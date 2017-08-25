@@ -16,7 +16,7 @@
 title: SuaLab Research Blog
 email: kim.kilho@sualab.com
 description: > # this means to ignore newlines until "baseurl:"
-	SuaLab research blog: covers subjects regarding machine learning, deep learning, machine vision, and so on.
+    SuaLab research blog: covers subjects regarding machine learning, deep learning, machine vision, and so on.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: kimkilho
