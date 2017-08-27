@@ -2,13 +2,16 @@
 layout: post
 title: "머신러닝이란 무엇인가?"
 date: 2017-09-04 09:00:00 +0900
-categories: machine learning
+categories: [machine learning]
 tags: [machine learning, data science]
 ---
 
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/what-is-machine-learning.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
 수아랩 리서치 블로그 첫 번째 글의 주제는 '머신러닝이란 무엇인가?' 입니다. AI(인공지능)를 가능하게 하는 핵심 기술이라고 할 수 있는 머신러닝에 대해서, 글을 읽는 모든 분들이 이해하실 수 있도록 최대한 쉬운 언어로 이야기를 풀어나가고자 합니다.
 
-1. 본 글은 [저자의 개인 블로그](kilhokim.github.io) 글 <머신러닝이란 무엇인가?>에서 출발하여, 일부 내용을 추가, 수정하고 확장하였습니다.
+1. 본 글은 [저자의 개인 블로그](https://kilhokim.github.io) 글 <머신러닝이란 무엇인가?>에서 출발하여, 일부 내용을 추가, 수정하고 확장하였습니다.
 2. 본문의 머신러닝 예시를 위해 작성한 Python 코드를 부록으로 함께 첨부하였습니다.
 
 ## 서론
@@ -27,7 +30,7 @@ tags: [machine learning, data science]
 
 여러분이 아주 어렸을 적, 꼬마 시절 기억을 떠올려봅시다. 여러분이 어느 대상의 개념을 처음 익힐 때를 기억하시나요? 말을 시작한 지 얼마 되지 않은 네살배기 꼬마 여러분이 어머니의 손을 붙잡고 공원으로 나간 상황을 가정해봅시다. 여러분을 둘러싼 주변의 수많은 대상들을 관찰하던 와중에, 여러분은 아래 그림과 같이 생긴 대상을 관찰하게 됩니다.
 
-![나무의 전형적인 예시 사진]({{ site.url }}/assets/images/what-is-machine-learning/tree_example.png){: .center-image }
+![나무의 전형적인 예시 사진]({{ site.url }}/assets/images/what-is-machine-learning/tree_example.png){: .large-image }
 
 <center><i>나무의 전형적인 예시 사진</i></center>
 
@@ -64,7 +67,7 @@ tags: [machine learning, data science]
 
 이 때 중요한 것은, 기계로 하여금 어느 대상의 이미지를 주고 그것이 나무인지 아닌지 구별하도록 하기 위해서는, 나무 이미지뿐만 아니라 나무가 아닌 이미지도 충분히 많이 제시해줘야 합니다. 따라서 실제로는 어느 랜덤한 이미지를 주고 {'나무', '나무X'} 중 하나의 표식을 붙여 그것의 정체를 나타내도록 하는데, 이를 '**레이블(label)**'이라고 합니다. 다시 말해, 머신러닝(정확히는 *지도 학습(supervised learning)* 패러다임에서의 머신러닝)에서는 수많은 (예시, 레이블) 쌍의 집합이 한 덩어리의 데이터가 되어 기계로 전달됩니다.
 
-!['나무' vs '나무X' 데이터 - 예시와 레이블]({{ site.url }}/assets/images/what-is-machine-learning/treelike-things-with-labels.png)
+!['나무' vs '나무X' 데이터 - 예시와 레이블]({{ site.url }}/assets/images/what-is-machine-learning/treelike-things-with-labels.png){: .full-image}
 
 <center><i>'나무' vs '나무X' 데이터 - 예시와 레이블의 나열</i></center>
 
@@ -92,6 +95,7 @@ tags: [machine learning, data science]
 |9|45|32|X|
 |10|52|75|O|
 |11|62|31|X|
+{: .full-table}
 
 <center><i>빨대론의 고객 데이터 일부</i></center>
 
@@ -99,19 +103,19 @@ tags: [machine learning, data science]
 
 다음으로 중요한 것이 사람으로 따지면 '뇌'에 해당하는 것인데, 머신러닝에서는 이를 '**러닝 모델(learning model)**'이라고 합니다. 러닝 모델은, 아주 간단히 말해서 하나의 커다란 함수로 구성되어 있다고 보면 됩니다. 여러분이 학창 시절 지식을 떠올려 보면, 대략 함수는 어떤 주어진 입력 변수에 대하여 특정한 연산을 수행한 결과를 출력 변수로 내뱉는 장치라고 배웠을 것입니다.
 
-![함수의 모식도]({{ site.url }}/assets/images/what-is-machine-learning/function-diagram.png)
+![함수의 모식도]({{ site.url }}/assets/images/what-is-machine-learning/function-diagram.png){: .small-image}
 
 <center><i>함수의 모식도</i></center>
 
 우리가 만들어내고자 하는 '나무 여부 구별 기계'의 경우에도, 이를 하나의 함수로 보아 단순화시키면, 입력 변숫값이 이미지이고 출력 변숫값이 {'나무', '나무X'} 중 하나인 함수라고 할 수 있습니다.
 
-![나무인지 아닌지 구별하는 함수]({{ site.url }}/assets/images/what-is-machine-learning/image-to-istree-classifier.png)
+![나무인지 아닌지 구별하는 함수]({{ site.url }}/assets/images/what-is-machine-learning/image-to-istree-classifier.png){: .small-image}
 
 <center><i>나무인지 아닌지 구별하는 함수</i></center>
 
 한편 '3개월 내 채무 이행여부 예측 기계'의 경우, 입력 변숫값이 신규 고객의 '나이'와 '연봉'이고, 출력 변숫값이 {'이행', '이행X'} 중 하나인 함수라고 할 수 있습니다. 예를 들어 오늘 막 대출한 신규 고객 '김호구'씨가 있는데, 이 사람의 나이가 40세이고 연봉이 40백만원(=4천만원)일 때 향후 3개월 내로 채무를 이행할지 여부를 맞추는 것입니다.
 
-![채무 이행여부 예측 함수]({{ site.url }}/assets/images/what-is-machine-learning/customer-data-to-fulfillment-classifier.png)
+![채무 이행여부 예측 함수]({{ site.url }}/assets/images/what-is-machine-learning/customer-data-to-fulfillment-classifier.png){: .small-image }
 
 <center><i>채무 이행여부 예측 함수</i></center>
 
@@ -123,7 +127,7 @@ tags: [machine learning, data science]
 
 앞서 빨대론의 11명 고객 데이터를 표로 나타내었는데, 표는 한 눈에 들어오지 않으므로 이를 플롯으로 찍어보도록 하겠습니다. 표기의 편의 상 나이를 $x_1$, 연봉을 $x_2$로 하고, 고객이 채무를 이행한 경우 해당 고객의 $(x_1, x_2)$ 좌표에 'O', 그렇지 않으면 'X'로 표기하도록 하겠습니다. 그럼 아래와 같은 플롯을 얻게 됩니다.
 
-![X1-X2 그래프]({{ site.url }}/assets/images/what-is-machine-learning/age-to-salary-plot.png)
+![X1-X2 그래프]({{ site.url }}/assets/images/what-is-machine-learning/age-to-salary-plot.png){: .large-image }
 
 <center>*X1 - X2 그래프*</center>
 

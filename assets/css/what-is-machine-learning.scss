@@ -1,0 +1,93 @@
+---
+---
+// Define defaults for each variable.
+$base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$base-font-size:   16px !default;
+$base-font-weight: 400 !default;
+$small-font-size:  $base-font-size * 0.875 !default;
+$base-line-height: 1.5 !default;
+
+$spacing-unit:     10px !default;
+
+$text-color:       #111 !default;
+$background-color: #fdfdfd !default;
+$brand-color:      #2a7ae2 !default;
+
+$grey-color:       #828282 !default;
+$grey-color-light: lighten($grey-color, 40%) !default;
+$grey-color-dark:  darken($grey-color, 25%) !default;
+
+$table-text-align: center !default;
+
+// Width of the content area
+$content-width:    800px !default;
+
+$on-palm:          600px !default;
+$on-laptop:        800px !default;
+
+
+.full-image {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: $spacing-unit;
+  display: block;
+  }
+
+.large-image {
+  @extend .full-image;
+  max-width: 70%;
+}
+
+.medium-image {
+  @extend .full-image;
+  max-width: 50%;
+}
+
+.small-image {
+  @extend .full-image;
+  max-width: 30%;
+}
+
+.full-table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: $spacing-unit;
+  display: table;
+  text-align: $table-text-align;
+  color: lighten($text-color, 18%);
+  border-collapse: collapse;
+  border: 1px solid $grey-color-dark;
+  tr {
+    &:nth-child(even) {
+      background-color: lighten($grey-color-light, 6%);
+    }
+  }
+  th, td {
+    padding: ($spacing-unit / 3) ($spacing-unit / 2);
+  }
+  th {
+    background-color: lighten($grey-color-light, 3%);
+    border: 1px solid darken($grey-color-dark, 4%);
+    border-bottom-color: darken($grey-color-dark, 12%);
+  }
+  td {
+    border: 1px solid $grey-color-dark;
+  }
+}
+
+.large-table {
+  @extend .full-table;
+  max-width: 50%;
+}
+
+.medium-table {
+  @extend .full-table;
+  max-width: 50%;
+}
+
+.small-table {
+  @extend .full-table;
+  max-width: 30%;
+}
+
