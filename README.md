@@ -1,2 +1,2 @@
-# kimkilho.github.io
+# sualab.github.io
 SuaLab research blog, powered by Jekyll
