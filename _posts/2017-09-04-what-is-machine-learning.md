@@ -270,7 +270,7 @@ f(x_1, x_2, ..., x_6) = w_0 + w_1x_1 + w_2x_2 + ... + w_6x_6
 
 필자가 막 지어낸 엄청나게 허접해보이는(?) 요인이지만, 적어도 제 생각에는 앞선 'RGB 평균값' 요인보다는 이게 더 나을 것 같습니다. 일반적인 나무 이미지를 생각해보면, 윗쪽 중앙에는 무성한 초록색 잎사귀가 위치해 있고, 아랫쪽 중앙에는 줄기가 위치해 있지 않았던가요? 이 때문에 나무 이미지의 경우 윗쪽 중앙의 [R, G, B] 값이 녹색에 해당하는 값에 가까울 것이고, 아랫쪽 중앙의 [R, G, B] 값은 갈색에 해당하는 값에 가까울 것입니다. 러닝 모델은 6개의 입력 변수로부터 이러한 경향을 받아들인 뒤, 이러한 특성을 잘 설명할 수 있는 방향으로 계수를 조절할 것으로 기대할 수 있습니다.
 
-![나무 이미지의 윗쪽 절반 중앙 픽셀 색상과 아랫쪽 절반 중앙 픽셀 색상]({{ site.url }}/assets/images/what-is-machine-learning/isTree-classifier-pixels.png){: .large-image}
+![나무 이미지의 윗쪽 절반 중앙 픽셀 색상과 아랫쪽 절반 중앙 픽셀 색상]({{ site.url }}/assets/images/what-is-machine-learning/isTree-classifier-successful-features.png){: .large-image}
 
 <center><i>나무 이미지의 윗쪽 절반 중앙 픽셀 색상과 아랫쪽 절반 중앙 픽셀 색상</i></center>
 
