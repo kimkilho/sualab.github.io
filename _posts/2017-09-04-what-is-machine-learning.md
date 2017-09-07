@@ -8,12 +8,11 @@ tags: [machine-learning, data-science]
 ---
 
 <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/what-is-machine-learning.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
 수아랩 리서치 블로그 첫 번째 글의 주제는 '머신러닝이란 무엇인가?' 입니다. AI(인공지능)를 가능하게 하는 핵심 기술이라고 할 수 있는 머신러닝에 대해서, 글을 읽는 모든 분들이 이해하실 수 있도록 최대한 쉬운 언어로 이야기를 풀어나가고자 합니다.
 
-1. 본 글은 [저자의 개인 블로그](https://kilhokim.github.io) 글 <머신러닝이란 무엇인가?>에서 출발하여, 일부 내용을 추가, 수정하고 확장하였습니다.
-2. 본문의 머신러닝 예시를 위해 작성한 [Python 코드](https://github.com/sualab/sualab.github.io/blob/master/assets/notebooks/what-is-machine-learning.ipynb)를 부록으로 함께 첨부하였습니다.
+1. 본 글은 <a href="https://kilhokim.github.io" target="_blank">저자의 개인 블로그</a> 글 <머신러닝이란 무엇인가?>에서 출발하여, 일부 내용을 추가, 수정하고 확장하였습니다.
+2. 본문의 머신러닝 예시를 위해 작성한 <a href="https://github.com/sualab/sualab.github.io/blob/master/assets/notebooks/what-is-machine-learning.ipynb" target="_blank">Python 코드</a>를 부록으로 함께 첨부하였습니다.
 
 
 ## 서론
@@ -197,7 +196,7 @@ f(40, 40) = -50 -40 + 2\cdot40 < 0
 
 나무 여부 구별 기계의 경우에는 채무 이행 여부 예측 기계와 조금 다른 점이 있는 것이, 먼저 데이터를 기계가 이해할 수 있는 형태로 수치화시켜야 한다는 점입니다. 채무 이행 여부 예측 기계의 경우, 애초부터 '나이'나 '연봉'처럼 이미 수치화된 정보를 사용했기 때문에 러닝 모델에 바로 입력하는 데 전혀 무리가 없었습니다. 하지만 이미지의 경우, 사람은 눈을 통해 받아들인 빛의 파장을 감각 기관에서 적절히 받아들여 변환하고, 이를 뇌 속에서 이리저리 정리하여 '어느 지점의 색상이 무엇인지' 등의 정보를 빠른 시간 내에 직관적으로 받아들이고 이해할 수 있지만, 기계는 그렇지 못합니다.
 
-그래서 이미지의 경우, 다음과 같은 방법으로 먼저 데이터를 '수치화'시키는 과정을 거쳐야 합니다. 먼저, 주어진 이미지를 [픽셀(pixel, 이미지 상에서의 하나의 점)](https://ko.wikipedia.org/wiki/%ED%99%94%EC%86%8C) 단위로 잘게 자릅니다. 그런 다음, 각 픽셀이 어떤 색상을 나타내는지를 [RGB 가산혼합](https://ko.wikipedia.org/wiki/RGB_%EA%B0%80%EC%82%B0%ED%98%BC%ED%95%A9) 방식으로 나타냅니다(픽셀과 RGB 가산혼합에 대한 내용은, 각 단어에 연결된 링크를 참조하시길 바랍니다). 이미지의 특정 픽셀 위치를 '이미지 맨 위에서부터 $$Y$$번째, 맨 왼쪽에서부터 $$X$$번째' 식으로 생각하면 $$(X, Y)$$와 같이 좌표 형태로 나타낼 수 있을 것인데, 예를 들면 $$(53, 121)$$에 위치한 픽셀의 RGB 값은 $$[77, 140, 86]$$이 되는 식입니다.
+그래서 이미지의 경우, 다음과 같은 방법으로 먼저 데이터를 '수치화'시키는 과정을 거쳐야 합니다. 먼저, 주어진 이미지를 <a href="https://ko.wikipedia.org/wiki/%ED%99%94%EC%86%8C" target="_blank">픽셀(pixel, 이미지 상에서의 하나의 점)</a> 단위로 잘게 자릅니다. 그런 다음, 각 픽셀이 어떤 색상을 나타내는지를 <a href="https://ko.wikipedia.org/wiki/RGB_%EA%B0%80%EC%82%B0%ED%98%BC%ED%95%A9" target="_blank">RGB 가산혼합</a> 방식으로 나타냅니다(픽셀과 RGB 가산혼합에 대한 내용은, 각 단어에 연결된 링크를 참조하시길 바랍니다). 이미지의 특정 픽셀 위치를 '이미지 맨 위에서부터 $$Y$$번째, 맨 왼쪽에서부터 $$X$$번째' 식으로 생각하면 $$(X, Y)$$와 같이 좌표 형태로 나타낼 수 있을 것인데, 예를 들면 $$(53, 121)$$에 위치한 픽셀의 RGB 값은 $$[77, 140, 86]$$이 되는 식입니다.
 
 ![나무 이미지의 (53, 121)에 위치한 픽셀의 RGB 값]({{ site.url }}/assets/images/what-is-machine-learning/isTree-classifier-pixels.png){: .large-image}
 
@@ -304,10 +303,10 @@ f(x_1, x_2, ..., x_6) = w_0 + w_1x_1 + w_2x_2 + ... + w_6x_6
 
 ## References
 
-- [Abu-Mostafa, Magdon-Ismail, Lin, <Learning from Data\>](https://work.caltech.edu/telecourse.html)
-- [나무의 전형적인 예시 이미지](http://vsbattles.wikia.com/wiki/Composite_Tree)
-- [나무\[나무\]의 정의](http://krdic.naver.com/detail.nhn?docid=6621300)
-- [함수의 구조](https://en.wikipedia.org/wiki/Talk%3AFunction_%28mathematics%29%2FArchive_5)
+- <a href="https://work.caltech.edu/telecourse.html" target="_blank">Abu-Mostafa, Magdon-Ismail, Lin, \<Learning from Data\></a>
+- <a href="http://vsbattles.wikia.com/wiki/Composite_Tree" target="_blank">나무의 전형적인 예시 이미지</a>
+- <a href="http://krdic.naver.com/detail.nhn?docid=6621300" target="_blank">나무\[나무\]의 정의</a>
+- <a href="https://en.wikipedia.org/wiki/Talk%3AFunction_%28mathematics%29%2FArchive_5" target="_blank">함수의 구조</a>
 
 
 
