@@ -65,3 +65,6 @@ _source/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+
+# swp files
+*.swp
