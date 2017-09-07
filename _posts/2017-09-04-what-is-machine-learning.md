@@ -5,9 +5,8 @@ date: 2017-09-04 09:00:00 +0900
 author: kilho_kim
 categories: [machine-learning]
 tags: [machine-learning, data-science]
+name: what-is-machine-learning
 ---
-
-<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/what-is-machine-learning.css" />
 
 수아랩 리서치 블로그 첫 번째 글의 주제는 '머신러닝이란 무엇인가?' 입니다. AI(인공지능)를 가능하게 하는 핵심 기술이라고 할 수 있는 머신러닝에 대해서, 글을 읽는 모든 분들이 이해하실 수 있도록 최대한 쉬운 언어로 이야기를 풀어나가고자 합니다.
 
@@ -31,9 +30,7 @@ tags: [machine-learning, data-science]
 
 여러분이 아주 어렸을 적, 꼬마 시절 기억을 떠올려봅시다. 여러분이 어느 대상의 개념을 처음 익힐 때를 기억하시나요? 말을 시작한 지 얼마 되지 않은 네살배기 꼬마 여러분이 어머니의 손을 붙잡고 공원으로 나간 상황을 가정해봅시다. 여러분을 둘러싼 주변의 수많은 대상들을 관찰하던 와중에, 여러분은 아래 그림과 같이 생긴 대상을 관찰하게 됩니다.
 
-![나무의 전형적인 예시 이미지]({{ site.url }}/assets/images/what-is-machine-learning/tree_example.png){: .large-image }
-
-<center><i>나무의 전형적인 예시 이미지</i></center>
+{% include image.html name=page.name file="tree_example.png" description="나무의 전형적인 예시 이미지" class="large-image" %}
 
 저러한 대상을 관찰할 때만 하더라도 여러분은 저 대상이 무엇인지 몰랐는데, 어머니께 '엄마, 저게 뭐야?'라고 물어봤더니 어머니께서 '나무'라고 알려주셨습니다. 그런데, 실제로는 모든 나무가 위 그림처럼 생겼을 리가 없습니다. 나무도 그 종이 매우 다양하며, 동종의 나무라고 하더라도 자라온 환경에 따라 그 모양이 당연히 다를 수 있습니다. 따라서, 엄밀히 말하자면, 위 그림은 실제 '나무'라는 개념을 완전히 온전하게 설명해주진 못하며, '나무'라는 대상의 실체에 대하여 간접적으로 접근하여 관찰된 하나의 '**예시(example)**'에 불과하다고 할 수 있습니다. 꼬마 여러분들이 접한 나무 예시는 위의 저 그림밖에 없기 때문에, 여러분들의 머릿속에는 '나무 = 저것 그 자체'로 자리잡은 상태일 것입니다(언어적으로 풀어 설명하자면 '갈색의 딱딱하고 커다란 무언가가 하나 있고, 그 윗쪽으로 좀 더 얇은 무언가가 여러 개 뻗어있으며 각 가지에는 자잘하고 아주 얇은 녹색의 무언가가 여러 개 매달려 있는 대상' 따위가 되겠죠).
 
@@ -68,9 +65,7 @@ tags: [machine-learning, data-science]
 
 이 때 중요한 것은, 기계로 하여금 어느 대상의 이미지를 주고 그것이 나무인지 아닌지 구별하도록 하기 위해서는, 나무 이미지뿐만 아니라 나무가 아닌 이미지도 충분히 많이 제시해줘야 합니다. 따라서 실제로는 어느 랜덤한 이미지를 주고 {'나무', '나무X'} 중 하나의 표식을 붙여 그것의 정체를 나타내도록 하는데, 이를 '**레이블(label)**'이라고 합니다. 다시 말해, 머신러닝(정확히는 *지도 학습(supervised learning)* 패러다임에서의 머신러닝)에서는 수많은 (예시, 레이블) 쌍의 집합이 한 덩어리의 데이터가 되어 기계로 전달됩니다.
 
-!['나무' vs '나무X' 데이터 - 예시와 레이블]({{ site.url }}/assets/images/what-is-machine-learning/treelike-things-with-labels.png){: .full-image}
-
-<center><i>'나무' vs '나무X' 데이터 - 예시와 레이블의 나열</i></center>
+{% include image.html name=page.name file="treelike-things-with-labels.png" description="'나무' vs '나무X' 데이터 - 예시와 레이블의 나열" class="full-image" %}
 
 #### 예시2: 3개월 내 채무 이행 여부 예측 기계
 
@@ -82,6 +77,7 @@ tags: [machine-learning, data-science]
 
 좀 더 구체적인 예시를 들어봅시다. 데이터 확보를 위해, 빨대론에서는 과거에 3개월 내에 채무를 이행한 기록이 있거나, 혹은 이행하지 못한 기록이 있는 고객들의 데이터를 활용하고자 하였습니다. 예를 들어 2014년 3월 27일에 대출한 29세 '박갑부'씨는 연봉이 5천6백만원인데, 2014년 5월 31일에 채무를 이행한 기록이 있습니다. 한편 2015년 8월 10일에 대출한 33세 '최빈궁'씨는 연봉이 3천3백만원인데, 채무 이행 기한인 2015년 11월 9일까지 채무를 이행하지 못했다고 기록되어 있습니다. 빨대론에서는 이런 과거의 데이터를 모두 긁어모아 하나의 커다란 **데이터 집합(data set)**을 만들었습니다.
 
+{% include table.html description="빨대론의 고객 데이터 일부" content="
 |---|---|---|---|
 |번호|나이|연봉(백만원)|이행여부|
 |---|---|---|---|
@@ -96,29 +92,21 @@ tags: [machine-learning, data-science]
 |9|45|32|X|
 |10|52|75|O|
 |11|62|31|X|
-{: .full-table}
-
-<center><i>빨대론의 고객 데이터 일부</i></center>
+" class="full-table"%}
 
 ### 러닝 모델
 
 다음으로 중요한 것이 사람으로 따지면 '뇌'에 해당하는 것인데, 머신러닝에서는 이를 '**러닝 모델(learning model)**'이라고 합니다. 러닝 모델은, 아주 간단히 말해서 하나의 커다란 함수로 구성되어 있다고 보면 됩니다. 여러분이 학창 시절 지식을 떠올려 보면, 대략 함수는 어떤 주어진 입력 변수에 대하여 특정한 연산을 수행한 결과를 출력 변수로 내뱉는 장치라고 배웠을 것입니다.
 
-![함수의 구조]({{ site.url }}/assets/images/what-is-machine-learning/function-diagram.png){: .small-image}
-
-<center><i>함수의 구조</i></center>
+{% include image.html name=page.name file="function-diagram.png" description="함수의 구조" class="small-image" %}
 
 우리가 만들어내고자 하는 '나무 여부 구별 기계'의 경우에도, 이를 하나의 함수로 보아 단순화시키면, 입력 변숫값이 이미지이고 출력 변숫값이 {'나무', '나무X'} 중 하나인 함수라고 할 수 있습니다.
 
-![나무인지 아닌지 구별하는 함수]({{ site.url }}/assets/images/what-is-machine-learning/image-to-istree-classifier.png){: .small-image}
-
-<center><i>나무인지 아닌지 구별하는 함수</i></center>
+{% include image.html name=page.name file="image-to-istree-classifier.png" description="나무인지 아닌지 구별하는 함수" class="small-image" %}
 
 한편 '3개월 내 채무 이행여부 예측 기계'의 경우, 입력 변숫값이 신규 고객의 '나이'와 '연봉'이고, 출력 변숫값이 {'이행', '이행X'} 중 하나인 함수라고 할 수 있습니다. 예를 들어 오늘 막 대출한 신규 고객 '김호구'씨가 있는데, 이 사람의 나이가 40세이고 연봉이 40백만원(=4천만원)일 때 향후 3개월 내로 채무를 이행할지 여부를 맞추는 것입니다.
 
-![채무 이행여부 예측 함수]({{ site.url }}/assets/images/what-is-machine-learning/customer-data-to-fulfillment-classifier.png){: .small-image }
-
-<center><i>채무 이행여부 예측 함수</i></center>
+{% include image.html name=page.name file="customer-data-to-fulfillment-classifier.png" description="채무 이행여부 예측 함수" class="small-image" %}
 
 > 러닝 모델에 대해 이 이상으로 더 설명하려면, 좀 더 수학적인 설명을 하지 않을 수가 없습니다. 수학에 약하신 분들을 배려하여, 이 지점에서 미리 양해를 구합니다.
 
@@ -128,9 +116,7 @@ tags: [machine-learning, data-science]
 
 앞서 빨대론의 11명 고객 데이터를 표로 나타내었는데, 표는 한 눈에 들어오지 않으므로 이를 플롯으로 찍어보도록 하겠습니다. 표기의 편의 상 나이를 $$x_1$$, 연봉을 $$x_2$$로 하고, 고객이 채무를 이행한 경우 해당 고객의 $$(x_1, x_2)$$ 좌표에 'O', 그렇지 않으면 'X'로 표기하도록 하겠습니다. 그럼 아래와 같은 플롯을 얻게 됩니다.
 
-![X1-X2 플롯]({{ site.url }}/assets/images/what-is-machine-learning/age-to-salary-plot.png){: .large-image }
-
-<center><i>X1-X2 플롯</i></center>
+{% include image.html name=page.name file="age-to-salary-plot.png" description="X1-X2 플롯" class="large-image" %}
 
 데이터 내의 각 (예시, 레이블)을 플롯으로 나타내니, 보기에 좀 더 직관적으로 되었습니다. 빨대론의 목표는 현재 대출한 모 고객의 나이와 연봉만을 알고 있을 때, 이 고객이 3개월 내로 채무를 이행할지 여부를 맞추는 것입니다. 다시 말하면, 어느 새로운 예시가 들어왔고 이 예시의 $$x_1$$과 $$x_2$$의 값만을 알 때, 위 플롯 상에 떨어뜨린 점 $$(x_1, x_2)$$가 'O'가 될지, 'X'가 될지 예측하는 것입니다. 한 번 더 생각하면, 플롯 상에서 원래 'O'가 모여있는 영역과 'X'가 모여있는 영역의 명확한 '경계'를 찾으면 될 것 같다는 생각이 듭니다.
 
@@ -152,21 +138,15 @@ w_0 + w_1x_1 + w_2x_2 = 0
 
 이를 위해, 먼저 $$w_0$$, $$w_1$$, $$w_2$$의 초깃값을 (대충) *적절하게* 잡겠습니다. 예를 들어, $$w_0=80$$, $$w_1=-3$$, $$w_2=1$$로 잡았다고 하겠습니다. 이 직선을 플롯 상에 나타내면 아래와 같이 됩니다.
 
-![X1-X2 플롯과 초기 선형 모델]({{ site.url }}/assets/images/what-is-machine-learning/age-to-salary-with-initialized-model-plot.png){: .large-image}
-
-<center><i>X1-X2 플롯과 초기 선형 모델</i></center>
+{% include image.html name=page.name file="age-to-salary-with-initialized-model-plot.png" description="X1-X2 플롯과 초기 선형 모델" class="large-image" %}
 
 그런 다음 각 점들을 돌아가면서 관찰하여, 해당 점이 직선에 의해 제대로 분류되었는지 살펴보겠습니다. 위 플롯에 표시된 바와 같이, 'O'인데도 직선 아랫쪽으로, 'X'인데도 직선 윗쪽으로 잘못 위치한 점들이 4개 있습니다. 이들 점에 해당하는 예시들을 제대로 분류하려면, 현재 직선의 기울기를 낮춰야 할 것 같습니다. 러닝 모델은, 이에 결부되어 있는 모종의 **러닝 알고리즘(learning algorithm)**에 의거하여 $$w_0$$, $$w_1$$, $$w_2$$의 값을 적절하게 조정, 잘못 분류된 점이 제대로 분류되도록 합니다.
 
-![X1-X2 플롯과 1차 학습된 선형 모델]({{ site.url }}/assets/images/what-is-machine-learning/age-to-salary-with-improved-model-plot.png){: .large-image}
-
-<center><i>X1-X2 플롯과 1차 학습된 선형 모델</i></center>
+{% include image.html name=page.name file="age-to-salary-with-improved-model-plot.png" description="X1-X2 플롯과 1차 학습된 선형 모델" class="large-image" %}
 
 $$w_0=40$$, $$w_1=-3$$, $$w_2=2$$로 조정하였더니, 방금 전보다 잘못 분류된 점의 수가 감소하였습니다. 그런데, 여전히 잘못 분류된 점이 있습니다. 러닝 모델은 러닝 알고리즘에 의해 $$w_0$$, $$w_1$$, $$w_2$$의 값을 다시 한 번 조정합니다.
 
-![X1-X2 플롯과 학습이 완료된 선형 모델]({{ site.url }}/assets/images/what-is-machine-learning/age-to-salary-with-learned-model-plot.png){: .large-image}
-
-<center><i>X1-X2 플롯과 학습이 완료된 선형 모델</i></center>
+{% include image.html name=page.name file="age-to-salary-with-learned-model-plot.png" description="X1-X2 플롯과 학습이 완료된 선형 모델" class="large-image" %}
 
 이제 완벽합니다. 빨대론에서 가지고 있는 11개 예시 고객 데이터를 모두 정확히 분류하는 선형 모델을 찾았습니다. 이를 최종적인 함수 형태로 나타내면 다음과 같습니다.
 
@@ -180,9 +160,7 @@ f(x_1, x_2) = -50 -x_1 + 2x_2
 f(40, 40) = -50 -40 + 2\cdot40 < 0
 \end{equation}
 
-![김호구 씨의 채무 이행 여부 확인 결과]({{ site.url }}/assets/images/what-is-machine-learning/age-to-salary-classify-sample-plot.png){: .large-image}
-
-<center><i>김호구 씨의 채무 이행 여부 확인 결과</i></center>
+{% include image.html name=page.name file="age-to-salary-classify-sample-plot.png" description="김호구 씨의 채무 이행 여부 확인 결과" class="large-image" %}
 
 새로 찍은 김호구 씨의 점이 러닝 모델이 만들어낸 직선의 아랫쪽에 위치하므로, 'X'로 분류됨이 확인되었습니다. 즉, 김호구 씨는 3개월 내로 채무를 이행할 수 없을 것이므로, 사전에 고강도의 조치(?)를 취해야 함이 확인되었습니다.
 
@@ -198,12 +176,11 @@ f(40, 40) = -50 -40 + 2\cdot40 < 0
 
 그래서 이미지의 경우, 다음과 같은 방법으로 먼저 데이터를 '수치화'시키는 과정을 거쳐야 합니다. 먼저, 주어진 이미지를 <a href="https://ko.wikipedia.org/wiki/%ED%99%94%EC%86%8C" target="_blank">픽셀(pixel, 이미지 상에서의 하나의 점)</a> 단위로 잘게 자릅니다. 그런 다음, 각 픽셀이 어떤 색상을 나타내는지를 <a href="https://ko.wikipedia.org/wiki/RGB_%EA%B0%80%EC%82%B0%ED%98%BC%ED%95%A9" target="_blank">RGB 가산혼합</a> 방식으로 나타냅니다(픽셀과 RGB 가산혼합에 대한 내용은, 각 단어에 연결된 링크를 참조하시길 바랍니다). 이미지의 특정 픽셀 위치를 '이미지 맨 위에서부터 $$Y$$번째, 맨 왼쪽에서부터 $$X$$번째' 식으로 생각하면 $$(X, Y)$$와 같이 좌표 형태로 나타낼 수 있을 것인데, 예를 들면 $$(53, 121)$$에 위치한 픽셀의 RGB 값은 $$[77, 140, 86]$$이 되는 식입니다.
 
-![나무 이미지의 (53, 121)에 위치한 픽셀의 RGB 값]({{ site.url }}/assets/images/what-is-machine-learning/isTree-classifier-pixels.png){: .large-image}
-
-<center><i>나무 이미지의 (53, 121)에 위치한 픽셀의 RGB 값*<br><small>(*주의: 격자 안의 하나의 정사각형의 크기는 실제 1픽셀보다는 크며, 설명을 돕기 위해 과장하였습니다.)</small></i></center>
+{% include image.html name=page.name file="isTree-classifier-pixels.png" description="나무 이미지의 (53, 121)에 위치한 픽셀의 RGB 값*<br><small>(*주의: 격자 안의 하나의 정사각형의 크기는 실제 1픽셀보다는 크며, 설명을 돕기 위해 과장하였습니다.)</small>" class="large-image" %}
 
 위 이미지 하나에 포함된 픽셀은 총 몇 개일까요? 이미지 해상도가 (세로x가로)100x150이었다고 하면, $$100 \times 150 = 15,000$$개 정도 됩니다. 이 15,000개 픽셀 각각의 RGB 값을, 위치에 따라 아래와 같이 일렬로 정리해 놓은 것을 데이터로 활용한다고 생각하시면 됩니다.
 
+{% include table.html description="나무 이미지 예시 하나의 수치화된 데이터" content="
 |---|---|---|---|
 |픽셀 번호(Y,X)|R|G|B|
 |---|---|---|---|
@@ -216,9 +193,7 @@ f(40, 40) = -50 -40 + 2\cdot40 < 0
 |14998 (100, 148)|27|188|70|
 |14999 (100, 149)|64|192|66|
 |15000 (100, 150)|0|0|1|
-{: .full-table}
-
-<center><i>나무 이미지 예시 하나의 수치화된 데이터</i></center>
+" class="full-table"%}
 
 나무 여부 구별 기계를 위해 러닝 모델은 무엇을 사용해야 할까요? 지금으로서 우리가 아는 것은 선형 모델밖에 없으니 그걸 써 봅시다. 입력 변수는 총 몇 개일까요? 명심할 것은, (아까 빨대론의 사례와는 다르게) 위 표에 나타낸 것이 *한 장의* 예시 이미지 데이터라는 것입니다! 예시 하나에 [R, G, B] 값의 조합이 총 15,000개 있으므로, 단순 계산으로 $$15,000\times3=45,000$$ 개의 입력 변수가 필요합니다.
 
@@ -232,13 +207,14 @@ f(x_1, x_2, ..., x_{45000}) = w_0 + w_1x_1 + w_2x_2 + ... + w_{45000}x_{45000}
 
 그래서 보통 맨 첫 번째로, 러닝 모델의 입력 변수를 줄이고자 하는 시도를 합니다. 예를 들어, 한 예시 이미지 내의 15,000개 픽셀들의 [R, G, B] 값 각각에 대하여, 이들의 평균값을 대표로 사용하면 어떨까요? 이렇게 하면, 픽셀의 위치와는 무관하게 다음과 같이 [R, G, B] 조합 한 개만이 얻어질 것입니다.
 
+{% include table.html description="나무 이미지 예시로부터 추출한 'RGB 평균값' 요인" content="
 |---|---|---|---|
 |픽셀 번호(Y,X)|R의 평균|G의 평균|B의 평균|
 |---|---|---|---|
 |N/A|192.34|34.56|11.67|
-{: .full-table}
+" class="full-table"%}
 
-<center><i>나무 이미지 예시로부터 추출한 'RGB 평균값' 요인</i></center>
+<center><i></i></center>
 
 이렇게 원 데이터에서 'R의 평균', 'G의 평균', 'B의 평균'과 같이, 데이터를 설명하는 새로운 항목들을 정의하여 위와 같이 새로운 형태의 데이터를 생성함으로써 입력 변수의 개수를 감소시키는 작업은 머신러닝에서 필수적이라고 할 수 있는데, 이 때의 항목을 '**요인(feature)**이라고 부릅니다. 이렇게 새로 생성된 'R의 평균', 'G의 평균', 'B의 평균'이라는 3개의 요인을 추출하여, 이를 선형 모델에 주고 학습시키고자 할 경우, 단 3개의 입력 변수를 가지는 선형 모델을 활용할 수 있으며, 단 4개의 계수만을 조정하면 됩니다.
 
@@ -252,14 +228,13 @@ f(x_1, x_2, x_3) = w_0 + w_1x_1 + w_2x_2 + w_3x_3
 
 'RGB 평균값' 요인보다 좀 더 그럴싸한 요인을 생각해봅시다. 주어진 이미지를 수평 방향으로 반으로 갈라, 윗쪽 절반의 정중앙에 해당하는 픽셀을 선택하여 해당 픽셀의 [R, G, B] 값과, 아랫쪽 절반의 정중앙 픽셀을 선택하여 해당 픽셀의 [R, G, B] 값을 각각 요인으로 정의하는 것입니다. 즉, '윗쪽 절반 중앙의 [R, G, B]값', '아랫쪽 절반 중앙의 [R, G, B]값'으로 총 6개의 요인을 정의할 수 있습니다.
 
+{% include table.html description="나무 이미지 예시로부터 추출한 '윗쪽 중앙, 아랫쪽 중앙 픽셀의 RGB 값' 요인" content="
 |---|---|---|---|
 |픽셀 위치|R|G|B|
 |---|---|---|---|
 |윗쪽 중앙|77|215|86|
 |아랫쪽 중앙|49|55|33|
-{: .full-table}
-
-<center><i>나무 이미지 예시로부터 추출한 '윗쪽 중앙, 아랫쪽 중앙 픽셀의 RGB 값' 요인</i></center>
+" class="full-table"%}
 
 이렇게 하면, 총 6개의 입력 변수를 가지는 선형 모델을 활용하여 7개의 계수를 조정하면 됩니다.
 
@@ -269,15 +244,11 @@ f(x_1, x_2, ..., x_6) = w_0 + w_1x_1 + w_2x_2 + ... + w_6x_6
 
 필자가 막 지어낸 엄청나게 허접해보이는(?) 요인이지만, 적어도 제 생각에는 앞선 'RGB 평균값' 요인보다는 이게 더 나을 것 같습니다. 일반적인 나무 이미지를 생각해보면, 윗쪽 중앙에는 무성한 초록색 잎사귀가 위치해 있고, 아랫쪽 중앙에는 줄기가 위치해 있지 않았던가요? 이 때문에 나무 이미지의 경우 윗쪽 중앙의 [R, G, B] 값이 녹색에 해당하는 값에 가까울 것이고, 아랫쪽 중앙의 [R, G, B] 값은 갈색에 해당하는 값에 가까울 것입니다. 러닝 모델은 6개의 입력 변수로부터 이러한 경향을 받아들인 뒤, 이러한 특성을 잘 설명할 수 있는 방향으로 계수를 조절할 것으로 기대할 수 있습니다.
 
-![나무 이미지의 윗쪽 절반 중앙 픽셀 색상과 아랫쪽 절반 중앙 픽셀 색상]({{ site.url }}/assets/images/what-is-machine-learning/isTree-classifier-successful-features.png){: .large-image}
-
-<center><i>나무 이미지의 윗쪽 절반 중앙 픽셀 색상과 아랫쪽 절반 중앙 픽셀 색상</i></center>
+{% include image.html name=page.name file="isTree-classifier-successful-features.png" description="나무 이미지의 윗쪽 절반 중앙 픽셀 색상과 아랫쪽 절반 중앙 픽셀 색상" class="large-image" %}
 
 참고로, 위에서 소개한 2가지 요인은 이해를 돕기 위해 대충(?) 급조해 낸 요인들이며, 실제 **이미지 인식(image recognition)** 문제에서는 절대 사용되지 않습니다. 실제 이미지 인식 문제에서 일반적으로 많이 사용되는 요인 추출 기법은 대부분 이미지 상의 픽셀들을 영역별, 혹은 횡적/종적으로 스캔하면서 이 과정에서의 픽셀 강도의 변화 경향을 추적하며, 이를 수치화시킨 형태로 정의합니다.
 
-![이미지 인식 분야에서의 대표적인 요인 추출 알고리즘]({{ site.url }}/assets/images/what-is-machine-learning/image-feature-extractors.png){: .full-image}
-
-<center><i>이미지 인식 분야에서의 대표적인 요인 추출 알고리즘</i></center>
+{% include image.html name=page.name file="image-feature-extractors.png" description="이미지 인식 분야에서의 대표적인 요인 추출 알고리즘" class="full-image" %}
 
 머신러닝에서 러닝 모델을 성공적으로 학습하기 위해서는 효과적인 요인을 잘 정의하는 것이 대단히 중요한데, 이는 해당 분야에 대한 풍부한 지식과 뛰어난 직관에 힘입은, 가히 예술에 가까운 작업이라고 할 수 있습니다. 실제로 '나무 여부 구별'이나 '채무 이행여부 예측' 따위의 문제에 있어서, '어떤 요인을 정의해서 기계를 학습했더니 성능이 월등하게 잘 나왔더라'와 같은 내용의 연구 결과가 하나의 논문거리가 되는 경우가 허다합니다.
 
@@ -287,9 +258,7 @@ f(x_1, x_2, ..., x_6) = w_0 + w_1x_1 + w_2x_2 + ... + w_6x_6
 
 그래서, 실제 이미지 인식 분야에서는 선형 모델 대신 인공신경망(artificial neural networks)과 같은 복잡성이 높은 러닝 모델을 사용합니다. 이렇게 복잡성이 높은 신경망(neural networks) 구조를 러닝 모델로 사용하는 머신러닝 패러다임을 '**딥 러닝(deep learning)**'이라고 합니다.
 
-![주요한 러닝 모델 및 러닝 알고리즘]({{ site.url }}/assets/images/what-is-machine-learning/learning-models-and-algorithms.png){: .full-image}
-
-<center><i>주요한 러닝 모델 및 러닝 알고리즘</i></center>
+{% include image.html name=page.name file="learning-models-and-algorithms.png" description="주요한 러닝 모델 및 러닝 알고리즘" class="full-image" %}
 
 
 ## 결론
