@@ -5,6 +5,7 @@ date: 2017-09-04 09:00:00 +0900
 author: kilho_kim
 categories: [machine-learning]
 tags: [machine-learning, data-science]
+comments: true
 name: what-is-machine-learning
 ---
 
@@ -276,6 +277,4 @@ f(x_1, x_2, ..., x_6) = w_0 + w_1x_1 + w_2x_2 + ... + w_6x_6
 - <a href="http://vsbattles.wikia.com/wiki/Composite_Tree" target="_blank">나무의 전형적인 예시 이미지</a>
 - <a href="http://krdic.naver.com/detail.nhn?docid=6621300" target="_blank">나무\[나무\]의 정의</a>
 - <a href="https://en.wikipedia.org/wiki/Talk%3AFunction_%28mathematics%29%2FArchive_5" target="_blank">함수의 구조</a>
-
-
 
