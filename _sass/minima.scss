@@ -52,6 +52,15 @@ $on-laptop:        800px !default;
   "minima/syntax-highlighting"
 ;
 
+.logo-div {
+  float: left;
+  margin-right: 10px;
+}
+
+.logo-img {
+  height: 50px;
+}
+
 .full-image {
   max-width: 100%;
   margin-left: auto;
