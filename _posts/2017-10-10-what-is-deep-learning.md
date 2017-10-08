@@ -108,7 +108,7 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 완전 연결 신경망에서 하나의 층 내부만을 보면, 그 안에 위치한 노드들은 1차원적으로 세로 방향으로만 배치되어 있습니다. 만약 완전 연결 신경망의 하나의 층에 위치한 노드들이 2차원적으로 가로/세로 방향으로 동시에 배치되어 있다면 어떤 모습일까요? 각 층에 가로 $$w$$개, 세로 $$h$$개의 노드가 배치되어 있는 2층짜리 완전 연결 신경망을 생각해 봅시다.
 
-{% include image.html name=page.name file="2d-deep-neural-network.svg" description="2차원적 완전 연결 신경망*<br><small>(*주의: 지면 관계상, 노드 간의 연결 관계에 대한 표현은 생략하였습니다.)</small>" class="full-image" %}
+{% include image.html name=page.name file="2d-deep-neural-network.svg" description="2차원적 완전 연결 신경망*<br><small>(*주의: 지면 관계상, 노드 간의 연결 관계에 대한 표현 및 $$+1$$ 노드는 생략하였습니다.)</small>" class="full-image" %}
 
 위 그림과 같이 노드를 배치할 경우, 노드 간의 연결 개수가 막대하게 증가한다는 문제가 있습니다. 예를 들어, 아래 그림과 같이 입력층의 $$x_{11}$$ 노드에서 은닉층으로 이어지는 연결만 보더라도, 연결 하나 당 한 개의 가중치 값이 붙으므로 총 $$h \times w$$개의 가중치를 고려해야 합니다. 입력층에는 총 $$h \times w$$개의 노드가 존재하므로, 인접한 두 층 사이에만 총 $$h^2w^2$$개의 가중치가 필요합니다. 
 
@@ -118,16 +118,26 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 {% include image.html name=page.name file="convolutional-neural-network.svg" description="컨볼루션 신경망에서의 필터에 대한 연산" class="full-image" %}
 
+위 그림에서는 $$3 \times 3$$ 크기의 필터가 입력층의 가장 좌측 상단 $$3 \times 3$$ 영역에 적용되어, 이들 노드에 대한 가중합 및 활성함수 연산을 수행하고 그 출력값을 $$z_{22}$$에 저장하고 있습니다. 이렇게 필터는 원본 입력층 상에서 일정 간격만큼 횡적/종적으로 이동하면서 가중합 및 활성함수 연산을 수행하고, 그 출력값을 현재 필터의 위치에 놓습니다. 이러한 연산 방식은 컴퓨터 비전(computer vision) 분야에서 이미지에 대한 <a href="https://ko.wikipedia.org/wiki/%ED%95%A9%EC%84%B1%EA%B3%B1" target="_blank">컨볼루션(convolution)</a> 연산과 유사하여, 이러한 구조를 채택하는 심층 신경망을 특별히 **컨볼루션 신경망(convolutional neural network)**라고 부르게 되었습니다. 
 
+위 그림에서는 설명의 편의를 위해 하나의 필터만이 작동하는 것을 표현하였으나, 실제로는 인접한 층 사이에 복수 개의 필터를 설치하고 각 필터의 컨볼루션 연산을 통해 복수 개의 은닉층이 생성되도록 합니다. 
 
+{% include image.html name=page.name file="lenet-architecture.svg" description="컨볼루션 신경망의 최초 모델: LeNet" class="full-image" %}
 
+컨볼루션 신경망은, 본래 2차원적 속성을 지니는 데이터에 효과적으로 적용할 수 있습니다. 가로/세로 방향으로 픽셀(pixel)이 분포해 있는 이미지 데이터가 가장 대표적인 사례라고 할 수 있습니다. 실제로도 **이미지 인식(image recognition)** 분야에서 컨볼루션 신경망이 가장 활발하게 사용됩니다. 컨볼루션 신경망에 대한 보다 자세한 내용은, 추후에 또 다른 블로그 포스팅을 통해 다루도록 하겠습니다.
 
-- 순환 신경망
+### 순환 신경망
+
+TODO
+
+---
 
 
 ## 딥러닝의 강점 
 
 지금까지는 딥러닝의 개념을 설명하기 위한 내용이었고, 이제 딥러닝이 왜 좋다고 하는지
+
+TODO
 
 ### 요인 추출의 자동화
 
@@ -167,3 +177,5 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 ## References
 
 - <a href="https://en.wikipedia.org/wiki/Neuron" target="_blank">뉴런의 구조</a>
+- 컨볼루션 신경망의 최초 모델: LeNet
+  - <a href="http://www.dengfanxin.cn/wp-content/uploads/2016/03/1998Lecun.pdf" target="_blank">LeCun, Yann, et al. "Gradient-based learning applied to document recognition." Proceedings of the IEEE 86.11 (1998): 2278-2324.</a>
