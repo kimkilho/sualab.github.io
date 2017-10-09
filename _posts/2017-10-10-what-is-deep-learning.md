@@ -118,9 +118,9 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 {% include image.html name=page.name file="convolutional-neural-network.svg" description="컨볼루션 신경망에서의 필터에 대한 연산" class="full-image" %}
 
-위 그림에서는 $$3 \times 3$$ 크기의 필터가 입력층의 가장 좌측 상단 $$3 \times 3$$ 영역에 적용되어, 이들 노드에 대한 가중합 및 활성함수 연산을 수행하고 그 출력값을 $$z_{22}$$에 저장하고 있습니다. 이렇게 필터는 원본 입력층 상에서 일정 간격만큼 횡적/종적으로 이동하면서 가중합 및 활성함수 연산을 수행하고, 그 출력값을 현재 필터의 위치에 놓습니다. 이러한 연산 방식은 컴퓨터 비전(computer vision) 분야에서 이미지에 대한 <a href="https://ko.wikipedia.org/wiki/%ED%95%A9%EC%84%B1%EA%B3%B1" target="_blank">컨볼루션(convolution)</a> 연산과 유사하여, 이러한 구조를 채택하는 심층 신경망을 특별히 **컨볼루션 신경망(convolutional neural network)**라고 부르게 되었습니다. 
+위 그림에서는 $$3 \times 3$$ 크기의 필터가 입력층의 가장 좌측 상단 $$3 \times 3$$ 영역에 적용되어, 이들 노드에 대한 가중합 및 활성함수 연산을 수행하고 그 출력값을 $$z_{22}$$에 저장하고 있습니다. 이렇게 필터는 원본 입력층 상에서 일정 간격만큼 횡적/종적으로 이동하면서 가중합 및 활성함수 연산을 수행하고, 그 출력값을 현재 필터의 위치에 놓습니다. 이러한 연산 방식은 컴퓨터 비전(computer vision) 분야에서 이미지에 대한 <a href="https://ko.wikipedia.org/wiki/%ED%95%A9%EC%84%B1%EA%B3%B1" target="_blank">컨볼루션(convolution)</a> 연산과 유사하여, 이러한 구조를 채택하는 심층 신경망을 특별히 **컨볼루션 신경망(CNN: convolutional neural network)**라고 부르게 되었습니다. 컨볼루션 연산 결과 생성되는 은닉층을 특별히 *컨볼루션 층(convolutional layer)*이라고 부르며, 복수 개의 컨볼루션 층이 존재하는 신경망을 **심층 컨볼루션 신경망(DCNN: Deep convolutional neural network)**이라고 부릅니다.
 
-위 그림에서는 설명의 편의를 위해 하나의 필터만이 작동하는 것을 표현하였으나, 실제로는 인접한 층 사이에 복수 개의 필터를 설치하고 각 필터의 컨볼루션 연산을 통해 복수 개의 은닉층이 생성되도록 합니다. 
+위 그림에서는 설명의 편의를 위해 하나의 필터만이 작동하는 것을 표현하였으나, 실제로는 컨볼루션 층 직전에 복수 개의 필터를 설치하고 각 필터의 컨볼루션 연산을 통해 복수 개의 출력 결과물이 생성되도록 합니다. 
 
 {% include image.html name=page.name file="lenet-architecture.svg" description="컨볼루션 신경망의 최초 모델: LeNet" class="full-image" %}
 
@@ -128,9 +128,26 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 ### 순환 신경망
 
-TODO
+우리가 다루는 입력 데이터 중에서는, 특별히 선후 관계가 중요하게 취급되는 것들이 있습니다. <a href="https://ko.wikipedia.org/wiki/%EC%97%BC%EA%B8%B0%EC%84%9C%EC%97%B4" target="_blank">DNA 염기 서열</a>과 같은 것들이 대표적입니다. 하나의 예시의 길이가 가변적이며, 서두에 어떤 염기가 등장했는지에 따라 나중에 등장할 염기가 무엇이 될지 결정됩니다. 이와 같은 형태의 데이터를 **시퀀스(sequence)**라고 부릅니다.
 
----
+{% include image.html name=page.name file="dna-sequencing.jpg" description="DNA 시퀀스" class="full-image" %}
+
+이러한 시퀀스 데이터의 길이 가변성과 선후 관계를 러닝 모델로 하여금 어떻게 학습할 수 있도록 할지에 대하여 머신러닝 과학자들은 고민을 지속해 왔습니다. 그러던 중, 아래의 두 가지 아이디어를 반영하여 새로운 구조의 완전 연결 신경망을 만들었습니다.
+
+1. 데이터 시퀀스 상의 원소를 매 시점(timestep)마다 하나씩 입력한다.
+2. 특정 시점에 나온 출력값을, 시퀀스 상의 바로 다음 원소와 함께 입력한다.
+
+{% include image.html name=page.name file="recurrent-neural-network.svg" description="순환 루프가 존재하는 완전 연결 신경망 구조" class="full-image" %}
+
+데이터 시퀀스 상의 어느 시점 $$t$$의 원소 $$(x_1^{(t)}, x_2^{(t)}, ..., x_d^{(t)})$$를 완전 연결 신경망에 입력하는 과정에서, 바로 이전 시점 $$t-1$$의 출력 벡터 $$(s_1^{(t-1)}, s_2^{(t-1)}, ..., s_d^{(t-1)})$$을 함께 입력하여 가중합 및 활성함수를 적용하는 구조입니다. 이러한 구조의 신경망을 **순환 신경망(RNN: recurrent neural network)**이라고 합니다. 순환 신경망은 실제 데이터 시퀀스에 대하여, 아래 그림과 같이 시점 순서대로 작동하게 됩니다. 
+
+{% include image.html name=page.name file="recurrent-neural-network-example.svg" description="$$d$$차원 입력 벡터 시퀀스에 대한 순환 신경망의 작동 방식" class="full-image" %}
+
+위 그림을 보면, 시점 $$1$$에서의 입력 벡터 $$(x_1^{(1)}, x_2^{(1)}, ..., x_d^{(1)})$$가 순환 신경망에 입력되었을 때의 출력층의 벡터 $$(s_1^{(1)}, s_2^{(1)}, ..., s_K^{(1)})$$가 시점 $$2$$의 입력 벡터 $$(x_1^{(2)}, x_2^{(2)}, ..., x_d^{(2)})$$와 함께 입력되어 가중합 및 활성 함수를 통해 은닉층의 벡터 $$(z_1^{(2)}, z_2^{(2)}, ..., z_H^{(2)})$$를 결정합니다. 이러한 과정은 시점 $$2$$, 시점 $$3$$에서도 이어지며, 시점 $$T$$를 마지막으로 종료됩니다.
+
+그리고 당연하게도, 순환 신경망 내에 복수 개의 은닉층을 배치할 경우, 이를 **심층 순환 신경망(DRNN: Deep recurrent neural network)**이라고 부릅니다. 
+
+이렇게, 순환 신경망은 태생적으로 시퀀스 데이터에 대하여 잘 작동하도록 설계되어 있습니다. 오늘날 순환 신경망은 **자연어 처리(natural language processing)** 분야에서 특히 많이 적용되고 있습니다. 사람들이 사용하는 언어를 텍스트 시퀀스 형태의 데이터로 변환하였을 때, 이 또한 길이 가변성과 선후 관계의 특징을 지니기 때문입니다. 순환 신경망에 대한 보다 자세한 내용은, 추후에 또 다른 블로그 포스팅을 통해 다루도록 하겠습니다.
 
 
 ## 딥러닝의 강점 
@@ -179,3 +196,4 @@ TODO
 - <a href="https://en.wikipedia.org/wiki/Neuron" target="_blank">뉴런의 구조</a>
 - 컨볼루션 신경망의 최초 모델: LeNet
   - <a href="http://www.dengfanxin.cn/wp-content/uploads/2016/03/1998Lecun.pdf" target="_blank">LeCun, Yann, et al. "Gradient-based learning applied to document recognition." Proceedings of the IEEE 86.11 (1998): 2278-2324.</a>
+- <a href="http://www.gettyimages.com/detail/photo/unaligned-dna-sequences-viewed-on-lcd-screen-royalty-free-image/157649758?esource=SEO_GIS_CDN_Redirect" target="_blank">DNA 시퀀스</a>
