@@ -27,7 +27,7 @@
      inkscape:current-layer="layer1"
      inkscape:document-units="mm"
      inkscape:cy="315.30537"
-     inkscape:cx="186.99874"
+     inkscape:cx="28.95967"
      inkscape:zoom="0.95862371"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -702,7 +702,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -791,12 +791,12 @@
          y="134.48462"
          x="-29.301121"
          sodipodi:role="line"
-         id="tspan10846">정사각형 영역 픽셀</tspan><tspan
+         id="tspan10846">정사각형 영역 픽셀의 RGB</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.58023882px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
          y="142.13086"
          x="-29.301121"
          sodipodi:role="line"
-         id="tspan25437">(300개)</tspan></text>
+         id="tspan25437">(총 300개 값)</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.58023882px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
@@ -812,12 +812,12 @@
          sodipodi:role="line"
          x="-29.301121"
          y="254.2731"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.58023882px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332">정사각형 영역 픽셀</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.58023882px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332">정사각형 영역 픽셀의 RGB</tspan><tspan
          sodipodi:role="line"
          x="-29.301121"
          y="261.91934"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.58023882px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
-         id="tspan25443">(300개)</tspan></text>
+         id="tspan25443">(총 300개 값)</tspan></text>
     <path
        style="fill:#000000;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker13570)"
        d="M -29.786055,171.76595 V 153.92059"
