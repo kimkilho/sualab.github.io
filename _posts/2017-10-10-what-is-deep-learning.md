@@ -19,7 +19,7 @@ name: what-is-deep-learning
 
 > "딥러닝 썼더니 바둑도 잘 두던데? 우리 비즈니스에도 딥러닝 적용하면 전부 대체 가능하겠네!!"
 
-이러한 변화의 길목에서, 필자는 개인적으로 '딥러닝 만능주의'가 생겨나고 있다는 느낌을 지울 수 없습니다. 실제로 적지 않은 국가 혹은 기업의 의사결정권자들이, 딥러닝의 성공적인 적용 사례만을 보고 (위와 같은 뉘앙스로 말씀하시면서) 호기롭게 딥러닝을 자신들의 비즈니스에도 적용해보자는 주장을 하시는 것을 심심치 않게 보고 들어 왔습니다. 그러나, 현재의 딥러닝에는 엄연한 한계가 존재하며, 아직까지는 특정 부류 업무의 자동화를 위한 하나의 도구로 보아야 합당합니다. 
+이러한 변화의 길목에서, 필자는 개인적으로 '딥러닝 만능주의'가 생겨나고 있다는 느낌을 지울 수 없습니다. 실제로 적지 않은 국가 혹은 기업의 의사결정권자들이, 딥러닝의 성공적인 적용 사례만을 보고 (위와 같은 뉘앙스로 말씀하시면서) 호기롭게 딥러닝을 자신들의 비즈니스에도 적용해보자는 주장을 하시는 것을 심심치 않게 보고 들어 왔습니다. 그러나, 현재의 딥러닝에는 엄연한 약점이 존재하며, 아직까지는 특정 부류 업무의 자동화를 위한 하나의 도구로 보아야 합당합니다. 
 
 이번 글에서는 이러한 오해를 불식하고자, 딥러닝이란 기술이 본질적으로 무엇인지, 어떤 강점과 약점이 있는지, 어떠한 문제에 효과적으로 적용될 수 있는지 등을 중심으로 이야기해 보고자 합니다.
 
@@ -72,7 +72,7 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 {% include image.html name=page.name file="neural-network-detailed.svg" description="4개의 퍼셉트론 간의 2차원적 연결 예시" class="full-image" %}
 
-위 그림에서 입력 벡터 $$\boldsymbol{x}=(x_1, x_2, ..., x_d)$$가 각각 상단, 중단, 하단에 위치한, 서로 다른 $$(d+1)$$차원 퍼셉트론의 입력값으로 들어갑니다(이를 각각 초록색, 붉은색, 보라색으로 표현했습니다). 각각의 퍼셉트론에서 가중합 및 합성함수를 거친 3개의 출력값이 $$x_0=1$$과 함께 4차원 입력 벡터를 구성하며, 4차원 퍼셉트론으로 입력됩니다. 4차원 퍼셉트론에서도 최종적으로 가중합 및 합성함수를 거치고, 최종적으로 1개의 값을 출력합니다. 
+위 그림에서 입력 벡터 $$\boldsymbol{x}=(x_1, x_2, ..., x_d)$$가 각각 상단, 중단, 하단에 위치한, 서로 다른 $$(d+1)$$차원 퍼셉트론의 입력값으로 들어갑니다(이를 각각 초록색, 붉은색, 보라색으로 표현했습니다). 각각의 퍼셉트론에서 가중합 및 합성함수를 거친 3개의 출력값이 $$x_0=1$$과 함께 4차원 퍼셉트론으로 입력됩니다. 4차원 퍼셉트론에서도 최종적으로 가중합 및 합성함수를 거치고, 최종적으로 1개의 값을 출력합니다. 
 
 위와 같이 연결한 구조에서, 세 개의 **층(layer)**을 확인하실 수 있나요? 입력 벡터가 위치한 층을 첫 번째 층, 3개의 $$(d+1)$$차원 퍼셉트론이 나란히 붙어 출력한 값들이 위치하는 두 번째 층, 1개의 4차원 퍼셉트론이 출력한 값이 위치하는 세 번째 층으로 보시면 됩니다. 층 사이의 퍼셉트론들은 *낮은(앞쪽) 층*의 벡터를 각각 입력으로 받아 출력값을 내뱉고, 이는 *높은(뒷쪽) 층*의 벡터로 위치하는 구조를 확인할 수 있습니다. 
 
@@ -84,7 +84,7 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 {% include image.html name=page.name file="multilayer-perceptron.svg" description="다층 퍼셉트론의 일반적 구조" class="medium-image" %}
 
-입력 벡터가 자리잡는 층을 **입력층(input layer)**, 최종 출력값이 자리잡는 층을 **출력층(output layer)**, 입력층과 출력층 사이에 위치하는 모든 층을 **은닉층(hidden layer)**이라고 합니다. 그림 으로 표현할 때는 3개의 층을 그리나, 실제 인공신경망의 층 개수를 셀 때 입력층은 생략하는 것을 주의해야 합니다. 따라서 위 구조에서는 '총 *2개*의 층이 존재한다'고 부릅니다. 퍼셉트론을 기본 빌딩 블록으로 하여, 이런 패턴에 따라 2차원적으로 연결되어 구성되는 인공신경망의 일종을 특별히 **다층 퍼셉트론(MLP: multi-layer perceptron)**이라고 합니다.
+입력 벡터가 자리잡는 층을 **입력층(input layer)**, 최종 출력값이 자리잡는 층을 **출력층(output layer)**, 입력층과 출력층 사이에 위치하는 모든 층을 **은닉층(hidden layer)**이라고 합니다. 그림으로 표현할 때는 3개의 층을 그리나, 실제 인공신경망의 층 개수를 셀 때 입력층은 생략하는 것을 주의해야 합니다. 따라서 위 구조에서는 '총 *2개*의 층이 존재한다'고 부릅니다. 퍼셉트론을 기본 빌딩 블록으로 하여, 이런 패턴에 따라 2차원적으로 연결되어 구성되는 인공신경망의 일종을 특별히 **다층 퍼셉트론(MLP: multi-layer perceptron)**이라고 합니다.
 
 이런 입력층-은닉층-출력층의 경우, 다층 퍼셉트론뿐만 아니라, 좀 있다 설명할 다양한 인공신경망 구조에서 공통적으로 존재하는 층입니다. 은닉층의 개수가 많아질수록 인공신경망이 *'깊어졌다(deep)'*고 부르며, 이렇게 *충분히 깊어진 인공신경망을 러닝 모델로 사용하는 머신러닝 패러다임*을 바로 **딥러닝(Deep Learning)**이라고 합니다. 그리고, 딥러닝을 위해 사용하는 충분히 깊은 인공신경망을 **심층 신경망(DNN: Deep neural network)**이라고 통칭합니다.
 
@@ -119,19 +119,21 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 {% include image.html name=page.name file="convolutional-neural-network.svg" description="컨볼루션 신경망에서의 필터에 대한 연산" class="full-image" %}
 
-위 그림에서는 $$3 \times 3$$ 크기의 필터가 입력층의 가장 좌측 상단 $$3 \times 3$$ 영역에 적용되어, 이들 노드에 대한 가중합 및 활성함수 연산을 수행하고 그 출력값을 $$z_{22}$$에 저장하고 있습니다. 이렇게 필터는 원본 입력층 상에서 일정 간격만큼 횡적/종적으로 이동하면서 가중합 및 활성함수 연산을 수행하고, 그 출력값을 현재 필터의 위치에 놓습니다. 이러한 연산 방식은 컴퓨터 비전(computer vision) 분야에서 이미지에 대한 <a href="https://ko.wikipedia.org/wiki/%ED%95%A9%EC%84%B1%EA%B3%B1" target="_blank">컨볼루션(convolution)</a> 연산과 유사하여, 이러한 구조를 채택하는 심층 신경망을 특별히 **컨볼루션 신경망(CNN: convolutional neural network)**라고 부르게 되었습니다. 컨볼루션 연산 결과 생성되는 은닉층을 특별히 *컨볼루션 층(convolutional layer)*이라고 부르며, 복수 개의 컨볼루션 층이 존재하는 신경망을 **심층 컨볼루션 신경망(DCNN: Deep convolutional neural network)**이라고 부릅니다.
+위 그림에서는 $$3 \times 3$$ 크기의 필터가 입력층의 가장 좌측 상단 $$3 \times 3$$ 영역에 적용되어, 이들 노드에 대한 가중합 및 활성함수 연산을 수행하고 그 출력값을 $$z_{22}$$에 저장하고 있습니다. 이렇게 필터는 원본 입력층 상에서 일정 간격만큼 횡적/종적으로 이동하면서 가중합 및 활성함수 연산을 수행하고, 그 출력값을 현재 필터의 위치에 놓습니다. 이러한 연산 방식은 컴퓨터 비전(computer vision) 분야에서 이미지에 대한 <a href="https://ko.wikipedia.org/wiki/%ED%95%A9%EC%84%B1%EA%B3%B1" target="_blank">컨볼루션(convolution)</a> 연산과 유사하여, 이러한 구조를 채택하는 심층 신경망을 특별히 **컨볼루션 신경망(CNN: convolutional neural network)**이라고 부르게 되었습니다. 컨볼루션 연산 결과 생성되는 은닉층을 특별히 *컨볼루션 층(convolutional layer)*이라고 부르며, 복수 개의 컨볼루션 층이 존재하는 신경망을 **심층 컨볼루션 신경망(DCNN: Deep convolutional neural network)**이라고 부릅니다.
 
 위 그림에서는 설명의 편의를 위해 하나의 필터만이 작동하는 것을 표현하였으나, 실제로는 컨볼루션 층 직전에 복수 개의 필터를 설치하고 각 필터의 컨볼루션 연산을 통해 복수 개의 출력 결과물이 생성되도록 합니다. 
 
 {% include image.html name=page.name file="lenet-architecture.svg" description="컨볼루션 신경망의 최초 모델: LeNet" class="full-image" %}
 
-컨볼루션 신경망은, 본래 2차원적 속성을 지니는 데이터에 효과적으로 적용할 수 있습니다. 가로/세로 방향으로 픽셀(pixel)이 분포해 있는 이미지 데이터가 가장 대표적인 사례라고 할 수 있습니다. 실제로도 **이미지 인식(image recognition)** 분야에서 컨볼루션 신경망이 가장 활발하게 사용됩니다. 컨볼루션 신경망에 대한 보다 자세한 내용은, 추후에 또 다른 블로그 포스팅을 통해 다루도록 하겠습니다.
+컨볼루션 신경망은, 본래 2차원적 속성을 지니는 데이터에 효과적으로 적용할 수 있습니다. 가로/세로 방향으로 픽셀(pixel)이 분포해 있는 이미지 데이터가 가장 대표적인 사례라고 할 수 있습니다. 실제로도 **이미지 인식(image recognition)** 분야에서 컨볼루션 신경망이 가장 활발하게 사용됩니다. 
+
+(컨볼루션 신경망에 대한 보다 자세한 내용은, 추후에 또 다른 블로그 포스팅을 통해 다루도록 하겠습니다.)
 
 ### 순환 신경망
 
 우리가 다루는 입력 데이터 중에서는, 특별히 선후 관계가 중요하게 취급되는 것들이 있습니다. <a href="https://ko.wikipedia.org/wiki/%EC%97%BC%EA%B8%B0%EC%84%9C%EC%97%B4" target="_blank">DNA 염기 서열</a>과 같은 것들이 대표적입니다. 하나의 예시의 길이가 가변적이며, 서두에 어떤 염기가 등장했는지에 따라 나중에 등장할 염기가 무엇이 될지 결정됩니다. 이와 같은 형태의 데이터를 **시퀀스(sequence)**라고 부릅니다.
 
-{% include image.html name=page.name file="dna-sequencing.jpg" description="DNA 시퀀스" class="full-image" %}
+{% include image.html name=page.name file="dna-sequencing.jpg" description="DNA 시퀀스" class="medium-image" %}
 
 이러한 시퀀스 데이터의 길이 가변성과 선후 관계를 러닝 모델로 하여금 어떻게 학습할 수 있도록 할지에 대하여 머신러닝 과학자들은 고민을 지속해 왔습니다. 그러던 중, 아래의 두 가지 아이디어를 반영하여 새로운 구조의 완전 연결 신경망을 만들었습니다.
 
@@ -148,7 +150,9 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 그리고 당연하게도, 순환 신경망 내에 복수 개의 은닉층을 배치할 경우, 이를 **심층 순환 신경망(DRNN: Deep recurrent neural network)**이라고 부릅니다. 
 
-이렇게, 순환 신경망은 태생적으로 시퀀스 데이터에 대하여 잘 작동하도록 설계되어 있습니다. 오늘날 순환 신경망은 **자연어 처리(natural language processing)** 분야에서 특히 많이 적용되고 있습니다. 사람들이 사용하는 언어를 텍스트 시퀀스 형태의 데이터로 변환하였을 때, 이 또한 길이 가변성과 선후 관계의 특징을 지니기 때문입니다. 순환 신경망에 대한 보다 자세한 내용은, 추후에 또 다른 블로그 포스팅을 통해 다루도록 하겠습니다.
+이렇게, 순환 신경망은 태생적으로 시퀀스 데이터에 대하여 잘 작동하도록 설계되어 있습니다. 오늘날 순환 신경망은 **자연어 처리(natural language processing)** 분야에서 특히 많이 적용되고 있습니다. 사람들이 사용하는 언어를 텍스트 시퀀스 형태의 데이터로 변환하였을 때, 이 또한 길이 가변성과 선후 관계의 특징을 지니기 때문입니다. 
+
+(순환 신경망에 대한 보다 자세한 내용은, 추후에 또 다른 블로그 포스팅을 통해 다루도록 하겠습니다.)
 
 
 ## 딥러닝의 강점 
@@ -199,7 +203,7 @@ f_2 = \frac{1}{300}\big(x_{(71,71,R)}+x_{(71,71,G)}, ..., +x_{(80,80,B)}\big)
 
 (물론 실제로는 심층 신경망도 '운이 좋아야' 최적 요인을 *정확히* 찾아내는 것이 사실입니다. 하지만, 적어도 최적 요인과 그 효과가 꽤 유사한, 차선의 요인은 사람보다 훨씬 잘 찾아냅니다.)
 
-지금까지 딥러닝 모델이 요인 표현을 학습하는 가장 단순화된 사례를 보여드렸습니다. 물론 위 예시에서는 최적 요인의 개수가 2개이며 그 정체가 무엇인지 대충 알고 있다는, 다소 '과격한' 가정을 했습니다. 실제로는 이러한 사항을 전혀 모르기 때문에, 최적의 요인 표현 방법을 심층 신경망이 학습할 수 있도록 하고자 다양한 방법으로 심층 신경망의 구조를 변화시키며 실험을 거듭하는 것이 일반적입니다.
+지금까지 딥러닝 모델이 요인 표현을 학습하는 가장 단순화된 사례를 보여드렸습니다. 물론 위 예시에서는 최적 요인의 개수가 2개이며 그 정체가 무엇인지 대충 알고 있다는, 다소 과격한 가정을 했습니다. 실제로는 이러한 사항을 전혀 모르기 때문에, 최적의 요인 표현 방법을 심층 신경망이 학습할 수 있도록 하고자 다양한 방법으로 심층 신경망의 구조를 변화시키며 실험을 거듭하는 것이 일반적입니다.
 
 #### 깊을수록 풍부해진다
 
@@ -227,7 +231,7 @@ f_2 = \frac{1}{300}\big(x_{(71,71,R)}+x_{(71,71,G)}, ..., +x_{(80,80,B)}\big)
 
 {% include image.html name=page.name file="ilsvrc-error-rate-change.svg" description="ILSVRC에서의 연도에 따른 최저 오류율 기록" class="large-image" %}
 
-이미지넷 측으로부터 최근까지 보고된 바에 따르면, 2015년도 우승자인 Microsoft Research의 Kaiming He 외 3인이 제안한 *ResNet*이라는 심층 신경망 모델이 분류 오류율 3.57%를 기록하였다고 하며, 이는 주최측에서 자체적으로 모집한 피실험자에 대한 실험 수행 결과 얻은 *인간 분류 오류율*  5.1%을 하회하는 수치입니다. '드디어 기계가 사람을 뛰어넘었다'는 소식에 많은 사람들이 크게 흥분했고, 이는 딥러닝 광풍을 불러 일으키는 데 크게 기여하였습니다.
+이미지넷 측으로부터 최근까지 보고된 바에 따르면, 2015년도 우승자인 Microsoft Research의 Kaiming He 외 3인이 제안한 *ResNet*이라는 심층 신경망 모델이 분류 오류율 3.57%를 기록하였다고 하며, 이는 주최측에서 자체적으로 모집한 피실험자 집단에 대한 실험 수행 결과 얻은 *인간 분류 오류율*  5.1%을 하회하는 수치입니다. '드디어 기계가 사람을 뛰어넘었다'는 소식에 많은 사람들이 크게 흥분했고, 이는 딥러닝 광풍을 불러 일으키는 데 크게 기여하였습니다.
 
 이미지 인식 분야뿐만 아니라, 음성 인식 및 자연어 처리, 바둑을 포함한 각종 게임 등에서도 딥러닝 모델은 인간의 수준에 필적하거나 이를 뛰어넘는 성능를 보여주고 있습니다.
 
@@ -267,24 +271,47 @@ ILSVRC에서 사용되는 데이터셋을 만든 이미지넷은, 미국 내 주
 
 ### 느린 속도와 높은 요구 사양
 
-(딥러닝 만능주의를 경계 - 아직 기계 제국이 지배하는 시대는 한참 멀었다)
+딥러닝 모델이 실제 산업에 적용되는 상황에서 발목을 잡게 되는 또 다른 부분은, 바로 느린 속도와 높은 요구 사양입니다. 이는 특히 저희 수아랩이 집중하고 있는 제조업 분야에서의 중요한 선결 과제로 손꼽힙니다.
 
+{% include image.html name=page.name file="production-line-example.png" description="제조업 생산 라인의 모습" class="medium-image" %}
+
+제조업 공장에서의 생산 라인을 직접 견학해 보신 분은 아시겠지만, 생산 라인이 흘러가는 속도는 여러분이 일반적으로 예상하시는 것보다 훨씬 빠릅니다. 만약 갓 생산된 제품의 외형을 실시간으로 촬영한 이미지를 사용하여, 제품에 결함이 존재하는지를 검사하는 장비를 제작하고자 한다면, 검사 속도가 컨베이어 벨트의 속도보다는 반드시 빨라야 합니다. 
+
+그런데, 딥러닝 모델의 경우 특유의 거대한 구조 때문에 그 안에 많은 수의 가중치를 포함하고 있으며, 그만큼 가중합 및 활성 함수 연산을 더 많이 수행해야 합니다. 그래서, 딥러닝 모델에 대한 특별한 조치 없이, 일반적인 이미지 인식 분야에서 사용되는 딥러닝 모델을 결함 검사에 그대로 갖다 쓸 경우 검사 속도가 요구 수준에 도달하지 못하는 상황이 발생하게 됩니다.
+
+이러한 문제를 해결하기 위한 가장 직관적인 방법은 결함 검사에 사용하는 컴퓨터의 사양을 업그레이드하는 것인데, 이 과정에서 추가적인 비용이 소요될 수밖에 없습니다. 그러나 대부분의 공장에서는 이러한 부분에서의 추가적인 비용 지출을 꺼려하는 것이 보통입니다.
+
+이 또한, 주요 학계와 산업계에서 해결하고자 하는 주요 문제 중 하나입니다. 이들의 연구는 기존 모델을 가능한 한 많이 경량화하여, 기존의 성능을 저해하지 않도록 하면서 최소한의 컴퓨팅 리소스를 가지고 최대한 빠른 속도로 예측을 수행할 수 있도록 하는 데 초점이 맞춰져 있습니다.
 
 
 ## 결론
 
+딥러닝이란, 본질적으로 머신러닝의 세부 방법론을 통칭하는 개념에 불과합니다. 즉, 퍼셉트론을 기본 단위로 하여 망의 형태로 얽힌 심층 신경망 계열을 러닝 모델로 사용하는 머신러닝 방법론이 바로 딥러닝입니다. 오늘날 주로 사용되는 대표적인 딥러닝 모델에는 크게 완전 연결 신경망, 컨볼루션 신경망, 순환 신경망이 있으며, 각각이 주로 사용되는 분야가 뚜렷하게 정해져 있는 편입니다. 
+
+딥러닝의 최대 강점은, 요인 표현을 스스로 학습할 수 있는 능력이며, 이로 인해 요인 추출을 자동으로 수행한다는 것입니다. 이러한 경향은 심층 신경망의 은닉층의 개수를 늘릴수록(더 깊게 만들수록) 극대화됩니다. 그 결과, 기존에 어렵게 느껴졌던 머신러닝 문제들에 대한 해결 성능이 비약적으로 상승하였으며, 산업 속 제품의 자동화에 있어서 손쉽고 신속한 커스터마이징을 가능하게 하였습니다. 그러나, 딥러닝 모델은 충분한 학습을 위해 매우 많은 양의 데이터를 요구하고, 그 거대한 몸집 때문에 속도가 느린 편이며, 그와 동시에 높은 수준의 컴퓨팅 리소스를 요구합니다.
+
+> 이러한 문제들 때문에, 다행스럽게도, 아직 인간이 기계 제국에 지배당할 날은 한참 멀었습니다.
+
+한편 본 글에서는, 저번에도 그랬듯, 딥러닝 모델의 러닝 알고리즘에 대해서는 전혀 설명하지 않았습니다. 이를 이해하고자 하는 시점부터, 비로소 프로그래밍, 미적분학, 선형대수학, 통계학 등에 대한 기본적인 지식이 필요하기 때문입니다. 비록 딥러닝 모델의 러닝 알고리즘을 자세히 살펴보지 못하셨더라도, 본 글을 통해서 딥러닝의 개념과 종류, 강점/약점 등을 파악하셨다면, 추후에 딥러닝 혹은 AI 등과 관련된 내용을 추가로 받아들이고 이해하시는 데 충분히 도움이 될 것이라고 생각합니다.
+
+저희 수아랩에서는, 위에서 언급한 실제 산업 현장에서의 현실적인 어려움에도 불구하고, 딥러닝이 제조업 분야에 적용되었을 때의 파급 효과를 여전히 높게 보고 있으며, 이러한 어려움을 극복하고자 다양한 연구를 진행하고 있습니다. \*향후 글에서는, 수아랩에서 진행하고 있는 딥러닝 관련 연구 주제들에 대하여 하나씩 소개해 드리도록 하겠습니다.
+
 
 ## References
 
-- <a href="https://en.wikipedia.org/wiki/Neuron" target="_blank">뉴런의 구조</a>
+- 뉴런의 구조
+  - <a href="https://en.wikipedia.org/wiki/Neuron" target="_blank">"Neuron." Wikipedia: The Free Encyclopedia. Wikimedia Foundation, Inc. 22 July 2004. Web. 10 October 2004., https://en.wikipedia.org/wiki/Neuron</a>
 - 컨볼루션 신경망의 최초 모델: LeNet
   - <a href="http://www.dengfanxin.cn/wp-content/uploads/2016/03/1998Lecun.pdf" target="_blank">LeCun, Yann, et al. "Gradient-based learning applied to document recognition." Proceedings of the IEEE 86.11 (1998): 2278-2324.</a>
-- <a href="http://www.gettyimages.com/detail/photo/unaligned-dna-sequences-viewed-on-lcd-screen-royalty-free-image/157649758?esource=SEO_GIS_CDN_Redirect" target="_blank">DNA 시퀀스</a>
+- DNA 시퀀스
+  - <a href="http://www.sciencemag.org/news/2016/11/rise-digital-dna-raises-biopiracy-fears" target="_blank">Kelly Servick, "Rise of digital DNA raises biopiracy fears." Science, http://www.sciencemag.org/news/2016/11/rise-digital-dna-raises-biopiracy-fears. Accessed 10 October 2017.</a>
 - 컨볼루션 신경망의 추상화된 요인 표현 기능
   - <a href="http://www.cs.nyu.edu/~yann/talks/lecun-ranzato-icml2013.pdf" target="_blank">LeCun, Yann, et al. "Deep Learning Tutorial." ICML, Atlanta. 16 June 2013.</a>
 - 이미지넷 이미지 인식 대회에서의 연도에 따른 최저 오류율 기록
   - <a href="http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture1.pdf" target="_blank">Li, Fei-Fei, et al. "Convolutional Neural Networks for Visual Recognition." Stanford University, iStanford. 4 April 2017.</a>
 - ILSVRC에서 제공된 이미지의 일부 예시
-  - <a href="http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/" target="_blank">Andrej Karpathy, "What I learned from competing against a ConvNet on ImageNet." Andrej Karpathy blog, http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet. Accessehttp://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet. Accessed 10 October 2013.</a>
+  - <a href="http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/" target="_blank">Andrej Karpathy, "What I learned from competing against a ConvNet on ImageNet." Andrej Karpathy blog, http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet. Accessehttp://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet. Accessed 10 October 2017.</a>
 - 이미지넷 ILSVRC 측에서 발표한 논문
   - <a href="https://arxiv.org/pdf/1409.0575.pdf" target="_blank">Russakovsky, Olga, et al. "Imagenet large scale visual recognition challenge." International Journal of Computer Vision 115.3 (2015): 211-252.</a>
+- 제조업 생산 라인의 모습
+  - 수아랩, "4차산업혁명 시대와 딥러닝 스마트팩토리 솔루션", Smart Connected World 2017. 판교 스타트업캠퍼스, Seongnam, 18 August 2017. Lecture.
