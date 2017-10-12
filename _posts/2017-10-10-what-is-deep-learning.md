@@ -119,13 +119,19 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 {% include image.html name=page.name file="convolutional-neural-network.svg" description="컨볼루션 신경망에서의 필터에 대한 연산" class="full-image" %}
 
-위 그림에서는 $$3 \times 3$$ 크기의 필터가 입력층의 가장 좌측 상단 $$3 \times 3$$ 영역에 적용되어, 이들 노드에 대한 가중합 및 활성함수 연산을 수행하고 그 출력값을 $$z_{22}$$에 저장하고 있습니다. 이렇게 필터는 원본 입력층 상에서 일정 간격만큼 횡적/종적으로 이동하면서 가중합 및 활성함수 연산을 수행하고, 그 출력값을 현재 필터의 위치에 놓습니다. 이러한 연산 방식은 컴퓨터 비전(computer vision) 분야에서 이미지에 대한 <a href="https://ko.wikipedia.org/wiki/%ED%95%A9%EC%84%B1%EA%B3%B1" target="_blank">컨볼루션(convolution)</a> 연산과 유사하여, 이러한 구조를 채택하는 심층 신경망을 특별히 **컨볼루션 신경망(CNN: convolutional neural network)**이라고 부르게 되었습니다. 컨볼루션 연산 결과 생성되는 은닉층을 특별히 *컨볼루션 층(convolutional layer)*이라고 부르며, 복수 개의 컨볼루션 층이 존재하는 신경망을 **심층 컨볼루션 신경망(DCNN: Deep convolutional neural network)**이라고 부릅니다.
+하나의 필터는 그 크기만큼의 개수에 해당하는 가중치를 가지고 있으며, 이미지 상의 어느 특정한 특징을 요인으로 추출하여 출력할 수 있도록 가중치의 학습이 이루어집니다. 위 그림에서는 $$3 \times 3$$ 크기의 필터가 입력층의 가장 좌측 상단 $$3 \times 3$$ 영역에 적용되어, 이들 노드에 대한 가중합 및 활성함수 연산을 수행하고 그 출력값을 $$z_{22}$$에 저장하고 있습니다. 이렇게 필터는 원본 입력층 상에서 일정 간격만큼 횡적/종적으로 이동하면서 가중합 및 활성함수 연산을 수행하고, 그 출력값을 현재 필터의 위치에 놓습니다. 이러한 연산 방식은 컴퓨터 비전(computer vision) 분야에서 이미지에 대한 <a href="https://ko.wikipedia.org/wiki/%ED%95%A9%EC%84%B1%EA%B3%B1" target="_blank">컨볼루션(convolution)</a> 연산과 유사하여, 이러한 구조를 채택하는 심층 신경망을 특별히 **컨볼루션 신경망(CNN: convolutional neural network)**이라고 부르게 되었습니다. 컨볼루션 연산 결과 생성되는 은닉층을 특별히 *컨볼루션 층(convolutional layer)*이라고 부르며, 복수 개의 컨볼루션 층이 존재하는 신경망을 **심층 컨볼루션 신경망(DCNN: Deep convolutional neural network)**이라고 부릅니다.
 
-위 그림에서는 설명의 편의를 위해 하나의 필터만이 작동하는 것을 표현하였으나, 실제로는 컨볼루션 층 직전에 복수 개의 필터를 설치하고 각 필터의 컨볼루션 연산을 통해 복수 개의 출력 결과물이 생성되도록 합니다. 
+이렇게 컨볼루션 층에서는 현재 필터가 위치한 노드에서, 그 필터가 커버하고 있는, *물리적으로 가까운* 곳에 위치한 노드만을 포괄하여 가중합을 계산하는데, 이는 가중치의 개수를 줄여주는 것 외의 또 다른 장점을 제공합니다. 하나의 필터로 하여금 *국부(local) 영역에 대한 특징에 집중*할 수 있도록 한다는 점이 그것입니다. 이러한 특성 때문에, 컨볼루션 필터는 2차원 영역 상의 물리적 거리가 중요한 판단 기준이 되는 이미지 등의 데이터에 대하여 효과적으로 적용될 수 있습니다. 
+
+{% include image.html name=page.name file="tree-image-local-connectivity.svg" description="이미지에 대한 컨볼루션 필터의 국부 영역 특징에 대한 집중" class="full-image" %}
+
+예를 들어, '이미지 상의 특정 영역 상에서의 수직 방향 경계 존재 가능성'이라는 요인을 추출하는 $$5 \times 5$$ 크기의 필터가 있다고 합시다. 이 필터가 현재 이미지 상의 $$(23,35)$$ 위치에 있을 경우, $$(21,33)$$에서 $$(25,37)$$ 사이에 있는 정사각형 영역 상에 위치한 픽셀(pixel)들의 값만을 참조합니다. 뜬금없이(?) 현재 위치에서 물리적으로 멀리 떨어져 있는, 이를테면, $$(86,79)$$에 위치한 픽셀의 값을 조사하지 않는다는 것이죠.
+
+지금까지 서술한 내용에서는, 설명의 편의를 위해 하나의 필터만이 작동하는 것을 표현하였으나, 실제로는 컨볼루션 층 직전에 복수 개의 필터를 설치하고 각 필터의 컨볼루션 연산을 통해 복수 개의 출력 결과물이 생성되도록 합니다. 
 
 {% include image.html name=page.name file="lenet-architecture.svg" description="컨볼루션 신경망의 최초 모델: LeNet" class="full-image" %}
 
-컨볼루션 신경망은, 본래 2차원적 속성을 지니는 데이터에 효과적으로 적용할 수 있습니다. 가로/세로 방향으로 픽셀(pixel)이 분포해 있는 이미지 데이터가 가장 대표적인 사례라고 할 수 있습니다. 실제로도 **이미지 인식(image recognition)** 분야에서 컨볼루션 신경망이 가장 활발하게 사용됩니다. 
+컨볼루션 신경망은, 본래 2차원적 속성을 지니는 데이터에 효과적으로 적용할 수 있습니다. 위에서 보인 바와 같이, 이미지 데이터가 가장 대표적인 사례라고 할 수 있습니다. 실제로도 **이미지 인식(image recognition)** 분야에서 컨볼루션 신경망이 가장 활발하게 사용됩니다. 
 
 (컨볼루션 신경망에 대한 보다 자세한 내용은, 추후에 또 다른 블로그 포스팅을 통해 다루도록 하겠습니다.)
 
@@ -229,7 +235,7 @@ f_2 = \frac{1}{300}\big(x_{(71,71,R)}+x_{(71,71,G)}, ..., +x_{(80,80,B)}\big)
 
 이미지 인식 연구를 위한 대규모 프로젝트인 이미지넷(ImageNet) 측에서 개최하는 대회인 ILSVRC(ImageNet Large Scale Visual Recognition Challenge)에서는 매년 전 세계 각국에서 온 수많은 참가자들이 총 1,000개 카테고리의 사물들을 담고 있는 총 1,431,167장의 이미지 데이터셋을 대상으로 이미지 인식 문제 해결을 위한 대결을 펼쳐 왔습니다. 그러던 중, 2012년도 ILSVRC에서 토론토 대학 소속 대학원생 Alex Krizhevsky 외 2인이 심층 신경망을 러닝 모델로 사용하여 대회에 도전장을 던졌고, 그 전까지 20% 이상에 머물렀던 분류 오류율(error rate)을 10%대로 낮추는 쾌거를 거두며 우승하였습니다. 이를 통해 Alex Krizhevsky는 일약 스타덤에 올랐으며, 이는 향후 딥러닝의 부흥을 알리는 신호탄이 되었다고 해도 과언이 아닙니다.
 
-{% include image.html name=page.name file="ilsvrc-error-rate-change.svg" description="ILSVRC에서의 연도에 따른 최저 오류율 기록" class="large-image" %}
+{% include image.html name=page.name file="ilsvrc-error-rate-change.svg" description="ILSVRC에서의 연도에 따른 최저 오류율 기록" class="full-image" %}
 
 이미지넷 측으로부터 최근까지 보고된 바에 따르면, 2015년도 우승자인 Microsoft Research의 Kaiming He 외 3인이 제안한 *ResNet*이라는 심층 신경망 모델이 분류 오류율 3.57%를 기록하였다고 하며, 이는 주최측에서 자체적으로 모집한 피실험자 집단에 대한 실험 수행 결과 얻은 *인간 분류 오류율*  5.1%을 하회하는 수치입니다. '드디어 기계가 사람을 뛰어넘었다'는 소식에 많은 사람들이 크게 흥분했고, 이는 딥러닝 광풍을 불러 일으키는 데 크게 기여하였습니다.
 
@@ -286,7 +292,7 @@ ILSVRC에서 사용되는 데이터셋을 만든 이미지넷은, 미국 내 주
 
 ## 결론
 
-딥러닝이란, 본질적으로 머신러닝의 세부 방법론을 통칭하는 개념에 불과합니다. 즉, 퍼셉트론을 기본 단위로 하여 망의 형태로 얽힌 심층 신경망 계열을 러닝 모델로 사용하는 머신러닝 방법론이 바로 딥러닝입니다. 오늘날 주로 사용되는 대표적인 딥러닝 모델에는 크게 완전 연결 신경망, 컨볼루션 신경망, 순환 신경망이 있으며, 각각이 주로 사용되는 분야가 뚜렷하게 정해져 있는 편입니다. 
+딥러닝이란, 본질적으로 머신러닝의 세부 방법론을 통칭하는 개념에 불과합니다. 즉, '퍼셉트론을 빌딩 블록으로 하여 쌓아올린, 심층 신경망을 러닝 모델로 사용하는 머신러닝 방법론'이 바로 딥러닝입니다. 오늘날 주로 사용되는 대표적인 딥러닝 모델에는 크게 완전 연결 신경망, 컨볼루션 신경망, 순환 신경망이 있으며, 각각이 주로 사용되는 분야가 뚜렷하게 정해져 있는 편입니다. 
 
 딥러닝의 최대 강점은, 요인 표현을 스스로 학습할 수 있는 능력이며, 이로 인해 요인 추출을 자동으로 수행한다는 것입니다. 이러한 경향은 심층 신경망의 은닉층의 개수를 늘릴수록(더 깊게 만들수록) 극대화됩니다. 그 결과, 기존에 어렵게 느껴졌던 머신러닝 문제들에 대한 해결 성능이 비약적으로 상승하였으며, 산업 속 제품의 자동화에 있어서 손쉽고 신속한 커스터마이징을 가능하게 하였습니다. 그러나, 딥러닝 모델은 충분한 학습을 위해 매우 많은 양의 데이터를 요구하고, 그 거대한 몸집 때문에 속도가 느린 편이며, 그와 동시에 높은 수준의 컴퓨팅 리소스를 요구합니다.
 
@@ -307,7 +313,7 @@ ILSVRC에서 사용되는 데이터셋을 만든 이미지넷은, 미국 내 주
   - <a href="http://www.sciencemag.org/news/2016/11/rise-digital-dna-raises-biopiracy-fears" target="_blank">Kelly Servick, "Rise of digital DNA raises biopiracy fears." Science, http://www.sciencemag.org/news/2016/11/rise-digital-dna-raises-biopiracy-fears. Accessed 10 October 2017.</a>
 - 컨볼루션 신경망의 추상화된 요인 표현 기능
   - <a href="http://www.cs.nyu.edu/~yann/talks/lecun-ranzato-icml2013.pdf" target="_blank">LeCun, Yann, et al. "Deep Learning Tutorial." ICML, Atlanta. 16 June 2013.</a>
-- 이미지넷 이미지 인식 대회에서의 연도에 따른 최저 오류율 기록
+- ILSVRC에서의 연도에 따른 최저 오류율 기록
   - <a href="http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture1.pdf" target="_blank">Li, Fei-Fei, et al. "Convolutional Neural Networks for Visual Recognition." Stanford University, iStanford. 4 April 2017.</a>
 - ILSVRC에서 제공된 이미지의 일부 예시
   - <a href="http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/" target="_blank">Andrej Karpathy, "What I learned from competing against a ConvNet on ImageNet." Andrej Karpathy blog, http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet. Accessehttp://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet. Accessed 10 October 2017.</a>
