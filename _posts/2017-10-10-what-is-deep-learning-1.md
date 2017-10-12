@@ -46,7 +46,7 @@ name: what-is-deep-learning-1
 f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 \end{equation}
 
-저번 글에서의 '3개월 내 채무 이행 여부 예측 기계' 예시에서는, 어느 특정한 예시 $$(x_1, x_2$$에 대하여, 학습된 러닝 모델의 출력값 $$f(x_1, x_2)$$가 0보다 크면 'O'로, 작으면 'X'로 분류했던 바 있습니다.
+저번 글에서의 '3개월 내 채무 이행 여부 예측 기계' 예시에서는, 어느 특정한 예시 $$(x_1, x_2)$$에 대하여, 학습된 러닝 모델의 출력값 $$f(x_1, x_2)$$가 0보다 크면 'O'로, 작으면 'X'로 분류했던 바 있습니다.
 
 {% include image.html name="what-is-machine-learning" file="age-to-salary-classify-sample-plot.png" description="3개월 내 채무 이행 여부 예측 결과 예시" class="medium-image" %}
 
