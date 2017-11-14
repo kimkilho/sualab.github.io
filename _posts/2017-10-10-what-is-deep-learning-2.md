@@ -166,7 +166,7 @@ ILSVRC에서 사용되는 데이터셋을 만든 이미지넷은, 미국 내 주
 - ILSVRC에서의 연도에 따른 최저 오류율 기록
   - <a href="http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture1.pdf" target="_blank">Li, Fei-Fei, et al. "Convolutional Neural Networks for Visual Recognition." Stanford University, iStanford. 4 April 2017.</a>
 - ILSVRC에서 제공된 이미지의 일부 예시
-  - <a href="http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/" target="_blank">Andrej Karpathy, "What I learned from competing against a ConvNet on ImageNet." Andrej Karpathy blog, http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet. Accessehttp://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet. Accessed 10 October 2017.</a>
+  - <a href="http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/" target="_blank">Andrej Karpathy, "What I learned from competing against a ConvNet on ImageNet." Andrej Karpathy blog, http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet. Accessed 10 October 2017.</a>
 - 이미지넷 ILSVRC 측에서 발표한 논문
   - <a href="https://arxiv.org/pdf/1409.0575.pdf" target="_blank">Russakovsky, Olga, et al. "Imagenet large scale visual recognition challenge." International Journal of Computer Vision 115.3 (2015): 211-252.</a>
 - 제조업 생산 라인의 모습
