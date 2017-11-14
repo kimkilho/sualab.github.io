@@ -43,7 +43,7 @@ name: image-recognition-overview
 
 ### 이미지 인식 문제의 정립: Classification, Detection, Segmentation
 
-연구실 차원에서의 올망졸망한(?) 벤치마크 데이터셋에서 출발하여, 그 후에는 1만 장 이상의 거대한 스케일의 이미지 데이터셋에 대하여 인식 성능을 겨루는 대회가 본격적으로 등장하였습니다. 초창기의 이미지 인식 대회 중 가장 대표적인 것이 *PASCAL VOC Challenge*입니다. 이 대회를 기점으로, 이미지 인식에서 다루는 문제들이 어느 정도 정형화되었다고 할 수 있습니다.
+연구실 차원에서의 이런 올망졸망한(?) 벤치마크 데이터셋에서 출발하여, 그 후에는 1만 장 이상의 거대한 스케일의 이미지 데이터셋에 대하여 인식 성능을 겨루는 대회가 본격적으로 등장하였습니다. 초창기의 이미지 인식 대회 중 가장 대표적인 것이 *PASCAL VOC Challenge*입니다. 이 대회를 기점으로, 이미지 인식에서 다루는 문제들이 어느 정도 정형화되었다고 할 수 있습니다.
 
 {% include image.html name="image-recognition-overview" file="classification-detection-segmentation.png" description="PASCAL VOC Challenge 문제: Classification, Detection, Segmentation" class="large-image" %}
 
@@ -53,17 +53,17 @@ PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다�
 
 - 하나의 이미지에는 하나의 사물이 포함되어 있다고 전제함
 - 이미지 안에 포함되어 있는 사물이 전체 N개의 카테고리들 중 어떤 것어 해당하는지 분류하는 문제
-- 이미지 인식 문제의 가장 기본이 되며, Segmentation, Localization/Detection 등의 문제를 위한 출발점
+- 이미지 인식 문제의 가장 기본이 되며, Detection, Segmentation 등의 문제를 위한 출발점
 - 평가 척도: Accuracy 등
 - 과거 접근 방법론
   - **TODO**
 - 최근 접근 방법론
   - **TODO**
 
-## Localization/Detection
+## Detection
 
-- Localization: Classification + 대략적 위치 파악
 - Object Detection: 복수 개의 사물에 대한 Localization
+  - Localization: Classification + 대략적 위치 파악
 - CNN with multitask loss: classification + bounding box regression
 - 평가 척도: IOU 기준, 사전에 지정된 threshold를 초과하는지
 - 과거 접근 방법론
