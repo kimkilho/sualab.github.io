@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "(가제)이미지 인식 문제의 기본 접근 방법"
+title: "이미지 인식 문제와 딥러닝"
 date: 2017-11-05 09:00:00 +0900
 author: kilho_kim
 categories: [machine-learning, machine-vision]
@@ -9,11 +9,11 @@ comments: true
 name: image-recognition-overview
 ---
 
-지난 번 글까지 해서 수아랩의 핵심 기술들 중 하나인 '딥러닝'에 대해 알아보았습니다. 오늘날 딥러닝 기술이 적용되고 있는 분야는 이미지 인식, 음성 인식, 자연어 처리 등 여러 가지가 있습니다. 오늘은 이러한 적용 분야들 중, 딥러닝의 위력을 가장 드라마틱하게 보여주고 있다고 할 수 있는 '이미지 인식' 분야에서 다루는 문제들에 대하여 살펴보고자 합니다. 
+지난 번 글까지 해서 수아랩의 핵심 기술들 중 하나인 '딥러닝'에 대해 알아보았습니다. 오늘날 딥러닝 기술이 적용되고 있는 분야는 이미지 인식, 음성 인식, 자연어 처리 등 여러 가지가 있습니다. 오늘은 이러한 적용 분야들 중, 딥러닝의 위력을 가장 드라마틱하게 보여주고 있다고 할 수 있는 '이미지 인식' 분야에서 다루는 문제들을 언급하고, 오늘날 딥러닝 기술을 활용하여 이들 문제에 어떻게 접근하고 있는지에 대하여 살펴보고자 합니다. 
 
 ## 서론
 
-**이미지 인식(image recognition)** 문제에서는, 기계로 하여금 주어진 이미지 상에 포함되어 있는 대상이 *무엇인지*, 또한 *어느 위치에 있는지* 파악하도록 하는 것을 주된 목표로 합니다. 예를 들어, 수아랩 기술 블로그를 오랫동안 보아 오셨다면 너무나도 친숙할 만한, 아래와 같은 이미지가 주어졌다고 합시다.
+**이미지 인식(image recognition)** 문제에서는, 기계로 하여금 주어진 이미지 상에 포함되어 있는 대상이 *무엇인지*, 또한 *어느 위치에 있는지* 등을 파악하도록 하는 것을 주된 목표로 합니다. 예를 들어, 수아랩 기술 블로그를 오랫동안 보아 오셨다면 너무나도 친숙할 만한, 아래와 같은 이미지가 주어졌다고 합시다.
 
 {% include image.html name="image-recognition-overview" file="tree-image.png" description="인간이 받아들이는 나무 이미지" class="large-image" %}
 
@@ -27,15 +27,27 @@ name: image-recognition-overview
 
 위와 같은 이미지를 보고 '나무'라는 추상적인 개념을 뽑아내는 작업에 있어, 인간의 경우 (아직 완전히 밝혀지지 않은 모종의 매커니즘에 의해) '선택적 주의 집중(selective attention)' 및 '문맥(context)'에 기반한 '종합적 이해' 등의 과정을 거치며, 이 작업을 *직관적으로* 빠른 속도로 정확하게 수행할 수 있습니다. 반면, 기계는 '선택적 주의 집중' 능력이 없기 때문에 픽셀의 값을 빠짐없이 하나하나 다 살펴봐야 하므로 일단 이 과정에서 속도가 느려질 수밖에 없으며, 이렇게 읽어들인 픽셀로부터 어떻게 '문맥' 정보를 추출하고, 또 이들을 어떻게 '종합하고 이해'하는 것이 최적인지도 알지 못하므로 그 성능 또한 인간에 한참 뒤떨어질 수밖에 없습니다.
 
-이러한 상황에서, 기계의 이미지 인식 속도와 성능을 인간의 수준으로 끌어올리기 위한 가장 효과적인 방법은 '인간이 이미지를 인식하는 매커니즘을 밝혀내고, 이를 기계로 하여금 모방하도록 해 보자'는 것이라고 생각할 수 있습니다. 실제로, 이는 뇌 과학(brain science) 분야에서 주로 다루어지는 연구 주제입니다. 이를 위해서는 인간의 지능을 구성하는 지식 표현, 학습, 추론, 창작 등에 해당하는 인공지능 문제들이 모두 풀려야 가능할 것으로 보이나, 아직 갈 길이 한참 먼 것이 현실입니다.
+### 인간의 인식 성능을 좇기 위한 도전
 
-한편 이미지 인식 연구 초창기에 뇌 과학의 연구 성과를 마냥 기다릴 수만은 없었던 공학자들은, 인간의 인식 매커니즘을 그대로 모방하려는 시도 대신, 기존의 이미지 인식 문제의 범위를 좁혀서 좀 더 특수한 목적을 지니는 쉬운 형태의 문제로 치환하고 이들을 수학적 기법을 통해 해결하는 방법을 고안해 왔습니다. 예를 들어, 인간의 '선택적 주의 집중' 및 '문맥 파악' 능력에는 못 미치지만, 어떤 특수한 문제 해결에 효과적인 **요인(feature)**을 정의하여 사용하고, 이들을 '종합하고 이해'하도록 하기 위해 **러닝 모델(learning model)**과 **러닝 알고리즘(learning algorithm)**을 사용하여 이를 머신러닝 차원으로 해결하고자 하였습니다.
+이러한 상황에서, 기계의 이미지 인식 속도와 성능을 인간의 수준으로 끌어올리기 위한 가장 효과적인 방법은 '인간이 이미지를 인식하는 매커니즘을 밝혀내고, 이를 기계로 하여금 모방하도록 해 보자'는 것이라고 생각할 수 있습니다. 실제로, 이는 뇌 과학(brain science) 분야에서 주로 다루어지는 연구 주제입니다. 이를 위해서는 인간의 지능을 구성하는 지식 표현, 학습, 추론, 창작 등에 해당하는 인공지능 문제들이 모두 풀려야 가능할 것으로 보이니, 이 방향으로 가기에는 아직 갈 길이 한참 먼 것이 현실입니다.
 
-{% include image.html name="image-recognition-overview" file="face-recognition-examples.png" description="특수한 이미지 인식 문제 예시: 얼굴 인식" class="large-image" %}
+이미지 인식 연구 초창기에 뇌 과학의 연구 성과를 마냥 기다릴 수만은 없었던 공학자들은, 인간의 인식 메커니즘을 그대로 모방하려는 시도 대신, 기존의 이미지 인식 문제의 범위를 좁혀서 좀 더 특수한 목적을 지니는 쉬운 형태의 문제로 치환하고 이들을 수학적 기법을 통해 해결하는 방법을 고안해 왔습니다. 예를 들어, 인간의 '선택적 주의 집중' 및 '문맥 파악' 능력에는 못 미치지만, 어떤 특수한 문제 해결에 효과적인 **요인(feature)**을 정의하여 사용하고, 이들을 '종합하고 이해'하도록 하기 위해 **러닝 모델(learning model)**과 **러닝 알고리즘(learning algorithm)**을 사용하여 이를 머신러닝 차원으로 해결하고자 하였습니다. 특수한 이미지 인식 문제로는 *얼굴 인식(face recognition)*, *필적 인식(handwriting recognition)* 등이 대표적입니다.
 
+{% include image.html name="image-recognition-overview" file="face-recognition-examples.png" description="특수한 이미지 인식 문제 예시: 얼굴 인식(FERET database)" class="medium-image" %}
 
-- PASCAL VOC, ImageNet ILSVRC 등의 대회 종목 및 규정을 기준으로 함
-- 과거의 전통적인 머신러닝 기반 접근 방법론, 최근 딥러닝 기반 접근 방법론을 모두 소개
+{% include image.html name="image-recognition-overview" file="mnist-handwriting-examples.png" description="특수한 이미지 인식 문제 예시: 필적 인식(MNIST database)" class="small-image" %}
+
+초창기의 이러한 시도들을 통해 자신감을 얻은 공학자들은, 좀 더 과감한 도전을 하기 시작하였습니다. 인간이 일상 속에서 접할 수 있는 몇 가지 주요한 사물들을 인식하기 위한 시도를 시작한 것입니다. 이는, 기계의 이미지 인식 성능의 벤치마크(benchmark)로 삼을 수 있는 다양한 데이터셋이 등장한 데에서부터 출발하였습니다. 예를 들어, *CIFAR-10 dataset*은 일반적인 이미지 인식을 위한 가장 대표적인 벤치마크용 데이터셋으로, 32x32 크기의 작은 컬러 이미지 상에 10가지 사물 중 어떤 것이 포함되어 있는지를 단순 분류하는 문제를 제시하기 위해 만들어졌습니다.
+
+{% include image.html name="image-recognition-overview" file="cifar10-examples.png" description="일반적인 이미지 인식 데이터셋 예시: CIFAR-10" class="large-image" %}
+
+### 이미지 인식 문제의 정립: Classification, Detection, Segmentation
+
+연구실 차원에서의 올망졸망한(?) 벤치마크 데이터셋에서 출발하여, 그 후에는 1만 장 이상의 거대한 스케일의 이미지 데이터셋에 대하여 인식 성능을 겨루는 대회가 본격적으로 등장하였습니다. 초창기의 이미지 인식 대회 중 가장 대표적인 것이 *PASCAL VOC Challenge*입니다. 이 대회를 기점으로, 이미지 인식에서 다루는 문제들이 어느 정도 정형화되었다고 할 수 있습니다.
+
+{% include image.html name="image-recognition-overview" file="classification-detection-segmentation.png" description="PASCAL VOC Challenge 문제: Classification, Detection, Segmentation" class="large-image" %}
+
+PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다루는 주요 문제를 크게 3가지로 정리할 수 있습니다. **Classification**, **Detection**, **Segmentation**이 바로 그것입니다. 지금부터 이들 각각의 문제가 구체적으로 무엇인지, 과거에는 이들 문제에 어떻게 접근했는지, 오늘날 딥러닝 기술을 적용하여 이들 문제에 어떻게 접근하고 있는지의 순으로 이야기해 보도록 하겠습니다.
 
 ## Classification
 
@@ -46,16 +58,6 @@ name: image-recognition-overview
   - **TODO**
 - 최근 접근 방법론
   - **TODO**
-
-## Segmentation
-
-- 개념적으로는, 픽셀 단위로 classification을 한 것
-- Semantic Segmentation: 이미지 상의 모든 픽셀을 대상으로 분류를 수행함(이 때, 서로 다른 사물이더라도 동일한 카테고리에 해당한다면, 서로 동일한 것으로 분류함)
-- Instance Segmentation: 사물 카테고리 단위가 아니라, 사물 단위로 픽셀 별 분류를 수행함
-- 과거 접근 방법론
-  - **TODO**
-- 최근 접근 방법론
-  - Fully convolutional networks(e.g. FCN)
 
 ## Localization/Detection
 
@@ -68,6 +70,16 @@ name: image-recognition-overview
   - Region Proposals(e.g. R-CNN 계열)
   - YOLO, SSD
 
+## Segmentation
+
+- 개념적으로는, 픽셀 단위로 classification을 한 것
+- Semantic Segmentation: 이미지 상의 모든 픽셀을 대상으로 분류를 수행함(이 때, 서로 다른 사물이더라도 동일한 카테고리에 해당한다면, 서로 동일한 것으로 분류함)
+- Instance Segmentation: 사물 카테고리 단위가 아니라, 사물 단위로 픽셀 별 분류를 수행함
+- 과거 접근 방법론
+  - **TODO**
+- 최근 접근 방법론
+  - Fully convolutional networks(e.g. FCN)
+
 ## 결론
 
 - TODO
@@ -75,7 +87,11 @@ name: image-recognition-overview
 ## References
 
 - 오일석, \<컴퓨터 비전\>, 한빛아카데미, 2014
-- 이미지넷 ILSVRC 측에서 발표한 논문
-  - <a href="https://arxiv.org/pdf/1409.0575.pdf" target="_blank">Russakovsky, Olga, et al. "Imagenet large scale visual recognition challenge." International Journal of Computer Vision 115.3 (2015): 211-252.</a>
-- 특수한 이미지 인식 문제 예시: 얼굴 인식
+- 특수한 이미지 인식 문제 예시: 얼굴 인식(FERET database)
   - <a href="https://www.researchgate.net/profile/Amnart_Petpon/publication/221412223_Face_Recognition_with_Local_Line_Binary_Pattern/links/0fcfd508e345a96d26000000/Face-Recognition-with-Local-Line-Binary-Pattern.pdf" target="_blank">Petpon, Amnart, and Sanun Srisuk. "Face recognition with local line binary pattern." Image and Graphics, 2009. ICIG'09. Fifth International Conference on. IEEE, 2009.</a>
+- 특수한 이미지 인식 문제 예시: 필적 인식(MNIST database)
+  - <a href="http://yann.lecun.com/exdb/mnist/" target="_blank">LeCun, Yann et al. "THE MNIST DATABASE" http://yann.lecun.com/exdb/mnist. Accessed 14 November 2017.</a>
+- 일반적인 이미지 인식 문제 데이터셋 예시: CIFAR-10
+  - <a href="https://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">Krizhevsky, Alex, and Geoffrey Hinton. "Learning multiple layers of features from tiny images." (2009).</a>
+- PASCAL VOC 문제: Classification, Detection, Segmentation
+  - <a href="http://host.robots.ox.ac.uk/pascal/VOC/pubs/everingham15.pdf" target="_blank">Everingham, Mark, et al. "The pascal visual object classes challenge: A retrospective." International journal of computer vision 111.1 (2015): 98-136.</a>
