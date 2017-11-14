@@ -54,6 +54,7 @@ PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다�
 - 하나의 이미지에는 하나의 사물이 포함되어 있다고 전제함
 - 이미지 안에 포함되어 있는 사물이 전체 N개의 카테고리들 중 어떤 것어 해당하는지 분류하는 문제
 - 이미지 인식 문제의 가장 기본이 되며, Segmentation, Localization/Detection 등의 문제를 위한 출발점
+- 평가 척도: Accuracy 등
 - 과거 접근 방법론
   - **TODO**
 - 최근 접근 방법론
@@ -64,6 +65,7 @@ PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다�
 - Localization: Classification + 대략적 위치 파악
 - Object Detection: 복수 개의 사물에 대한 Localization
 - CNN with multitask loss: classification + bounding box regression
+- 평가 척도: IOU 기준, 사전에 지정된 threshold를 초과하는지
 - 과거 접근 방법론
   - **TODO**
 - 최근 접근 방법론
@@ -75,6 +77,7 @@ PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다�
 - 개념적으로는, 픽셀 단위로 classification을 한 것
 - Semantic Segmentation: 이미지 상의 모든 픽셀을 대상으로 분류를 수행함(이 때, 서로 다른 사물이더라도 동일한 카테고리에 해당한다면, 서로 동일한 것으로 분류함)
 - Instance Segmentation: 사물 카테고리 단위가 아니라, 사물 단위로 픽셀 별 분류를 수행함
+- 평가 척도: IOU
 - 과거 접근 방법론
   - **TODO**
 - 최근 접근 방법론
