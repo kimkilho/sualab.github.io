@@ -1,2 +1,2 @@
 # sualab.github.io
-SuaLab research blog, powered by Jekyll
+SuaLab research blog, built using Jekyll.
