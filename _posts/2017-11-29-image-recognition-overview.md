@@ -57,9 +57,9 @@ Classification 문제에서는, *주어진 이미지 안에 어느 특정한 카
 
 본격적인 Classification을 수행하기 전에, 관심의 대상이 되는 전체 카테고리들을 미리 정해놓고 시작해야 합니다. 이러한 카테고리 하나하나를 **클래스(class)**라고 부릅니다. 예를 들어, PASCAL VOC Challenge에서는 총 20가지 클래스를 상정하고, 이에 대한 classification을 수행하도록 하였습니다.
 
-{% include image.html name="image-recognition-overview" file="pascal-voc-classes.png" description="PASCAL VOC Challenge에서 다루는 10가지 클래스" class="full-image" %}
+{% include image.html name="image-recognition-overview" file="pascal-voc-classes.png" description="PASCAL VOC Challenge에서 다루는 20가지 클래스" class="full-image" %}
 
-만약 모든 이미지가 반드시 하나의 사물만을 포함하도록 전제되어 있다면, 분류를 수행하는 모델을 '주어진 이미지에는 카테고리 X가 포함되어 있다'는 식의 결론을 내도록 디자인하는 것이 일반적입니다. 반면 이미지 상에 복수 개의 사물들이 포함되어 있을 수 있다면, 분류 모델을 '주어진 이미지에는 카테고리 X, Y, Z가 포함되어 있다'는 식의 결론을 내도록 디자인합니다. 보통 전자의 경우가 좀 더 쉬운 문제로 취급되며(e.g. MNIST, CIFAR-10), 후자가 좀 더 어려운 문제로 취급되는 경우가 많습니다(e.g. PASCAL VOC).
+만약 모든 이미지가 반드시 하나의 사물만을 포함하도록 전제되어 있다면, 분류를 수행하는 모델을 '주어진 이미지에는 카테고리 X가 포함되어 있을 것이다'는 식의 결론을 내도록 디자인하는 것이 일반적입니다. 반면 이미지 상에 복수 개의 사물들이 포함되어 있을 수 있다면, 분류 모델을 '주어진 이미지에는 카테고리 X, Y, Z가 포함되어 있을 것이다'는 식의 결론을 내도록 디자인합니다. 보통 전자의 경우가 좀 더 쉬운 문제로 취급되며(e.g. MNIST, CIFAR-10), 후자가 좀 더 어려운 문제로 취급되는 경우가 많습니다(e.g. PASCAL VOC).
 
 Classification 문제는, 이어질 Detection 및 Segmentation 문제를 향한 출발점이라고 할 수 있습니다. Detection 및 Segmentation 문제 해결을 위해서는 특정 클래스에 해당하는 사물이 이미지 상의 어느 곳에 위치하는지에 대한 정보를 파악해야 하는데, 이를 위해서는 우선 그러한 사물이 이미지 상에 존재하는지 여부가 반드시 먼저 파악되어야 하기 때문입니다. 이러한 경향 때문에, Classification 문제에서 우수한 성능을 발휘했던 모델을 Detection 또는 Segmentation을 위한 구조로 변형하여 사용할 경우, 그 역시 상대적으로 우수한 성능을 발휘하는 경향이 있습니다.
 
@@ -91,10 +91,26 @@ Classification 문제는, 이어질 Detection 및 Segmentation 문제를 향한 
 
 ## Detection
 
-- Object Detection: 복수 개의 사물에 대한 Localization
-  - Localization: Classification + 대략적 위치 파악
-- CNN with multitask loss: classification + bounding box regression
+### 문제 정의
+
+Detection 문제에서는, *주어진 이미지 안에 어느 특정한 클래스에 해당하는 사물이 (만약 있다면) 어느 위치에 포함되어 있는지 '박스 형태'로 검출*하는 것을 목표로 합니다. 이는 특정 클래스의 사물이 포함되어 있는지 여부만을 분류하는 Classification 문제의 목표에서 한 발 더 나아간 것이라고 할 수 있습니다. '위치 파악'이라는 의미를 부각하기 위해, 다른 이미지 인식 대회에서는 Detection 문제를 'Image Localization' 문제라고 표현하기도 합니다. 
+
+Detection에서 '박스 형태'로 위치를 표시한다고 하였는데, 이 때 사용하는 박스는 '네 변이 이미지 상에서 수직/수평 방향을 향한(axis-aligned)' 직사각형 모양의 박스입니다. 즉, 아래 그림과 같은 형태의 박스를 지칭하며, 이를 *바운딩 박스(bounding box)*라고 부릅니다. 
+
+{% include image.html name="image-recognition-overview" file="pascal-voc-detection-image-example.png" description="Detection 문제에서의 바운딩 박스" class="large-image" %}
+
+바운딩 박스를 정의하기 위해서는, 전체 이미지 상에서 박스의 좌측 상단의 좌표 $$(x_1, y_1)$$과, 우측 하단의 좌표 $$(x_2, y_2)$$를 결정해야 합니다. 이와 더불어, 제시한 바운딩 박스 안에 어떤 카테고리에 해당하는 사물이 포함되어 있을지에 대한 결론도 함께 제시해야 합니다. 즉, 제시해야 하는 결론을 종합해보면 '바운딩 박스 $$(x_1, y_1, x_2, y_2)$$ 안에는 카테고리 X가 포함되어 있을 것이다'는 식으로 표현할 수 있습니다. 
+
+여기에서도 마찬가지로, 만약 모든 이미지가 반드시 하나의 사물만을 포함하도록 전제되어 있다면, 검출을 수행하는 모델은 위의 결론을 하나만 내도록 디자인하면 됩니다. 반면 이미지 상에 복수 개의 사물들이 포함되어 있을 수 있다면, 검출 모델을 '1번 바운딩 박스 $$(x_1^{(1)}, y_1^{(1)}, x_2^{(1)}, y_2^{(1)})$$ 안에는 카테고리 X가, 2번 바운딩 박스 $$(x_1^{(2)}, y_1^{(2)}, x_2^{(2)}, y_2^{(2)})$$ 안에는 카테고리 Y가, 3번 바운딩 박스 $$(x_1^{(3)}, y_1^{(3)}, x_2^{(3)}, y_2^{(3)})$$ 안에는 카테고리 Z가 포함되어 있을 것이다'는 식의 결론을 내도록 디자인해야 합니다. 
+
+단순하게 생각해볼 때, Classification에 비해 바운딩 박스들과 관련된 정보를 추가로 제시해야 하고, 이들 각각에 결부된 사물의 클래스에 대한 분류를 빠짐없이 수행해야 한다는 측면에서, Detection 문제는 더 높은 난이도를 지닙니다. 
+
+### 평가 척도
+
 - 평가 척도: IOU 기준, 사전에 지정된 threshold를 초과하는지
+
+*TODO: IOU와 threshold에 대한 이미지 추가*
+
 - 과거 접근 방법론(TBD)
 - 최근 접근 방법론
   - Region Proposals(e.g. R-CNN 계열)
