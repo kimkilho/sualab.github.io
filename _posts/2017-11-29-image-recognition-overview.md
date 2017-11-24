@@ -51,14 +51,43 @@ PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다�
 
 ## Classification
 
-- 하나의 이미지에는 하나의 사물이 포함되어 있다고 전제함
-- 이미지 안에 포함되어 있는 사물이 전체 N개의 카테고리들 중 어떤 것어 해당하는지 분류하는 문제
-- 이미지 인식 문제의 가장 기본이 되며, Detection, Segmentation 등의 문제를 위한 출발점
-- 평가 척도: Accuracy 등
-- 과거 접근 방법론
-  - **TODO**
+### 문제 정의
+
+Classification 문제에서는, *주어진 이미지 안에 어느 특정한 카테고리에 해당하는 사물이 포함되어 있는지 여부를 분류*하는 것을 주요 목표로 합니다. 이 때, 분류의 대상이 되는 이미지에는 하나의 사물만이 포함되어 있거나, 또는 복수 개의 서로 다른 사물들이 포함되어 있을 수도 있습니다. 
+
+본격적인 Classification을 수행하기 전에, 관심의 대상이 되는 전체 카테고리들을 미리 정해놓고 시작해야 합니다. 이러한 카테고리 하나하나를 **클래스(class)**라고 부릅니다. 예를 들어, PASCAL VOC Challenge에서는 총 20가지 클래스를 상정하고, 이에 대한 classification을 수행하도록 하였습니다.
+
+{% include image.html name="image-recognition-overview" file="pascal-voc-classes.png" description="PASCAL VOC Challenge에서 다루는 10가지 클래스" class="full-image" %}
+
+만약 모든 이미지가 반드시 하나의 사물만을 포함하도록 전제되어 있다면, 분류를 수행하는 모델을 '주어진 이미지에는 카테고리 X가 포함되어 있다'는 식의 결론을 내도록 디자인하는 것이 일반적입니다. 반면 이미지 상에 복수 개의 사물들이 포함되어 있을 수 있다면, 분류 모델을 '주어진 이미지에는 카테고리 X, Y, Z가 포함되어 있다'는 식의 결론을 내도록 디자인합니다. 보통 전자의 경우가 좀 더 쉬운 문제로 취급되며(e.g. MNIST, CIFAR-10), 후자가 좀 더 어려운 문제로 취급되는 경우가 많습니다(e.g. PASCAL VOC).
+
+Classification 문제는, 이어질 Detection 및 Segmentation 문제를 향한 출발점이라고 할 수 있습니다. Detection 및 Segmentation 문제 해결을 위해서는 특정 클래스에 해당하는 사물이 이미지 상의 어느 곳에 위치하는지에 대한 정보를 파악해야 하는데, 이를 위해서는 우선 그러한 사물이 이미지 상에 존재하는지 여부가 반드시 먼저 파악되어야 하기 때문입니다. 이러한 경향 때문에, Classification 문제에서 우수한 성능을 발휘했던 모델을 Detection 또는 Segmentation을 위한 구조로 변형하여 사용할 경우, 그 역시 상대적으로 우수한 성능을 발휘하는 경향이 있습니다.
+
+### 평가 척도
+
+어떤 모델의 Classification 성능을 평가하고자 할 때, 다양한 종류의 **평가 척도(evaluation measure)** 중 하나 혹은 여러 개를 선정하여 사용할 수 있습니다. 일반적으로 가장 쉽게 떠올릴 수 있는 척도로 **정확도(accuracy)**가 있습니다. Classification 문제에서의 정확도는 일반적으로, 테스트를 위해 주어진 전체 이미지 수 대비 올바르게 분류한 이미지 수로 정의합니다. 
+
+\begin{equation}
+\text{accuracy} = \frac{\text{올바르게 분류한 이미지 수}} {\text{전체 이미지 수}}
+\end{equation}
+
+만약 하나의 이미지에 하나의 사물만이 포함되어 있다는 것이 전제되어 있다면, 위와 같이 정의된 정확도를 평가 척도로 즉각 사용하여도 크게 문제가 없습니다. 그런데 만약 하나의 이미지에 복수 개의 사물들이 포함되어 있을 수 있다면, 위의 정확도를 그대로 사용하기 곤란해지는 상황이 발생합니다. 
+
+이러한 경우, 정확도를 각 클래스 별로 계산한 뒤 이들 전체의 대푯값(representative value)을 취하는 방식을 채택할 수 있습니다. 예를 들어, 전체 $$C$$개 클래스의 평균 정확도를 계산하고자 할 시, 아래와 같은 공식을 사용할 수 있습니다(이 때, '클래스 $$c$$ 이미지'란 클래스 $$c$$에 해당하는 사물을 포함하고 있는 이미지를 지칭합니다).
+
+\begin{equation}
+\text{평균 accuracy} = \frac{1}{C} \sum_{c=1}^{C} \frac{\text{올바르게 분류한 클래스 c 이미지 수}} {\text{전체 클래스 c 이미지 수}}
+\end{equation}
+
+그런데, 보다 현실적인 Classification 문제에서는 단순한 정확도 대신 *<a href="https://en.wikipedia.org/wiki/Precision_and_recall" target="_blank">정밀도(precision)</a>*, *<a href="https://en.wikipedia.org/wiki/Precision_and_recall" target="_blank">재현율(recall)</a>*, *<a href="https://en.wikipedia.org/wiki/F1_score" target="_blank">F1 score</a>* 등의 척도를 더 많이 사용합니다(이들에 대한 자세한 내용은, 각 단어에 연결된 링크를 참조하시길 바랍니다). 
+
+### 대표적인 딥러닝 모델
+
+- 과거 접근 방법론(TBD)
 - 최근 접근 방법론
-  - **TODO**
+  - ResNeXt, DenseNet, DPN
+  - TODO
+
 
 ## Detection
 
@@ -66,11 +95,11 @@ PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다�
   - Localization: Classification + 대략적 위치 파악
 - CNN with multitask loss: classification + bounding box regression
 - 평가 척도: IOU 기준, 사전에 지정된 threshold를 초과하는지
-- 과거 접근 방법론
-  - **TODO**
+- 과거 접근 방법론(TBD)
 - 최근 접근 방법론
   - Region Proposals(e.g. R-CNN 계열)
   - YOLO, SSD
+
 
 ## Segmentation
 
@@ -78,10 +107,10 @@ PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다�
 - Semantic Segmentation: 이미지 상의 모든 픽셀을 대상으로 분류를 수행함(이 때, 서로 다른 사물이더라도 동일한 카테고리에 해당한다면, 서로 동일한 것으로 분류함)
 - Instance Segmentation: 사물 카테고리 단위가 아니라, 사물 단위로 픽셀 별 분류를 수행함
 - 평가 척도: IOU
-- 과거 접근 방법론
-  - **TODO**
+- 과거 접근 방법론(TBD)
 - 최근 접근 방법론
   - Fully convolutional networks(e.g. FCN)
+
 
 ## 결론
 
@@ -98,3 +127,7 @@ PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다�
   - <a href="https://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">Krizhevsky, Alex, and Geoffrey Hinton. "Learning multiple layers of features from tiny images." (2009).</a>
 - PASCAL VOC 문제: Classification, Detection, Segmentation
   - <a href="http://host.robots.ox.ac.uk/pascal/VOC/pubs/everingham15.pdf" target="_blank">Everingham, Mark, et al. "The pascal visual object classes challenge: A retrospective." International journal of computer vision 111.1 (2015): 98-136.</a>
+- 정밀도(precision)와 재현율(recall)
+  - <a href="https://en.wikipedia.org/wiki/Precision_and_recall" target="_blank">"Precision and recall." Wikipedia contributors. "Precision and recall." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 3 Oct. 2017. Web. 24 Nov. 2017.</a>
+- F1 score
+  - <a href="https://en.wikipedia.org/wiki/F1_score" target="_blank">Wikipedia contributors. "F1 score." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 29 Oct. 2017. Web. 24 Nov. 2017. </a>
