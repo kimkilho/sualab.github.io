@@ -53,15 +53,31 @@ PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다�
 
 ### 문제 정의
 
-Classification 문제에서는, *주어진 이미지 안에 어느 특정한 카테고리에 해당하는 사물이 포함되어 있는지 여부를 분류*하는 것을 주요 목표로 합니다. 이 때, 분류의 대상이 되는 이미지에는 하나의 사물만이 포함되어 있거나, 또는 복수 개의 서로 다른 사물들이 포함되어 있을 수도 있습니다. 
+Classification 문제에서는, *주어진 이미지 안에 어느 특정한 클래스에 해당하는 사물이 포함되어 있는지 여부를 분류*하는 것을 주요 목표로 합니다. 여기에서 **클래스(class)**란, 분류 대상이 되는 카테고리 하나하나를 지칭합니다. 본격적인 Classification을 수행하기 전에, 관심의 대상이 되는 클래스들을 미리 정해놓고 작업을 시작해야 합니다. 예를 들어, PASCAL VOC Challenge에서는 총 20가지 클래스를 상정하고, 이에 대한 classification을 수행하도록 하였습니다.
 
-본격적인 Classification을 수행하기 전에, 관심의 대상이 되는 전체 카테고리들을 미리 정해놓고 시작해야 합니다. 이러한 카테고리 하나하나를 **클래스(class)**라고 부릅니다. 예를 들어, PASCAL VOC Challenge에서는 총 20가지 클래스를 상정하고, 이에 대한 classification을 수행하도록 하였습니다.
+{% include image.html name="image-recognition-overview" file="pascal-voc-classes.png" description="PASCAL VOC Challenge에서 다루는 20가지 클래스<br><small>(좌측 절반 10개: 'aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow',<br> 우측 절반 10개: 'dining table', 'dog', 'horse', 'motorbike', 'person', 'potted plant', 'sheep', 'sofa', 'train', 'TV/monitor')</small>" class="full-image" %}
 
-{% include image.html name="image-recognition-overview" file="pascal-voc-classes.png" description="PASCAL VOC Challenge에서 다루는 20가지 클래스" class="full-image" %}
+PASCAL VOC Challenge를 비롯한 대부분의 이미지 인식 대회의 Classification 문제에서는, 주어진 이미지 안에 특정 클래스의 사물이 존재할 '가능성' 내지는 '믿음'을 나타내는 **신뢰도 점수(confidence score)**을 제출하도록 요구합니다. 즉, '주어진 이미지 안에 클래스 X의 사물이 있다'는 식의 단정적인 결론 대신, '주어진 이미지 안에 클래스 X의 사물이 존재할 가능성이 $$s_X$$, 클래스 Y의 사물이 존재할 가능성이 $$s_Y$$, 클래스 Z의 사물이 존재할 가능성이 $$s_Z$$, ...' 식의 결과물을 제출하도록 요구하고, 이를 통해 주최측으로 하여금 해당 결과물에 대한 사후적인 해석의 여지를 두게 되는 것입니다.
 
-만약 모든 이미지가 반드시 하나의 사물만을 포함하도록 전제되어 있다면, 분류를 수행하는 모델을 '주어진 이미지에는 카테고리 X가 포함되어 있을 것이다'는 식의 결론을 내도록 디자인하는 것이 일반적입니다. 반면 이미지 상에 복수 개의 사물들이 포함되어 있을 수 있다면, 분류 모델을 '주어진 이미지에는 카테고리 X, Y, Z가 포함되어 있을 것이다'는 식의 결론을 내도록 디자인합니다. 보통 전자의 경우가 좀 더 쉬운 문제로 취급되며(e.g. MNIST, CIFAR-10), 후자가 좀 더 어려운 문제로 취급되는 경우가 많습니다(e.g. PASCAL VOC).
+#### 신뢰도 점수에 대한 해석 방법
 
-Classification 문제는, 이어질 Detection 및 Segmentation 문제를 향한 출발점이라고 할 수 있습니다. Detection 및 Segmentation 문제 해결을 위해서는 특정 클래스에 해당하는 사물이 이미지 상의 어느 곳에 위치하는지에 대한 정보를 파악해야 하는데, 이를 위해서는 우선 그러한 사물이 이미지 상에 존재하는지 여부가 반드시 먼저 파악되어야 하기 때문입니다. 이러한 경향 때문에, Classification 문제에서 우수한 성능을 발휘했던 모델을 Detection 또는 Segmentation을 위한 구조로 변형하여 사용할 경우, 그 역시 상대적으로 우수한 성능을 발휘하는 경향이 있습니다.
+Classification 문제에서 분류의 대상이 되는 이미지에는 반드시 하나의 사물만이 포함되어 있거나, 또는 복수 개의 서로 다른 사물들이 포함되어 있을 수도 있습니다. 둘 중 어느 경우를 전제하느냐에 따라, 신뢰도 점수에 대한 최종적인 해석 방법이 달라집니다. 
+
+먼저 *모든 이미지가 반드시 하나의 사물만을 포함하도록* 전제되어 있는 경우를 생각해 봅시다. 이를 편의 상 '*단일 사물 분류*' 문제라고 지칭하도록 하겠습니다. 이 경우, 전체 클래스에 대한 신뢰도 점수 중 가장 큰 신뢰도 점수를 갖는 클래스를 선정하여, '주어진 이미지 안에 해당 클래스가 포함되어 있을 것이다'고 결론지을 수 있습니다. 예를 들어, 아래와 같이 '고양이'를 담고 있는 이미지가 주어졌을 때, 전체 20가지 클래스에 대한 신뢰도 점수들을 비교하여 그 중 가장 큰 신뢰도 점수를 지니는 'cat' 클래스를 선정하여 제시할 수 있습니다. 
+
+{% include image.html name="image-recognition-overview" file="single-object-classification-confidence-scores.svg" description="단일 사물 분류 문제에서의 신뢰도 점수 해석<br><small>(예시 이미지: VOC2008 데이터셋 - 2008_005977.jpg)</small>" class="large-image" %}
+
+단일 사물 분류를 요구하는 데이터셋으로는 앞서 언급했던 MNIST, CIFAR-10 등이 있으며, 이들은 상대적으로 좀 더 쉬운 문제로 취급됩니다. 
+
+반면, 이번에는 *이미지 상에 복수 개의 사물들이 포함되어 있을 수 있도록* 전제되어 있는 경우입니다. 이를 '*복수 사물 분류*' 문제라고 지칭하도록 하겠습니다. 이 경우, 단순히 위와 같이 가장 큰 신뢰도 점수를 갖는 클래스 하나만을 선정하여 제시하는 것은 그다지 합리적인 결론이 아닐 것입니다. 
+
+이러한 문제 상황에서는 이미지 인식 대회마다 결론을 도출하는 방식이 조금씩 다르나, PASCAL VOC Challenge의 경우에는 각 클래스마다 *문턱값(threshold)*을 설정해 놓고, 주어진 이미지의 각 클래스 별 신뢰도 점수가 문턱값보다 큰 경우에 한하여 '주어진 이미지 안에 해당 클래스가 포함되어 있을 것이다'고 결론짓도록 합니다. 예를 들어, 아래와 같이 '소'와 '사람'을 동시에 담고 있는 이미지가 주어졌을 때, 20가지 클래스 각각의 신뢰도 점수들을 조사하여, 이들 중 사전에 정한 문턱값보다 큰 신뢰도 점수를 지니는 'cow'와 'person' 클래스를 선정하여 제시할 수 있습니다.
+
+{% include image.html name="image-recognition-overview" file="multiple-objects-classification-confidence-scores.svg" description="복수 사물 분류 문제에서의 신뢰도 점수 해석<br><small>(예시 이미지: VOC2010 데이터셋 - 2010_001692.jpg)</small>" class="large-image" %}
+
+> 그렇다면, 각 클래스의 문턱값은 어떻게 결정해야 할까요? 이는 어느 평가 척도를 사용하여 평가할지의 문제와 같이 엮어 고민해야 하는 문제입니다.
+
+복수 사물 분류 문제가 아무래도 현실 상황에 좀 더 부합한다고 할 수 있으며, 상대적으로 좀 더 어려운 문제로 취급됩니다. PASCAL VOC Challenge, ILSVRC(ImageNet Large Scale Visual Recognition Challenge) 등 주요한 이미지 인식 대회에서 이를 채택하고 있습니다.
 
 ### 평가 척도
 
@@ -71,17 +87,42 @@ Classification 문제는, 이어질 Detection 및 Segmentation 문제를 향한 
 \text{accuracy} = \frac{\text{올바르게 분류한 이미지 수}} {\text{전체 이미지 수}}
 \end{equation}
 
-만약 하나의 이미지에 하나의 사물만이 포함되어 있다는 것이 전제되어 있다면, 위와 같이 정의된 정확도를 평가 척도로 즉각 사용하여도 크게 문제가 없습니다. 그런데 만약 하나의 이미지에 복수 개의 사물들이 포함되어 있을 수 있다면, 위의 정확도를 그대로 사용하기 곤란해지는 상황이 발생합니다. 
+단일 사물 분류 문제에서는,  위에서 정의된 정확도를 평가 척도로 즉각 사용하여도 크게 문제가 없습니다. 예를 들어, 아래와 같이 전체 테스트용 이미지가 10개 있었다고 할 때, 분류 모델이 이들 중 7개를 올바르게 예측했다면, 정확도는 $$7 / 10 = 0.7$$($$70\%$$)가 됩니다.
 
-이러한 경우, 정확도를 각 클래스 별로 계산한 뒤 이들 전체의 대푯값(representative value)을 취하는 방식을 채택할 수 있습니다. 예를 들어, 전체 $$C$$개 클래스의 평균 정확도를 계산하고자 할 시, 아래와 같은 공식을 사용할 수 있습니다(이 때, '클래스 $$c$$ 이미지'란 클래스 $$c$$에 해당하는 사물을 포함하고 있는 이미지를 지칭합니다).
+{% include image.html name="image-recognition-overview" file="accuracy-example.svg" description="단일 사물 분류 문제에서의 정확도 계산 예시" class="large-image" %}
+
+그러나, 복수 사물 분류 문제에서는, 위의 정확도를 그대로 사용하기 곤란해지는 상황이 발생합니다. 이러한 경우, 정확도를 각 클래스 별로 계산한 뒤 이들 전체의 *대푯값(representative value)*을 취하는 방식을 채택할 수 있습니다. 구체적으로, 전체 $$C$$개 클래스의 *평균* 정확도를 계산하고자 한다면, 아래와 같은 공식을 사용할 수 있습니다(이 때, '클래스 $$c$$ 이미지'란 클래스 $$c$$에 해당하는 사물을 포함하고 있는 이미지를 지칭합니다).
 
 \begin{equation}
 \text{평균 accuracy} = \frac{1}{C} \sum_{c=1}^{C} \frac{\text{올바르게 분류한 클래스 c 이미지 수}} {\text{전체 클래스 c 이미지 수}}
 \end{equation}
 
+즉, 아래와 같이 원본 테스트 이미지들을 각 클래스 별로 나눈 후, 각 클래스에 대하여 정확도를 따로 계산한 후, 이렇게 얻어진 클래스 별 정확도들의 평균을 계산합니다.
+
+{% include image.html name="image-recognition-overview" file="accuracy-per-class-example.svg" description="복수 사물 분류 문제에서의 클래스 별 정확도 계산 예시<br><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 정확도는 $$(0.6+1.0+0.8)/3 = 0.8(80\%)$$)</small>" class="large-image" %}
+
+#### 신뢰도 점수의 문턱값에 따른 평가 척도 수치의 변화 가능성
+
+복수 사물 분류 문제의 경우, 각 클래스 별로 신뢰도 점수에 대한 문턱값을 어떻게 결정해야 하는지에 대한 이슈가 여전히 남아 있습니다. 이해를 돕기 위해, 'car' 클래스에 대한 분류 모델의 신뢰도 점수를 가지고, 설정한 문턱값에 따라 결론을 내리는 상황을 살펴보도록 하겠습니다. 이 때, 편의 상 'car' 클래스를 제외한 나머지 모든 클래스들을 not 'car' 클래스로 지칭하도록 하겠습니다.
+
+먼저, (1) *'car' 클래스의 문턱값을 높게 잡을수록*, 분류 모델이 'car' 클래스로 예측하게 되는 이미지의 개수가 감소합니다. 이렇게 되면, *실제 'car' 클래스 이미지들을 올바르게 분류할 가능성은 낮아질 것이나, not 'car' 클래스 이미지들을 올바르게 분류할 가능성은 높아집니다*.
+
+반면에 (2) *'car' 클래스의 문턱값을 낮게 잡을수록*, 분류 모델이 'car' 클래스로 예측하게 되는 이미지의 개수가 증가합니다. 이렇게 되면, *실제 'car' 클래스 이미지들을 올바르게 분류할 가능성은 높아질 것이나, not 'car' 클래스 이미지들을 올바르게 분류할 가능성은 낮아집니다*.
+
+'car' 클래스에 대하여, 테스트 이미지들에 대한 분류 모델의 신뢰도 점수가 계산된 후, 문턱값의 변화에 따라 모델의 예측 결과 및 실제 정답 여부를 아래 그림과 같이 나타냈습니다. 
+
+{% include image.html name="image-recognition-overview" file="threshold-to-classification-results.svg" description="'car' 클래스의 신뢰도 점수의 문턱값에 따른, 정확도 결과 변화" class="full-image" %}
+
+위의 사례에서는, 'car' 클래스의 문턱값을 $$2.0$$으로 설정했을 때, 정확도 $$0.9$$로 최고 수치를 기록했습니다. 
+
+
+
 그런데, 보다 현실적인 Classification 문제에서는 단순한 정확도 대신 *<a href="https://en.wikipedia.org/wiki/Precision_and_recall" target="_blank">정밀도(precision)</a>*, *<a href="https://en.wikipedia.org/wiki/Precision_and_recall" target="_blank">재현율(recall)</a>*, *<a href="https://en.wikipedia.org/wiki/F1_score" target="_blank">F1 score</a>* 등의 척도를 더 많이 사용합니다(이들에 대한 자세한 내용은, 각 단어에 연결된 링크를 참조하시길 바랍니다). 
 
 ### 대표적인 딥러닝 모델
+
+Classification 문제는, 이어질 Detection 및 Segmentation 문제를 향한 출발점이라고 할 수 있습니다. Detection 및 Segmentation 문제 해결을 위해서는 특정 클래스에 해당하는 사물이 이미지 상의 어느 곳에 위치하는지에 대한 정보를 파악해야 하는데, 이를 위해서는 우선 그러한 사물이 이미지 상에 존재하는지 여부가 반드시 먼저 파악되어야 하기 때문입니다. 이러한 경향 때문에, Classification 문제에서 우수한 성능을 발휘했던 모델을 Detection 또는 Segmentation을 위한 구조로 변형하여 사용할 경우, 그 역시 상대적으로 우수한 성능을 발휘하는 경향이 있습니다.
+
 
 - 과거 접근 방법론(TBD)
 - 최근 접근 방법론
