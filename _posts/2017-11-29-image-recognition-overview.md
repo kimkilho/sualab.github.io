@@ -11,6 +11,8 @@ name: image-recognition-overview
 
 지난 번 글까지 해서 수아랩의 핵심 기술들 중 하나인 '딥러닝'에 대해 알아보았습니다. 오늘날 딥러닝 기술이 적용되고 있는 분야는 이미지 인식, 음성 인식, 자연어 처리 등 여러 가지가 있습니다. 오늘은 이러한 적용 분야들 중, 딥러닝의 위력을 가장 드라마틱하게 보여주고 있다고 할 수 있는 '이미지 인식' 분야에서 다루는 문제들을 언급하고, 오늘날 딥러닝 기술을 활용하여 이들 문제에 어떻게 접근하고 있는지에 대하여 살펴보고자 합니다. 
 
+- 본문의 플롯을 위해 작성한 <a href="https://github.com/sualab/sualab.github.io/blob/master/assets/notebooks/image-recognition-overview.ipynb" target="_blank">Python 코드</a>를 부록으로 함께 첨부하였습니다. 
+
 ## 서론
 
 **이미지 인식(image recognition)** 문제에서는, 기계로 하여금 주어진 이미지 상에 포함되어 있는 대상이 *무엇인지*, 또한 *어느 위치에 있는지* 등을 파악하도록 하는 것을 주된 목표로 합니다. 예를 들어, 수아랩 기술 블로그를 오랫동안 보아 오셨다면 너무나도 친숙할 만한, 아래와 같은 이미지가 주어졌다고 합시다.
@@ -53,11 +55,13 @@ PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다�
 
 ### 문제 정의
 
-Classification 문제에서는, *주어진 이미지 안에 어느 특정한 클래스에 해당하는 사물이 포함되어 있는지 여부를 분류*하는 것을 주요 목표로 합니다. 여기에서 **클래스(class)**란, 분류 대상이 되는 카테고리 하나하나를 지칭합니다. 본격적인 Classification을 수행하기 전에, 관심의 대상이 되는 클래스들을 미리 정해놓고 작업을 시작해야 합니다. 예를 들어, PASCAL VOC Challenge에서는 총 20가지 클래스를 상정하고, 이에 대한 classification을 수행하도록 하였습니다.
+Classification 문제에서는, *주어진 이미지 안에 어느 특정한 클래스에 해당하는 사물이 포함되어 있는지 여부를 분류*하는 것을 주요 목표로 합니다. 여기에서 **클래스(class)**란, 분류 대상이 되는 카테고리 하나하나를 지칭합니다. 
+
+본격적인 Classification을 수행하기 전에, 반드시 관심의 대상이 되는 클래스들을 미리 정해놓고 작업을 시작해야 합니다. 예를 들어, PASCAL VOC Challenge에서는 총 20가지 클래스를 상정하고, 이에 대한 classification을 수행하도록 하였습니다.
 
 {% include image.html name="image-recognition-overview" file="pascal-voc-classes.png" description="PASCAL VOC Challenge에서 다루는 20가지 클래스<br><small>(좌측 절반 10개: 'aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow',<br> 우측 절반 10개: 'dining table', 'dog', 'horse', 'motorbike', 'person', 'potted plant', 'sheep', 'sofa', 'train', 'TV/monitor')</small>" class="full-image" %}
 
-PASCAL VOC Challenge를 비롯한 대부분의 이미지 인식 대회의 Classification 문제에서는, 주어진 이미지 안에 특정 클래스의 사물이 존재할 '가능성' 내지는 '믿음'을 나타내는 **신뢰도 점수(confidence score)**을 제출하도록 요구합니다. 즉, '주어진 이미지 안에 클래스 X의 사물이 있다'는 식의 단정적인 결론 대신, '주어진 이미지 안에 클래스 X의 사물이 존재할 가능성이 $$s_X$$, 클래스 Y의 사물이 존재할 가능성이 $$s_Y$$, 클래스 Z의 사물이 존재할 가능성이 $$s_Z$$, ...' 식의 결과물을 제출하도록 요구하고, 이를 통해 주최측으로 하여금 해당 결과물에 대한 사후적인 해석의 여지를 두게 되는 것입니다.
+PASCAL VOC Challenge를 비롯한 대부분의 이미지 인식 대회의 Classification 문제에서는, 주어진 이미지 안에 특정 클래스의 사물이 존재할 '가능성' 내지는 '믿음'을 나타내는 **신뢰도 점수(confidence score)**를 제출하도록 요구합니다. 즉, '주어진 이미지 안에 클래스 X의 사물이 있다'는 식의 단정적인 결론 대신, '주어진 이미지 안에 클래스 X의 사물이 존재할 가능성이 $$s_X$$, 클래스 Y의 사물이 존재할 가능성이 $$s_Y$$, 클래스 Z의 사물이 존재할 가능성이 $$s_Z$$, ...' 식의 결과물을 제출하도록 요구하고, 이를 통해 추후 정답 여부 확인 시 해당 결과물에 대한 사후적인 해석의 여지를 두게 되는 것입니다.
 
 #### 신뢰도 점수에 대한 해석 방법
 
@@ -67,11 +71,11 @@ Classification 문제에서 분류의 대상이 되는 이미지에는 반드시
 
 {% include image.html name="image-recognition-overview" file="single-object-classification-confidence-scores.svg" description="단일 사물 분류 문제에서의 신뢰도 점수 해석<br><small>(예시 이미지: VOC2008 데이터셋 - 2008_005977.jpg)</small>" class="large-image" %}
 
-단일 사물 분류를 요구하는 데이터셋으로는 앞서 언급했던 MNIST, CIFAR-10 등이 있으며, 이들은 상대적으로 좀 더 쉬운 문제로 취급됩니다. 
+단일 사물 분류를 요구하는 데이터셋으로는 앞서 언급했던 MNIST, CIFAR-10 등이 있으며, 이들은 상대적으로 쉬운 문제로 취급됩니다. 
 
 반면, 이번에는 *이미지 상에 복수 개의 사물들이 포함되어 있을 수 있도록* 전제되어 있는 경우입니다. 이를 '*복수 사물 분류*' 문제라고 지칭하도록 하겠습니다. 이 경우, 단순히 위와 같이 가장 큰 신뢰도 점수를 갖는 클래스 하나만을 선정하여 제시하는 것은 그다지 합리적인 결론이 아닐 것입니다. 
 
-이러한 문제 상황에서는 이미지 인식 대회마다 결론을 도출하는 방식이 조금씩 다르나, PASCAL VOC Challenge의 경우에는 각 클래스마다 *문턱값(threshold)*을 설정해 놓고, 주어진 이미지의 각 클래스 별 신뢰도 점수가 문턱값보다 큰 경우에 한하여 '주어진 이미지 안에 해당 클래스가 포함되어 있을 것이다'고 결론짓도록 합니다. 예를 들어, 아래와 같이 '소'와 '사람'을 동시에 담고 있는 이미지가 주어졌을 때, 20가지 클래스 각각의 신뢰도 점수들을 조사하여, 이들 중 사전에 정한 문턱값보다 큰 신뢰도 점수를 지니는 'cow'와 'person' 클래스를 선정하여 제시할 수 있습니다.
+이러한 문제 상황에서는 이미지 인식 대회마다 결론을 도출하는 방식이 조금씩 다르나, PASCAL VOC Challenge의 경우에는 각 클래스마다 **문턱값(threshold)**을 미리 설정해 놓고, 주어진 이미지의 *각 클래스 별 신뢰도 점수가 문턱값보다 **큰** 경우에 한하여 '주어진 이미지 안에 해당 클래스가 포함되어 있을 것이다'고 결론*짓도록 합니다. 예를 들어, 아래와 같이 '소'와 '사람'을 동시에 담고 있는 이미지가 주어졌을 때, 20가지 클래스 각각의 신뢰도 점수들을 조사하여, 이들 중 사전에 정한 문턱값보다 큰 신뢰도 점수를 지니는 'cow'와 'person' 클래스를 선정하여 제시할 수 있습니다.
 
 {% include image.html name="image-recognition-overview" file="multiple-objects-classification-confidence-scores.svg" description="복수 사물 분류 문제에서의 신뢰도 점수 해석<br><small>(예시 이미지: VOC2010 데이터셋 - 2010_001692.jpg)</small>" class="large-image" %}
 
@@ -81,53 +85,81 @@ Classification 문제에서 분류의 대상이 되는 이미지에는 반드시
 
 ### 평가 척도
 
-어떤 모델의 Classification 성능을 평가하고자 할 때, 다양한 종류의 **평가 척도(evaluation measure)** 중 하나 혹은 여러 개를 선정하여 사용할 수 있습니다. 일반적으로 가장 쉽게 떠올릴 수 있는 척도로 **정확도(accuracy)**가 있습니다. Classification 문제에서의 정확도는 일반적으로, 테스트를 위해 주어진 전체 이미지 수 대비 올바르게 분류한 이미지 수로 정의합니다. 
+#### 정확도(accuracy)
+
+어떤 모델의 Classification 성능을 평가하고자 할 때, 다양한 종류의 **평가 척도(evaluation measure)** 중 하나 혹은 여러 개를 선정하여 사용할 수 있습니다. 일반적으로 가장 쉽게 떠올릴 수 있는 척도로 **정확도(accuracy)**가 있습니다. Classification 문제에서의 정확도는 일반적으로, *테스트를 위해 주어진 전체 이미지 수 대비, 분류 모델이 올바르게 분류한 이미지 수*로 정의합니다. 
 
 \begin{equation}
-\text{accuracy} = \frac{\text{올바르게 분류한 이미지 수}} {\text{전체 이미지 수}}
+\text{정확도} = \frac{\text{올바르게 분류한 이미지 수}} {\text{전체 이미지 수}}
 \end{equation}
 
 단일 사물 분류 문제에서는,  위에서 정의된 정확도를 평가 척도로 즉각 사용하여도 크게 문제가 없습니다. 예를 들어, 아래와 같이 전체 테스트용 이미지가 10개 있었다고 할 때, 분류 모델이 이들 중 7개를 올바르게 예측했다면, 정확도는 $$7 / 10 = 0.7$$($$70\%$$)가 됩니다.
 
 {% include image.html name="image-recognition-overview" file="accuracy-example.svg" description="단일 사물 분류 문제에서의 정확도 계산 예시" class="large-image" %}
 
-그러나, 복수 사물 분류 문제에서는, 위의 정확도를 그대로 사용하기 곤란해지는 상황이 발생합니다. 이러한 경우, 정확도를 각 클래스 별로 계산한 뒤 이들 전체의 *대푯값(representative value)*을 취하는 방식을 채택할 수 있습니다. 구체적으로, 전체 $$C$$개 클래스의 *평균* 정확도를 계산하고자 한다면, 아래와 같은 공식을 사용할 수 있습니다(이 때, '클래스 $$c$$ 이미지'란 클래스 $$c$$에 해당하는 사물을 포함하고 있는 이미지를 지칭합니다).
+#### 정밀도(precision)와 재현율(recall)
+
+그러나, 복수 사물 분류 문제에서는, 위의 정확도를 그대로 사용하기 곤란해지는 상황이 발생합니다. 이 때문에, 정확도 대신 **정밀도(precision)** 및 **재현율(recall)** 등의 평가 척도를 사용합니다. 정밀도와 재현율은 하나의 클래스에 대하여 (다른 클래스와는 독립적으로) 매겨지는 평가 척도입니다.
+
+Classification 문제에서의 어느 특정 클래스 $$c$$의 정밀도는, *분류 모델이 $$c$$일 것으로 예측한 이미지 수 대비, 분류 모델이 올바르게 분류한 클래스 $$c$$ 이미지 수*로 정의합니다. 한편, 클래스 $$c$$의 재현율은, *전체 클래스 $$c$$ 이미지 수 대비, 분류 모델이 올바르게 분류한 클래스 $$c$$ 이미지 수*로 정의합니다.
 
 \begin{equation}
-\text{평균 accuracy} = \frac{1}{C} \sum_{c=1}^{C} \frac{\text{올바르게 분류한 클래스 c 이미지 수}} {\text{전체 클래스 c 이미지 수}}
+\text{클래스 c의 정밀도} = \frac{\text{올바르게 분류한 클래스 c 이미지 수}} {\text{클래스 c일 것으로 예측한 이미지 수}}
 \end{equation}
 
-즉, 아래와 같이 원본 테스트 이미지들을 각 클래스 별로 나눈 후, 각 클래스에 대하여 정확도를 따로 계산한 후, 이렇게 얻어진 클래스 별 정확도들의 평균을 계산합니다.
+\begin{equation}
+\text{클래스 c의 재현율} = \frac{\text{올바르게 분류한 클래스 c 이미지 수}} {\text{전체 클래스 c 이미지 수}}
+\end{equation}
 
-{% include image.html name="image-recognition-overview" file="accuracy-per-class-example.svg" description="복수 사물 분류 문제에서의 클래스 별 정확도 계산 예시<br><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 정확도는 $$(0.6+1.0+0.8)/3 = 0.8(80\%)$$)</small>" class="large-image" %}
+각 클래스에 대한 정밀도 및 재현율을 계산한 뒤, 이들 전체의 대표값(representative value)을 취하고, 이를 최종적인 평가 척도로 삼을 수 있습니다. 구체적으로, 전체 $$C$$개 클래스에 대한 평균 정밀도 및 평균 재현율을 계산하고자 한다면, 아래와 같은 공식을 사용할 수 있습니다(이 때, '클래스 $$c$$ 이미지'란 클래스 $$c$$에 해당하는 사물을 포함하고 있는 이미지를 지칭합니다).
+
+\begin{equation}
+\text{평균 정밀도} = \frac{1}{C} \sum_{c=1}^{C} \text{(클래스 c의 정밀도)}
+\end{equation}
+
+\begin{equation}
+\text{평균 재현율} = \frac{1}{C} \sum_{c=1}^{C} \text{(클래스 c의 재현율)}
+\end{equation}
+
+평균 정밀도를 계산하는 구체적인 과정을 보면, 아래 그림과 같이 원본 테스트 이미지들을 모델이 예측한 클래스를 기준으로 나눈 후, 각각에 대하여 정밀도를 따로 계산한 뒤, 이렇게 얻어진 클래스 별 정밀도의 평균을 계산합니다.
+
+{% include image.html name="image-recognition-overview" file="precision-per-class-example.svg" description="복수 사물 분류 문제에서의 클래스 별 정밀도 계산 예시<br><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 정밀도는 $$(0.4+0.6+0.4)/3 = 0.47(47\%)$$)</small>" class="large-image" %}
+
+다음으로 평균 재현율을 계산하는 구체적인 과정을 보면, 아래 그림과 같이 원본 테스트 이미지들을 실제 클래스를 기준으로 나눈 후, 각 클래스에 대하여 재현율을 따로 계산한 뒤, 이렇게 얻어진 클래스 별 재현율의 평균을 계산합니다.
+
+{% include image.html name="image-recognition-overview" file="recall-per-class-example.svg" description="복수 사물 분류 문제에서의 클래스 별 재현율 계산 예시<br><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 재현율은 $$(0.6+1.0+0.8)/3 = 0.8(80\%)$$)</small>" class="large-image" %}
 
 #### 신뢰도 점수의 문턱값에 따른 평가 척도 수치의 변화 가능성
 
-복수 사물 분류 문제의 경우, 각 클래스 별로 신뢰도 점수에 대한 문턱값을 어떻게 결정해야 하는지에 대한 이슈가 여전히 남아 있습니다. 이해를 돕기 위해, 'car' 클래스에 대한 분류 모델의 신뢰도 점수를 가지고, 설정한 문턱값에 따라 결론을 내리는 상황을 살펴보도록 하겠습니다. 이 때, 편의 상 'car' 클래스를 제외한 나머지 모든 클래스들을 not 'car' 클래스로 지칭하도록 하겠습니다.
+복수 사물 분류 문제의 경우, 각 클래스 별로 신뢰도 점수에 대한 문턱값을 어떻게 결정해야 하는지에 대한 이슈가 여전히 남아 있습니다. 이해를 돕기 위해, 'car' 클래스에 대한 분류 모델의 신뢰도 점수가 주어졌을 때, 특정 문턱값에 따라 결론을 내리는 상황을 살펴보도록 하겠습니다. 이 때, 편의 상 'car' 클래스를 제외한 나머지 모든 클래스들을 not 'car' 클래스로 지칭하도록 하겠습니다.
 
-먼저, (1) *'car' 클래스의 문턱값을 높게 잡을수록*, 분류 모델이 'car' 클래스로 예측하게 되는 이미지의 개수가 감소합니다. 이렇게 되면, *실제 'car' 클래스 이미지들을 올바르게 분류할 가능성은 낮아질 것이나, not 'car' 클래스 이미지들을 올바르게 분류할 가능성은 높아집니다*.
+먼저, (1) *'car' 클래스의 문턱값을 높게 잡을수록, 분류 모델이 'car' 클래스로 예측하게 되는 이미지의 개수가 감소*합니다. 이렇게 되면, 신뢰도가 확실하게 높은 이미지에 대해서만 'car' 클래스로 예측하게 되므로 *정밀도가 상승하나, 반대로 재현율은 하락*합니다.
 
-반면에 (2) *'car' 클래스의 문턱값을 낮게 잡을수록*, 분류 모델이 'car' 클래스로 예측하게 되는 이미지의 개수가 증가합니다. 이렇게 되면, *실제 'car' 클래스 이미지들을 올바르게 분류할 가능성은 높아질 것이나, not 'car' 클래스 이미지들을 올바르게 분류할 가능성은 낮아집니다*.
+반면에 (2) *'car' 클래스의 문턱값을 낮게 잡을수록, 분류 모델이 'car' 클래스로 예측하게 되는 이미지의 개수가 증가*합니다. 이렇게 되면, 신뢰도가 낮은 이미지들까지 공격적으로 'car' 클래스로 예측하게 되므로 *재현율이 상승하나, 반대로 정밀도는 하락*합니다.
 
 'car' 클래스에 대하여, 테스트 이미지들에 대한 분류 모델의 신뢰도 점수가 계산된 후, 문턱값의 변화에 따라 모델의 예측 결과 및 실제 정답 여부를 아래 그림과 같이 나타냈습니다. 
 
-{% include image.html name="image-recognition-overview" file="threshold-to-classification-results.svg" description="'car' 클래스의 신뢰도 점수의 문턱값에 따른, 정확도 결과 변화" class="full-image" %}
+{% include image.html name="image-recognition-overview" file="threshold-to-classification-results.svg" description="'car' 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 표" class="full-image" %}
 
-위의 사례에서는, 'car' 클래스의 문턱값을 $$2.0$$으로 설정했을 때, 정확도 $$0.9$$로 최고 수치를 기록했습니다. 
+위 그림에서는 편의 상 문턱값을 $$1.0$$ 간격으로 조정하면서 정확도를 측정한 것인데, 문턱값의 조정 간격을 더 짧게 하고 정밀도와 재현율을 측정하면 아래와 같은 형태의 플롯을 얻을 수 있습니다.
 
+{% include image.html name="image-recognition-overview" file="precision-recall-to-threshold-plot.svg" description="'car' 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 플롯" class="medium-image" %}
 
+위의 사례에서는, 'car' 클래스의 문턱값을 약 $$2.3$$ 정도로 설정했을 때, 정밀도 및 재현율이 모두 $$1.0$$으로 최고 수치를 기록했습니다. 아마도 여러분들께서는 위와 같이 문턱값을 조정하면서 테스트 이미지들에 대한 채점 결과를 관찰하여, 최고 수치의 정밀도 혹은 재현율을 발휘하는 문턱값을 결정하면 될 것 같다는 충동이 들 것입니다.
 
-그런데, 보다 현실적인 Classification 문제에서는 단순한 정확도 대신 *<a href="https://en.wikipedia.org/wiki/Precision_and_recall" target="_blank">정밀도(precision)</a>*, *<a href="https://en.wikipedia.org/wiki/Precision_and_recall" target="_blank">재현율(recall)</a>*, *<a href="https://en.wikipedia.org/wiki/F1_score" target="_blank">F1 score</a>* 등의 척도를 더 많이 사용합니다(이들에 대한 자세한 내용은, 각 단어에 연결된 링크를 참조하시길 바랍니다). 
+그런데, 사실 이런 방식으로 최적의 문턱값을 결정하여 최종 성능을 뽑아내면, 그 결과는 현재 가지고 있는 테스트 이미지들에 한해서만 지나치게 '낙관적인(optimistic)' 결과가 되어 버립니다. 즉, 새로운 테스트 이미지가 들어오는 상황에서 발휘할 수 있는 '일반적인 성능'이라고 담보하기 어려워지는 것입니다. 
 
-### 대표적인 딥러닝 모델
+> 이는 마치 시험 시작 전에 시험 출제 문제를 1분 정도 슬쩍 컨닝한 뒤, 시험을 치는 것과 같은 행동입니다. 
 
-Classification 문제는, 이어질 Detection 및 Segmentation 문제를 향한 출발점이라고 할 수 있습니다. Detection 및 Segmentation 문제 해결을 위해서는 특정 클래스에 해당하는 사물이 이미지 상의 어느 곳에 위치하는지에 대한 정보를 파악해야 하는데, 이를 위해서는 우선 그러한 사물이 이미지 상에 존재하는지 여부가 반드시 먼저 파악되어야 하기 때문입니다. 이러한 경향 때문에, Classification 문제에서 우수한 성능을 발휘했던 모델을 Detection 또는 Segmentation을 위한 구조로 변형하여 사용할 경우, 그 역시 상대적으로 우수한 성능을 발휘하는 경향이 있습니다.
+이러한 맹점을 보완하고자 대부분의 이미지 인식 대회에서는, 문턱값을 전체 가능한 범위 내에서 미세하게 변화시키면서 정밀도 혹은 재현율이 변화하는 순간을 추적하고, 이러한 지점에서의 정밀도 및 재현율 값들을 수집하여 이들의 평균을 계산하는 방법을 채택하고 있습니다. 
 
+**TODO: average precision 관련 내용 추가**
 
-- 과거 접근 방법론(TBD)
-- 최근 접근 방법론
-  - ResNeXt, DenseNet, DPN
-  - TODO
+### 의의
+
+Classification 문제는, 이어질 Detection 및 Segmentation 문제를 향한 출발점이라고 할 수 있습니다. Detection 및 Segmentation 문제 해결을 위해서는 특정 클래스에 해당하는 사물이 이미지 상의 어느 곳에 위치하는지에 대한 정보를 파악해야 하는데, 이를 위해서는 우선 그러한 사물이 이미지 상에 존재하는지 여부가 반드시 먼저 파악되어야 하기 때문입니다. 
+
+이러한 경향 때문에, Classification 문제에서 우수한 성능을 발휘했던 모델을 Detection 또는 Segmentation을 위한 구조로 변형하여 사용할 경우, 그 역시 상대적으로 우수한 성능을 발휘하는 경향이 있습니다.
 
 
 ## Detection
@@ -183,8 +215,5 @@ Detection에서 '박스 형태'로 위치를 표시한다고 하였는데, 이 �
 - 일반적인 이미지 인식 문제 데이터셋 예시: CIFAR-10
   - <a href="https://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">Krizhevsky, Alex, and Geoffrey Hinton. "Learning multiple layers of features from tiny images." (2009).</a>
 - PASCAL VOC 문제: Classification, Detection, Segmentation
+  - <a href="https://pdfs.semanticscholar.org/0ee1/916a0cb2dc7d3add086b5f1092c3d4beb38a.pdf" target="_blank">Everingham, Mark, et al. "The pascal visual object classes (voc) challenge." International journal of computer vision 88.2 (2010): 303-338.</a>
   - <a href="http://host.robots.ox.ac.uk/pascal/VOC/pubs/everingham15.pdf" target="_blank">Everingham, Mark, et al. "The pascal visual object classes challenge: A retrospective." International journal of computer vision 111.1 (2015): 98-136.</a>
-- 정밀도(precision)와 재현율(recall)
-  - <a href="https://en.wikipedia.org/wiki/Precision_and_recall" target="_blank">"Precision and recall." Wikipedia contributors. "Precision and recall." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 3 Oct. 2017. Web. 24 Nov. 2017.</a>
-- F1 score
-  - <a href="https://en.wikipedia.org/wiki/F1_score" target="_blank">Wikipedia contributors. "F1 score." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 29 Oct. 2017. Web. 24 Nov. 2017. </a>
