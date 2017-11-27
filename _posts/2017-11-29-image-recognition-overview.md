@@ -196,9 +196,33 @@ Detection에서 '박스 형태'로 위치를 표시한다고 하였는데, 이 �
 
 #### IOU(intersection over union)
 
-- 평가 척도: IOU 기준, 사전에 지정된 threshold를 초과하는지
+Detection 문제의 경우, 사물의 클래스 및 위치에 대한 예측 결과를 동시에 평가해야 하기 때문에, 사물의 실제 위치를 나타내는 '*실제(ground truth; 이하 GT)*' 바운딩 박스 정보가 이미지 레이블 상에 포함되어 있습니다. 검출 모델의 경우 복수 개의 예측 바운딩 박스를 제출할 수 있기 때문에, 이들 중 어떤 것을 GT 바운딩 박스와 매칭시킬지에 대한 규정이 마련되어 있습니다.
 
-**TODO: IOU와 overlap threshold에 대한 이미지 추가**
+이를 위해, 각 예측 바운딩 박스 $$B_p$$와 GT 바운딩 박스 $$B_{gt}$$에 대하여, 아래와 같이 정의되는 **IOU(intersection over union)**를 사용하여 $$B_p$$와 $$B_{gt}$$가 서로 얼마나 '겹쳐지는지'를 평가합니다.
+
+\begin{equation}
+B_p\text{와 } B_{gt}\text{ 의 IOU} = \frac{B_p \cap B_{gt} \text{ 영역 넓이}} {B_p \cup B_{gt} \text{ 영역 넓이}}
+\end{equation}
+
+{% include image.html name="image-recognition-overview" file="bbox-overlap.svg" description="$$B_p$$와 $$B_{gt}$$ 간의 IOU 계산" class="full-image" %}
+
+PASCAL VOC에서는, 예측 바운딩 박스와 GT 바운딩 박스 간의 IOU에 대한 문턱값을 $$0.5$$로 정해 놓고 있습니다. 즉, *예측 바운딩 박스와 GT 바운딩 박스 간에 겹친 영역의 비율이 50%를 넘겼을 때만, 두 바운딩 박스를 매칭한 뒤, 해당 예측 바운딩 박스의 신뢰도 점수를 평가*하는 방식을 채택합니다.
+
+이 때 주의할 점은, 하나의 GT 바운딩 박스에 대하여 여러 개의 예측 바운딩 박스가 모두 IOU를 50% 넘겨 매칭된 경우, 이들 모두 결과적으로는 매칭에 실패한 것으로 간주되어 채점 대상에서 누락된다는 점입니다. 예측 바운딩 박스와 GT 바운딩 박스 간의 매칭 성사 및 실패 사례를 아래 그림에서 나타내었습니다.
+
+{% include image.html name="image-recognition-overview" file="bbox-overlap-examples.svg" description="$$B_p$$와 $$B_{gt}$$ 간의 매칭 사례<br><small>(예시 이미지: VOC2010 데이터셋 - 2010_000413.jpg)</small>" class="large-image" %}
+
+> 이러한 규정 때문에, '일단 마구 질러보고, 하나만 얻어 걸려라'는 식의 전략은 지양하는 것이 좋겠습니다.
+
+#### 정밀도와 재현율
+
+일단 위와 같이 하나의 GT 바운딩 박스 당 하나의 예측 바운딩 박스가 매칭된 이후에는, 해당 예측 바운딩 박스에 결부된 신뢰도 점수를 기반으로 정밀도 또는 재현율을 계산합니다. 이 과정은 Classification 문제에서와 거의 동일한 방법으로 진행되므로, 자세한 설명은 생략하도록 하겠습니다.
+
+### 의의
+
+Detection 문제는 근본적으로 Classification 문제보다 어려운 문제입니다. 실제로 오늘날 Classification 문제를 위해 개발된 분류 모델들의 성능 발전 수준에 비해, Detection 문제를 위해 개발된 검출 모델들의 성능 발전 수준이 상대적으로 뒤처져 있는 것이 사실입니다. 
+
+그럼에도 불구하고, Detection 문제는 사물의 위치에 대한 예측 정보까지 추가로 제공해 준다는 측면에서, 다양한 산업 현장에 적용될 수 있는 잠재적인 가치를 지니고 있습니다. 실제 산업에의 적용을 위해, Detection 문제를 연구하는 사람들은 검출 결과의 성능 자체를 향상시키기 위한 노력과 더불어, 검출 모델의 이미지 1장 당 처리 소요 시간을 낮추기 위한 노력도 병행하고 있습니다.
 
 
 ## Segmentation
