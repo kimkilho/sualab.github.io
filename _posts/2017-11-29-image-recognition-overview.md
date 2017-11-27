@@ -123,7 +123,7 @@ Classification 문제에서의 어느 특정 클래스 $$c$$의 정밀도는, *�
 \text{평균 재현율} = \frac{1}{C} \sum_{c=1}^{C} \text{(클래스 c의 재현율)}
 \end{equation}
 
-> 총으로 사냥을 하는 것에 비유하자면, 일단 발사한 탄환 하나마다 사냥감 하나를 반드시 놓치지 않고 맞추도록 하고자 한다면, 정밀도를 높이는 방향으로 전략을 짜야 합니다. 반면, '헛방'이 많이 나도 좋으니 어떻게든 자기 주변에 있는 모든 사냥감을 맞추는 것이 목표라면, 재현율을 높이는 방향으로 전략을 짜야 합니다.
+> 총으로 사냥을 하는 것에 비유하자면, 일단 발사한 탄환 하나마다 사냥감 하나씩을 반드시 놓치지 않고 맞추도록 하고자 한다면, 정밀도를 높이는 방향으로 전략을 짜야 합니다. 반면, '헛방'이 많이 나도 좋으니 어떻게든 자기 주변에 있는 모든 사냥감을 맞추는 것이 목표라면, 재현율을 높이는 방향으로 전략을 짜야 합니다.
 
 평균 정밀도를 계산하는 구체적인 과정을 보면, 아래 그림과 같이 원본 테스트 이미지들을 모델이 예측한 클래스를 기준으로 나눈 후, 각각에 대하여 정밀도를 따로 계산한 뒤, 이렇게 얻어진 클래스 별 정밀도의 평균을 계산합니다.
 
@@ -227,12 +227,44 @@ Detection 문제는 근본적으로 Classification 문제보다 어려운 문제
 
 ## Segmentation
 
-- 개념적으로는, 픽셀 단위로 classification을 한 것
-- Semantic Segmentation: 이미지 상의 모든 픽셀을 대상으로 분류를 수행함(이 때, 서로 다른 사물이더라도 동일한 카테고리에 해당한다면, 서로 동일한 것으로 분류함)
-- Instance Segmentation: 사물 카테고리 단위가 아니라, 사물 단위로 픽셀 별 분류를 수행함
-- 평가 척도: IOU
+### 문제 정의
 
-**TODO: Segmentation == Pixel-wise classification을 보여주는 이미지 추가**
+Segmentation 문제에서는, *주어진 이미지 안에 어느 특정한 클래스에 해당하는 사물이 (만약 있다면) 어느 위치에 포함되어 있는지 '픽셀 단위로' 분할하는 모델을 만드는 것*을 목표로 합니다. 이는 사물의 위치를 바운딩 박스로 표시하는 Detection 문제보다 더 자세하게 위치를 표시해야 하기 때문에, Detection 문제보다 더 어려운 문제에 해당합니다.
+
+{% include image.html name="image-recognition-overview" file="segmentation-model.svg" description="Segmentation 문제<br><small>(예시 이미지: VOC2007 데이터셋 - 2007_001423.jpg)</small>" class="full-image" %}
+
+Segmentation 문제는, 그 정의 상 본질적으로 *'픽셀'들을 대상으로 한 Classification 문제*라고 해도 크게 무리가 없습니다. 주어진 이미지 내 각 위치 상의 픽셀들을 하나씩 조사하면서, 현재 조사 대상인 픽셀이 어느 특정한 클래스에 해당하는 사물의 일부인 경우, 해당 픽셀의 위치에 그 클래스를 나타내는 '값'을 표기하는 방식으로 예측 결과물을 생성합니다. 만약 조사 대상 픽셀이 어느 클래스에도 해당하지 않는 경우, 이를 '*배경(background)*' 클래스로 규정하여 예측 결과물의 해당 위치에 $$0$$을 표기합니다. 이렇게 생성된 예측 결과물을 **마스크(mask)** 라고도 부릅니다.
+
+가령 'person' 클래스를 나타내는 값이 $$1$$이라고 했다면, 아래 그림과 같이 사람이 포함된 이미지를 받았을 때 실제 사람이 위치하는 'person' 영역에만 $$1$$을, 그렇지 않은 'background' 영역에는 $$0$$을 기재할 수 있습니다. 이런 식으로 하여, 'dog', 'pottedplant', 'motorbike' 등의 다른 클래스에 대해서도, $$2$$, $$3$$, $$4$$ 등 해당 클래스들을 나타내는 값을 표기하는 방식으로 예측 마스크를 생성할 수 있습니다.
+
+{% include image.html name="image-recognition-overview" file="segmentation-result-to-values.svg" description="Segmentation 분할 결과 = 픽셀 단위 분류 결과<br><small>(좌측 이미지는 PASCAL VOC의 마스킹 규칙에 맞게 빨간색으로 채색하였으며, 우측 결과물과 실제로 일치하지는 않습니다.)</small>" class="large-image" %}
+
+(하지만 엄밀하게 Classification 문제와 차이가 있다면, Classification 문제에서는 각 이미지에 대한 신뢰도 점수를 제출하도록 요구한다면, Segmentation 문제에서는 각 픽셀이 어떤 클래스에 해당하는지를 나타내는 값을 곧바로 제출하도록 한다는 점을 들 수 있겠습니다.)
+
+#### 세부 문제 구분
+
+Segmentation 문제는 **Semantic Segmentation**과 **Instance Segmentation**의 두 가지 세부 문제로 구분할 수 있습니다. Semantic Segmentation은 분할의 기본 단위를 클래스로 하여, 동일한 클래스에 해당하는 사물을 예측 마스크 상에 동일한 색상으로 표시합니다. 반면 Instance Segmentation은 분할의 기본 단위를 사물로 하여, 동일한 클래스에 해당하더라도 서로 다른 사물에 해당하면 이들을 예측 마스크 상에 다른 색상으로 표시합니다. 아래 그림에서 Semantic Segmentation과 Instance Segmentation 간의 차이를 극명하게 확인할 수 있습니다.
+
+{% include image.html name="image-recognition-overview" file="segmentation-types.svg" description="Segmentation의 종류: Semantic Segmentation, Instance Segmentation<br><small>(예시 이미지: VOC2007 데이터셋 - 2007_000129.jpg)</small>" class="large-image" %}
+
+### 평가 척도
+
+#### IOU(intersection over union)
+
+Segmentation 문제도 Detection 문제의 경우와 유사하게, 사물의 실제 위치를 나타내는 '*실제(GT)*' 마스크가 이미지 레이블 상에 포함되어 있습니다. 예측 마스크의 특정 클래스를 나타내는 영역 $$A_p$$와 GT 마스크의 해당 클래스 영역 $$A_{gt}$$에 대하여, 아래의 **IOU(intersection over union)**를 사용하여 $$A_p$$와 $$A_{gt}$$가 서로 얼마나 '겹쳐지는지'를 평가합니다.
+
+\begin{equation}
+A_p\text{와 } A_{gt}\text{ 의 IOU} = \frac{A_p \cap A_{gt} \text{ 영역 넓이}} {A_p \cup A_{gt} \text{ 영역 넓이}}
+\end{equation}
+
+{% include image.html name="image-recognition-overview" file="segmentation-iou.svg" description="$$A_p$$와 $$A_{gt}$$ 간의 IOU 계산<br><small>(마스크 상의 흰 색으로 표시된 픽셀들의 경우, IOU 계산 시 고려 대상에서 제외됨,<br>예시 이미지: VOC2007 데이터셋 - 2007_001458.jpg)</small>" class="full-image" %}
+
+PASCAL VOC에서는, 각 클래스 별로 위와 같이 계산된 IOU 자체를 최종 평가 척도로 사용합니다. 이 때 주의할 점은, 기존 GT 마스크 상에서 ('background' 클래스를 제외한) 특정 클래스를 나타내는 영역 $$A_{gt}$$의 가장자리에는 반드시 *폭 5px의 '흰색' 경계선*이 표시되어 있다는 것입니다. 이렇게 GT 마스크 상에서 흰색으로 표시된 픽셀의 경우, *IOU 계산 시 고려 대상에서 완전히 배제*됩니다. 보통 이미지 상의 사물을 둘러싼 '정확한' 경계를 결정하는 과정에서는 사람들 사이에서도 의견이 분분할 수밖에 없는데, 이러한 애매함을 해결하고자 도입한 규정이라고 보면 됩니다.
+
+### 의의
+
+Segmentation 문제는 모든 픽셀에 대하여 클래스 분류를 수행해야 한다는 점에서, 성능 발전 수준도 다른 문제에 비해 상대적으로 낮은 편이며, 분류 모델의 이미지 1장 당 처리 소요 시간도 매우 긴 편입니다. 하지만, 사물의 위치에 대한 정교한 인식 결과물을 얻는 것이 가장 중요한 문제 상황에서는, 이를 Segmentation 문제로 가정하고 이를 해결하기 위한 분할 모델을 개발하는 것이 최선의 방법이라고 할 수 있겠습니다. 
+
 
 
 ## 결론
