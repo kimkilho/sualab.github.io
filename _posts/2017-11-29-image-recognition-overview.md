@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "이미지 인식 문제와 딥러닝"
-date: 2017-11-05 09:00:00 +0900
+date: 2017-11-29 09:00:00 +0900
 author: kilho_kim
 categories: [machine-learning, machine-vision]
 tags: [machine-learning, data-science, machine-vision]
@@ -9,7 +9,7 @@ comments: true
 name: image-recognition-overview
 ---
 
-지난 번 글까지 해서 수아랩의 핵심 기술들 중 하나인 '딥러닝'에 대해 알아보았습니다. 오늘날 딥러닝 기술이 적용되고 있는 분야는 이미지 인식, 음성 인식, 자연어 처리 등 여러 가지가 있습니다. 오늘은 이러한 적용 분야들 중, 딥러닝의 위력을 가장 드라마틱하게 보여주고 있다고 할 수 있는 '이미지 인식' 분야에서 다루는 문제들을 언급하고, 오늘날 딥러닝 기술을 활용하여 이들 문제에 어떻게 접근하고 있는지에 대하여 살펴보고자 합니다. 
+지난 번 글까지 해서 수아랩의 핵심 기술들 중 하나인 '딥러닝'에 대해 알아보았습니다. 오늘날 딥러닝 기술이 적용되고 있는 분야는 이미지 인식, 음성 인식, 자연어 처리 등 여러 가지가 있습니다. 오늘은 이러한 적용 분야들 중, 딥러닝의 위력을 가장 드라마틱하게 보여주고 있다고 할 수 있는 '이미지 인식' 분야에서 다루는 문제들을 정의하고, 이들의 주요 목표가 무엇인지, 러닝 모델의 예측 결과를 어떤 척도로 평가하는지 등에 대하여 살펴보고자 합니다. 
 
 - 본문의 플롯을 위해 작성한 <a href="https://github.com/sualab/sualab.github.io/blob/master/assets/notebooks/image-recognition-overview.ipynb" target="_blank">Python 코드</a>를 부록으로 함께 첨부하였습니다. 
 
@@ -49,13 +49,13 @@ name: image-recognition-overview
 
 {% include image.html name="image-recognition-overview" file="classification-detection-segmentation.png" description="PASCAL VOC Challenge 문제: Classification, Detection, Segmentation" class="large-image" %}
 
-PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다루는 주요 문제를 크게 3가지로 정리할 수 있습니다. **Classification**, **Detection**, **Segmentation**이 바로 그것입니다. 지금부터 이들 각각의 문제가 구체적으로 무엇인지, 과거에는 이들 문제에 어떻게 접근했는지, 오늘날 딥러닝 기술을 적용하여 이들 문제에 어떻게 접근하고 있는지의 순으로 이야기해 보도록 하겠습니다.
+PASCAL VOC Challenge를 기준으로 볼 때, 이미지 인식 분야에서 다루는 주요 문제를 크게 3가지로 정리할 수 있습니다. **Classification**, **Detection**, **Segmentation**이 바로 그것입니다. 지금부터 이들 각각의 문제가 무엇인지 정의하고, 각 문제와 관련된 주요한 이슈는 무엇인지, 어떤 기준으로 예측 성능을 평가하는지 순으로 이야기해 보도록 하겠습니다.
 
 ## Classification
 
 ### 문제 정의
 
-Classification 문제에서는, *주어진 이미지 안에 어느 특정한 클래스에 해당하는 사물이 포함되어 있는지 여부를 분류*하는 것을 주요 목표로 합니다. 여기에서 **클래스(class)**란, 분류 대상이 되는 카테고리 하나하나를 지칭합니다. 
+Classification 문제에서는, *주어진 이미지 안에 어느 특정한 클래스에 해당하는 사물이 포함되어 있는지 여부를 분류하는 모델을 만드는 것*을 주요 목표로 합니다. 여기에서 **클래스(class)**란, 분류 대상이 되는 카테고리 하나하나를 지칭합니다. 
 
 본격적인 Classification을 수행하기 전에, 반드시 관심의 대상이 되는 클래스들을 미리 정해놓고 작업을 시작해야 합니다. 예를 들어, PASCAL VOC Challenge에서는 총 20가지 클래스를 상정하고, 이에 대한 classification을 수행하도록 하였습니다.
 
@@ -63,7 +63,7 @@ Classification 문제에서는, *주어진 이미지 안에 어느 특정한 클
 
 PASCAL VOC Challenge를 비롯한 대부분의 이미지 인식 대회의 Classification 문제에서는, 주어진 이미지 안에 특정 클래스의 사물이 존재할 '가능성' 내지는 '믿음'을 나타내는 **신뢰도 점수(confidence score)**를 제출하도록 요구합니다. 즉, '주어진 이미지 안에 클래스 X의 사물이 있다'는 식의 단정적인 결론 대신, '주어진 이미지 안에 클래스 X의 사물이 존재할 가능성이 $$s_X$$, 클래스 Y의 사물이 존재할 가능성이 $$s_Y$$, 클래스 Z의 사물이 존재할 가능성이 $$s_Z$$, ...' 식의 결과물을 제출하도록 요구하고, 이를 통해 추후 정답 여부 확인 시 해당 결과물에 대한 사후적인 해석의 여지를 두게 되는 것입니다.
 
-**TODO: '이미지 입력 --> 분류 모델 --> 신뢰도 점수 출력' 과정 모식도 추가**
+{% include image.html name="image-recognition-overview" file="classification-model.svg" description="Classification 문제<br><small>(예시 이미지: VOC2009 데이터셋 - 2009_001984.jpg)</small>" class="full-image" %}
 
 #### 신뢰도 점수에 대한 해석 방법
 
@@ -123,6 +123,8 @@ Classification 문제에서의 어느 특정 클래스 $$c$$의 정밀도는, *�
 \text{평균 재현율} = \frac{1}{C} \sum_{c=1}^{C} \text{(클래스 c의 재현율)}
 \end{equation}
 
+> 총으로 사냥을 하는 것에 비유하자면, 일단 발사한 탄환 하나마다 사냥감 하나를 반드시 놓치지 않고 맞추도록 하고자 한다면, 정밀도를 높이는 방향으로 전략을 짜야 합니다. 반면, '헛방'이 많이 나도 좋으니 어떻게든 자기 주변에 있는 모든 사냥감을 맞추는 것이 목표라면, 재현율을 높이는 방향으로 전략을 짜야 합니다.
+
 평균 정밀도를 계산하는 구체적인 과정을 보면, 아래 그림과 같이 원본 테스트 이미지들을 모델이 예측한 클래스를 기준으로 나눈 후, 각각에 대하여 정밀도를 따로 계산한 뒤, 이렇게 얻어진 클래스 별 정밀도의 평균을 계산합니다.
 
 {% include image.html name="image-recognition-overview" file="precision-per-class-example.svg" description="복수 사물 분류 문제에서의 클래스 별 정밀도 계산 예시<br><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 정밀도는 $$(0.4+0.6+0.4)/3 = 0.47(47\%)$$)</small>" class="large-image" %}
@@ -139,23 +141,31 @@ Classification 문제에서의 어느 특정 클래스 $$c$$의 정밀도는, *�
 
 반면에 (2) *'car' 클래스의 문턱값을 낮게 잡을수록, 분류 모델이 'car' 클래스로 예측하게 되는 이미지의 개수가 증가*합니다. 이렇게 되면, 신뢰도가 낮은 이미지들까지 공격적으로 'car' 클래스로 예측하게 되므로 *재현율이 상승하나, 반대로 정밀도는 하락*합니다.
 
-'car' 클래스에 대하여, 테스트 이미지들에 대한 분류 모델의 신뢰도 점수가 계산된 후, 문턱값의 변화에 따라 모델의 예측 결과 및 실제 정답 여부를 아래 그림과 같이 나타냈습니다. 
+(1)과 (2)의 상황에서 확인할 수 있듯이, *정밀도와 재현율 간에는 서로 trade-off 관계가 존재*합니다. 좀 더 구체적으로 'car' 클래스에 대하여, 테스트 이미지들에 대한 분류 모델의 신뢰도 점수가 계산된 상황에서, 문턱값의 변화에 따라 모델의 예측 결과 및 실제 정답 여부를 아래 그림과 같이 나타냈습니다. 
 
-{% include image.html name="image-recognition-overview" file="threshold-to-classification-results.svg" description="'car' 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 표" class="full-image" %}
+{% include image.html name="image-recognition-overview" file="threshold-to-classification-results.svg" description="'car' 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 표<br><small>(정밀도 n/a의 경우, 클래스 $$c$$로 예측한 이미지 수가 0개이므로 계산이 불가함을 나타냄)</small>" class="full-image" %}
 
-위 그림에서는 편의 상 문턱값을 $$1.0$$ 간격으로 조정하면서 정확도를 측정한 것인데, 문턱값의 조정 간격을 더 짧게 하고 정밀도와 재현율을 측정하면 아래와 같은 형태의 플롯을 얻을 수 있습니다.
+위 그림에서는 편의 상 문턱값을 $$1.0$$ 간격으로 조정하면서 정밀도 및 재현율을 측정한 것인데, 문턱값의 조정 간격을 더 짧게 하고 정밀도와 재현율을 측정하면 아래와 같은 형태의 플롯을 얻을 수 있습니다.
 
 {% include image.html name="image-recognition-overview" file="precision-recall-to-threshold-plot.svg" description="'car' 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 플롯" class="medium-image" %}
 
-위의 사례에서는, 'car' 클래스의 문턱값을 약 $$2.3$$ 정도로 설정했을 때, 정밀도 및 재현율이 모두 $$1.0$$으로 최고 수치를 기록했습니다. 아마도 여러분들께서는 위와 같이 문턱값을 조정하면서 테스트 이미지들에 대한 채점 결과를 관찰하여, 최고 수치의 정밀도 혹은 재현율을 발휘하는 문턱값을 결정하면 될 것 같다는 충동이 들 것입니다.
+위 플롯에서, 정밀도 혹은 재현율이 변화하는 지점만을 포착하여, 이들 지점에서의 $$(재현율, 정밀도)$$를 아래 그림과 같이 2차원 평면 상에 나타내는 것이 더 일반적인 표현 방법에 해당합니다. 이를 **정밀도-재현율 곡선(precision-recall curves)**이라고 부릅니다.
+
+{% include image.html name="image-recognition-overview" file="precision-recall-curve-plot.svg" description="'car' 클래스의 문턱값에 따른, 정밀도-재현율 곡선 플롯" class="medium-image" %}
+
+위의 사례에서는, 'car' 클래스의 문턱값을 약 $$2.3$$ 정도로 설정했을 때, 정밀도 및 재현율 모두 $$0.8$$로 적당히 높은 수치를 기록했습니다. 아마도 여러분들께서는 위와 같이 문턱값을 조정하면서 테스트 이미지들에 대한 채점 결과를 관찰하여, 높은 수치의 정밀도 혹은 재현율을 발휘하는 문턱값을 결정하면 될 것 같다는 충동이 들 것입니다.
 
 그런데, 사실 이런 방식으로 최적의 문턱값을 결정하여 최종 성능을 뽑아내면, 그 결과는 현재 가지고 있는 테스트 이미지들에 한해서만 지나치게 '낙관적인(optimistic)' 결과가 되어 버립니다. 즉, 새로운 테스트 이미지가 들어오는 상황에서 발휘할 수 있는 '일반적인 성능'이라고 담보하기 어려워지는 것입니다. 
 
-> 이는 마치 시험 시작 전에 시험 출제 문제를 1분 정도 슬쩍 컨닝한 뒤, 시험을 치는 것과 같은 행동입니다. 
+> 이는 마치 시험 시작 직전에 시험 출제 문제를 1분 정도 슬쩍 컨닝한 뒤, 시험을 치는 것과 같은 행동입니다. 
 
-이러한 맹점을 보완하고자 대부분의 이미지 인식 대회에서는, 문턱값을 전체 가능한 범위 내에서 미세하게 변화시키면서 정밀도 혹은 재현율이 변화하는 순간을 추적하고, 이러한 지점에서의 정밀도 및 재현율 값들을 수집하여 이들의 평균을 계산하는 방법을 채택하고 있습니다. 
+이러한 맹점을 보완하고자 대부분의 이미지 인식 대회에서는, 문턱값을 특정 값으로 한정시킨 상황에서의 성능 척도만을 보는 것이 아니라, 문턱값이 존재할 수 있는 전체 범위 내에서의 정밀도 및 재현율들을 계산하고, 이들의 대푯값을 계산하는 방법을 채택하고 있습니다. 
 
-**TODO: average precision 관련 내용 추가**
+예를 들어, PASCAL VOC에서는 **평균 정밀도(average precision)**이라는 평가 척도를 사용합니다. 평균 정밀도는, 각 문턱값에서 얻어지는 정밀도를, (이전 문턱값에서와 비교한)재현율의 증가량으로 곱한 것들의 총합으로 정의되며, 단순하게 생각하면 *정밀도-재현율 곡선과 재현율 축 사이의 넓이*에 해당합니다.
+
+\begin{equation}
+\text{평균 정밀도} = \sum_t (R_t - R_{t-1}) \cdot P_t
+\end{equation}
 
 ### 의의
 
@@ -168,23 +178,23 @@ Classification 문제는, 이어질 Detection 및 Segmentation 문제를 향한 
 
 ### 문제 정의
 
-Detection 문제에서는, *주어진 이미지 안에 어느 특정한 클래스에 해당하는 사물이 (만약 있다면) 어느 위치에 포함되어 있는지 '박스 형태'로 검출*하는 것을 목표로 합니다. 이는 특정 클래스의 사물이 포함되어 있는지 여부만을 분류하는 Classification 문제의 목표에서 한 발 더 나아간 것이라고 할 수 있습니다. '위치 파악'이라는 의미를 부각하기 위해, 다른 이미지 인식 대회에서는 Detection 문제를 'Image Localization' 문제라고 표현하기도 합니다. 
+Detection 문제에서는, *주어진 이미지 안에 어느 특정한 클래스에 해당하는 사물이 (만약 있다면) 어느 위치에 포함되어 있는지 '박스 형태'로 검출하는 모델을 만드는 것*을 목표로 합니다. 이는 특정 클래스의 사물이 포함되어 있는지 여부만을 분류하는 Classification 문제의 목표에서 한 발 더 나아간 것이라고 할 수 있습니다. '위치 파악'이라는 의미를 부각하기 위해, 다른 이미지 인식 대회에서는 Detection 문제를 'Image Localization' 문제라고 표현하기도 합니다. 
 
-Detection에서 '박스 형태'로 위치를 표시한다고 하였는데, 이 때 사용하는 박스는 '네 변이 이미지 상에서 수직/수평 방향을 향한(axis-aligned)' 직사각형 모양의 박스입니다. 즉, 아래 그림과 같은 형태의 박스를 지칭하며, 이를 *바운딩 박스(bounding box)*라고 부릅니다. 
+Detection에서 '박스 형태'로 위치를 표시한다고 하였는데, 이 때 사용하는 박스는 '네 변이 이미지 상에서 수직/수평 방향을 향한(axis-aligned)' 직사각형 모양의 박스입니다. 즉, 아래 그림과 같은 형태의 박스를 지칭하며, 이를 **바운딩 박스(bounding box)**라고 부릅니다. 
 
-**TODO: 아래 이미지에서 $$(x_1, y_1)$$, $$(x_2, y_2)$$ 표시**
+{% include image.html name="image-recognition-overview" file="pascal-voc-detection-bbox-example.svg" description="Detection 문제에서의 바운딩 박스 예시<br><small>(예시 이미지: VOC2009 데이터셋 - 2009_002093.jpg)</small>" class="medium-image" %}
 
-{% include image.html name="image-recognition-overview" file="pascal-voc-detection-image-example.png" description="Detection 문제에서의 바운딩 박스" class="large-image" %}
+바운딩 박스를 정의하기 위해서는, 전체 이미지 상에서 박스의 좌측 상단의 좌표 $$(x_1, y_1)$$과, 우측 하단의 좌표 $$(x_2, y_2)$$를 결정해야 합니다. 이와 더불어, 제시한 바운딩 박스 안에 포함된 사물에 대한 각 클래스 별 신뢰도 점수도 함께 제시해야 합니다. 즉, '바운딩 박스 $$(x_1, y_1, x_2, y_2)$$ 안에 클래스 X의 사물이 존재할 가능성이 $$s_X$$이다'는 식의 결과물을 제출해야 합니다.
 
-바운딩 박스를 정의하기 위해서는, 전체 이미지 상에서 박스의 좌측 상단의 좌표 $$(x_1, y_1)$$과, 우측 하단의 좌표 $$(x_2, y_2)$$를 결정해야 합니다. 이와 더불어, 제시한 바운딩 박스 안에 어떤 카테고리에 해당하는 사물이 포함되어 있을지에 대한 결론도 함께 제시해야 합니다. 즉, 제시해야 하는 결론을 종합해보면 '바운딩 박스 $$(x_1, y_1, x_2, y_2)$$ 안에는 카테고리 X가 포함되어 있을 것이다'는 식으로 표현할 수 있습니다. 
+여기에서도 마찬가지로, 만약 '*단일 사물 검출*' 문제를 전제한다면, 수행하는 모델은 바운딩 박스 하나에 대한 결과물만을 내도록 디자인하면 됩니다. 반면 '*복수 사물 검출*' 문제를 전제한다면, 검출 모델로 하여금 '1번 바운딩 박스 $$(x_1^{(1)}, y_1^{(1)}, x_2^{(1)}, y_2^{(1)})$$ 안에는 {클래스 X: $$s_X^{(1)}$$, 클래스 Y: $$s_Y^{(1)}$$, ...}, 2번 바운딩 박스 $$(x_1^{(2)}, y_1^{(2)}, x_2^{(2)}, y_2^{(2)})$$ 안에는 {클래스 X: $$s_X^{(1)}$$, 클래스 Y: $$s_Y^{(1)}$$, ...}, 3번 바운딩 박스 $$(x_1^{(3)}, y_1^{(3)}, x_2^{(3)}, y_2^{(3)})$$ 안에는 {클래스 X: $$s_X^{(1)}$$, 클래스 Y: $$s_Y^{(1)}$$, ...}' 식의 결과물을 제출하도록 디자인해야 합니다. 
 
-**TODO: '이미지 입력 --> 분류 모델 --> 바운딩 박스 좌표, 신뢰도 점수 출력' 과정 모식도 추가**
-
-여기에서도 마찬가지로, 만약 모든 이미지가 반드시 하나의 사물만을 포함하도록 전제되어 있다면, 검출을 수행하는 모델은 위의 결론을 하나만 내도록 디자인하면 됩니다. 반면 이미지 상에 복수 개의 사물들이 포함되어 있을 수 있다면, 검출 모델을 '1번 바운딩 박스 $$(x_1^{(1)}, y_1^{(1)}, x_2^{(1)}, y_2^{(1)})$$ 안에는 카테고리 X가, 2번 바운딩 박스 $$(x_1^{(2)}, y_1^{(2)}, x_2^{(2)}, y_2^{(2)})$$ 안에는 카테고리 Y가, 3번 바운딩 박스 $$(x_1^{(3)}, y_1^{(3)}, x_2^{(3)}, y_2^{(3)})$$ 안에는 카테고리 Z가 포함되어 있을 것이다'는 식의 결론을 내도록 디자인해야 합니다. 
+{% include image.html name="image-recognition-overview" file="detection-model.svg" description="Detection 문제(복수 사물 검출 문제)<br><small>(예시 이미지: VOC2009 데이터셋 - 2009_002807.jpg)</small>" class="full-image" %}
 
 단순하게 생각해볼 때, Classification에 비해 바운딩 박스들과 관련된 정보를 추가로 제시해야 하고, 이들 각각에 결부된 사물의 클래스에 대한 분류를 빠짐없이 수행해야 한다는 측면에서, Detection 문제는 더 높은 난이도를 지닙니다. 
 
 ### 평가 척도
+
+#### IOU(intersection over union)
 
 - 평가 척도: IOU 기준, 사전에 지정된 threshold를 초과하는지
 
@@ -217,3 +227,5 @@ Detection에서 '박스 형태'로 위치를 표시한다고 하였는데, 이 �
 - PASCAL VOC 문제: Classification, Detection, Segmentation
   - <a href="https://pdfs.semanticscholar.org/0ee1/916a0cb2dc7d3add086b5f1092c3d4beb38a.pdf" target="_blank">Everingham, Mark, et al. "The pascal visual object classes (voc) challenge." International journal of computer vision 88.2 (2010): 303-338.</a>
   - <a href="http://host.robots.ox.ac.uk/pascal/VOC/pubs/everingham15.pdf" target="_blank">Everingham, Mark, et al. "The pascal visual object classes challenge: A retrospective." International journal of computer vision 111.1 (2015): 98-136.</a>
+- 분류 모델 예시 그림: LeNet
+  - <a href="http://www.dengfanxin.cn/wp-content/uploads/2016/03/1998Lecun.pdf" target="_blank">LeCun, Yann, et al. "Gradient-based learning applied to document recognition." Proceedings of the IEEE 86.11 (1998): 2278-2324.</a>
