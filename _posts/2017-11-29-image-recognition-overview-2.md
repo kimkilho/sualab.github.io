@@ -9,7 +9,7 @@ comments: true
 name: image-recognition-overview-2
 ---
 
-[(이전 포스팅 보기)](http://research.sualab.com/machine-learning/2017/11/29/image-recognition-overview-1.html)
+[(이전 포스팅 보기)](http://research.sualab.com/machine-learning/machine-vision/2017/11/29/image-recognition-overview-2.html)
 
 ## Detection
 

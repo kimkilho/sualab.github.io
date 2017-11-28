@@ -173,4 +173,4 @@ Classification 문제는, 이어질 Detection 및 Segmentation 문제를 향한 
 
 이러한 경향 때문에, Classification 문제에서 우수한 성능을 발휘했던 모델을 Detection 또는 Segmentation을 위한 구조로 변형하여 사용할 경우, 그 역시 상대적으로 우수한 성능을 발휘하는 경향이 있습니다.
 
-[(다음 포스팅 보기)](http://research.sualab.com/machine-learning/2017/11/29/image-recognition-overview-2.html)
+[(다음 포스팅 보기)](http://research.sualab.com/machine-learning/machine-vision/2017/11/29/image-recognition-overview-2.html)
