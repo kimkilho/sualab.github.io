@@ -9,13 +9,13 @@ comments: true
 name: setup-cntk-evaluation-library-on-jetson-tx1
 ---
 
-이 포스트에서는 Jetson TX1에 CNTK를 이용한 모델 evaluation에 필요한 라이브러리들을 설치하는 방법을 설명하겠습니다. 이 포스트는 공식 CNTK 사이트의 [Setup CNTK on Linux](https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-Linux) 문서를 참조하였습니다.
+이 포스트에서는 Jetson TX1에 CNTK를 이용한 모델 evaluation에 필요한 라이브러리들을 설치하는 방법을 설명하겠습니다. 전체 소요 시간은 약 2시간입니다. 이 포스트는 공식 CNTK 사이트의 [Setup CNTK on Linux](https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-Linux) 문서를 참조하였습니다.
 
 CNTK 프로젝트 팀은 리눅스 환경에서 실행할 수 있는 도커 이미지를 제공하고 있습니다. 그런데 현재 [도커 허브](https://hub.docker.com/r/microsoft/cntk/)에 제공되어 있는 이미지들은 GPU 기능이 활성화된 버전을 이용하고 싶을 경우 [nvidia-docker](https://github.com/nvidia/nvidia-docker)를 이용해야 한다고 안내되어 있습니다. 문제는 이 nvidia-docker가 [테그라 플랫폼(Tegra platform)을 지원하지 않는다는 데에 있습니다.](https://github.com/NVIDIA/nvidia-docker/wiki/Frequently-Asked-Questions#platform-support) 따라서 TX1에서 CNTK를 돌리기 위해서는 어쩔 수 없이 CNTK 소스코드를 받아서 직접 빌드해야 합니다.
 
 # 빌드대상
 
-이 포스트에서는 다른 기기에서 학습된 CNTK 모델을 TX1에서 evaluation만 하는 상황을 가정하겠습니다. 따라서 기본 CNTK 소스코드에 있는 모든 라이브러리와 실행파일을 빌드하지 않고 다음 목록에 있는 것만 빌드하도록 하겠습니다.
+이 포스트에서는 다른 기기에서 학습된 CNTK 모델을 TX1에서 evaluation만 하는 상황을 가정하겠습니다. 따라서 CNTK 소스코드에 있는 모든 라이브러리와 실행파일을 빌드하지 않고 다음 목록에 있는 것만 빌드하도록 하겠습니다.
 
 * libCntk.Core-2.1.so
 * libCntk.Math-2.1.so
@@ -44,7 +44,6 @@ CNTK 설치를 위한 사전작업으로 다음의 라이브러리들을 설치�
 * libzip 1.1.2
 * Boost 1.58.0
 * CUB 1.4.1
-* LAPACK & LAPACKE 3.8.0
 * protobuf 3.1.0
 
 그리고 CNTK `configure` 스크립트가 위 라이브러리들을 잘 찾을 수 있도록 시스템 폴더들에 살짝 손을 대는 과정을 거치도록 하겠습니다.
@@ -59,11 +58,32 @@ CNTK 설치를 위한 사전작업으로 다음의 라이브러리들을 설치�
 
 [CNTK에 사용되는 기본 수학 라이브러리는 Intel Math Kernel Library (Intel MKL) 입니다.](https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-Linux#mkl) 그러나 이 라이브러리는 [여기](https://software.intel.com/en-us/mkl)에 명시되어 있듯이 Intel 계열 프로세서만 지원합니다. TX1은 aarch64 기반이므로 우리는 다른 수학 라이브러리를 이용해야 합니다. CNTK는 현재 Intel MKL 말고 OpenBLAS를 지원하고 있는 것으로 보이므로 ([참고1](https://github.com/Microsoft/CNTK/issues/2198), [참고2](https://github.com/Microsoft/CNTK/blob/v2.1/configure#L33)) 우리는 OpenBLAS를 사용하도록 하겠습니다.
 
+OpenBLAS를 빌드하기 전에 gfortran 라이브러리를 설치해야 합니다. 그래야 [OpenBLAS에 LAPACKE 라이브러리가 포함되서 빌드가 되는데](https://github.com/Microsoft/CNTK/issues/1424), 이렇게 하지 않으면 나중에 CNTK 빌드시에 링킹 에러가 발생합니다.
+
 ```console
 nvidia@tegra-ubuntu:~$ git clone https://github.com/xianyi/OpenBLAS.git
 nvidia@tegra-ubuntu:~$ cd OpenBLAS
 nvidia@tegra-ubuntu:~/OpenBLAS$ git checkout v0.2.20
+nvidia@tegra-ubuntu:~/OpenBLAS$ sudo apt install gfortran
 nvidia@tegra-ubuntu:~/OpenBLAS$ make -j3
+```
+
+빌드가 완료되면 다음과 같이 LAPACK 및 LAPACKE 라이브러리까지 빌드되었다고 나와야 합니다.
+
+```console
+ OpenBLAS build complete. (BLAS CBLAS LAPACK LAPACKE)
+
+  OS               ... Linux             
+  Architecture     ... arm64               
+  BINARY           ... 64bit                 
+  C compiler       ... GCC  (command line : gcc)
+  Fortran compiler ... GFORTRAN  (command line : gfortran)
+  Library Name     ... libopenblas_cortexa57p-r0.2.20.a (Multi threaded; Max num-threads is 4)
+```
+
+이제 빌드된 라이브러리를 다음과 같이 설치하도록 하겠습니다.
+
+```console
 nvidia@tegra-ubuntu:~/OpenBLAS$ sudo make install PREFIX=/usr/local/OpenBLAS
 ```
 
@@ -94,47 +114,6 @@ nvidia@tegra-ubuntu:~$ unzip ./1.4.1.zip
 nvidia@tegra-ubuntu:~$ sudo cp -r cub-1.4.1 /usr/local
 ```
 
-## LAPACK & LAPACKE 3.8.0
-
-LAPACK 및 LAPACKE 라이브러리를 설치하지 않으면 CNTK 빌드 과정에서 다음의 에러가 발생합니다.
-```shell
-# LAPACKE가 없을 경우
-lib/libCntk.Math-2.1.so: undefined reference to 'LAPACKE_dgesvd'
-lib/libCntk.Math-2.1.so: undefined reference to 'LAPACKE_sgesvd'
-
-# LAPACK이 없을 경우
-lib/libCntk.Math-2.1.so: undefined reference to 'sgesvd_'
-lib/libCntk.Math-2.1.so: undefined reference to 'dgesvd_'
-```
-우리는 3.8.0 버전의 소스를 받아 직접 빌드하도록 하겠습니다.
-```console
-nvidia@tegra-ubuntu:~$ wget http://www.netlib.org/lapack/lapack-3.8.0.tar.gz
-nvidia@tegra-ubuntu:~$ tar xzf lapack-3.8.0.tar.gz
-nvidia@tegra-ubuntu:~$ cd lapack-3.8.0
-nvidia@tegra-ubuntu:~/lapack-3.8.0$ cp make.inc.example make.inc
-```
-여기서 그냥 `make`를 하면 향후 CNTK 빌드 과정에서 다음의 링킹 에러가 발생합니다.
-```console
-/usr/bin/ld: /usr/lib/liblapacke.a(lapacke_dgesvd.o): relocation R_AARCH64_ADR_PREL_PG_HI21 against external symbol `__stack_chk_guard@@GLIBC_2.17` can not be used when making a shared object; recompile with -fPIC
-```
-이를 방지하기 위해 `LAPACKE/src/Makefile` 및 `LAPACKE/utils/Makefile`의 마지막 줄에 `-fPIC` 옵션을 추가해주어 다음과 같이 보이도록 합니다.
-```Makefile
-.c.o:
-    $(CC) $(CFLAGS) -I../include -c -o $@ $< -fPIC
-                                            #^^^^^ 여기를 추가해줍니다
-```
-이제 LAPACK와 LAPACKE를 빌드해보겠습니다.
-```console
-nvidia@tegra-ubuntu:~/lapack-3.8.0$ sudo apt install gfortran
-nvidia@tegra-ubuntu:~/lapack-3.8.0$ make lapacklib lapackelib -j3
-```
-빌드된 라이브러리와 헤더를 다음과 같이 설치하겠습니다.
-```console
-nvidia@tegra-ubuntu:~/lapack-3.8.0$ sudo cp liblapack.a /usr/lib
-nvidia@tegra-ubuntu:~/lapack-3.8.0$ sudo cp liblapacke.a /usr/lib
-nvidia@tegra-ubuntu:~/lapack-3.8.0$ sudo cp LAPACKE/include/*.h /usr/include
-```
-
 ## Protobuf 3.1.0
 Ubuntu 16.04에서 기본으로 제공하는 버전은 2.6.1입니다([참고](https://launchpad.net/ubuntu/xenial/+source/protobuf)). 이 버전을 이용해서 CNTK를 빌드하려고 했으나 proto2가 아닌 proto3를 요구하면서 빌드에 실패하였습니다. 따라서 [CNTK 문서에 따라](https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-Linux#protobuf) 3.1.0 버전을 받아 설치하겠습니다.
 ```console
@@ -154,54 +133,54 @@ CNTK `configure` 스크립트가 우리가 설치한 라이브러리들을 알�
 
 ```shell
 # make symbolic links for CUDNN
-sudo mkdir /usr/local/cudnn-6.0/cuda/include -p
-sudo ln -s /usr/lib/aarch64-linux-gnu /usr/local/cudnn-6.0/lib
-sudo ln -s /usr/include/aarch64-linux-gnu/cudnn_v6.h /usr/local/cudnn-6.0/cuda/include/cudnn.h
+$ sudo mkdir /usr/local/cudnn-6.0/cuda/include -p
+$ sudo ln -s /usr/lib/aarch64-linux-gnu /usr/local/cudnn-6.0/lib
+$ sudo ln -s /usr/include/aarch64-linux-gnu/cudnn_v6.h /usr/local/cudnn-6.0/cuda/include/cudnn.h
 
 # make symbolic link for CUDA
-sudo ln -s /usr/local/cuda-8.0/targets/aarch64-linux/include/nvml.h /usr/local/include
+$ sudo ln -s /usr/local/cuda-8.0/targets/aarch64-linux/include/nvml.h /usr/local/include
 
 # make symbolic link for OpenMPI
-sudo mkdir /usr/lib/openmpi/bin
-sudo ln -s /usr/bin/mpic++ /usr/lib/openmpi/bin/mpic++
+$ sudo mkdir /usr/lib/openmpi/bin
+$ sudo ln -s /usr/bin/mpic++ /usr/lib/openmpi/bin/mpic++
 
 # make symbolic links for Boost
-sudo mkdir /usr/local/boost-1.58.0
-sudo ln -s /usr/lib/aarch64-linux-gnu /usr/local/boost-1.58.0/lib
-sudo ln -s /usr/include /usr/local/boost-1.58.0/include
+$ sudo mkdir /usr/local/boost-1.58.0
+$ sudo ln -s /usr/lib/aarch64-linux-gnu /usr/local/boost-1.58.0/lib
+$ sudo ln -s /usr/include /usr/local/boost-1.58.0/include
 ```
 
 ## CNTK 2.1
 
-여기서는 개인 깃헙 계정에 fork된 소스코드를 이용하도록 하겠습니다. 원래 CNTK 소스의 v2.1 태그가 가리키는 커밋을 기준으로 Makefile에만 변경을 가하였습니다. 우리에게 필요한 라이브러리와 실행파일만을 빌드하고자 기존의 Makefile의 많은 부분을 주석처리 하였습니다. 또한 누락되어 있던 라이브러리 링킹 플래그(`-llapacke -llapack -lgfortran`)를 추가해주었습니다. 변경된 부분은 [여기](https://github.com/Microsoft/CNTK/compare/v2.1...nglee:v2.1_tx1)에서 볼 수 있습니다. 혹은 콘솔에서 `git diff v2.1 v2.1_tx1` 명령어를 이용해도 됩니다.
+여기서는 개인 깃헙 계정에 fork된 소스코드를 이용하도록 하겠습니다. 원래 CNTK 소스의 v2.1 태그가 가리키는 커밋을 기준으로 `Makefile`에만 변경을 가하였습니다. 우리에게 필요한 라이브러리와 실행파일만을 빌드하고자 기존의 `Makefile`의 많은 부분을 주석처리 하였습니다. 또한 aarch64 아키텍쳐가 지원하지 않는 SSE 관련 플래그 역시 주석처리 하였습니다. 변경된 부분은 [여기](https://github.com/Microsoft/CNTK/compare/v2.1...nglee:v2.1_tx1)에서 볼 수 있습니다. 혹은 콘솔에서 `git diff v2.1 v2.1_tx1` 명령어를 이용해도 됩니다.
 
 빌드 도중 `g++: internal compiler error: Killed (program cc1plus)` 에러가 발생한다면 메모리 부족 문제일 가능성이 큽니다. `make`시에 `-j` 옵션은 되도록 주지 않는 것이 좋고, 웹브라우저같은 다른 어플리케이션은 종료시킨 상태로 컴파일을 하는 것이 좋습니다.
 
 ```console
-$ git clone https://github.com/nglee/CNTK.git
-$ cd CNTK
-CNTK$ git checkout v2.1_tx1
-CNTK$ mkdir build/release -p
-CNTK$ cd build/release
-CNTK/build/release$ ../../configure --asgd=no                                  \
-                                    --cuda=yes                                 \
-                                    --with-openblas=/usr/local/OpenBLAS        \
-                                    --with-boost=/usr/local/boost-1.58.0       \
-                                    --with-cudnn=/usr/local/cudnn-6.0          \
-                                    --with-protobuf=/usr/local/protobuf-3.1.0  \
-                                    --with-mpi=/usr/lib/openmpi                \
-                                    --with-gdk-include=/usr/local/include      \
-                                    --with-gdk-nvml-lib=/usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs
-CNTK/build/release$ make
+nvidia@tegra-ubuntu:~$ git clone https://github.com/nglee/CNTK.git
+nvidia@tegra-ubuntu:~$ cd CNTK
+nvidia@tegra-ubuntu:~/CNTK$ git checkout v2.1_tx1
+nvidia@tegra-ubuntu:~/CNTK$ mkdir build/release -p
+nvidia@tegra-ubuntu:~/CNTK$ cd build/release
+nvidia@tegra-ubuntu:~/CNTK/build/release$ ../../configure --asgd=no                                 \
+                                                          --cuda=yes                                \
+                                                          --with-openblas=/usr/local/OpenBLAS       \
+                                                          --with-boost=/usr/local/boost-1.58.0      \
+                                                          --with-cudnn=/usr/local/cudnn-6.0         \
+                                                          --with-protobuf=/usr/local/protobuf-3.1.0 \
+                                                          --with-mpi=/usr/lib/openmpi               \
+                                                          --with-gdk-include=/usr/local/include     \
+                                                          --with-gdk-nvml-lib=/usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs
+nvidia@tegra-ubuntu:~/CNTK/build/release$ make
 ```
 빌드가 끝나면 하기 경로에 다음과 같이 3개의 라이브러리가 빌드되었음을 볼 수 있습니다.
 ```console
-CNTK/build/release$ ls lib
+nvidia@tegra-ubuntu:~/CNTK/build/release$ ls lib
 libCntk.Core-2.1.so  libCntk.Math-2.1.so  libCntk.PerformanceProfiler-2.1.so
 ```
 또한 하기 경로에는 테스트용 실행파일이 빌드되었음을 볼 수 있습니다.
 ```console
-CNTK/build/release$ ls bin
+nvidia@tegra-ubuntu:~/CNTK/build/release$ ls bin
 CNTKLibraryCPPEvalExamples
 ```
 
@@ -210,8 +189,8 @@ CNTKLibraryCPPEvalExamples
 테스트를 위해서 `01_OneHidden.model` 파일이 필요합니다. 이 파일은 [여기](https://github.com/nglee/CNTK/tree/master/Examples/Image/GettingStarted)에 있는 설명을 따라 `01_OneHidden.cntk`를 학습시키면 얻을 수 있습니다. 저는 윈도우 머신에서 이 모델을 학습시켰고 그것을 TX1으로 복사해서 돌려보았습니다. `01_OneHidden.model`은 `CNTKLibraryCPPEvalExamples`와 같은 디렉토리에 위치해야 합니다.
 
 ```console
-~/CNTK/build/release$ cd bin
-~/CNTK/build/release/bin$ sudo ln -s /usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs/libnvidia-ml.so /usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs/libnvidia-ml.so.1
-~/CNTK/build/release/bin$ export LD_LIBRARY_PATH=/usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs:../lib:$LD_LIBRARY_PATH
-~/CNTK/build/release/bin$ ./CNTKLibraryCPPEvalExamples
+nvidia@tegra-ubuntu:~/CNTK/build/release$ cd bin
+nvidia@tegra-ubuntu:~/CNTK/build/release/bin$ sudo ln -s /usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs/libnvidia-ml.so /usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs/libnvidia-ml.so.1
+nvidia@tegra-ubuntu:~/CNTK/build/release/bin$ export LD_LIBRARY_PATH=/usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs:../lib:$LD_LIBRARY_PATH
+nvidia@tegra-ubuntu:~/CNTK/build/release/bin$ ./CNTKLibraryCPPEvalExamples
 ```
