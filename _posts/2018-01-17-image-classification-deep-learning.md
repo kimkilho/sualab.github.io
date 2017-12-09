@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "이미지 Classification 문제와 딥러닝: ResNet 외"
-date: 2017-12-31 09:00:00 +0900
+date: 2018-01-17 09:00:00 +0900
 author: kilho_kim
-categories: [machine-learning, machine-vision]
-tags: [machine-learning, data-science, machine-vision]
+categories: [machine-learning, computer-vision]
+tags: [classification, alexnet]
 comments: true
 name: image-classification-deep-learning
 ---
