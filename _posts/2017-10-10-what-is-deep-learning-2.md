@@ -9,7 +9,7 @@ comments: true
 name: what-is-deep-learning-2
 ---
 
-[(이전 포스팅 보기)](http://research.sualab.com/machine-learning/2017/10/10/what-is-deep-learning-1.html)
+[(이전 포스팅 보기)]({{ page.url }}/../what-is-deep-learning-1.html)
 
 지금까지 딥러닝의 개념과 대표적인 딥러닝 모델에 대하여 알아보았습니다. 그러면 이제, 다들 딥러닝이 왜 그렇게들 좋다고 하는지 그 이유에 대해 파헤쳐보도록 하겠습니다. 
 

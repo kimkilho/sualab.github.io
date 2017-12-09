@@ -160,4 +160,4 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 (순환 신경망에 대한 보다 자세한 내용은, 추후에 또 다른 블로그 포스팅을 통해 다루도록 하겠습니다.)
 
-[(다음 포스팅 보기)](http://research.sualab.com/machine-learning/2017/10/10/what-is-deep-learning-2.html)
+[(다음 포스팅 보기)]({{ page.url }}/../what-is-deep-learning-2.html)
