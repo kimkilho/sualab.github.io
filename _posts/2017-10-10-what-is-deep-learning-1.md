@@ -4,7 +4,7 @@ title: "딥러닝이란 무엇인가? (1)"
 date: 2017-10-10 09:00:00 +0900
 author: kilho_kim
 categories: [machine-learning]
-tags: [machine-learning, data-science]
+tags: [deep learning, deep neural networks, representation learning]
 comments: true
 name: what-is-deep-learning-1
 ---

@@ -4,7 +4,7 @@ title: "머신러닝이란 무엇인가?"
 date: 2017-09-04 09:00:00 +0900
 author: kilho_kim
 categories: [machine-learning]
-tags: [machine-learning, data-science]
+tags: [supervised learning, data set, learning model, learning algorithm]
 comments: true
 name: what-is-machine-learning
 ---

@@ -3,7 +3,7 @@ layout: post
 title: "Jetson TX1에 CNTK Evaluation 라이브러리 설치하기"
 date: 2017-12-07 16:00:00 +0900
 author: namgoo_lee
-categories: [embedded]
+categories: [high-performance-computing]
 tags: [embedded, tx1, cntk]
 comments: true
 name: setup-cntk-evaluation-library-on-jetson-tx1
@@ -51,8 +51,6 @@ CNTK 설치를 위한 사전작업으로 다음의 라이브러리들을 설치�
 여기까지 끝나면 CNTK를 빌드할 수 있습니다. GPU 기능이 활성화된 2.1 버전을 빌드하도록 하겠습니다.
 
 * CNTK 2.1 (GPU enabled)
-
-현재 CNTK 공식 깃헙에 올라와있는 Makefile에 몇 가지 변경사항이 필요해서 제 개인 깃헙 저장소에 fork된 소스로 진행하도록 하겠습니다.
 
 ## OpenBLAS v0.2.20
 
@@ -152,14 +150,12 @@ $ sudo ln -s /usr/include /usr/local/boost-1.58.0/include
 
 ## CNTK 2.1
 
-여기서는 개인 깃헙 계정에 fork된 소스코드를 이용하도록 하겠습니다. 원래 CNTK 소스의 v2.1 태그가 가리키는 커밋을 기준으로 `Makefile`에만 변경을 가하였습니다. 우리에게 필요한 라이브러리와 실행파일만을 빌드하고자 기존의 `Makefile`의 많은 부분을 주석처리 하였습니다. 또한 aarch64 아키텍쳐가 지원하지 않는 SSE 관련 플래그 역시 주석처리 하였습니다. 변경된 부분은 [여기](https://github.com/Microsoft/CNTK/compare/v2.1...nglee:v2.1_tx1)에서 볼 수 있습니다. 혹은 콘솔에서 `git diff v2.1 v2.1_tx1` 명령어를 이용해도 됩니다.
-
-빌드 도중 `g++: internal compiler error: Killed (program cc1plus)` 에러가 발생한다면 메모리 부족 문제일 가능성이 큽니다. `make`시에 `-j` 옵션은 되도록 주지 않는 것이 좋고, 웹브라우저같은 다른 어플리케이션은 종료시킨 상태로 컴파일을 하는 것이 좋습니다.
+이제 본격적으로 CNTK를 빌드하겠습니다.
 
 ```console
-nvidia@tegra-ubuntu:~$ git clone https://github.com/nglee/CNTK.git
+nvidia@tegra-ubuntu:~$ git clone https://github.com/Microsoft/CNTK.git
 nvidia@tegra-ubuntu:~$ cd CNTK
-nvidia@tegra-ubuntu:~/CNTK$ git checkout v2.1_tx1
+nvidia@tegra-ubuntu:~/CNTK$ git checkout v2.1
 nvidia@tegra-ubuntu:~/CNTK$ mkdir build/release -p
 nvidia@tegra-ubuntu:~/CNTK$ cd build/release
 nvidia@tegra-ubuntu:~/CNTK/build/release$ ../../configure --asgd=no                                 \
@@ -171,14 +167,29 @@ nvidia@tegra-ubuntu:~/CNTK/build/release$ ../../configure --asgd=no             
                                                           --with-mpi=/usr/lib/openmpi               \
                                                           --with-gdk-include=/usr/local/include     \
                                                           --with-gdk-nvml-lib=/usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs
-nvidia@tegra-ubuntu:~/CNTK/build/release$ make
+nvidia@tegra-ubuntu:~/CNTK/build/release$ make -C ../../                                                                                                                            \
+                                               BUILD_TOP=$PWD                                                                                                                       \
+                                               SSE_FLAGS=''                                                                                                                         \
+                                               GENCODE_FLAGS='-gencode arch=compute_53,code=\"sm_53,compute_53\"'                                                                   \
+                                               CNTKLIBRARY_CPP_EVAL_EXAMPLES_SRC='$(PWD)/../../Examples/Evaluation/CNTKLibraryCPPEvalGPUExamples/CNTKLibraryCPPEvalGPUExamples.cpp' \
+                                               CNTKLIBRARY_CPP_EVAL_EXAMPLES_SRC+='$(PWD)/../../Examples/Evaluation/CNTKLibraryCPPEvalCPUOnlyExamples/EvalMultithreads.cpp'         \
+                                               $PWD/lib/libCntk.Core-2.1.so                                                                                                         \
+                                               $PWD/lib/libCntk.Math-2.1.so                                                                                                         \
+                                               $PWD/lib/libCntk.PerformanceProfiler-2.1.so                                                                                          \
+                                               $PWD/bin/CNTKLibraryCPPEvalExamples
 ```
+
+빌드 도중 `g++: internal compiler error: Killed (program cc1plus)` 에러가 발생한다면 메모리 부족 문제일 가능성이 큽니다. `make`시에 `-j` 옵션은 되도록 주지 않는 것이 좋고, 웹브라우저같은 다른 어플리케이션은 종료시킨 상태로 컴파일을 하는 것이 좋습니다.
+
 빌드가 끝나면 하기 경로에 다음과 같이 3개의 라이브러리가 빌드되었음을 볼 수 있습니다.
+
 ```console
 nvidia@tegra-ubuntu:~/CNTK/build/release$ ls lib
 libCntk.Core-2.1.so  libCntk.Math-2.1.so  libCntk.PerformanceProfiler-2.1.so
 ```
+
 또한 하기 경로에는 테스트용 실행파일이 빌드되었음을 볼 수 있습니다.
+
 ```console
 nvidia@tegra-ubuntu:~/CNTK/build/release$ ls bin
 CNTKLibraryCPPEvalExamples

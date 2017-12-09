@@ -16,7 +16,7 @@
 title: SuaLab Research Blog
 web: http://sualab.com
 description: > # this means to ignore newlines until "baseurl:"
-    SuaLab research blog: covers subjects regarding machine learning, deep learning, machine vision, and so on.
+    SuaLab research blog: covers subjects regarding machine learning, computer vision, high-performance computing, and so on.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 facebook_username: sualab
@@ -30,6 +30,11 @@ future: true
 
 # Google Analytics
 google_analytics: UA-110963421-1
+
+# Category collections
+collections:
+  category:
+    output: true
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
