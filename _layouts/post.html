@@ -13,9 +13,18 @@ layout: default
         {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
         {{ page.date | date: date_format }}
       </time>
+      {% if page.categories.size > 0 %} • 
+        {% for category in page.categories %}
+          <span itemprop="category" itemscope itemtype="http://schema.org/Category"><a href="/{{ category }}.html">{{ category }}</a>{% if forloop.last == false %}, {% endif %}</span>
+        {% endfor %}
+      {% endif %}
       {% if author %}
         • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="{{ author.web }}" target="_blank">{{ author.name }}</a></span></span>
-      {% endif %}</p>
+      {% endif %}
+      {% if page.tags.size > 0 %}
+         <br>Tag{% if page.tags.size > 1 %}s{% endif %}: {{ page.tags | join: ", " }}
+      {% endif %}
+    </p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
