@@ -135,3 +135,29 @@ $on-laptop:        800px !default;
   display: block;
   text-align: center;
 }
+
+/**
+ * Code formatting
+ */
+pre,
+code {
+  @include relative-font-size(0.8000);
+  border: 1px solid $grey-color-light;
+  border-radius: 3px;
+  background-color: #eef;
+}
+
+code {
+  padding: 1px 5px;
+}
+
+pre {
+  padding: 8px 12px;
+  overflow-x: auto;
+
+  > code {
+    border: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
