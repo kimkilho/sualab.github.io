@@ -246,12 +246,16 @@ class DataSet(object):
 
 원 AlexNet 논문에서는 학습 단계와 테스트 단계에서의 데이터 증강(data augmentation) 방법을 아래와 같이 서로 다르게 채택하고 있습니다.
 
-- 학습 단계: 원본 $$256\times256$$ 크기의 이미지로부터 $$224\times224$$ 크기의 패치(patch)를 랜덤한 위치에서 추출하고, $$50%$$ 확률로 해당 패치에 대한 수평 방향으로의 대칭 변환(horizontal reflection)을 수행하여, 이미지 하나 당 하나의 패치를 반환함
-- 테스트 단계: 원본 $$256\times256$$ 크기 이미지에서의 좌측 상단, 우측 상단, 좌측 하단, 우측 하단, 중심 위치 각각으로부터 총 5개의 패치를 추출하고, 이들 각각에 대해 수평 방향 대칭 변환을 수행하여 얻은 5개의 패치를 추가하여, 이미지 하나 당 총 10개의 패치를 반환함
+- 학습 단계: 원본 $$256\times256$$ 크기의 이미지로부터 $$227\times227$$ 크기의 패치(patch)를 랜덤한 위치에서 추출하고, $$50%$$ 확률로 해당 패치에 대한 수평 방향으로의 대칭 변환(horizontal reflection)을 수행하여, 이미지 하나 당 하나의 패치를 반환함
+- 테스트 단계: 원본 $$256\times256$$ 크기 이미지에서의 좌측 상단, 우측 상단, 좌측 하단, 우측 하단, 중심 위치 각각으로부터 총 5개의 $$227\times227$$ 패치를 추출하고, 이들 각각에 대해 수평 방향 대칭 변환을 수행하여 얻은 5개의 패치를 추가하여, 이미지 하나 당 총 10개의 패치를 반환함
 
 `next_batch` 함수에서는 데이터 증강을 수행하도록 설정되어 있는 경우에 한해(`augment == True`), 현재 학습 단계인지(`is_train == True`) 테스트 단계인지(`is_train == False`)에 따라 위와 같이 서로 다른 데이터 증강 방법을 적용하고, 이를 통해 얻어진 패치 단위의 이미지들을 반환하도록 하였습니다.
 
-단, 원 AlexNet 논문에서는 여기에 PCA에 기반한 색상 증강(color augmentation)을 추가로 수행하였는데, 본 구현체에서는 구현의 단순화를 위해 이를 반영하지 않았습니다.
+### 원 논문과의 차이점
+
+AlexNet 논문에서는 추출되는 패치의 크기가 $$224\times224$$라고 명시되어 있으나, 본 구현체에서는 $$227\times227$$로 하였습니다. 실제로 온라인 상의 많은 AlexNet 구현체에서 $$227\times227$$ 크기를 채택하고 있으며, 이렇게 해야만 올바른 형태로 구현이 가능합니다.
+
+또, AlexNet 논문에서는 여기에 PCA에 기반한 색상 증강(color augmentation)을 추가로 수행하였는데, 본 구현체에서는 구현의 단순화를 위해 이를 반영하지 않았습니다.
 
 
 ## (2) 성능 평가: 정확도
@@ -313,7 +317,7 @@ class Evaluator(object):
         pass
 ```
 
-`Evaluator` 클래스는, 성능 평가를 담당하는 객체를 서술하는 추상(abstract) 클래스입니다. 이는 `worst_score`, `mode` 프로퍼티(property)와 `score`, `is_better` 함수로 구성되어 있습니다. 성능 평가 척도에 따라 '최저' 성능 점수와 '점수가 높아야 성능이 우수한지, 낮아야 성능이 우수한지' 등이 다르기 때문에, 이들을 명시하는 부분이 각각 `worst_score`와 `mode`입니다. 
+`Evaluator` 클래스는, 성능 평가를 담당하는 객체를 서술하는 베이스 클래스입니다. 이는 `worst_score`, `mode` 프로퍼티(property)와 `score`, `is_better` 함수로 구성되어 있습니다. 성능 평가 척도에 따라 '최저' 성능 점수와 '점수가 높아야 성능이 우수한지, 낮아야 성능이 우수한지' 등이 다르기 때문에, 이들을 명시하는 부분이 각각 `worst_score`와 `mode`입니다. 
 
 한편 `score` 함수는 테스트용 데이터셋의 실제 레이블 및 이에 대한 모델의 예측 결과를 받아, 지정한 성능 평가 척도에 의거하여 성능 점수를 계산하여 반환합니다. `is_better` 함수는 현재의 평가 성능과 현재까지의 '최고' 성능을 서로 비교하여, 현재 성능이 최고 성능보다 더 우수한지 여부를 `bool` 타입으로 반환합니다.
 
@@ -355,31 +359,80 @@ class AccuracyEvaluator(Evaluator):
 
 ## (3) 러닝 모델: AlexNet
 
+러닝 모델로는 앞서 언급한 대로 컨볼루션 신경망인 AlexNet을 사용합니다. 이 때, 러닝 모델을 사후적으로 수정하거나 혹은 새로운 구조의 러닝 모델을 추가하는 상황에서의 편의를 고려하여, 컨볼루션 신경망에서 주로 사용하는 층(layers)들을 생성하는 함수를 미리 정의해 놓고, 일반적인 컨볼루션 신경망 모델을 표현하는 베이스 클래스를 먼저 정의한 뒤 이를 AlexNet의 클래스가 상속받는 형태로 구현하였습니다.
+
 ### models.layers 모듈
+
+`models.layers` 모듈에서는, 컨볼루션 신경망에서 주로 사용하는 컨볼루션 층(convolutional layer), 완전 연결 층(fully-connected layer) 등을 함수 형태로 정의하였습니다. 
 
 ```python
 def weight_variable(shape, stddev=0.01):
+    """
+    Initialize a weight variable with given shape,
+    by sampling randomly from Normal(0.0, stddev^2).
+    :param shape: list(int).
+    :param stddev: float, standard deviation of Normal distribution for weights.
+    :return weights: tf.Variable.
+    """
     weights = tf.get_variable('weights', shape, tf.float32,
                               tf.random_normal_initializer(mean=0.0, stddev=stddev))
     return weights
 
 
 def bias_variable(shape, value=1.0):
+    """
+    Initialize a bias variable with given shape,
+    with given constant value.
+    :param shape: list(int).
+    :param value: float, initial value for biases.
+    :return biases: tf.Variable.
+    """
     biases = tf.get_variable('biases', shape, tf.float32,
                              tf.constant_initializer(value=value))
     return biases
 
 
 def conv2d(x, W, stride, padding='SAME'):
+    """
+    Compute a 2D convolution from given input and filter weights.
+    :param x: tf.Tensor, shape: (N, H, W, C).
+    :param W: tf.Tensor, shape: (fh, fw, ic, oc).
+    :param stride: int, the stride of the sliding window for each dimension.
+    :param padding: str, either 'SAME' or 'VALID',
+                         the type of padding algorithm to use.
+    :return: tf.Tensor.
+    """
     return tf.nn.conv2d(x, W, strides=[1, stride, stride, 1], padding=padding)
 
 
 def max_pool(x, side_l, stride, padding='SAME'):
+    """
+    Performs max pooling on given input.
+    :param x: tf.Tensor, shape: (N, H, W, C).
+    :param side_l: int, the side length of the pooling window for each dimension.
+    :param stride: int, the stride of the sliding window for each dimension.
+    :param padding: str, either 'SAME' or 'VALID',
+                         the type of padding algorithm to use.
+    :return: tf.Tensor.
+    """
     return tf.nn.max_pool(x, ksize=[1, side_l, side_l, 1],
                           strides=[1, stride, stride, 1], padding=padding)
 
 
 def conv_layer(x, side_l, stride, out_depth, padding='SAME', **kwargs):
+    """
+    Add a new convolutional layer.
+    :param x: tf.Tensor, shape: (N, H, W, C).
+    :param side_l: int, the side length of the filters for each dimension.
+    :param stride: int, the stride of the filters for each dimension.
+    :param out_depth: int, the total number of filters to be applied.
+    :param padding: str, either 'SAME' or 'VALID',
+                         the type of padding algorithm to use.
+    :param kwargs: dict, extra arguments, including weights/biases initialization hyperparameters.
+        - weight_stddev: float, standard deviation of Normal distribution for weights.
+        - biases_value: float, initial value for biases.
+    :return: tf.Tensor.
+    """
     weights_stddev = kwargs.pop('weights_stddev', 0.01)
     biases_value = kwargs.pop('biases_value', 0.1)
     in_depth = int(x.get_shape()[-1])
@@ -390,6 +443,15 @@ def conv_layer(x, side_l, stride, out_depth, padding='SAME', **kwargs):
 
 
 def fc_layer(x, out_dim, **kwargs):
+    """
+    Add a new fully-connected layer.
+    :param x: tf.Tensor, shape: (N, D).
+    :param out_dim: int, the dimension of output vector.
+    :param kwargs: dict, extra arguments, including weights/biases initialization hyperparameters.
+        - weight_stddev: float, standard deviation of Normal distribution for weights.
+        - biases_value: float, initial value for biases.
+    :return: tf.Tensor.
+    """
     weights_stddev = kwargs.pop('weights_stddev', 0.01)
     biases_value = kwargs.pop('biases_value', 0.1)
     in_dim = int(x.get_shape()[-1])
@@ -399,26 +461,35 @@ def fc_layer(x, out_dim, **kwargs):
     return tf.matmul(x, weights) + biases
 ```
 
+AlexNet의 경우 처음 가중치(weight)와 바이어스(bias)를 초기화(initialize)할 때 각기 다른 방법으로 합니다.
+
+- 가중치: 지정한 표준편차(standard deviation)를 가지는 정규 분포(Normal distribution)으로부터 가중치들을 랜덤하게 샘플링하여 초기화함
+- 바이어스: 지정한 값으로 초기화함
+
+이를 반영하고자 `weight_variable` 함수에서는 가중치를 샘플링할 정규 분포의 표준편차인 `stddev`을, `bias_variable` 함수에서는 바이어스를 초기화할 값인 `value`를 인자로 추가하였습니다. AlexNet의 각 층에 따라 초기화에 사용할 가중치의 표준편차 및 바이어스 값 등이 다르게 적용되기 때문에, 이를 조정할 수 있도록 구현하였습니다.
+
+
 ### models.nn 모듈
+
+`models.nn` 모듈은, 컨볼루션 신경망을 표현하는 클래스를 담고 있습니다.
 
 #### ConvNet 클래스
 
 ```python
 class ConvNet(object):
-    """
-    Base class for Convolutional Neural Networks.
-    """
+    """Base class for Convolutional Neural Networks."""
 
     def __init__(self, input_shape, num_classes, **kwargs):
         """
         Model initializer.
-        :param input_shape: Tuple, shape of inputs (H, W, C), range [0.0, 1.0].
-        :param num_classes: Integer, number of classes.
+        :param input_shape: tuple, the shape of inputs (H, W, C), ranged [0.0, 1.0].
+        :param num_classes: int, the number of classes.
         """
         self.X = tf.placeholder(tf.float32, [None] + input_shape)
         self.y = tf.placeholder(tf.float32, [None] + [num_classes])
-
         self.is_train = tf.placeholder(tf.bool)
+
+        # Build model and loss function
         self.d = self._build_model(**kwargs)
         self.logits = self.d['logits']
         self.pred = self.d['pred']
@@ -427,7 +498,7 @@ class ConvNet(object):
     @abstractmethod
     def _build_model(self, **kwargs):
         """
-        Model builder.
+        Build model.
         This should be implemented.
         """
         pass
@@ -445,18 +516,24 @@ class ConvNet(object):
         Make predictions for the given dataset.
         :param sess: tf.Session.
         :param dataset: DataSet.
-        :param verbose: Boolean, whether to print details during prediction.
+        :param verbose: bool, whether to print details during prediction.
+        :param kwargs: dict, extra arguments for prediction.
+            - batch_size: int, batch size for each iteration.
+            - augment_pred: bool, whether to perform augmentation for prediction.
+        :return _y_pred: np.ndarray, shape: (N, num_classes).
         """
         batch_size = kwargs.pop('batch_size', 256)
         augment_pred = kwargs.pop('augment_pred', True)
 
+        assert len(dataset.labels.shape) > 1, 'Labels must be one-hot encoded.'
+        num_classes = int(self.y.get_shape()[-1])
         pred_size = dataset.num_examples
         num_steps = pred_size // batch_size
 
         if verbose:
             print('Running prediction loop...')
 
-        # Evaluation loop
+        # Start evaluation loop
         _y_pred = []
         start_time = time.time()
         for i in range(num_steps+1):
@@ -467,11 +544,12 @@ class ConvNet(object):
             X, _ = dataset.next_batch(_batch_size, shuffle=False,
                                       augment=augment_pred, is_train=False)
             # if augment_pred == True:  X.shape: (N, 10, h, w, C)
-            # else:  X.shape: (N, h, w, C)
+            # else:                     X.shape: (N, h, w, C)
 
             # If performing augmentation during prediction,
             if augment_pred:
-                y_pred_patches = np.empty((_batch_size, 10, 2), dtype=np.float32)    # (N, 10, 2)
+                y_pred_patches = np.empty((_batch_size, 10, num_classes),
+                                          dtype=np.float32)    # (N, 10, num_classes)
                 # compute predictions for each of 10 patch modes,
                 for idx in range(10):
                     y_pred_patch = sess.run(self.pred,
@@ -479,22 +557,25 @@ class ConvNet(object):
                                                        self.is_train: False})
                     y_pred_patches[:, idx] = y_pred_patch
                 # and average predictions on the 10 patches
-                y_pred = y_pred_patches.mean(axis=1)    # (N, 2)
+                y_pred = y_pred_patches.mean(axis=1)    # (N, num_classes)
             else:
                 # Compute predictions
                 y_pred = sess.run(self.pred,
                                   feed_dict={self.X: X,
-                                             self.is_train: False})
-                # (N, 2)
+                                             self.is_train: False})    # (N, num_classes)
 
             _y_pred.append(y_pred)
         if verbose:
             print('Total evaluation time(sec): {}'.format(time.time() - start_time))
 
-        _y_pred = np.concatenate(_y_pred, axis=0)    # (N, 2)
+        _y_pred = np.concatenate(_y_pred, axis=0)    # (N, num_classes)
 
         return _y_pred
 ```
+
+`ConvNet` 클래스는, 컨볼루션 신경망 모델 객체를 서술하는 베이스 클래스입니다. 어떤 컨볼루션 신경망을 사용할 것이냐에 따라 그 **아키텍처(architecture)**가 달라질 것이기 때문에, `ConvNet` 클래스의 자식 클래스에서 이를 `_build_model` 함수에서 구현하도록 하였습니다. 한편 컨볼루션 신경망을 학습할 시 사용할 **손실 함수(loss function)** 또한 `ConvNet`의 자식 클래스에서 `_build_loss` 함수에 구현하도록 하였습니다.
+
+`predict` 함수는, `DataSet` 객체인 `dataset`을 입력받아 이에 대한 모델의 예측 결과를 반환합니다. 이 때, 테스트 단계에서의 데이터 증강 방법을 채택할 경우(`augment_pred == True`), 앞서 설명했던 방식대로 하나의 이미지 당 총 10개의 패치를 얻으며, 이들 각각에 대한 예측 결과를 계산하고 이들의 평균을 계산하는 방식으로 최종적인 예측을 수행하게 됩니다.
 
 #### AlexNet 클래스
 
@@ -503,13 +584,19 @@ class AlexNet(ConvNet):
     """AlexNet class."""
 
     def _build_model(self, **kwargs):
-        """Model builder."""
+        """
+        Build model.
+        :param kwargs: dict, extra arguments for building AlexNet.
+            - image_mean: np.ndarray, mean image for each input channel, shape: (C,).
+            - dropout_prob: float, the probability of dropping out each unit in FC layer.
+        :return d: dict, containing outputs on each layer.
+        """
         d = dict()    # Dictionary to save intermediate values returned from each layer.
         X_mean = kwargs.pop('image_mean', 0.0)
         dropout_prob = kwargs.pop('dropout_prob', 0.0)
         num_classes = int(self.y.get_shape()[-1])
 
-        # keep_prob for dropout layers
+        # The probability of keeping each unit for dropout layers
         keep_prob = tf.cond(self.is_train,
                             lambda: 1. - dropout_prob,
                             lambda: 1.)
@@ -595,12 +682,18 @@ class AlexNet(ConvNet):
                                 weights_stddev=0.01, biases_value=0.0)
         # (4096) --> (num_classes)
 
+        # softmax
         d['pred'] = tf.nn.softmax(d['logits'])
 
         return d
 
     def _build_loss(self, **kwargs):
-        """Evaluate loss for the model."""
+        """
+        Build loss function for the model training.
+        :param kwargs: dict, extra arguments for regularization term.
+            - weight_decay: float, L2 weight decay regularization coefficient.
+        :return tf.Tensor.
+        """
         weight_decay = kwargs.pop('weight_decay', 0.0005)
         variables = tf.trainable_variables()
         l2_reg_loss = tf.add_n([tf.nn.l2_loss(var) for var in variables])
@@ -612,14 +705,26 @@ class AlexNet(ConvNet):
         return softmax_loss + weight_decay*l2_reg_loss
 ```
 
-- 기존 본문과의 차이점
-  - 입력층의 크기로 $$224\times224\times3$$ 대신 $$227\times227\times3$$을 사용
-  - 그룹 컨볼루션(grouped convolution) 대신 일반적인 형태의 컨볼루션으로 구현
-  - Local response normalization 층을 제거함
-  - Weight initialization 수행 시, bias 초깃값을 1.0 대신 0.1로 사용
+`AlexNet` 클래스는, AlexNet의 아키텍처 및 학습에 사용할 손실 함수를 정의하고자 `ConvNet` 클래스를 상속받은 것입니다. `_build_model` 함수에서는 전체 아키텍처뿐만 아니라 각 층별 가중치 및 바이어스 초기화를 위한 하이퍼파라미터(`weights_stddev`, `biases_value`)와, 핵심적인 정규화 기법인 **드롭아웃(dropout)**을 수행하는 부분을 하나의 독립적인 층 형태로 삽입하여 구현하였습니다.
+
+`_build_loss` 함수에서는 AlexNet을 학습하는 데 사용할 **소프트맥스 교차 엔트로피(softmax cross-entropy)** 손실 함수를 구현하였습니다. 이 때, 주요 정규화 기법인 L2 정규화(L2 regularization)를 위해 전체 가중치 및 바이어스에 대한 L2 norm을 계산하고, 여기에 `weight_decay` 인자를 통해 전달된 계수를 곱한 뒤 기존 손실함수에 더하여 최종적인 손실 함수를 완성하였습니다.
+
+### 원 논문과의 차이점
+
+AlexNet 논문에서는, AlexNet의 아키텍처를 아래 그림과 같이 표현하고 있습니다.
+
+{% include image.html name=page.name file="alexnet-architecture.svg" description="AlexNet 아키텍처" class="full-image" %}
+
+중간 컨볼루션 층에서 생성된 3차원 출력값들이 크게 두 갈래로 나뉘어 다음 층으로 전달되고 있는 것을 확인할 수 있는데, 이는 AlexNet 초기 구현 당시 두 개의 GPU를 병렬적으로 활용하기 위해 채택한 **그룹 컨볼루션(grouped convolution)**으로 인한 결과물이라고 할 수 있습니다. 오늘날에는 초기 구현 당시보다 GPU의 성능도 향상된 것도 있고, 구조적으로 봐도 일반적인 형태의 컨볼루션을 채택하는 것이 더 단순하면서 효과적이기 때문에, 본 구현체에서는 그룹 컨볼루션 대신 일반적인 형태의 컨볼루션을 사용하여 전체 아키텍처를 구현하였습니다. 
+
+또, AlexNet 논문에서는 local response normalization(이하 LRN) 층을 몇몇 컨볼루션 층 및 풀링(pooling) 층 바로 다음 위치에 삽입하여, 각 층에서의 출력값을 일정하게 조절하고 있습니다. 오늘날 활성함수(activation function)의 개선 및 batch normalization 방법의 등장으로 인해 LRN은 최신 컨볼루션 신경망 아키텍처에서 거의 사용되지 않으며, 구현의 단순화 측면에서도 좋지 못하기 때문에, 본 구현체에서는 LRN 층을 삽입하지 않았습니다.
+
+그리고 AlexNet 논문에서는 몇몇 컨볼루션 층과 완전 연결 층의 바이어스를 1.0으로 초기화하였으나, 본 구현체에서는 이를 1.0 대신 0.1로 초기화하였습니다.
 
 
 ## (4) 러닝 알고리즘: SGD+Momentum
+
+*TODO*
 
 ### learning.optimizers 모듈
 
@@ -627,30 +732,32 @@ class AlexNet(ConvNet):
 
 ```python
 class Optimizer(object):
-    """
-    Base class for gradient-based optimization functions.
-    """
+    """Base class for gradient-based optimization algorithms."""
 
     def __init__(self, model, train_set, evaluator, val_set=None, **kwargs):
         """
         Optimizer initializer.
-        :param model: Model to be learned.
-        :param train_set: DataSet.
-        :param evaluator: Evaluator.
-        :param val_set: DataSet.
+        :param model: ConvNet, the model to be learned.
+        :param train_set: DataSet, training set to be used.
+        :param evaluator: Evaluator, for computing performance scores during training.
+        :param val_set: DataSet, validation set to be used, which can be None if not used.
+        :param kwargs: dict, extra arguments containing training hyperparameters.
+            - batch_size: int, batch size for each iteration.
+            - num_epochs: int, total number of epochs for training.
+            - init_learning_rate: float, initial learning rate.
         """
         self.model = model
         self.train_set = train_set
         self.evaluator = evaluator
         self.val_set = val_set
 
+        # Training hyperparameters
         self.batch_size = kwargs.pop('batch_size', 256)
         self.num_epochs = kwargs.pop('num_epochs', 320)
         self.init_learning_rate = kwargs.pop('init_learning_rate', 0.01)
 
-        self.learning_rate_placeholder = tf.placeholder(tf.float32)
+        self.learning_rate_placeholder = tf.placeholder(tf.float32)    # Placeholder for current learning rate
         self.optimize = self._optimize_op()
-        self.saver = tf.train.Saver()
 
         self._reset()
 
@@ -681,6 +788,12 @@ class Optimizer(object):
         """
         Make a single gradient update and return its results.
         This should not be called manually.
+        :param sess: tf.Session.
+        :param kwargs: dict, extra arguments containing training hyperparameters.
+            - augment_train: bool, whether to perform augmentation for training.
+        :return loss: float, loss value for the single iteration step.
+                y_true: np.ndarray, true label from the training set.
+                y_pred: np.ndarray, predicted label from the model.
         """
         augment_train = kwargs.pop('augment_train', True)
 
@@ -697,13 +810,17 @@ class Optimizer(object):
 
         return loss, y_true, y_pred
 
-    def train(self, sess, details=False, verbose=True, **kwargs):
+    def train(self, sess, save_dir='/tmp', details=False, verbose=True, **kwargs):
         """
         Run optimizer to train the model.
         :param sess: tf.Session.
-        :param details: Boolean, whether to return detailed results.
-        :param verbose: Boolean, whether to print details during training.
+        :param save_dir: str, the directory to save the learned weights of the model.
+        :param details: bool, whether to return detailed results.
+        :param verbose: bool, whether to print details during training.
+        :param kwargs: dict, extra arguments containing training hyperparameters.
+        :return train_results: dict, containing detailed results of training.
         """
+        saver = tf.train.Saver()
         sess.run(tf.global_variables_initializer())    # initialize all weights
 
         train_results = dict()    # dictionary to contain training(, evaluation) results and details
@@ -717,49 +834,54 @@ class Optimizer(object):
 
         step_losses, step_scores, eval_scores = [], [], []
         start_time = time.time()
+
+        # Start training loop
         for i in range(num_steps):
+            # Perform a gradient update from a single minibatch
             step_loss, step_y_true, step_y_pred = self._step(sess, **kwargs)
             step_losses.append(step_loss)
 
+            # Perform evaluation in the end of each epoch
             if (i+1) % num_steps_per_epoch == 0:
+                # Evaluate model with current minibatch, from training set
                 step_score = self.evaluator.score(step_y_true, step_y_pred)
                 step_scores.append(step_score)
+
+                # If validation set is initially given, use it for evaluation
                 if self.val_set is not None:
-                    # Evaluate current model
+                    # Evaluate model with the validation set
                     eval_y_pred = self.model.predict(sess, self.val_set, verbose=False, **kwargs)
                     eval_score = self.evaluator.score(self.val_set.labels, eval_y_pred)
                     eval_scores.append(eval_score)
 
                     if verbose:
+                        # Print intermediate results
                         print('[epoch {}]\tloss: {:.6f} |Train score: {:.6f} |Eval score: {:.6f} |lr: {:.6f}'\
                               .format(self.curr_epoch, step_loss, step_score, eval_score, self.curr_learning_rate))
                         # Plot intermediate results
                         plot_learning_curve(-1, step_losses, step_scores, eval_scores=eval_scores,
-                                            plot=False, save=True, img_dir='/tmp')
+                                            mode=self.evaluator.mode, img_dir=save_dir)
+                    curr_score = eval_score
 
-                    # Keep track of the current best model for validation set
-                    if self.evaluator.is_better(eval_score, self.best_score, **kwargs):
-                        self.best_score = eval_score
-                        self.num_bad_epochs = 0
-                        self.saver.save(sess, '/tmp/model.ckpt')    # save current weights
-                    else:
-                        self.num_bad_epochs += 1
-
+                # else, just use results from current minibatch for evaluation
                 else:
                     if verbose:
+                        # Print intermediate results
                         print('[epoch {}]\tloss: {} |Train score: {:.6f} |lr: {:.6f}'\
                               .format(self.curr_epoch, step_loss, step_score, self.curr_learning_rate))
                         # Plot intermediate results
                         plot_learning_curve(-1, step_losses, step_scores, eval_scores=None,
-                                            plot=False, save=True, img_dir='/tmp')
+                                            mode=self.evaluator.mode, img_dir=save_dir)
+                    curr_score = step_score
 
-                    # Keep track of the current best model for training set
-                    if self.evaluator.is_better(step_score, self.best_score, **kwargs):
-                        self.best_score = step_score
-                        self.num_bad_epochs = 0
-                        self.saver.save(sess, '/tmp/model.ckpt')    # save current weights
-                    else:
-                        self.num_bad_epochs += 1
+                # Keep track of the current best model,
+                # by comparing current score and the best score
+                if self.evaluator.is_better(curr_score, self.best_score, **kwargs):
+                    self.best_score = curr_score
+                    self.num_bad_epochs = 0
+                    saver.save(sess, os.path.join(save_dir, 'model.ckpt'))    # save current weights
+                else:
+                    self.num_bad_epochs += 1
 
                 self._update_learning_rate(**kwargs)
                 self.curr_epoch += 1
@@ -768,7 +890,6 @@ class Optimizer(object):
             print('Total training time(sec): {}'.format(time.time() - start_time))
             print('Best {} score: {}'.format('evaluation' if eval else 'training',
                                              self.best_score))
-
         print('Done.')
 
         if details:
@@ -778,7 +899,7 @@ class Optimizer(object):
             if self.val_set is not None:
                 train_results['eval_scores'] = eval_scores    # (num_epochs)
 
-            return details
+            return train_results
 ```
 
 #### MomentumOptimizer 클래스
@@ -788,7 +909,12 @@ class MomentumOptimizer(Optimizer):
     """Gradient descent optimizer, with Momentum algorithm."""
 
     def _optimize_op(self, **kwargs):
-        """tf.train.MomentumOptimizer.minimize Op for a gradient update."""
+        """
+        tf.train.MomentumOptimizer.minimize Op for a gradient update.
+        :param kwargs: dict, extra arguments for optimizer.
+            - momentum: float, the momentum coefficient.
+        :return tf.Operation.
+        """
         momentum = kwargs.pop('momentum', 0.9)
 
         update_vars = tf.trainable_variables()
@@ -796,7 +922,15 @@ class MomentumOptimizer(Optimizer):
                 .minimize(self.model.loss, var_list=update_vars)
 
     def _update_learning_rate(self, **kwargs):
-        """Update current learning rate, when evaluation score plateaus."""
+        """
+        Update current learning rate, when evaluation score plateaus.
+        :param kwargs: dict, extra arguments for learning rate scheduling.
+            - learning_rate_patience: int, number of epochs with no improvement
+                                      after which learning rate will be reduced.
+            - learning_rate_decay: float, factor by which the learning rate will be updated.
+            - eps: float, if the difference between new and old learning rate is smaller than eps,
+                   the update is ignored.
+        """
         learning_rate_patience = kwargs.pop('learning_rate_patience', 10)
         learning_rate_decay = kwargs.pop('learning_rate_decay', 0.1)
         eps = kwargs.pop('eps', 1e-8)
