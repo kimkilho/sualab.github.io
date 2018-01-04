@@ -268,7 +268,7 @@ AlexNet 논문에서는 추출되는 패치의 크기가 $$224\times224$$라고 
 
 ### learning.evaluators 모듈
 
-`learning.evaluators` 모듈은, 현재까지 학습된 모델의 성능 평가를 위한 클래스를 담고 있습니다. 
+`learning.evaluators` 모듈은, 현재까지 학습된 모델의 성능 평가를 위한 'evaluator(성능 평가를 수행하는 개체)'의 클래스를 담고 있습니다. 
 
 #### Evaluator 클래스
 
@@ -317,7 +317,7 @@ class Evaluator(object):
         pass
 ```
 
-`Evaluator` 클래스는, 성능 평가를 담당하는 객체를 서술하는 베이스 클래스입니다. 이는 `worst_score`, `mode` 프로퍼티(property)와 `score`, `is_better` 함수로 구성되어 있습니다. 성능 평가 척도에 따라 '최저' 성능 점수와 '점수가 높아야 성능이 우수한지, 낮아야 성능이 우수한지' 등이 다르기 때문에, 이들을 명시하는 부분이 각각 `worst_score`와 `mode`입니다. 
+`Evaluator` 클래스는, evaluator를 서술하는 베이스 클래스입니다. 이는 `worst_score`, `mode` 프로퍼티(property)와 `score`, `is_better` 함수로 구성되어 있습니다. 성능 평가 척도에 따라 '최저' 성능 점수와 '점수가 높아야 성능이 우수한지, 낮아야 성능이 우수한지' 등이 다르기 때문에, 이들을 명시하는 부분이 각각 `worst_score`와 `mode`입니다. 
 
 한편 `score` 함수는 테스트용 데이터셋의 실제 레이블 및 이에 대한 모델의 예측 결과를 받아, 지정한 성능 평가 척도에 의거하여 성능 점수를 계산하여 반환합니다. `is_better` 함수는 현재의 평가 성능과 현재까지의 '최고' 성능을 서로 비교하여, 현재 성능이 최고 성능보다 더 우수한지 여부를 `bool` 타입으로 반환합니다.
 
@@ -354,7 +354,7 @@ class AccuracyEvaluator(Evaluator):
         return curr > best * relative_eps
 ```
 
-`AccuracyEvaluator` 클래스는 정확도를 평가 척도로 삼는 것으로, `Evaluator` 클래스를 구현(implement)한 것입니다. `score` 함수에서 정확도를 계산하기 위해, scikit-learn 라이브러리에서 제공하는 `sklearn.metrics.accuracy_score` 함수를 불러와 사용하였습니다. 한편 `is_better` 함수에서는 두 성능 간의 단순 비교를 수행하는 것이 아니라, 상대적 문턱값(relative threshold)를 사용하여 현재 평가 성능이 최고 평가 성능보다 지정한 비율 이상으로 높은 경우에 한해 `True`를 반환하도록 하였습니다.
+`AccuracyEvaluator` 클래스는 정확도를 평가 척도로 삼는 evaluator로, `Evaluator` 클래스를 구현(implement)한 것입니다. `score` 함수에서 정확도를 계산하기 위해, scikit-learn 라이브러리에서 제공하는 `sklearn.metrics.accuracy_score` 함수를 불러와 사용하였습니다. 한편 `is_better` 함수에서는 두 성능 간의 단순 비교를 수행하는 것이 아니라, 상대적 문턱값(relative threshold)를 사용하여 현재 평가 성능이 최고 평가 성능보다 지정한 비율 이상으로 높은 경우에 한해 `True`를 반환하도록 하였습니다.
 
 
 ## (3) 러닝 모델: AlexNet
@@ -724,9 +724,11 @@ AlexNet 논문에서는, AlexNet의 아키텍처를 아래 그림과 같이 표�
 
 ## (4) 러닝 알고리즘: SGD+Momentum
 
-*TODO*
+러닝 알고리즘으로는, AlexNet 논문을 그대로 따라하여 **모멘텀(momentum)**을 적용한 **확률적 경사 하강법(stochastic gradient descent; 이하 SGD)**을 채택하였습니다. 이 때, 기존 러닝 알고리즘을 사후적으로 수정하거나 혹은 새로운 러닝 알고리즘을 추가하는 상황에서의 편의를 고려하여, SGD 계열의 러닝 알고리즘에 기반한 'optimizer(최적화를 수행하는 개체)'를 표현하는 베이스 클래스를 먼저 정의한 뒤, 이를 모멘텀 SGD에 기반한 optimizer 클래스가 상속받는 형태로 구현하였습니다. 
 
 ### learning.optimizers 모듈
+
+`learning.optimizers` 모듈에서는, optimizer의 베이스 클래스인 `Optimizer` 클래스와 이를 상속받는 `MomentumOptimizer` 클래스를 담고 있습니다.
 
 #### Optimizer 클래스
 
@@ -902,6 +904,12 @@ class Optimizer(object):
             return train_results
 ```
 
+`Optimizer` 클래스는 학습을 통한 모델의 최적화를 담당하기 때문에, 학습 데이터셋(`DataSet` 객체)과 학습할 모델(`ConvNet` 객체), evaluator(`Evaluator` 객체), 그리고 학습과 관련된 기본적인 하이퍼파라미터(`batch_size`, `num_epochs`, `init_learning_rate` 등)들을 멤버 변수 형태로 포함하고 있습니다. SGD 계열의 러닝 알고리즘들 중 구체적으로 어떤 것을 사용할 것인지에 따라, `_optimize_op` 함수에서 이를 명시하여 구현하도록 하였습니다. 
+
+또한 학습 과정에서 모델 업데이트를 거듭할 수록 매 epochs의 말미마다 **학습률(learning rate)**을 낮춰주어 모델이 수렴(convergence)하도록 유도할 수 있는데, 이를 위한 학습률 스케줄링(scheduling) 방법을 `_update_learning_rate` 함수에서 구현하도록 하였습니다. 이 함수에서 현재의 학습률을 나타내는 `curr_learning_rate` 멤버 변수의 값을 일정한 규칙에 의거하여 조정하도록 할 수 있습니다.
+
+`train` 함수는 `Optimizer` 클래스의 핵심적인 함수로, 실제 학습을 수행하도록 합니다. `batch_size` 크기의 미니배치를 학습 데이터셋으로부터 추출하여 이에 대한 손실 함수의 값을 계산하고, 이를 사용하여 SGD에 기반한 모델 파라미터의 업데이트를 수행합니다. 이 과정에서 매 epoch의 말미에 도달할 때마다, 검증 데이터셋(validation set)에 대하여 현재까지 학습된 모델의 성능을 평가합니다(만약 검증 데이터셋이 따로 주어지지 않은 경우, 기존 학습 데이터셋의 해당 반복 회차에서 추출된 미니배치에 대한 성능 평가로 대체합니다). 현재 모델의 성능 평가 결과가 (`Evaluator`의 `is_better` 함수에 의해) 지금까지의 최고 성능 기록보다 높다고 판단될 경우, 현재 모델의 파라미터를 디스크에 저장하고 최고 성능 기록을 업데이트합니다. 
+
 #### MomentumOptimizer 클래스
 
 ```python
@@ -943,6 +951,14 @@ class MomentumOptimizer(Optimizer):
             self.num_bad_epochs = 0
 ```
 
+`MomentumOptimizer` 클래스는, SGD+Momentum 기반의 optimizer를 정의하고자 `Optimizer` 클래스를 상속받은 것입니다. `_optimize_op` 함수에서는 모멘텀의 정도를 조절하는 계수를 `momentum` 인자로 전달받아, TensorFlow에서 제공하는 `tf.train.MomentumOptimizer` 에 대한 `minimize` Operation을 반환합니다.
+
+`_update_learning_rate` 함수에서는, AlexNet 논문에서 채택한 아래의 학습률 스케줄링 방법을 좀 더 고도화하여 구현하였습니다.
+
+- 현재 수준의 학습률에서, 검증 데이터셋에 대한 성능 향상이 수 epochs에 걸쳐 확인되지 않을 경우, 학습률을 일정한 수로 나누어 감소시킨 뒤 학습을 지속함
+
+`learning_rate_patience`는, 몇 epochs동안 성능 향상이 확인되지 않을 경우 학습률을 조정할지 결정하는 인자이며, `learning_rate_decay`의 경우, 학습률 조정 시 곱하여 학습률을 감소시키기 위해 사용되는 값을 전달하는 인자입니다. 학습률을 일정 비율로 계속 감소시키다 보면 어느 순간부터는 학습률의 변화량이 미미해지는데, 이 때 이전 학습률과 조정된 학습률 간의 차이가 `eps` 인자의 값보다 큰 경우에 한해서만 학습률 조정을 실제로 수행하도록 합니다.
+
 
 
 ## 학습 수행 및 결과
@@ -971,4 +987,5 @@ TODO
   - <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank">Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E. Hinton. "Imagenet classification with deep convolutional neural networks." Advances in neural information processing systems. 2012.</a>
 - The Asirra dataset
   - <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2007/10/CCS2007.pdf" target="_blank">Elson, Jeremy, et al. "Asirra: a CAPTCHA that exploits interest-aligned manual image categorization." (2007).</a>
-
+- 본문 구현체의 러닝 알고리즘의 학습률 스케줄링 방법
+	- <a href="http://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.ReduceLROnPlateau" target="_blank">"torch.optim.lr_scheduler.ReduceLROnPlateau" Pytorch master documentation, http://pytorch.org/docs/master/optim.html. Accessed 4 January 2018.</a>
