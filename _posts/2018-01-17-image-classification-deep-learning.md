@@ -142,9 +142,10 @@ class DataSet(object):
         :param images: np.ndarray, shape: (N, H, W, C).
         :param labels: np.ndarray, shape: (N, num_classes) or (N,).
         """
-        assert images.shape[0] == labels.shape[0], (
-            'Number of examples mismatch, between images and labels.'
-        )
+        if labels is not None:
+            assert images.shape[0] == labels.shape[0], (
+                'Number of examples mismatch, between images and labels.'
+            )
         self._num_examples = images.shape[0]
         self._images = images
         self._labels = labels    # NOTE: this can be None, if not given.
@@ -525,7 +526,8 @@ class ConvNet(object):
         batch_size = kwargs.pop('batch_size', 256)
         augment_pred = kwargs.pop('augment_pred', True)
 
-        assert len(dataset.labels.shape) > 1, 'Labels must be one-hot encoded.'
+        if dataset.labels is not None:
+            assert len(dataset.labels.shape) > 1, 'Labels must be one-hot encoded.'
         num_classes = int(self.y.get_shape()[-1])
         pred_size = dataset.num_examples
         num_steps = pred_size // batch_size
@@ -705,7 +707,7 @@ class AlexNet(ConvNet):
         return softmax_loss + weight_decay*l2_reg_loss
 ```
 
-`AlexNet` 클래스는, AlexNet의 아키텍처 및 학습에 사용할 손실 함수를 정의하고자 `ConvNet` 클래스를 상속받은 것입니다. `_build_model` 함수에서는 전체 아키텍처뿐만 아니라 각 층별 가중치 및 바이어스 초기화를 위한 하이퍼파라미터(`weights_stddev`, `biases_value`)와, 핵심적인 정규화 기법인 **드롭아웃(dropout)**을 수행하는 부분을 하나의 독립적인 층 형태로 삽입하여 구현하였습니다.
+`AlexNet` 클래스는, AlexNet의 아키텍처 및 학습에 사용할 손실 함수를 정의하고자 `ConvNet` 클래스를 상속받은 것입니다. `_build_model` 함수에서는 전체 아키텍처뿐만 아니라 각 층별 가중치 및 바이어스 초기화를 위한 하이퍼파라미터(hyperparameters; `weights_stddev`, `biases_value`)와, 핵심적인 정규화 기법인 **드롭아웃(dropout)**을 수행하는 부분을 하나의 독립적인 층 형태로 삽입하여 구현하였습니다.
 
 `_build_loss` 함수에서는 AlexNet을 학습하는 데 사용할 **소프트맥스 교차 엔트로피(softmax cross-entropy)** 손실 함수를 구현하였습니다. 이 때, 주요 정규화 기법인 L2 정규화(L2 regularization)를 위해 전체 가중치 및 바이어스에 대한 L2 norm을 계산하고, 여기에 `weight_decay` 인자를 통해 전달된 계수를 곱한 뒤 기존 손실함수에 더하여 최종적인 손실 함수를 완성하였습니다.
 
@@ -960,25 +962,188 @@ class MomentumOptimizer(Optimizer):
 `learning_rate_patience`는, 몇 epochs동안 성능 향상이 확인되지 않을 경우 학습률을 조정할지 결정하는 인자이며, `learning_rate_decay`의 경우, 학습률 조정 시 곱하여 학습률을 감소시키기 위해 사용되는 값을 전달하는 인자입니다. 학습률을 일정 비율로 계속 감소시키다 보면 어느 순간부터는 학습률의 변화량이 미미해지는데, 이 때 이전 학습률과 조정된 학습률 간의 차이가 `eps` 인자의 값보다 큰 경우에 한해서만 학습률 조정을 실제로 수행하도록 합니다.
 
 
+## 학습 수행 및 테스트 결과
 
-## 학습 수행 및 결과
+`train.py` 스크립트에서는 실제 학습을 수행하는 과정을 구현하였으며, `test.py` 스크립트에서는 테스트 데이터셋에 대하여 학습이 완료된 모델을 테스트하는 과정을 구현하였습니다. 
 
-- 학습 관련 hyperparameters:
-  - batch_size: 256
-  - initial learning rate: 0.01
-  - momentum: 0.9
-  - learning rate decay rate: 0.1
-  - number of epochs: 300
-- 정규화 관련 hyperparameters:
+### train.py 스크립트
+
+```python
+import os
+import numpy as np
+import tensorflow as tf
+from datasets import asirra as dataset
+from models.nn import AlexNet as ConvNet
+from learning.optimizers import MomentumOptimizer as Optimizer
+from learning.evaluators import AccuracyEvaluator as Evaluator
+
+
+""" 1. Load and split datasets """
+root_dir = os.path.join('/', 'mnt', 'sdb2', 'Datasets', 'asirra')    # FIXME
+trainval_dir = os.path.join(root_dir, 'train')
+
+# Load trainval set and split into train/val sets
+X_trainval, y_trainval = dataset.read_asirra_subset(trainval_dir, one_hot=True)
+trainval_size = X_trainval.shape[0]
+val_size = int(trainval_size * 0.2)    # FIXME
+val_set = dataset.DataSet(X_trainval[:val_size], y_trainval[:val_size])
+train_set = dataset.DataSet(X_trainval[val_size:], y_trainval[val_size:])
+
+# Sanity check
+print('Training set stats:')
+print(train_set.images.shape)
+print(train_set.images.min(), train_set.images.max())
+print((train_set.labels[:, 1] == 0).sum(), (train_set.labels[:, 1] == 1).sum())
+print('Validation set stats:')
+print(val_set.images.shape)
+print(val_set.images.min(), val_set.images.max())
+print((val_set.labels[:, 1] == 0).sum(), (val_set.labels[:, 1] == 1).sum())
+
+
+""" 2. Set training hyperparameters """
+hp_d = dict()
+image_mean = train_set.images.mean(axis=(0, 1, 2))    # mean image
+np.save('/tmp/asirra_mean.npy', image_mean)    # save mean image
+hp_d['image_mean'] = image_mean
+
+# FIXME: Training hyperparameters
+hp_d['batch_size'] = 256
+hp_d['num_epochs'] = 300
+
+hp_d['augment_train'] = True
+hp_d['augment_pred'] = True
+
+hp_d['init_learning_rate'] = 0.01
+hp_d['momentum'] = 0.9
+hp_d['learning_rate_patience'] = 30
+hp_d['learning_rate_decay'] = 0.1
+hp_d['eps'] = 1e-8
+
+# FIXME: Regularization hyperparameters
+hp_d['weight_decay'] = 0.0005
+hp_d['dropout_prob'] = 0.5
+
+# FIXME: Evaluation hyperparameters
+hp_d['score_threshold'] = 1e-4
+
+
+""" 3. Build graph, initialize a session and start training """
+# Initialize
+graph = tf.get_default_graph()
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+
+model = ConvNet([227, 227, 3], 2, **hp_d)
+evaluator = Evaluator()
+optimizer = Optimizer(model, train_set, evaluator, val_set=val_set, **hp_d)
+
+sess = tf.Session(graph=graph, config=config)
+train_results = optimizer.train(sess, details=True, verbose=True, **hp_d)
+```
+
+`train.py` 스크립트에서는 다음의 3단계 과정을 거칩니다.
+
+1. 원본 학습 데이터셋을 메모리에 로드하고, 이를 학습 데이터셋(80%)과 검증 데이터셋(20%)으로 나눈 뒤 각각을 사용하여 `DataSet` 객체를 생성함 
+2. 학습 수행 및 성능 평가와 관련된 하이퍼파라미터를 설정함
+3. `ConvNet` 객체, `Evaluator` 객체 및 `Optimizer` 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, `Optimizer.train` 함수를 호출하여 모델 학습을 수행함
+
+이 때, 원본 데이터셋 저장 경로, 하이퍼파라미터 등 `FIXME`로 표시된 부분은 여러분의 상황에 맞춰 수정하셔야 합니다. 본 글에서 학습을 수행할 당시의 하이퍼파라미터 설정은 아래와 같이 하였습니다.
+
+- 러닝 알고리즘 관련 하이퍼파라미터 설정
+  - Batch size: 256
+  - Number of epochs: 300
+  - Initial learning rate: 0.01
+  - Momentum: 0.9
+  - Learning rate decay: 0.1
+    - Learning rate patience: 30
+    - eps: 1e-8
+- 정규화 관련 하이퍼파라미터 설정
   - L2 weight decay: 0.0005
   - dropout probability: 0.5
-- Learning curve + overfitting 여부 확인
-- Test set 예시 이미지 - 예측 결과
+- 평가 척도 관련 하이퍼파라미터 설정
+  - Score threshold: 1e-4
+
+### test.py 스크립트
+
+```python
+""" 1. Load and split datasets """
+root_dir = os.path.join('/', 'mnt', 'sdb2', 'Datasets', 'asirra')    # FIXME
+test_dir = os.path.join(root_dir, 'test')
+
+# Load test set
+X_test, y_test = dataset.read_asirra_subset(test_dir, one_hot=True)
+test_set = dataset.DataSet(X_test, y_test)
+
+# Sanity check
+print('Test set stats:')
+print(test_set.images.shape)
+print(test_set.images.min(), test_set.images.max())
+print((test_set.labels[:, 1] == 0).sum(), (test_set.labels[:, 1] == 1).sum())
+
+
+""" 2. Set test hyperparameters """
+hp_d = dict()
+image_mean = np.load('/tmp/asirra_mean.npy')    # load mean image
+hp_d['image_mean'] = image_mean
+
+# FIXME: Test hyperparameters
+hp_d['batch_size'] = 256
+hp_d['augment_pred'] = True
+
+
+""" 3. Build graph, load weights, initialize a session and start test """
+# Initialize
+graph = tf.get_default_graph()
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+
+model = ConvNet([227, 227, 3], 2, **hp_d)
+evaluator = Evaluator()
+saver = tf.train.Saver()
+
+sess = tf.Session(graph=graph, config=config)
+saver.restore(sess, '/tmp/model.ckpt')    # restore learned weights
+test_y_pred = model.predict(sess, test_set, **hp_d)
+test_score = evaluator.score(test_set.labels, test_y_pred)
+
+print('Test accuracy: {}'.format(test_score))
+```
+
+`test.py` 스크립트에서도 유사하게, 다음의 3단계 과정을 거칩니다. 
+
+1. 원본 테스트 데이터셋을 메모리에 로드하여, `DataSet` 객체를 생성함
+2. 테스트 수행 및 성능 평가와 관련된 하이퍼파라미터를 설정함
+3. `ConvNet` 객체와 `Evaluator` 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, `tf.train.Saver`의 `restore` 함수 호출을 통해 학습이 완료된 모델의 가중치들을 로드하고 `ConvNet.predict` 함수와 `Evaluator.score` 함수를 순서대로 호출하여 모델 테스트 성능을 평가함
+
+### 학습 결과 분석
+
+#### 학습 곡선
+
+`train.py` 스크립트를 실행하여, 실제 학습 수행 과정에서 아래의 정보들을 추적하여, 이를 **학습 곡선(learning curve)**으로 나타내었습니다.
+
+- 매 반복 횟수에서의 손실 함수의 값
+- 매 epoch에 대하여 (1) 학습 데이터셋으로부터 추출한 미니배치에 대한 모델의 예측 정확도(이하 학습 정확도)와 (2) 검증 데이터셋에 대한 모델의 예측 정확도(이하 검증 정확도)
+
+{% include image.html name=page.name file="learning-curve-result.svg" description="학습 곡선 플롯팅 결과" class="large-image" %}
+
+학습이 진행됨에 따라 손실 함수의 값은 (약간의 진동이 있으나) 점차적으로 감소하면서, 동시에 학습 정확도 및 검증 정확도는 점차적으로 증가하는, 꽤 예쁜(?) 결과를 보였습니다. 단, 학습 정확도가 1.0을 향해 가는 과정에서 검증 정확도는 약 0.9288 언저리에 머물렀는데, 이 차이는 모델이 학습 데이터셋에 대하여 과적합(overfitting)된 정도를 나타낸다고 할 수 있겠습니다. 
+
+학습 과정 말미에서, 검증 정확도가 0.932일 때의 모델 가중치를 최종적으로 채택하여, 테스트를 위해 저장하였습니다.
+
+#### 테스트 결과
+
+테스트 결과 측정된 정확도는 **0.92768**로 확인되었습니다. <a href="https://www.kaggle.com/c/dogs-vs-cats" target="_blank">Dogs vs. Cats</a>의 Leaderboard 섹션에서, 1등인 Pierre Sermanet이 거둔 0.98914에 비하면 한참 못 미치는 점수입니다. 그러나 (1) 원본 데이터셋(25,000장)의 절반(12,500장)밖에 학습에 사용하지 않았으며, (2) 단 한 개의 (튜닝을 거치지 않은) 순수한 AlexNet만을 사용했다는 것을 생각해보면, 필자 생각에는 그렇게 나쁜 결과도 아닌 것 같습니다.
+
+실제로 얻을 수 있는 이미지에 대한 테스트를 위해, Google에서 개 이미지와 고양이 이미지 각각에 대한 검색 결과들 중 랜덤하게 3개씩 고른 뒤 이들을 학습이 완료된 모델에 입력하였더니, 아래와 같은 예측 결과를 얻었습니다. 
+
+{% include image.html name=page.name file="random-dogs-cats-predictions.png" description="랜덤한 개vs고양이 이미지에 대한 모델의 예측 결과(pred)" class="full-image" %}
 
 
 ## 결론
 
-TODO
+본 글에서는 이미지 인식 분야에서 가장 많이 다뤄지는 Classification 문제의 예시로, '개vs고양이 분류' 문제를 정하고, 이를 AlexNet 모델과 딥러닝 알고리즘을 사용하여 해결하는 과정을 안내하였습니다. 비록 온라인 상에서 딥러닝 구현체를 쉽게 찾을 수 있더라도, 여러분들이 데이터셋, 성능 평가, 러닝 모델, 러닝 알고리즘의 4가지 요소를 고려하여 각각을 모듈화하는 방식으로 직접 구현한다면, 딥러닝에 대한 이해 및 구현체에 대한 유지/보수의 측면에서 장점을 가져다줄 수 있다고 말씀드렸습니다. 여러분들이 본 글에서 제공한 구현체를 보고 받아들이는 입장에서도, 이러한 장점을 어느 정도는 느낄 수 있으셨기를 바랍니다. 
+
+\*추후 글에서는, 이미지 인식 분야의 또 다른 중요한 문제들인 Detection 및 Segmentation 문제를 해결하는 과정을, 예시 문제와 모델 등을 선정하여 여러분들께 안내해 드리고자 합니다. 이 때에도 본 글에서 언급한 딥러닝의 4가지 기본 요소를 중심으로 할 것입니다. 
 
 
 ## References
