@@ -17,6 +17,7 @@ name: image-classification-deep-learning
 - 본 글에서는, 딥러닝 모델 및 알고리즘 구현을 위한 하나의 방식을 제시합니다. 이는 새로운 딥러닝 테크닉이 등장하였을 때, 여러분들이 사용하던 기존 모델 혹은 알고리즘에 빠르고 효과적으로 적용할 수 있도록 하기 위함이며, 그와 동시에 딥러닝 모델과 알고리즘의 작동 방식을 더 잘 이해할 수 있도록 하기 위함입니다.
 - 본 글에서 구현한 AlexNet은, 원본 AlexNet 논문의 셋팅과 일부 다른 부분이 존재합니다. 이러한 부분을 본문 중간중간에 명시하였습니다.
 - 본문에서는 전체 구현체 중 핵심적인 부분을 중심으로 설명합니다. 전체 구현체 코드는 수아랩의 GitHub 저장소(*TODO: 링크 추가*)에서 자유롭게 확인하실 수 있습니다. 
+  - 전체 구현체 코드 원본에는 모든 주석이 (일반적인 관습에 맞춰) 영문으로 작성되어 있으나, 본 글에서 인용한 부분에서는 이들을 한국어로 번역하였습니다.
 
 
 ## 서론
@@ -61,7 +62,7 @@ name: image-classification-deep-learning
 
 {% include image.html name=page.name file="dogs-cats-examples.png" description="Asirra Dogs vs. Cats 데이터셋 내 개/고양이 이미지 예시" class="full-image" %}
 
-원본 데이터셋은 학습 데이터셋(training set) 25,000장, 테스트 데이터셋(test set) 12,500장으로 구성되어 있으나, 이 중 학습 데이터셋에 대해서만 레이블링(labeling)된 채로 제공되고 있습니다. 본 글에서의 개vs고양이 분류 문제 셋팅을 위해, 원본 학습 데이터셋 중 랜덤하게 절반 크기만큼 샘플링(sampling)하여 이 부분(12,500장)을 학습 데이터셋으로, 나머지 절반에 해당하는 부분(12,500장)을 테스트 데이터셋으로 재정의하였습니다. 
+원본 데이터셋은 학습 데이터셋(training set) 25,000장, 테스트 데이터셋(test set) 12,500장으로 구성되어 있으나, 이 중 학습 데이터셋에 대해서만 레이블링(labeling)된 채로 제공되고 있습니다. 본 글에서의 개vs고양이 분류 문제 셋팅을 위해, 원본 학습 데이터셋 중 *랜덤하게 절반 크기만큼 샘플링(sampling)하여 이 부분(12,500장)을 학습 데이터셋으로, 나머지 절반에 해당하는 부분(12,500장)을 테스트 데이터셋으로 재정의*하였습니다. 
 
 이미지 크기는 가로 42~1050px, 세로 32~768px 사이에서 가변적입니다. 개vs고양이 분류 문제용 데이터셋이므로, 자연히 클래스는 0(고양이)과 1(개)의 이진(binary) 클래스로 구성되어 있습니다.
 
@@ -77,27 +78,27 @@ name: image-classification-deep-learning
 ```python
 def read_asirra_subset(subset_dir, one_hot=True, sample_size=None):
     """
-    Load the Asirra Dogs vs. Cats data subset from disk
-    and perform preprocessing for training AlexNet.
-    :param subset_dir: str, path to the directory to read.
-    :param one_hot: bool, whether to return one-hot encoded labels.
-    :param sample_size: int, sample size specified when we are not using the entire set.
+    디스크로부터 Asirra Dogs vs. Cats 데이터셋을 로드하고,
+    AlexNet을 학습하는 데 사용하기 위한 형태로 전처리를 수행함.
+    :param subset_dir: str, 원본 데이터셋이 저장된 디렉터리 경로.
+    :param one_hot: bool, one-hot 인코딩 형태의 레이블을 반환할 것인지 여부.
+    :param sample_size: int, 전체 데이터셋을 모두 사용하지 않는 경우, 사용하고자 하는 샘플 이미지 개수.
     :return: X_set: np.ndarray, shape: (N, H, W, C).
              y_set: np.ndarray, shape: (N, num_channels) or (N,).
     """
-    # Read trainval data
+    # 학습+검증 데이터셋을 읽어들임
     filename_list = os.listdir(subset_dir)
     set_size = len(filename_list)
 
     if sample_size is not None and sample_size < set_size:
-        # Randomly sample subset of data when sample_size is specified
+        # sample_size가 명시된 경우, 원본 중 일부를 랜덤하게 샘플링함
         filename_list = np.random.choice(filename_list, size=sample_size, replace=False)
         set_size = sample_size
     else:
-        # Just shuffle the filename list
+        # 단순히 filename list의 순서를 랜덤하게 섞음
         np.random.shuffle(filename_list)
 
-    # Pre-allocate data arrays
+    # 데이터 array들을 메모리 공간에 미리 할당함
     X_set = np.empty((set_size, 256, 256, 3), dtype=np.float32)    # (N, H, W, 3)
     y_set = np.empty((set_size), dtype=np.uint8)                   # (N,)
     for i, filename in enumerate(filename_list):
@@ -115,7 +116,7 @@ def read_asirra_subset(subset_dir, one_hot=True, sample_size=None):
         y_set[i] = y
 
     if one_hot:
-        # Convert labels to one-hot vectors, shape: (N, num_classes)
+        # 모든 레이블들을 one-hot 인코딩 벡터들로 변환함, shape: (N, num_classes)
         y_set_oh = np.zeros((set_size, 2), dtype=np.uint8)
         y_set_oh[np.arange(set_size), y_set] = 1
         y_set = y_set_oh
@@ -138,7 +139,7 @@ def read_asirra_subset(subset_dir, one_hot=True, sample_size=None):
 class DataSet(object):
     def __init__(self, images, labels=None):
         """
-        Construct a new DataSet object.
+        새로운 DataSet 객체를 생성함.
         :param images: np.ndarray, shape: (N, H, W, C).
         :param labels: np.ndarray, shape: (N, num_classes) or (N,).
         """
@@ -148,12 +149,12 @@ class DataSet(object):
             )
         self._num_examples = images.shape[0]
         self._images = images
-        self._labels = labels    # NOTE: this can be None, if not given.
-        self._indices = np.arange(self._num_examples, dtype=np.uint)    # image/label indices(can be permuted)
+        self._labels = labels    # NOTE: 만약 입력 인자로 주어지지 않았다면, None으로 남길 수 있음.
+        self._indices = np.arange(self._num_examples, dtype=np.uint)    # image/label 인덱스(추후 랜덤하게 섞일 수 있음)
         self._reset()
 
     def _reset(self):
-        """Reset some variables."""
+        """일부 변수를 재설정함."""
         self._epochs_completed = 0
         self._index_in_epoch = 0
 
@@ -172,12 +173,12 @@ class DataSet(object):
     def next_batch(self, batch_size, shuffle=True, augment=True, is_train=True,
                    fake_data=False):
         """
-        Return the next `batch_size` examples from this dataset.
-        :param batch_size: int, size of a single batch.
-        :param shuffle: bool, whether to shuffle the whole set while sampling a batch.
-        :param augment: bool, whether to perform data augmentation while sampling a batch.
-        :param is_train: bool, current phase for sampling.
-        :param fake_data: bool, whether to generate fake data (for debugging).
+        `batch_size` 개수만큼의 이미지들을 현재 데이터셋으로부터 추출하여 미니배치 형태로 반환함.
+        :param batch_size: int, 미니배치 크기.
+        :param shuffle: bool, 미니배치 추출에 앞서, 현재 데이터셋 내 이미지들의 순서를 랜덤하게 섞을 것인지 여부.
+        :param augment: bool, 미니배치를 추출할 때, 데이터 증강을 수행할 것인지 여부.
+        :param is_train: bool, 미니배치 추출을 위한 현재 상황(학습/예측).
+        :param fake_data: bool, (디버깅 목적으로) 가짜 이미지 데이터를 생성할 것인지 여부.
         :return: batch_images: np.ndarray, shape: (N, h, w, C) or (N, 10, h, w, C).
                  batch_labels: np.ndarray, shape: (N, num_classes) or (N,).
         """
@@ -189,23 +190,23 @@ class DataSet(object):
 
         start_index = self._index_in_epoch
 
-        # Shuffle the dataset, for the first epoch
+        # 맨 첫 번째 epoch에서는 전체 데이터셋을 랜덤하게 섞음
         if self._epochs_completed == 0 and start_index == 0 and shuffle:
             np.random.shuffle(self._indices)
 
-        # Go to the next epoch, if current index goes beyond the total number of examples
+        # 현재의 인덱스가 전체 이미지 수를 넘어간 경우, 다음 epoch을 진행함
         if start_index + batch_size > self._num_examples:
-            # Increment the number of epochs completed
+            # 완료된 epochs 수를 1 증가
             self._epochs_completed += 1
-            # Get the rest examples in this epoch
+            # 새로운 epoch에서, 남은 이미지들을 가져옴
             rest_num_examples = self._num_examples - start_index
             indices_rest_part = self._indices[start_index:self._num_examples]
 
-            # Shuffle the dataset, after finishing a single epoch
+            # 하나의 epoch이 끝나면, 전체 데이터셋을 섞음
             if shuffle:
                 np.random.shuffle(self._indices)
 
-            # Start the next epoch
+            # 다음 epoch 시작
             start_index = 0
             self._index_in_epoch = batch_size - rest_num_examples
             end_index = self._index_in_epoch
@@ -231,13 +232,13 @@ class DataSet(object):
                 batch_labels = None
 
         if augment and is_train:
-            # Perform data augmentation, for training phase
+            # 학습 상황에서의 데이터 증강을 수행함 
             batch_images = random_crop_reflect(batch_images, 227)
         elif augment and not is_train:
-            # Perform data augmentation, for evaluation phase(10x)
+            # 예측 상황에서의 데이터 증강을 수행함
             batch_images = corner_center_crop_reflect(batch_images, 227)
         else:
-            # Don't perform data augmentation, generating center-cropped patches
+            # 데이터 증강을 수행하지 않고, 단순히 이미지 중심 위치에서만 추출된 패치를 사용함
             batch_images = center_crop(batch_images, 227)
 
         return batch_images, batch_labels
@@ -275,12 +276,12 @@ class DataSet(object):
 
 ```python
 class Evaluator(object):
-    """Base class for evaluation functions."""
+    """성능 평가를 위한 evaluator의 베이스 클래스."""
 
     @abstractproperty
     def worst_score(self):
         """
-        The worst performance score.
+        최저 성능 점수.
         :return float.
         """
         pass
@@ -288,9 +289,9 @@ class Evaluator(object):
     @abstractproperty
     def mode(self):
         """
-        The mode for performance score, either 'max' or 'min'.
-        e.g. 'max' for accuracy, AUC, precision and recall,
-              and 'min' for error rate, FNR and FPR.
+        점수가 높아야 성능이 우수한지, 낮아야 성능이 우수한지 여부. 'max'와 'min' 중 하나.
+        e.g. 정확도, AUC, 정밀도, 재현율 등의 경우 'max',
+             오류율, 미검률, 오검률 등의 경우 'min'.
         :return: str.
         """
         pass
@@ -298,8 +299,8 @@ class Evaluator(object):
     @abstractmethod
     def score(self, y_true, y_pred):
         """
-        Performance metric for a given prediction.
-        This should be implemented.
+        실제로 사용할 성능 평가 지표.
+        해당 함수를 추후 구현해야 함.
         :param y_true: np.ndarray, shape: (N, num_classes).
         :param y_pred: np.ndarray, shape: (N, num_classes).
         :return float.
@@ -309,10 +310,10 @@ class Evaluator(object):
     @abstractmethod
     def is_better(self, curr, best, **kwargs):
         """
-        Function to return whether current performance score is better than current best.
-        This should be implemented.
-        :param curr: float, current performance to be evaluated.
-        :param best: float, current best performance.
+        현재 주어진 성능 점수가 현재까지의 최고 성능 점수보다 우수한지 여부를 반환하는 함수.
+        해당 함수를 추후 구현해야 함.
+        :param curr: float, 평가 대상이 되는 현재 성능 점수.
+        :param best: float, 현재까지의 최고 성능 점수.
         :return bool.
         """
         pass
@@ -326,29 +327,29 @@ class Evaluator(object):
 
 ```python
 class AccuracyEvaluator(Evaluator):
-    """Evaluator with accuracy metric."""
+    """정확도를 평가 척도로 사용하는 evaluator 클래스."""
 
     @property
     def worst_score(self):
-        """The worst performance score."""
+        """최저 성능 점수."""
         return 0.0
 
     @property
     def mode(self):
-        """The mode for performance score."""
+        """점수가 높아야 성능이 우수한지, 낮아야 성능이 우수한지 여부."""
         return 'max'
 
     def score(self, y_true, y_pred):
-        """Compute accuracy for a given prediction."""
+        """정확도에 기반한 성능 평가 점수."""
         return accuracy_score(y_true.argmax(axis=1), y_pred.argmax(axis=1))
 
     def is_better(self, curr, best, **kwargs):
         """
-        Return whether current performance score is better than current best,
-        with consideration of the relative threshold to the given performance score.
-        :param kwargs: dict, extra arguments.
-            - score_threshold: float, relative threshold for measuring the new optimum,
-                               to only focus on significant changes.
+        상대적 문턱값을 고려하여, 현재 주어진 성능 점수가 현재까지의 최고 성능 점수보다
+        우수한지 여부를 반환하는 함수.
+        :param kwargs: dict, 추가 인자.
+            - score_threshold: float, 새로운 최적값 결정을 위한 상대적 문턱값으로,
+                               유의미한 차이가 발생했을 경우만을 반영하기 위함.
         """
         score_threshold = kwargs.pop('score_threshold', 1e-4)
         relative_eps = 1.0 + score_threshold
@@ -369,10 +370,10 @@ class AccuracyEvaluator(Evaluator):
 ```python
 def weight_variable(shape, stddev=0.01):
     """
-    Initialize a weight variable with given shape,
-    by sampling randomly from Normal(0.0, stddev^2).
+    새로운 가중치 변수를 주어진 shape에 맞게 선언하고,
+    Normal(0.0, stddev^2)의 정규분포로부터의 샘플링을 통해 초기화함.
     :param shape: list(int).
-    :param stddev: float, standard deviation of Normal distribution for weights.
+    :param stddev: float, 샘플링 대상이 되는 정규분포의 표준편차 값.
     :return weights: tf.Variable.
     """
     weights = tf.get_variable('weights', shape, tf.float32,
@@ -382,10 +383,10 @@ def weight_variable(shape, stddev=0.01):
 
 def bias_variable(shape, value=1.0):
     """
-    Initialize a bias variable with given shape,
-    with given constant value.
+    새로운 바이어스 변수를 주어진 shape에 맞게 선언하고, 
+    주어진 상수값으로 추기화함.
     :param shape: list(int).
-    :param value: float, initial value for biases.
+    :param value: float, 바이어스의 초기화 값.
     :return biases: tf.Variable.
     """
     biases = tf.get_variable('biases', shape, tf.float32,
@@ -395,12 +396,12 @@ def bias_variable(shape, value=1.0):
 
 def conv2d(x, W, stride, padding='SAME'):
     """
-    Compute a 2D convolution from given input and filter weights.
+    주어진 입력값과 필터 가중치 간의 2D 컨볼루션을 수행함.
     :param x: tf.Tensor, shape: (N, H, W, C).
     :param W: tf.Tensor, shape: (fh, fw, ic, oc).
-    :param stride: int, the stride of the sliding window for each dimension.
-    :param padding: str, either 'SAME' or 'VALID',
-                         the type of padding algorithm to use.
+    :param stride: int, 필터의 각 방향으로의 이동 간격.
+    :param padding: str, 'SAME' 또는 'VALID',
+                         컨볼루션 연산 시 입력값에 대해 적용할 패딩 알고리즘.
     :return: tf.Tensor.
     """
     return tf.nn.conv2d(x, W, strides=[1, stride, stride, 1], padding=padding)
@@ -408,12 +409,12 @@ def conv2d(x, W, stride, padding='SAME'):
 
 def max_pool(x, side_l, stride, padding='SAME'):
     """
-    Performs max pooling on given input.
+    주어진 입력값에 대해 최댓값 풀링(max pooling)을 수행함.
     :param x: tf.Tensor, shape: (N, H, W, C).
-    :param side_l: int, the side length of the pooling window for each dimension.
-    :param stride: int, the stride of the sliding window for each dimension.
-    :param padding: str, either 'SAME' or 'VALID',
-                         the type of padding algorithm to use.
+    :param side_l: int, 풀링 윈도우의 한 변의 길이.
+    :param stride: int, 풀링 윈도우의 각 방향으로의 이동 간격. 
+    :param padding: str, 'SAME' 또는 'VALID',
+                         풀링 연산 시 입력값에 대해 적용할 패딩 알고리즘.
     :return: tf.Tensor.
     """
     return tf.nn.max_pool(x, ksize=[1, side_l, side_l, 1],
@@ -422,16 +423,16 @@ def max_pool(x, side_l, stride, padding='SAME'):
 
 def conv_layer(x, side_l, stride, out_depth, padding='SAME', **kwargs):
     """
-    Add a new convolutional layer.
+    새로운 컨볼루션 층을 추가함.
     :param x: tf.Tensor, shape: (N, H, W, C).
-    :param side_l: int, the side length of the filters for each dimension.
-    :param stride: int, the stride of the filters for each dimension.
-    :param out_depth: int, the total number of filters to be applied.
-    :param padding: str, either 'SAME' or 'VALID',
-                         the type of padding algorithm to use.
-    :param kwargs: dict, extra arguments, including weights/biases initialization hyperparameters.
-        - weight_stddev: float, standard deviation of Normal distribution for weights.
-        - biases_value: float, initial value for biases.
+    :param side_l: int, 필터의 한 변의 길이.
+    :param stride: int, 필터의 각 방향으로의 이동 간격.
+    :param out_depth: int, 입력값에 적용할 필터의 총 개수.
+    :param padding: str, 'SAME' 또는 'VALID',
+                         컨볼루션 연산 시 입력값에 대해 적용할 패딩 알고리즘.
+    :param kwargs: dict, 추가 인자, 가중치/바이어스 초기화를 위한 하이퍼파라미터들을 포함함.
+        - weight_stddev: float, 샘플링 대상이 되는 정규분포의 표준편차 값.
+        - biases_value: float, 바이어스의 초기화 값.
     :return: tf.Tensor.
     """
     weights_stddev = kwargs.pop('weights_stddev', 0.01)
@@ -445,12 +446,12 @@ def conv_layer(x, side_l, stride, out_depth, padding='SAME', **kwargs):
 
 def fc_layer(x, out_dim, **kwargs):
     """
-    Add a new fully-connected layer.
+    새로운 완전 연결 층을 추가함.
     :param x: tf.Tensor, shape: (N, D).
-    :param out_dim: int, the dimension of output vector.
-    :param kwargs: dict, extra arguments, including weights/biases initialization hyperparameters.
-        - weight_stddev: float, standard deviation of Normal distribution for weights.
-        - biases_value: float, initial value for biases.
+    :param out_dim: int, 출력 벡터의 차원수.
+    :param kwargs: dict, 추가 인자, 가중치/바이어스 초기화를 위한 하이퍼파라미터들을 포함함. 
+        - weight_stddev: float, 샘플링 대상이 되는 정규분포의 표준편차 값.
+        - biases_value: float, 바이어스의 초기화 값.
     :return: tf.Tensor.
     """
     weights_stddev = kwargs.pop('weights_stddev', 0.01)
@@ -478,19 +479,19 @@ AlexNet의 경우 처음 가중치(weight)와 바이어스(bias)를 초기화(in
 
 ```python
 class ConvNet(object):
-    """Base class for Convolutional Neural Networks."""
+    """컨볼루션 신경망 모델의 베이스 클래스."""
 
     def __init__(self, input_shape, num_classes, **kwargs):
         """
-        Model initializer.
-        :param input_shape: tuple, the shape of inputs (H, W, C), ranged [0.0, 1.0].
-        :param num_classes: int, the number of classes.
+        모델 생성자.
+        :param input_shape: tuple, shape (H, W, C) 및 값 범위 [0.0, 1.0]의 입력값.
+        :param num_classes: int, 총 클래스 개수.
         """
         self.X = tf.placeholder(tf.float32, [None] + input_shape)
         self.y = tf.placeholder(tf.float32, [None] + [num_classes])
         self.is_train = tf.placeholder(tf.bool)
 
-        # Build model and loss function
+        # 모델과 손실 함수 정의
         self.d = self._build_model(**kwargs)
         self.logits = self.d['logits']
         self.pred = self.d['pred']
@@ -499,28 +500,28 @@ class ConvNet(object):
     @abstractmethod
     def _build_model(self, **kwargs):
         """
-        Build model.
-        This should be implemented.
+        모델 생성.
+        해당 함수를 추후 구현해야 함. 
         """
         pass
 
     @abstractmethod
     def _build_loss(self, **kwargs):
         """
-        Build loss function for the model training.
-        This should be implemented.
+        모델 학습을 위한 손실 함수 생성.
+        해당 함수를 추후 구현해야 함. 
         """
         pass
 
     def predict(self, sess, dataset, verbose=False, **kwargs):
         """
-        Make predictions for the given dataset.
+        주어진 데이터셋에 대한 예측을 수행함.
         :param sess: tf.Session.
         :param dataset: DataSet.
-        :param verbose: bool, whether to print details during prediction.
-        :param kwargs: dict, extra arguments for prediction.
-            - batch_size: int, batch size for each iteration.
-            - augment_pred: bool, whether to perform augmentation for prediction.
+        :param verbose: bool, 예측 과정에서 구체적인 정보를 출력할지 여부.
+        :param kwargs: dict, 예측을 위한 추가 인자.
+            - batch_size: int, 각 반복 회차에서의 미니배치 크기.
+            - augment_pred: bool, 예측 과정에서 데이터 증강을 수행할지 여부.
         :return _y_pred: np.ndarray, shape: (N, num_classes).
         """
         batch_size = kwargs.pop('batch_size', 256)
@@ -535,7 +536,7 @@ class ConvNet(object):
         if verbose:
             print('Running prediction loop...')
 
-        # Start evaluation loop
+        # 예측 루프를 시작함
         _y_pred = []
         start_time = time.time()
         for i in range(num_steps+1):
@@ -548,20 +549,20 @@ class ConvNet(object):
             # if augment_pred == True:  X.shape: (N, 10, h, w, C)
             # else:                     X.shape: (N, h, w, C)
 
-            # If performing augmentation during prediction,
+            # 예측 과정에서 데이터 증강을 수행할 경우,
             if augment_pred:
                 y_pred_patches = np.empty((_batch_size, 10, num_classes),
                                           dtype=np.float32)    # (N, 10, num_classes)
-                # compute predictions for each of 10 patch modes,
+                # 10종류의 patch 각각에 대하여 예측 결과를 산출하고,
                 for idx in range(10):
                     y_pred_patch = sess.run(self.pred,
                                             feed_dict={self.X: X[:, idx],    # (N, h, w, C)
                                                        self.is_train: False})
                     y_pred_patches[:, idx] = y_pred_patch
-                # and average predictions on the 10 patches
+                # 이들 10개 예측 결과의 평균을 산출함
                 y_pred = y_pred_patches.mean(axis=1)    # (N, num_classes)
             else:
-                # Compute predictions
+                # 예측 결과를 단순 산출함
                 y_pred = sess.run(self.pred,
                                   feed_dict={self.X: X,
                                              self.is_train: False})    # (N, num_classes)
@@ -583,28 +584,28 @@ class ConvNet(object):
 
 ```python
 class AlexNet(ConvNet):
-    """AlexNet class."""
+    """AlexNet 클래스."""
 
     def _build_model(self, **kwargs):
         """
-        Build model.
-        :param kwargs: dict, extra arguments for building AlexNet.
-            - image_mean: np.ndarray, mean image for each input channel, shape: (C,).
-            - dropout_prob: float, the probability of dropping out each unit in FC layer.
-        :return d: dict, containing outputs on each layer.
+        모델 생성.
+        :param kwargs: dict, AlexNet 생성을 위한 추가 인자.
+            - image_mean: np.ndarray, 평균 이미지: 이미지들의 각 입력 채널별 평균값, shape: (C,).
+            - dropout_prob: float, 완전 연결 층에서 각 유닛별 드롭아웃 수행 확률.
+        :return d: dict, 각 층에서의 출력값들을 포함함.
         """
-        d = dict()    # Dictionary to save intermediate values returned from each layer.
+        d = dict()    # 각 중간층에서의 출력값을 포함하는 dict.
         X_mean = kwargs.pop('image_mean', 0.0)
         dropout_prob = kwargs.pop('dropout_prob', 0.0)
         num_classes = int(self.y.get_shape()[-1])
 
-        # The probability of keeping each unit for dropout layers
+        # Dropout을 적용할 층들에서의 각 유닛별 '유지' 확률
         keep_prob = tf.cond(self.is_train,
                             lambda: 1. - dropout_prob,
                             lambda: 1.)
 
         # input
-        X_input = self.X - X_mean    # perform mean subtraction
+        X_input = self.X - X_mean    # 기존 입력값으로부터 평균 이미지를 뺌
 
         # conv1 - relu1 - pool1
         with tf.variable_scope('conv1'):
@@ -655,7 +656,7 @@ class AlexNet(ConvNet):
         # (13, 13, 256) --> (6, 6, 256)
         print('pool5.shape', d['pool5'].get_shape().as_list())
 
-        # Flatten feature maps
+        # 전체 feature maps를 flatten하여 벡터화
         f_dim = int(np.prod(d['pool5'].get_shape()[1:]))
         f_emb = tf.reshape(d['pool5'], [-1, f_dim])
         # (6, 6, 256) --> (9216)
@@ -691,16 +692,16 @@ class AlexNet(ConvNet):
 
     def _build_loss(self, **kwargs):
         """
-        Build loss function for the model training.
-        :param kwargs: dict, extra arguments for regularization term.
-            - weight_decay: float, L2 weight decay regularization coefficient.
+        모델 학습을 위한 손실 함수 생성.
+        :param kwargs: dict, 정규화 항을 위한 추가 인자.
+            - weight_decay: float, L2 정규화 계수.
         :return tf.Tensor.
         """
         weight_decay = kwargs.pop('weight_decay', 0.0005)
         variables = tf.trainable_variables()
         l2_reg_loss = tf.add_n([tf.nn.l2_loss(var) for var in variables])
 
-        # Softmax cross-entropy loss function
+        # 소프트맥스 교차 엔트로피 손실 함수
         softmax_losses = tf.nn.softmax_cross_entropy_with_logits(labels=self.y, logits=self.logits)
         softmax_loss = tf.reduce_mean(softmax_losses)
 
@@ -736,76 +737,76 @@ AlexNet 논문에서는, AlexNet의 아키텍처를 아래 그림과 같이 표�
 
 ```python
 class Optimizer(object):
-    """Base class for gradient-based optimization algorithms."""
+    """경사 하강 러닝 알고리즘 기반 optimizer의 베이스 클래스."""
 
     def __init__(self, model, train_set, evaluator, val_set=None, **kwargs):
         """
-        Optimizer initializer.
-        :param model: ConvNet, the model to be learned.
-        :param train_set: DataSet, training set to be used.
-        :param evaluator: Evaluator, for computing performance scores during training.
-        :param val_set: DataSet, validation set to be used, which can be None if not used.
-        :param kwargs: dict, extra arguments containing training hyperparameters.
-            - batch_size: int, batch size for each iteration.
-            - num_epochs: int, total number of epochs for training.
-            - init_learning_rate: float, initial learning rate.
+        optimizer 생성자.
+        :param model: ConvNet, 학습할 모델.
+        :param train_set: DataSet, 학습에 사용할 학습 데이터셋.
+        :param evaluator: Evaluator, 학습 수행 과정에서 성능 평가에 사용할 evaluator.
+        :param val_set: DataSet, 검증 데이터셋, 주어지지 않은 경우 None으로 남겨둘 수 있음.
+        :param kwargs: dict, 학습 관련 하이퍼파라미터로 구성된 추가 인자.
+            - batch_size: int, 각 반복 회차에서의 미니배치 크기.
+            - num_epochs: int, 총 epoch 수.
+            - init_learning_rate: float, 학습률 초깃값.
         """
         self.model = model
         self.train_set = train_set
         self.evaluator = evaluator
         self.val_set = val_set
 
-        # Training hyperparameters
+        # 학습 관련 하이퍼파라미터
         self.batch_size = kwargs.pop('batch_size', 256)
         self.num_epochs = kwargs.pop('num_epochs', 320)
         self.init_learning_rate = kwargs.pop('init_learning_rate', 0.01)
 
-        self.learning_rate_placeholder = tf.placeholder(tf.float32)    # Placeholder for current learning rate
+        self.learning_rate_placeholder = tf.placeholder(tf.float32)    # 현 학습률 값의 Placeholder
         self.optimize = self._optimize_op()
 
         self._reset()
 
     def _reset(self):
-        """Reset some variables."""
+        """일부 변수를 재설정."""
         self.curr_epoch = 1
-        self.num_bad_epochs = 0    # number of bad epochs, where the model is updated without improvement.
-        self.best_score = self.evaluator.worst_score    # initialize best score with the worst one
-        self.curr_learning_rate = self.init_learning_rate    # current learning rate
+        self.num_bad_epochs = 0    # 'bad epochs' 수: 성능 향상이 연속적으로 이루어지지 않은 epochs 수.
+        self.best_score = self.evaluator.worst_score    # 최저 성능 점수로, 현 최고 점수를 초기화함.
+        self.curr_learning_rate = self.init_learning_rate    # 현 학습률 값
 
     @abstractmethod
     def _optimize_op(self, **kwargs):
         """
-        tf.train.Optimizer.minimize Op for a gradient update.
-        This should be implemented, and should not be called manually.
+        경사 하강 업데이트를 위한 tf.train.Optimizer.minimize Op.
+        해당 함수를 추후 구현해야 하며, 외부에서 임의로 호출할 수 없음.
         """
         pass
 
     @abstractmethod
     def _update_learning_rate(self, **kwargs):
         """
-        Update current learning rate (if needed) on every epoch, by its own schedule.
-        This should be implemented, and should not be called manually.
+        고유의 학습률 스케줄링 방법에 따라, (필요한 경우) 매 epoch마다 현 학습률 값을 업데이트함.
+        해당 함수를 추후 구현해야 하며, 외부에서 임의로 호출할 수 없음.
         """
         pass
 
     def _step(self, sess, **kwargs):
         """
-        Make a single gradient update and return its results.
-        This should not be called manually.
+        경사 하강 업데이트를 1회 수행하며, 관련된 값을 반환함.
+        해당 함수를 외부에서 임의로 호출할 수 없음.
         :param sess: tf.Session.
-        :param kwargs: dict, extra arguments containing training hyperparameters.
-            - augment_train: bool, whether to perform augmentation for training.
-        :return loss: float, loss value for the single iteration step.
-                y_true: np.ndarray, true label from the training set.
-                y_pred: np.ndarray, predicted label from the model.
+        :param kwargs: dict, 학습 관련 하이퍼파라미터로 구성된 추가 인자.
+            - augment_train: bool, 학습 과정에서 데이터 증강을 수행할지 여부.
+        :return loss: float, 1회 반복 회차 결과 손실 함숫값.
+                y_true: np.ndarray, 학습 데이터셋의 실제 레이블.
+                y_pred: np.ndarray, 모델이 반환한 예측 레이블.
         """
         augment_train = kwargs.pop('augment_train', True)
 
-        # Sample a single batch
+        # 미니배치 하나를 추출함
         X, y_true = self.train_set.next_batch(self.batch_size, shuffle=True,
                                               augment=augment_train, is_train=True)
 
-        # Compute the loss and make update
+        # 손실 함숫값을 계산하고, 모델 업데이트를 수행함
         _, loss, y_pred = \
             sess.run([self.optimize, self.model.loss, self.model.pred],
                      feed_dict={self.model.X: X, self.model.y: y_true,
@@ -816,18 +817,18 @@ class Optimizer(object):
 
     def train(self, sess, save_dir='/tmp', details=False, verbose=True, **kwargs):
         """
-        Run optimizer to train the model.
+        optimizer를 실행하고, 모델을 학습함.
         :param sess: tf.Session.
-        :param save_dir: str, the directory to save the learned weights of the model.
-        :param details: bool, whether to return detailed results.
-        :param verbose: bool, whether to print details during training.
-        :param kwargs: dict, extra arguments containing training hyperparameters.
-        :return train_results: dict, containing detailed results of training.
+        :param save_dir: str, 학습된 모델의 가중치(바이어스 포함)들을 저장할 디렉터리 경로.
+        :param details: bool, 학습 결과 관련 구체적인 정보를, 학습 종료 후 반환할지 여부.
+        :param verbose: bool, 학습 과정에서 구체적인 정보를 출력할지 여부.
+        :param kwargs: dict, 학습 관련 하이퍼파라미터로 구성된 추가 인자.
+        :return train_results: dict, 구체적인 학습 결과를 담은 dict.
         """
         saver = tf.train.Saver()
-        sess.run(tf.global_variables_initializer())    # initialize all weights
+        sess.run(tf.global_variables_initializer())    # 전체 가중치들을 초기화함
 
-        train_results = dict()    # dictionary to contain training(, evaluation) results and details
+        train_results = dict()    # 학습 (및 검증) 결과 관련 정보를 포함하는 dict.
         train_size = self.train_set.num_examples
         num_steps_per_epoch = train_size // self.batch_size
         num_steps = self.num_epochs * num_steps_per_epoch
@@ -839,51 +840,51 @@ class Optimizer(object):
         step_losses, step_scores, eval_scores = [], [], []
         start_time = time.time()
 
-        # Start training loop
+        # 학습 루프를 실행함
         for i in range(num_steps):
-            # Perform a gradient update from a single minibatch
+            # 미니배치 하나로부터 경사 하강 업데이트를 1회 수행함
             step_loss, step_y_true, step_y_pred = self._step(sess, **kwargs)
             step_losses.append(step_loss)
 
-            # Perform evaluation in the end of each epoch
+            # 매 epoch의 말미에서, 성능 평가를 수행함
             if (i+1) % num_steps_per_epoch == 0:
-                # Evaluate model with current minibatch, from training set
+                # 학습 데이터셋으로부터 추출한 현재의 미니배치에 대하여 모델의 예측 성능을 평가함
                 step_score = self.evaluator.score(step_y_true, step_y_pred)
                 step_scores.append(step_score)
 
-                # If validation set is initially given, use it for evaluation
+                # 검증 데이터셋이 처음부터 주어진 경우, 이를 사용하여 모델 성능을 평가함
                 if self.val_set is not None:
-                    # Evaluate model with the validation set
+                    # 검증 데이터셋을 사용하여 모델 성능을 평가함
                     eval_y_pred = self.model.predict(sess, self.val_set, verbose=False, **kwargs)
                     eval_score = self.evaluator.score(self.val_set.labels, eval_y_pred)
                     eval_scores.append(eval_score)
 
                     if verbose:
-                        # Print intermediate results
+                        # 중간 결과를 출력함
                         print('[epoch {}]\tloss: {:.6f} |Train score: {:.6f} |Eval score: {:.6f} |lr: {:.6f}'\
                               .format(self.curr_epoch, step_loss, step_score, eval_score, self.curr_learning_rate))
-                        # Plot intermediate results
+                        # 중간 결과를 플롯팅함
                         plot_learning_curve(-1, step_losses, step_scores, eval_scores=eval_scores,
                                             mode=self.evaluator.mode, img_dir=save_dir)
                     curr_score = eval_score
 
-                # else, just use results from current minibatch for evaluation
+                # 그렇지 않은 경우, 단순히 미니배치에 대한 결과를 사용하여 모델 성능을 평가함
                 else:
                     if verbose:
-                        # Print intermediate results
+                        # 중간 결과를 출력함
                         print('[epoch {}]\tloss: {} |Train score: {:.6f} |lr: {:.6f}'\
                               .format(self.curr_epoch, step_loss, step_score, self.curr_learning_rate))
-                        # Plot intermediate results
+                        # 중간 결과를 플릇팅함
                         plot_learning_curve(-1, step_losses, step_scores, eval_scores=None,
                                             mode=self.evaluator.mode, img_dir=save_dir)
                     curr_score = step_score
 
-                # Keep track of the current best model,
-                # by comparing current score and the best score
+                # 현재의 성능 점수의 현재까지의 최고 성능 점수를 비교하고, 
+                # 최고 성능 점수가 갱신된 경우 해당 성능을 발휘한 모델의 가중치들을 저장함
                 if self.evaluator.is_better(curr_score, self.best_score, **kwargs):
                     self.best_score = curr_score
                     self.num_bad_epochs = 0
-                    saver.save(sess, os.path.join(save_dir, 'model.ckpt'))    # save current weights
+                    saver.save(sess, os.path.join(save_dir, 'model.ckpt'))    # 현재 모델의 가중치들을 저장함
                 else:
                     self.num_bad_epochs += 1
 
@@ -897,7 +898,7 @@ class Optimizer(object):
         print('Done.')
 
         if details:
-            # Store training results in a dictionary
+            # 학습 결과를 dict에 저장함
             train_results['step_losses'] = step_losses    # (num_iterations)
             train_results['step_scores'] = step_scores    # (num_epochs)
             if self.val_set is not None:
@@ -916,13 +917,13 @@ class Optimizer(object):
 
 ```python
 class MomentumOptimizer(Optimizer):
-    """Gradient descent optimizer, with Momentum algorithm."""
+    """모멘텀 알고리즘을 포함한 경사 하강 optimizer 클래스."""
 
     def _optimize_op(self, **kwargs):
         """
-        tf.train.MomentumOptimizer.minimize Op for a gradient update.
-        :param kwargs: dict, extra arguments for optimizer.
-            - momentum: float, the momentum coefficient.
+        경사 하강 업데이트를 위한 tf.train.MomentumOptimizer.minimize Op.
+        :param kwargs: dict, optimizer의 추가 인자.
+            - momentum: float, 모멘텀 계수.
         :return tf.Operation.
         """
         momentum = kwargs.pop('momentum', 0.9)
@@ -933,13 +934,13 @@ class MomentumOptimizer(Optimizer):
 
     def _update_learning_rate(self, **kwargs):
         """
-        Update current learning rate, when evaluation score plateaus.
-        :param kwargs: dict, extra arguments for learning rate scheduling.
-            - learning_rate_patience: int, number of epochs with no improvement
-                                      after which learning rate will be reduced.
-            - learning_rate_decay: float, factor by which the learning rate will be updated.
-            - eps: float, if the difference between new and old learning rate is smaller than eps,
-                   the update is ignored.
+        성능 평가 점수 상에 개선이 없을 때, 현 학습률 값을 업데이트함.
+        :param kwargs: dict, 학습률 스케줄링을 위한 추가 인자.
+            - learning_rate_patience: int, 성능 향상이 연속적으로 이루어지지 않은 epochs 수가 
+                                      해당 값을 초과할 경우, 학습률 값을 감소시킴.
+            - learning_rate_decay: float, 학습률 업데이트 비율.
+            - eps: float, 업데이트된 학습률 값과 기존 학습률 값 간의 차이가 해당 값보다 작을 경우,
+                          학습률 업데이트를 취소함.
         """
         learning_rate_patience = kwargs.pop('learning_rate_patience', 10)
         learning_rate_decay = kwargs.pop('learning_rate_decay', 0.1)
@@ -947,7 +948,7 @@ class MomentumOptimizer(Optimizer):
 
         if self.num_bad_epochs > learning_rate_patience:
             new_learning_rate = self.curr_learning_rate * learning_rate_decay
-            # Decay learning rate only when the difference is higher than epsilon.
+            # 새 학습률 값과 기존 학습률 값 간의 차이가 eps보다 큰 경우에 한해서만 업데이트를 수행함
             if self.curr_learning_rate - new_learning_rate > eps:
                 self.curr_learning_rate = new_learning_rate
             self.num_bad_epochs = 0
@@ -978,18 +979,18 @@ from learning.optimizers import MomentumOptimizer as Optimizer
 from learning.evaluators import AccuracyEvaluator as Evaluator
 
 
-""" 1. Load and split datasets """
+""" 1. 원본 데이터셋을 메모리에 로드하고 분리함 """
 root_dir = os.path.join('/', 'mnt', 'sdb2', 'Datasets', 'asirra')    # FIXME
 trainval_dir = os.path.join(root_dir, 'train')
 
-# Load trainval set and split into train/val sets
+# 원본 학습+검증 데이터셋을 로드하고, 이를 학습 데이터셋과 검증 데이터셋으로 나눔
 X_trainval, y_trainval = dataset.read_asirra_subset(trainval_dir, one_hot=True)
 trainval_size = X_trainval.shape[0]
 val_size = int(trainval_size * 0.2)    # FIXME
 val_set = dataset.DataSet(X_trainval[:val_size], y_trainval[:val_size])
 train_set = dataset.DataSet(X_trainval[val_size:], y_trainval[val_size:])
 
-# Sanity check
+# 중간 점검
 print('Training set stats:')
 print(train_set.images.shape)
 print(train_set.images.min(), train_set.images.max())
@@ -1000,13 +1001,13 @@ print(val_set.images.min(), val_set.images.max())
 print((val_set.labels[:, 1] == 0).sum(), (val_set.labels[:, 1] == 1).sum())
 
 
-""" 2. Set training hyperparameters """
+""" 2. 학습 수행 및 성능 평가를 위한 하이퍼파라미터 설정 """
 hp_d = dict()
-image_mean = train_set.images.mean(axis=(0, 1, 2))    # mean image
-np.save('/tmp/asirra_mean.npy', image_mean)    # save mean image
+image_mean = train_set.images.mean(axis=(0, 1, 2))    # 평균 이미지
+np.save('/tmp/asirra_mean.npy', image_mean)    # 평균 이미지를 저장
 hp_d['image_mean'] = image_mean
 
-# FIXME: Training hyperparameters
+# FIXME: 학습 관련 하이퍼파라미터
 hp_d['batch_size'] = 256
 hp_d['num_epochs'] = 300
 
@@ -1019,16 +1020,16 @@ hp_d['learning_rate_patience'] = 30
 hp_d['learning_rate_decay'] = 0.1
 hp_d['eps'] = 1e-8
 
-# FIXME: Regularization hyperparameters
+# FIXME: 정규화 관련 하이퍼파라미터
 hp_d['weight_decay'] = 0.0005
 hp_d['dropout_prob'] = 0.5
 
-# FIXME: Evaluation hyperparameters
+# FIXME: 성능 평가 관련 하이퍼파라미터
 hp_d['score_threshold'] = 1e-4
 
 
-""" 3. Build graph, initialize a session and start training """
-# Initialize
+""" 3. Graph 생성, session 초기화 및 학습 시작 """
+# 초기화
 graph = tf.get_default_graph()
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -1066,33 +1067,33 @@ train_results = optimizer.train(sess, details=True, verbose=True, **hp_d)
 ### test.py 스크립트
 
 ```python
-""" 1. Load and split datasets """
+""" 1. 원본 데이터셋을 메모리에 로드함 """
 root_dir = os.path.join('/', 'mnt', 'sdb2', 'Datasets', 'asirra')    # FIXME
 test_dir = os.path.join(root_dir, 'test')
 
-# Load test set
+# 테스트 데이터셋을 로드함
 X_test, y_test = dataset.read_asirra_subset(test_dir, one_hot=True)
 test_set = dataset.DataSet(X_test, y_test)
 
-# Sanity check
+# 중간 점검
 print('Test set stats:')
 print(test_set.images.shape)
 print(test_set.images.min(), test_set.images.max())
 print((test_set.labels[:, 1] == 0).sum(), (test_set.labels[:, 1] == 1).sum())
 
 
-""" 2. Set test hyperparameters """
+""" 2. 테스트를 위한 하이퍼파라미터 설정 """
 hp_d = dict()
-image_mean = np.load('/tmp/asirra_mean.npy')    # load mean image
+image_mean = np.load('/tmp/asirra_mean.npy')    # 평균 이미지를 로드
 hp_d['image_mean'] = image_mean
 
-# FIXME: Test hyperparameters
+# FIXME: 테스트 관련 하이퍼파라미터
 hp_d['batch_size'] = 256
 hp_d['augment_pred'] = True
 
 
-""" 3. Build graph, load weights, initialize a session and start test """
-# Initialize
+""" 3. Graph 생성, 가중치 로드, session 초기화 및 테스트 시작 """
+# 초기화 
 graph = tf.get_default_graph()
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -1102,7 +1103,7 @@ evaluator = Evaluator()
 saver = tf.train.Saver()
 
 sess = tf.Session(graph=graph, config=config)
-saver.restore(sess, '/tmp/model.ckpt')    # restore learned weights
+saver.restore(sess, '/tmp/model.ckpt')    # 학습된 가중치 로드 및 복원
 test_y_pred = model.predict(sess, test_set, **hp_d)
 test_score = evaluator.score(test_set.labels, test_y_pred)
 
@@ -1121,7 +1122,7 @@ print('Test accuracy: {}'.format(test_score))
 
 `train.py` 스크립트를 실행하여, 실제 학습 수행 과정에서 아래의 정보들을 추적하여, 이를 **학습 곡선(learning curve)**으로 나타내었습니다.
 
-- 매 반복 횟수에서의 손실 함수의 값
+- 매 반복 회차에서의 손실 함수의 값
 - 매 epoch에 대하여 (1) 학습 데이터셋으로부터 추출한 미니배치에 대한 모델의 예측 정확도(이하 학습 정확도)와 (2) 검증 데이터셋에 대한 모델의 예측 정확도(이하 검증 정확도)
 
 {% include image.html name=page.name file="learning-curve-result.svg" description="학습 곡선 플롯팅 결과" class="large-image" %}
@@ -1132,16 +1133,18 @@ print('Test accuracy: {}'.format(test_score))
 
 #### 테스트 결과
 
-테스트 결과 측정된 정확도는 **0.92768**로 확인되었습니다. <a href="https://www.kaggle.com/c/dogs-vs-cats" target="_blank">Dogs vs. Cats</a>의 Leaderboard 섹션에서, 1등인 Pierre Sermanet이 거둔 0.98914에 비하면 한참 못 미치는 점수입니다. 그러나 (1) 원본 데이터셋(25,000장)의 절반(12,500장)밖에 학습에 사용하지 않았으며, (2) 단 한 개의 (튜닝을 거치지 않은) 순수한 AlexNet만을 사용했다는 것을 생각해보면, 필자 생각에는 그렇게 나쁜 결과도 아닌 것 같습니다.
+테스트 결과 측정된 정확도는 **0.92768**로 확인되었습니다. <a href="https://www.kaggle.com/c/dogs-vs-cats" target="_blank">Dogs vs. Cats</a>의 Leaderboard 섹션에서, 1등인 Pierre Sermanet이 거둔 0.98914에 비하면 한참 못 미치는 점수입니다. 그러나 (1) 원본 데이터셋(25,000장)의 절반(12,500장)밖에 학습에 사용하지 않았으며, (2) 튜닝을 거치지 않은, 단 한 개의 순수한 AlexNet만을 사용했다는 것을 생각해보면, 필자 생각에는 그렇게 나쁜 결과도 아닌 것 같습니다.
 
 실제로 얻을 수 있는 이미지에 대한 테스트를 위해, Google에서 개 이미지와 고양이 이미지 각각에 대한 검색 결과들 중 랜덤하게 3개씩 고른 뒤 이들을 학습이 완료된 모델에 입력하였더니, 아래와 같은 예측 결과를 얻었습니다. 
 
 {% include image.html name=page.name file="random-dogs-cats-predictions.png" description="랜덤한 개vs고양이 이미지에 대한 모델의 예측 결과(pred)" class="full-image" %}
 
+*TODO: 실제 이미지 테스트용 노트북 링크 추가*
+
 
 ## 결론
 
-본 글에서는 이미지 인식 분야에서 가장 많이 다뤄지는 Classification 문제의 예시로, '개vs고양이 분류' 문제를 정하고, 이를 AlexNet 모델과 딥러닝 알고리즘을 사용하여 해결하는 과정을 안내하였습니다. 비록 온라인 상에서 딥러닝 구현체를 쉽게 찾을 수 있더라도, 여러분들이 데이터셋, 성능 평가, 러닝 모델, 러닝 알고리즘의 4가지 요소를 고려하여 각각을 모듈화하는 방식으로 직접 구현한다면, 딥러닝에 대한 이해 및 구현체에 대한 유지/보수의 측면에서 장점을 가져다줄 수 있다고 말씀드렸습니다. 여러분들이 본 글에서 제공한 구현체를 보고 받아들이는 입장에서도, 이러한 장점을 어느 정도는 느낄 수 있으셨기를 바랍니다. 
+본 글에서는 이미지 인식 분야에서 가장 많이 다뤄지는 Classification 문제의 예시로 '개vs고양이 분류' 문제를 정하고, 이를 AlexNet 모델과 딥러닝 알고리즘을 사용하여 해결하는 과정을 안내하였습니다. 비록 온라인 상에서 딥러닝 구현체를 쉽게 찾을 수 있더라도, 여러분들이 데이터셋, 성능 평가, 러닝 모델, 러닝 알고리즘의 4가지 요소를 고려하여 각각을 모듈화하는 방식으로 직접 구현한다면, 딥러닝에 대한 이해 및 구현체에 대한 유지/보수의 측면에서 장점을 가져다줄 수 있다고 말씀드렸습니다. 여러분들이 본 글에서 제공한 구현체를 보고 받아들이는 입장에서도, 이러한 장점을 어느 정도는 느낄 수 있으셨기를 바랍니다. 
 
 \*추후 글에서는, 이미지 인식 분야의 또 다른 중요한 문제들인 Detection 및 Segmentation 문제를 해결하는 과정을, 예시 문제와 모델 등을 선정하여 여러분들께 안내해 드리고자 합니다. 이 때에도 본 글에서 언급한 딥러닝의 4가지 기본 요소를 중심으로 할 것입니다. 
 
