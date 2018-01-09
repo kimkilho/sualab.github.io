@@ -16,8 +16,11 @@ name: image-classification-deep-learning
   - Python 언어 및 TensorFlow의 기본적인 사용법을 알고 계신 분들
 - 본 글에서는, 딥러닝 모델 및 알고리즘 구현을 위한 하나의 방식을 제시합니다. 이는 새로운 딥러닝 테크닉이 등장하였을 때, 여러분들이 사용하던 기존 모델 혹은 알고리즘에 빠르고 효과적으로 적용할 수 있도록 하기 위함이며, 그와 동시에 딥러닝 모델과 알고리즘의 작동 방식을 더 잘 이해할 수 있도록 하기 위함입니다.
 - 본 글에서 구현한 AlexNet은, 원본 AlexNet 논문의 셋팅과 일부 다른 부분이 존재합니다. 이러한 부분을 본문 중간중간에 명시하였습니다.
-- 본문에서는 전체 구현체 중 핵심적인 부분을 중심으로 설명합니다. 전체 구현체 코드는 수아랩의 GitHub 저장소(*TODO: 링크 추가*)에서 자유롭게 확인하실 수 있습니다. 
-  - 전체 구현체 코드 원본에는 모든 주석이 (일반적인 관습에 맞춰) 영문으로 작성되어 있으나, 본 글에서 인용한 부분에서는 이들을 한국어로 번역하였습니다.
+- 본문에서는 전체 구현체 중 핵심적인 부분을 중심으로 설명합니다. 본문을 따라 구현체를 작성하고 시험적으로 구동해 보고자 하시는 분들은, 아래 사항들을 참조해 주십시오.
+  - 전체 구현체 코드는 <a href="https://github.com/sualab/asirra-dogs-cats-classification" target="_blank">수아랩의 GitHub 저장소</a>에서 자유롭게 확인하실 수 있습니다. 
+    - 전체 구현체 코드 원본에는 모든 주석이 (일반적인 관습에 맞춰) 영문으로 작성되어 있으나, 본 글에서는 원활한 설명을 위해 이들을 한국어로 번역하였습니다.
+  - 본문에서 사용한 데이터셋은, <a href="https://drive.google.com/open?id=1XHjFwA41ZPdubHusmcg9D0KpdhQRYZ6-" target="_blank">여기</a>에서 압축 파일 형태로 다운로드 받으실 수 있습니다.
+  - 학습이 완료된 모델을, 실제 Google에서 얻을 수 있는 랜덤한 이미지들을 사용하여 테스트하는 과정은 <a href="https://github.com/sualab/sualab.github.io/blob/machine-learning/assets/notebooks/{{ page.name }}.ipynb" target="_blank">여기</a>에서 확인할 수 있습니다.
 
 
 ## 서론
@@ -65,8 +68,6 @@ name: image-classification-deep-learning
 원본 데이터셋은 학습 데이터셋(training set) 25,000장, 테스트 데이터셋(test set) 12,500장으로 구성되어 있으나, 이 중 학습 데이터셋에 대해서만 레이블링(labeling)된 채로 제공되고 있습니다. 본 글에서의 개vs고양이 분류 문제 셋팅을 위해, 원본 학습 데이터셋 중 *랜덤하게 절반 크기만큼 샘플링(sampling)하여 이 부분(12,500장)을 학습 데이터셋으로, 나머지 절반에 해당하는 부분(12,500장)을 테스트 데이터셋으로 재정의*하였습니다. 
 
 이미지 크기는 가로 42~1050px, 세로 32~768px 사이에서 가변적입니다. 개vs고양이 분류 문제용 데이터셋이므로, 자연히 클래스는 0(고양이)과 1(개)의 이진(binary) 클래스로 구성되어 있습니다.
-
-*TODO: 데이터셋 다운로드 링크 추가*
 
 
 ### datasets.asirra 모듈
@@ -1138,8 +1139,6 @@ print('Test accuracy: {}'.format(test_score))
 실제로 얻을 수 있는 이미지에 대한 테스트를 위해, Google에서 개 이미지와 고양이 이미지 각각에 대한 검색 결과들 중 랜덤하게 3개씩 고른 뒤 이들을 학습이 완료된 모델에 입력하였더니, 아래와 같은 예측 결과를 얻었습니다. 
 
 {% include image.html name=page.name file="random-dogs-cats-predictions.png" description="랜덤한 개vs고양이 이미지에 대한 모델의 예측 결과(pred)" class="full-image" %}
-
-*TODO: 실제 이미지 테스트용 노트북 링크 추가*
 
 
 ## 결론
