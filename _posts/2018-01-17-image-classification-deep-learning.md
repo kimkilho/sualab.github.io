@@ -4,12 +4,12 @@ title: "이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양�
 date: 2018-01-17 09:00:00 +0900
 author: kilho_kim
 categories: [machine-learning, computer-vision]
-tags: [classification, alexnet]
+tags: [classification, alexnet, tensorflow]
 comments: true
 name: image-classification-deep-learning
 ---
 
-지금까지 딥러닝과 이미지 인식 문제에 대해서 알아보았습니다. 해결하고자 하는 문제(이미지 인식)의 개괄을 살펴보았고 문제 해결을 위한 도구(딥러닝)에 대해 알아보았으니, 이제는 좀 더 구체적으로 이미지 인식 문제에 딥러닝을 직접 적용한 사례를 하나 제시하고, 이를 실제 구현 코드와 함께 소개해 드리고자 합니다. 지금까지의 글들이 대부분 '개념적인' 이야기들 위주였다면, 본 글에서는 코드에 기반한 '실제적인' 내용이 다뤄진다고 이해하시면 될 것 같습니다.
+지금까지 딥러닝과 이미지 인식 문제에 대해서 알아보았습니다. 해결하고자 하는 문제(이미지 인식)의 개괄을 살펴보았고 문제 해결을 위한 도구(딥러닝)에 대해 알아보았으니, 이제는 좀 더 구체적으로 이미지 인식 문제에 딥러닝을 직접 적용한 사례를 하나 제시하고, 이를 실제 **TensorFlow** 구현 코드와 함께 소개해 드리고자 합니다. 지금까지의 글들이 대부분 '개념적인' 이야기들 위주였다면, 본 글에서는 코드에 기반한 '실제적인' 내용이 다뤄진다고 이해하시면 될 것 같습니다.
 
 - **주의: 본 글은 아래와 같은 분들을 대상으로 합니다.**
   - 딥러닝 알고리즘의 기본 구동 원리 및 정규화(regularization) 등의 테크닉에 대한 기초적인 내용들을 이해하고 계신 분들
@@ -132,7 +132,7 @@ def read_asirra_subset(subset_dir, one_hot=True, sample_size=None):
 
 > 하지만 틀림없이 상대적 박탈감을 느끼실 것인데, 이 점에 대해서는 심심한 사과의 말씀을 드립니다.
 
-본래 크기가 큰 데이터셋을 학습 또는 예측 과정에서 미니배치 단위로 불러들이도록 하고자 할 때는, 위와 같은 방식보다는 딥러닝 프레임워크에서 제공하는 input pipeline 관련 API를 사용하여 구현하는 것이 훨씬 효율적입니다. 이번에는 구현체가 지나치게 복잡해지는 것을 방지하고자 위의 방법을 채택하였다는 점을 양지해 주시길 바랍니다.
+본래 크기가 큰 데이터셋을 학습 또는 예측 과정에서 미니배치 단위로 불러들이도록 하고자 할 때는, 위와 같은 방식보다는 딥러닝 프레임워크에서 제공하는 input pipeline 관련 API를 사용하여 구현하는 것이 훨씬 효율적입니다. 이번에는 구현체가 지나치게 복잡해지는 것을 방지하고자 위의 방법을 채택하였다는 점을 감안해 주시길 바랍니다.
 
 #### DataSet 클래스
 
@@ -357,7 +357,7 @@ class AccuracyEvaluator(Evaluator):
         return curr > best * relative_eps
 ```
 
-`AccuracyEvaluator` 클래스는 정확도를 평가 척도로 삼는 evaluator로, `Evaluator` 클래스를 구현(implement)한 것입니다. `score` 함수에서 정확도를 계산하기 위해, scikit-learn 라이브러리에서 제공하는 `sklearn.metrics.accuracy_score` 함수를 불러와 사용하였습니다. 한편 `is_better` 함수에서는 두 성능 간의 단순 비교를 수행하는 것이 아니라, 상대적 문턱값(relative threshold)를 사용하여 현재 평가 성능이 최고 평가 성능보다 지정한 비율 이상으로 높은 경우에 한해 `True`를 반환하도록 하였습니다.
+`AccuracyEvaluator` 클래스는 정확도를 평가 척도로 삼는 evaluator로, `Evaluator` 클래스를 구현(implement)한 것입니다. `score` 함수에서 정확도를 계산하기 위해, scikit-learn 라이브러리에서 제공하는 `sklearn.metrics.accuracy_score` 함수를 불러와 사용하였습니다. 한편 `is_better` 함수에서는 두 성능 간의 단순 비교를 수행하는 것이 아니라, 상대적 문턱값(relative threshold)을 사용하여 현재 평가 성능이 최고 평가 성능보다 지정한 비율 이상으로 높은 경우에 한해 `True`를 반환하도록 하였습니다.
 
 
 ## (3) 러닝 모델: AlexNet
@@ -711,7 +711,7 @@ class AlexNet(ConvNet):
 
 `AlexNet` 클래스는, AlexNet의 아키텍처 및 학습에 사용할 손실 함수를 정의하고자 `ConvNet` 클래스를 상속받은 것입니다. `_build_model` 함수에서는 전체 아키텍처뿐만 아니라 각 층별 가중치 및 바이어스 초기화를 위한 하이퍼파라미터(hyperparameters; `weights_stddev`, `biases_value`)와, 핵심적인 정규화 기법인 **드롭아웃(dropout)**을 수행하는 부분을 하나의 독립적인 층 형태로 삽입하여 구현하였습니다.
 
-`_build_loss` 함수에서는 AlexNet을 학습하는 데 사용할 **소프트맥스 교차 엔트로피(softmax cross-entropy)** 손실 함수를 구현하였습니다. 이 때, 주요 정규화 기법인 L2 정규화(L2 regularization)를 위해 전체 가중치 및 바이어스에 대한 L2 norm을 계산하고, 여기에 `weight_decay` 인자를 통해 전달된 계수를 곱한 뒤 기존 손실함수에 더하여 최종적인 손실 함수를 완성하였습니다.
+`_build_loss` 함수에서는 AlexNet을 학습하는 데 사용할 **소프트맥스 교차 엔트로피(softmax cross-entropy)** 손실 함수를 구현하였습니다. 이 때, 주요 정규화 기법인 L2 정규화(L2 regularization)를 위해 전체 파라미터에 대한 L2 norm을 계산하고, 여기에 `weight_decay` 인자를 통해 전달된 계수를 곱한 뒤 기존 손실함수에 더하여 최종적인 손실 함수를 완성하였습니다.
 
 ### 원 논문과의 차이점
 
@@ -719,11 +719,11 @@ AlexNet 논문에서는, AlexNet의 아키텍처를 아래 그림과 같이 표�
 
 {% include image.html name=page.name file="alexnet-architecture.svg" description="AlexNet 아키텍처" class="full-image" %}
 
-중간 컨볼루션 층에서 생성된 3차원 출력값들이 크게 두 갈래로 나뉘어 다음 층으로 전달되고 있는 것을 확인할 수 있는데, 이는 AlexNet 초기 구현 당시 두 개의 GPU를 병렬적으로 활용하기 위해 채택한 **그룹 컨볼루션(grouped convolution)**으로 인한 결과물이라고 할 수 있습니다. 오늘날에는 초기 구현 당시보다 GPU의 성능도 향상된 것도 있고, 구조적으로 봐도 일반적인 형태의 컨볼루션을 채택하는 것이 더 단순하면서 효과적이기 때문에, 본 구현체에서는 그룹 컨볼루션 대신 일반적인 형태의 컨볼루션을 사용하여 전체 아키텍처를 구현하였습니다. 
+중간 컨볼루션 층에서 생성된 3차원 출력값들이 크게 두 갈래로 나뉘어 다음 층으로 전달되고 있는 것을 확인할 수 있는데, 이는 AlexNet 초기 구현 당시 두 개의 GPU를 병렬적으로 활용하기 위해 채택한 **그룹 컨볼루션(grouped convolution)**으로 인한 결과물이라고 할 수 있습니다. 오늘날에는 AlexNet의 초기 구현 당시보다 GPU의 성능이 향상된 것도 있고, 구조적으로 봐도 일반적인 형태의 컨볼루션을 채택하는 것이 더 단순하면서 효과적이기 때문에, 본 구현체에서는 그룹 컨볼루션 대신 일반적인 형태의 컨볼루션을 사용하여 전체 아키텍처를 구현하였습니다. 
 
 또, AlexNet 논문에서는 local response normalization(이하 LRN) 층을 몇몇 컨볼루션 층 및 풀링(pooling) 층 바로 다음 위치에 삽입하여, 각 층에서의 출력값을 일정하게 조절하고 있습니다. 오늘날 활성함수(activation function)의 개선 및 batch normalization 방법의 등장으로 인해 LRN은 최신 컨볼루션 신경망 아키텍처에서 거의 사용되지 않으며, 구현의 단순화 측면에서도 좋지 못하기 때문에, 본 구현체에서는 이를 삽입하지 않았습니다.
 
-그리고 AlexNet 논문에서는 몇몇 컨볼루션 층과 완전 연결 층의 바이어스를 1.0으로 초기화하였으나, 본 구현체에서는 이를 1.0 대신 0.1로 초기화하였습니다.
+그리고 AlexNet 논문에서는 몇몇 컨볼루션 층과 완전 연결 층의 바이어스를 1.0으로 초기화하였으나, 본 구현체에서는 통상적인 AlexNet 구현체에서의 관습에 따라, 이를 0.1로 초기화하였습니다.
 
 
 ## (4) 러닝 알고리즘: SGD+Momentum
@@ -820,14 +820,14 @@ class Optimizer(object):
         """
         optimizer를 실행하고, 모델을 학습함.
         :param sess: tf.Session.
-        :param save_dir: str, 학습된 모델의 가중치(바이어스 포함)들을 저장할 디렉터리 경로.
+        :param save_dir: str, 학습된 모델의 파라미터들을 저장할 디렉터리 경로.
         :param details: bool, 학습 결과 관련 구체적인 정보를, 학습 종료 후 반환할지 여부.
         :param verbose: bool, 학습 과정에서 구체적인 정보를 출력할지 여부.
         :param kwargs: dict, 학습 관련 하이퍼파라미터로 구성된 추가 인자.
         :return train_results: dict, 구체적인 학습 결과를 담은 dict.
         """
         saver = tf.train.Saver()
-        sess.run(tf.global_variables_initializer())    # 전체 가중치들을 초기화함
+        sess.run(tf.global_variables_initializer())    # 전체 파라미터들을 초기화함
 
         train_results = dict()    # 학습 (및 검증) 결과 관련 정보를 포함하는 dict.
         train_size = self.train_set.num_examples
@@ -881,11 +881,11 @@ class Optimizer(object):
                     curr_score = step_score
 
                 # 현재의 성능 점수의 현재까지의 최고 성능 점수를 비교하고, 
-                # 최고 성능 점수가 갱신된 경우 해당 성능을 발휘한 모델의 가중치들을 저장함
+                # 최고 성능 점수가 갱신된 경우 해당 성능을 발휘한 모델의 파라미터들을 저장함
                 if self.evaluator.is_better(curr_score, self.best_score, **kwargs):
                     self.best_score = curr_score
                     self.num_bad_epochs = 0
-                    saver.save(sess, os.path.join(save_dir, 'model.ckpt'))    # 현재 모델의 가중치들을 저장함
+                    saver.save(sess, os.path.join(save_dir, 'model.ckpt'))    # 현재 모델의 파라미터들을 저장함
                 else:
                     self.num_bad_epochs += 1
 
@@ -961,7 +961,7 @@ class MomentumOptimizer(Optimizer):
 
 - 현재 수준의 학습률에서, 검증 데이터셋에 대한 성능 향상이 수 epochs에 걸쳐 확인되지 않을 경우, 학습률을 일정한 수로 나누어 감소시킨 뒤 학습을 지속함
 
-`learning_rate_patience`는, 몇 epochs동안 성능 향상이 확인되지 않을 경우 학습률을 조정할지 결정하는 인자이며, `learning_rate_decay`의 경우, 학습률 조정 시 곱하여 학습률을 감소시키기 위해 사용되는 값을 전달하는 인자입니다. 학습률을 일정 비율로 계속 감소시키다 보면 어느 순간부터는 학습률의 변화량이 미미해지는데, 이 때 이전 학습률과 조정된 학습률 간의 차이가 `eps` 인자의 값보다 큰 경우에 한해서만 학습률 조정을 실제로 수행하도록 합니다.
+`learning_rate_patience`는, 몇 epochs동안 성능 향상이 확인되지 않을 경우 학습률을 조정할지 결정하는 인자이며, `learning_rate_decay`의 경우, 기존 학습률을 감소시키기 위해 곱해지는 값을 전달하는 인자입니다. 학습률을 일정 비율로 계속 감소시키다 보면 어느 순간부터는 학습률의 변화량이 미미해지는데, 이 때 이전 학습률과 조정된 학습률 간의 차이가 `eps` 인자의 값보다 큰 경우에 한해서만 학습률 조정을 실제로 수행하도록 합니다.
 
 
 ## 학습 수행 및 테스트 결과
@@ -971,15 +971,6 @@ class MomentumOptimizer(Optimizer):
 ### train.py 스크립트
 
 ```python
-import os
-import numpy as np
-import tensorflow as tf
-from datasets import asirra as dataset
-from models.nn import AlexNet as ConvNet
-from learning.optimizers import MomentumOptimizer as Optimizer
-from learning.evaluators import AccuracyEvaluator as Evaluator
-
-
 """ 1. 원본 데이터셋을 메모리에 로드하고 분리함 """
 root_dir = os.path.join('/', 'mnt', 'sdb2', 'Datasets', 'asirra')    # FIXME
 trainval_dir = os.path.join(root_dir, 'train')
@@ -1049,7 +1040,7 @@ train_results = optimizer.train(sess, details=True, verbose=True, **hp_d)
 2. 학습 수행 및 성능 평가와 관련된 하이퍼파라미터를 설정함
 3. `ConvNet` 객체, `Evaluator` 객체 및 `Optimizer` 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, `Optimizer.train` 함수를 호출하여 모델 학습을 수행함
 
-이 때, 원본 데이터셋 저장 경로, 하이퍼파라미터 등 `FIXME`로 표시된 부분은 여러분의 상황에 맞춰 수정하셔야 합니다. 본 글에서 학습을 수행할 당시의 하이퍼파라미터 설정은 아래와 같이 하였습니다.
+이 때, 원본 데이터셋 저장 경로, 하이퍼파라미터 등 `FIXME`로 표시된 부분은 여러분의 상황과 기호에 맞춰 수정하셔야 합니다. 본 글에서 학습을 수행할 당시의 하이퍼파라미터 설정은 아래와 같이 하였습니다.
 
 - 러닝 알고리즘 관련 하이퍼파라미터 설정
   - Batch size: 256
@@ -1061,7 +1052,7 @@ train_results = optimizer.train(sess, details=True, verbose=True, **hp_d)
     - eps: 1e-8
 - 정규화 관련 하이퍼파라미터 설정
   - L2 weight decay: 0.0005
-  - dropout probability: 0.5
+  - Dropout probability: 0.5
 - 평가 척도 관련 하이퍼파라미터 설정
   - Score threshold: 1e-4
 
@@ -1093,7 +1084,7 @@ hp_d['batch_size'] = 256
 hp_d['augment_pred'] = True
 
 
-""" 3. Graph 생성, 가중치 로드, session 초기화 및 테스트 시작 """
+""" 3. Graph 생성, 파라미터 로드, session 초기화 및 테스트 시작 """
 # 초기화 
 graph = tf.get_default_graph()
 config = tf.ConfigProto()
@@ -1104,7 +1095,7 @@ evaluator = Evaluator()
 saver = tf.train.Saver()
 
 sess = tf.Session(graph=graph, config=config)
-saver.restore(sess, '/tmp/model.ckpt')    # 학습된 가중치 로드 및 복원
+saver.restore(sess, '/tmp/model.ckpt')    # 학습된 파라미터 로드 및 복원
 test_y_pred = model.predict(sess, test_set, **hp_d)
 test_score = evaluator.score(test_set.labels, test_y_pred)
 
@@ -1115,7 +1106,7 @@ print('Test accuracy: {}'.format(test_score))
 
 1. 원본 테스트 데이터셋을 메모리에 로드하여, `DataSet` 객체를 생성함
 2. 테스트 수행 및 성능 평가와 관련된 하이퍼파라미터를 설정함
-3. `ConvNet` 객체와 `Evaluator` 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, `tf.train.Saver`의 `restore` 함수 호출을 통해 학습이 완료된 모델의 가중치들을 로드하고 `ConvNet.predict` 함수와 `Evaluator.score` 함수를 순서대로 호출하여 모델 테스트 성능을 평가함
+3. `ConvNet` 객체와 `Evaluator` 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, `tf.train.Saver`의 `restore` 함수 호출을 통해 학습이 완료된 모델의 파라미터들을 로드하고 `ConvNet.predict` 함수와 `Evaluator.score` 함수를 순서대로 호출하여 모델 테스트 성능을 평가함
 
 ### 학습 결과 분석
 
@@ -1130,13 +1121,13 @@ print('Test accuracy: {}'.format(test_score))
 
 학습이 진행됨에 따라 손실 함수의 값은 (약간의 진동이 있으나) 점차적으로 감소하면서, 동시에 학습 정확도 및 검증 정확도는 점차적으로 증가하는, 꽤 예쁜(?) 결과를 보였습니다. 단, 학습 정확도가 1.0을 향해 가는 과정에서 검증 정확도는 약 0.9288 언저리에 머물렀는데, 이 차이는 모델이 학습 데이터셋에 대하여 과적합(overfitting)된 정도를 나타낸다고 할 수 있겠습니다. 
 
-학습 과정 말미에서, 검증 정확도가 0.932일 때의 모델 가중치를 최종적으로 채택하여, 테스트를 위해 저장하였습니다.
+학습 과정 말미에서, 검증 정확도가 0.932일 때의 모델 파라미터들을 최종적으로 채택하여, 테스트를 위해 저장하였습니다.
 
 #### 테스트 결과
 
 테스트 결과 측정된 정확도는 **0.92768**로 확인되었습니다. <a href="https://www.kaggle.com/c/dogs-vs-cats" target="_blank">Dogs vs. Cats</a>의 Leaderboard 섹션에서, 1등인 Pierre Sermanet이 거둔 0.98914에 비하면 한참 못 미치는 점수입니다. 그러나 (1) 원본 데이터셋(25,000장)의 절반(12,500장)밖에 학습에 사용하지 않았으며, (2) 튜닝을 거치지 않은, 단 한 개의 순수한 AlexNet만을 사용했다는 것을 생각해보면, 필자 생각에는 그렇게 나쁜 결과도 아닌 것 같습니다.
 
-실제로 얻을 수 있는 이미지에 대한 테스트를 위해, Google에서 개 이미지와 고양이 이미지 각각에 대한 검색 결과들 중 랜덤하게 3개씩 고른 뒤 이들을 학습이 완료된 모델에 입력하였더니, 아래와 같은 예측 결과를 얻었습니다. 
+실제로 얻을 수 있는 이미지에 대한 테스트를 위해, Google에서 개 이미지와 고양이 이미지 각각에 대한 검색 결과들 중 랜덤하게 3개씩 고른 뒤 이들을 학습이 완료된 모델에 입력하였더니, 아래와 같이 괜찮은 예측 결과를 얻었습니다. 
 
 {% include image.html name=page.name file="random-dogs-cats-predictions.png" description="랜덤한 개vs고양이 이미지에 대한 모델의 예측 결과(pred)" class="full-image" %}
 
