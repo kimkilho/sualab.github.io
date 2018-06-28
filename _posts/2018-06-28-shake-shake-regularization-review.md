@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Shake-Shake Regularization Review"
-date:   2018-06-11 10:50:01 
+date:   2018-06-28 10:50:01 
 author: hoseong_lee
 categories: [machine-learning, computer-vision]
 tags: [shake-shake, regularization, tensorflow]
