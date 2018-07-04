@@ -52,13 +52,22 @@ $on-laptop:        800px !default;
   "minima/syntax-highlighting"
 ;
 
-.logo-div {
+.sualab-logo-div {
   float: left;
   margin-right: 10px;
 }
 
-.logo-img {
+.sualab-logo-img {
   height: 50px;
+}
+
+.feed-logo-div {
+  float: right;
+  margin-top: 10px;
+}
+
+.feed-logo-img {
+  height: 35px;
 }
 
 .full-image {
