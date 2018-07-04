@@ -3,6 +3,8 @@ layout: default
 ---
 <!-- Look the author details up from the site config. -->
 {% assign author = site.data.authors[page.author] %}
+<!-- Post metadata -->
+<!-- Reference: http://jovandeginste.github.io/2016/05/18/add-metadata-tags-to-jekyll-blog-posts.html -->
 
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
@@ -20,6 +22,10 @@ layout: default
       {% endif %}
       {% if author %}
         • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="{{ author.web }}" target="_blank">{{ author.name }}</a></span></span>
+        <!-- Author metadata -->
+        <meta itemprop="email" content="{{ author.email }}" />
+        <meta itemprop="web" content="{{ author.web }}" />
+        <!-- end of Author metadata -->
       {% endif %}
       {% if page.tags.size > 0 %}
          <br>Tag{% if page.tags.size > 1 %}s{% endif %}: {{ page.tags | join: ", " }}
