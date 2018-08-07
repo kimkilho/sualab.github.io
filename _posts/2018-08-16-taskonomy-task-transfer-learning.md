@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Taskonomy: Disentangling Task Transfer Learning 리뷰"
-date: 2018-08-16 09:00:00 +0900
+date: 2018-08-14 09:00:00 +0900
 author: kilho_kim
 categories: [machine-learning, computer-vision]
 tags: [taskonomy, visual tasks, transfer learning]
@@ -67,7 +67,7 @@ Taskonomy 방법에 대한 본격적인 설명에 앞서, 본문에서 사용하
 
 {% include image.html name=page.name file="taskonomy-method-overview.png" description="Taskonomy 방법 overview: Transferability 모델링 및 taxonomy 생성 과정" class="full-image" %}
 
-Taskonomy 방법은 총 4개의 단계를 거칩니다. 1단계에서는 $$\mathcal{S}$$ 내의 각 task에 대해 특화된 모델인 task-specific network를 각각 독립적으로 학습합니다. 2단계에서는 지정된 transfer order $$k$$ 하에서, 서로 간의 조합 연산을 통해 만들어지는 source task(s) -> target task 의 각 조합 별 transferability가 수치화된 형태로 계산됩니다. 3단계에서는 앞서 계산된 transferability에 대한 normalization(정규화)를 통해 affinity matrix를 얻으며, 이를 기반으로 마지막 4단계에서는 특정한 target task에 대하여 최적의 성능을 발휘하는 transfer policy를 탐색합니다.
+Taskonomy 방법은 총 4개의 단계를 거칩니다. 1단계에서는 $$\mathcal{S}$$ 내의 각 task에 대해 특화된 모델인 task-specific network를 각각 독립적으로 학습합니다. 2단계에서는 지정된 transfer order $$k$$ 하에서, 서로 간의 조합 연산을 통해 만들어지는 source task(s) -> target task 의 각 조합 별 transferability가 수치화된 형태로 계산됩니다. 3단계에서는 앞서 계산된 transferability에 대한 normalization(정규화)를 통해 affinity matrix를 얻으며, 이를 기반으로 마지막 4단계에서는 각 target task에 대하여 최적의 성능을 발휘하는 transfer policy를 탐색합니다.
 
 실험 수행 시 task dictionary 상에 명시한 task들은 총 26가지이며, 이는 computer vision 분야에서 일반적으로 다루는 문제들을 담고 있습니다. 각 task의 해결 난이도는 서로 차이가 있으며, 이에 따라 각 task 해결을 위해 사용되는 최적의 방법에 있어서도 약간의 차이가 존재합니다. 
 
@@ -89,7 +89,7 @@ Taskonomy 방법은 총 4개의 단계를 거칩니다. 1단계에서는 $$\math
 | Semantic Learning through Knowledge Distillation: Classification, Semantic (100-classes) | Semantic Learning through Knowledge Distillation: Segmentation, Semantic | |
 " class="full-table" %}
 
-{% include image.html name=page.name file="task-dictionary-examples.png" description="논문에서 채택된 26가지 중 24가지 task 예측 결과 예시" class="large-image" %}
+{% include image.html name=page.name file="task-dictionary-examples.png" description="논문에서 채택된 26가지 중 24가지 task 예측 결과 예시<br><small>(클릭하면 확대하여 보실 수 있습니다)</small>" class="large-image" %}
 
 ### 3.1. Step I: Task-Specific Modeling
 
@@ -166,7 +166,7 @@ Task affinity matrix $$P$$가 완성되면, 이를 사용하여 특정한 target
 2. 각 target task로 반드시 딱 하나의 transfer가 들어간다.
 3. 전체 supervision budget $$\gamma$$를 초과하지 않도록, source task들을 선정해야 한다.
 
-위 3가지 조건을 모두 반영하면 $$A \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1) \times (\vert E \vert + \vert \mathcal{V} \vert)}$$, $$b \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1)}$$를 얻을 수 있으며, 좀 더 구체적으로는 $$A$$와 $$b$$ 내 각 구역 별 원소의 값들을 아래 그림에 표시한 조건에 따라 결정하면 됩니다. 이 때, $$l_i$$는 $$i$$번째 transfer와 결부된 source task들을 레이블링할 시의 cost를 가리킵니다.
+위 3가지 조건을 모두 반영하면 $$A \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1) \times (\vert E \vert + \vert \mathcal{V} \vert)}$$, $$b \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1)}$$를 얻을 수 있으며, 좀 더 구체적으로는 $$A$$와 $$b$$ 내 각 구역 별 원소의 값들을 아래 그림에 표시한 조건에 따라 결정하면 됩니다. 이 때, $$l_i$$는 $$i$$번째 transfer와 결부된 source task들을 레이블링할 시의 상대적인 cost를 가리킵니다.
 
 {% include image.html name=page.name file="bip-constraints-description.png" description="BIP 문제에서의 constraints 설정<br><small>(클릭하면 확대하여 보실 수 있습니다)</small>" class="large-image" %}
 
@@ -179,7 +179,7 @@ Task affinity matrix $$P$$가 완성되면, 이를 사용하여 특정한 target
 
 본 논문에서의 테스트 결과 성능은 *win rate(%)*이라는 지표를 주로 사용하여 표현하였습니다. 이는 Taskonomy 방법과 비교하고자 하는 baseline 방법이 있을 때, 전체 test set 중에서 Taskonomy 방법의 예측 성능이 baseline 방법의 예측 성능보다 우수하였던 이미지 수 비율을 나타냅니다. 
 
-본격적인 Tasknomy 학습 결과 분석에 앞서, 학습이 완료된 task-specific network의 성능이 기본적으로 쓸 만한지(?)를 먼저 간단히 검증하였습니다. 정규분포로부터 샘플링한 랜덤한 값들을 그대로 task-specific network의 weight들로 사용하여 테스트하는 방법(*rand*)와, 각 task 별 실제 레이블들을 평균한 결과를 사용하여 테스트하는 통계적인 방법(*avg*)을 baseline으로 하여 검증한 결과, 충분히 안정적으로 잘 학습되었다는 것을 확인하였습니다. 아래 그림에서 그 결과를 확인할 수 있습니다.
+본격적인 Tasknomy 학습 결과 분석에 앞서, 학습이 완료된 task-specific network의 성능이 기본적으로 쓸 만한지(?)를 먼저 간단히 검증하였습니다. 정규분포로부터 샘플링한 랜덤한 값들을 그대로 task-specific network의 weight들로 사용하여 테스트하는 방법(*rand*)와, 각 task 별 전체 실제 레이블들을 평균한 결과를 그대로 사용하여 테스트하는 방법(*avg*)을 baseline으로 하여 검증한 결과, 충분히 안정적으로 잘 학습되었다는 것을 확인하였습니다. 아래 그림에서 그 결과를 확인할 수 있습니다.
 
 {% include image.html name=page.name file="task-specific-networks-sanity.png" description="Task-specific network들의 각 task 별 성능 검증 결과" class="large-image" %}
 
@@ -272,3 +272,19 @@ Taskonomy 방법의 안정성 검증을 위해, 아래의 요소들을 변화시
   - <a href="https://arxiv.org/abs/1804.08328" target="_blank">Zamir, Amir R., et al. "Taskonomy: Disentangling Task Transfer Learning." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018.</a>
 - Taskonomy 논문: 보충 자료 
   - <a href="http://taskonomy.stanford.edu/taskonomy_supp_CVPR2018.pdf" target="_blank">Zamir, Amir R., et al. "Taskonomy: Disentangling Task Transfer Learning - Supplementary Material." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018.</a>
+- Hypergraph
+  - <a href="https://en.wikipedia.org/wiki/Hypergraph" target="_blank">Wikipedia contributors. "Hypergraph." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 11 Jul. 2018. Web. 7 Aug. 2018.</a> 
+- Beam search
+  - <a href="https://en.wikipedia.org/wiki/Beam_search" target="_blank">Wikipedia contributors. "Beam search." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 31 Jul. 2018. Web. 7 Aug. 2018.</a>
+- Eigenvector centrality
+  - <a href="https://en.wikipedia.org/wiki/Eigenvector_centrality" target="_blank">Wikipedia contributors. "Eigenvector centrality." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 13 Jul. 2018. Web. 7 Aug. 2018.</a>
+- Analytic hierarchy process
+  - <a href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process" target="_blank">Wikipedia contributors. "Analytic hierarchy process." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 21 Jul. 2018. Web. 7 Aug. 2018.</a>
+- Integer programming
+  - <a href="https://en.wikipedia.org/wiki/Integer_programming" target="_blank">Wikipedia contributors. "Integer programming." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 26 Jul. 2018. Web. 7 Aug. 2018.</a>
+- Gurobi Optimizer
+  - I. Gurobi Optimization. Gurobi optimizer reference manual, 2016.
+- Spearman's rank correlation coefficient
+  - <a href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient" target="_blank">Wikipedia contributors. "Spearman's rank correlation coefficient." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 2 Aug. 2018. Web. 7 Aug. 2018.</a>
+- Hierarchical clustering
+  - <a href="https://en.wikipedia.org/wiki/Hierarchical_clustering" target="_blank">Wikipedia contributors. "Hierarchical clustering." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 24 May. 2018. Web. 7 Aug. 2018.</a>
