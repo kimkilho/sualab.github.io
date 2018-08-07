@@ -1,3 +1,5 @@
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<img class="{{ include.class }}" src="{{ site.url }}/assets/images/{{ include.name }}/{{ include.file }}" alt="{{ include.description }}">
+<a href="{{ site.url }}/assets/images/{{ include.name }}/{{ include.file }}" target="_blank">
+  <img class="{{ include.class }}" src="{{ site.url }}/assets/images/{{ include.name }}/{{ include.file }}" alt="{{ include.description }}">
+</a>
 <span class="caption">{{ include.description }}</span>
