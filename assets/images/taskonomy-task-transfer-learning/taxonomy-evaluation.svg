@@ -13,11 +13,11 @@
    viewBox="0 0 229.04683 146.17969"
    version="1.2"
    id="svg176934"
-   sodipodi:docname="taskonomy-evaluation.svg"
-   inkscape:version="0.92.1 r15371"
-   inkscape:export-filename="D:\Dropbox\Dropbox\taskonomy\assets\taskonomy-evaluation.png"
-   inkscape:export-xdpi="120"
-   inkscape:export-ydpi="120">
+   sodipodi:docname="taxonomy-evaluation.svg"
+   inkscape:version="0.92.3 (unknown)"
+   inkscape:export-filename="taxonomy-evaluation.png"
+   inkscape:export-xdpi="339.85571"
+   inkscape:export-ydpi="339.85571">
   <metadata
      id="metadata176938">
     <rdf:RDF>
@@ -26,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -39,16 +39,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="888"
-     inkscape:window-height="1048"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
      id="namedview176936"
      showgrid="false"
-     inkscape:zoom="1.7878788"
-     inkscape:cx="63.779015"
-     inkscape:cy="52.73699"
-     inkscape:window-x="1913"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:zoom="2.5284424"
+     inkscape:cx="137.54431"
+     inkscape:cy="77.439837"
+     inkscape:window-x="3840"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg176934" />
   <defs
      id="defs138995">

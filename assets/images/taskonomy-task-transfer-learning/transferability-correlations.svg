@@ -14,10 +14,10 @@
    version="1.2"
    id="svg259141"
    sodipodi:docname="transferability-correlations.svg"
-   inkscape:version="0.92.1 r15371"
-   inkscape:export-filename="D:\Dropbox\Dropbox\taskonomy\assets\transferability-correlations.png"
-   inkscape:export-xdpi="120"
-   inkscape:export-ydpi="120">
+   inkscape:version="0.92.3 (unknown)"
+   inkscape:export-filename="transferability-correlations.png"
+   inkscape:export-xdpi="360.6257"
+   inkscape:export-ydpi="360.6257">
   <metadata
      id="metadata259145">
     <rdf:RDF>
@@ -26,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -39,16 +39,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="888"
-     inkscape:window-height="1048"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
      id="namedview259143"
      showgrid="false"
-     inkscape:zoom="1.7878788"
-     inkscape:cx="165.20752"
-     inkscape:cy="32.91716"
-     inkscape:window-x="1913"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:zoom="2.5284424"
+     inkscape:cx="137.3001"
+     inkscape:cy="59.401855"
+     inkscape:window-x="3840"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg259141"
      showguides="false" />
   <defs

@@ -14,10 +14,10 @@
    version="1.2"
    id="svg15038"
    sodipodi:docname="task-specific-networks-sanity.svg"
-   inkscape:version="0.92.1 r15371"
-   inkscape:export-filename="D:\Dropbox\Dropbox\taskonomy\assets\task-specific-networks-sanity.png"
-   inkscape:export-xdpi="133.39999"
-   inkscape:export-ydpi="133.39999">
+   inkscape:version="0.92.3 (unknown)"
+   inkscape:export-filename="task-specific-networks-sanity.png"
+   inkscape:export-xdpi="239.82875"
+   inkscape:export-ydpi="239.82875">
   <metadata
      id="metadata15042">
     <rdf:RDF>
@@ -26,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -39,16 +39,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="937"
-     inkscape:window-height="1048"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
      id="namedview15040"
      showgrid="false"
-     inkscape:zoom="1.7878788"
-     inkscape:cx="173.62737"
-     inkscape:cy="4.6930102"
-     inkscape:window-x="1913"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:zoom="2.5284424"
+     inkscape:cx="134.01923"
+     inkscape:cy="86.748584"
+     inkscape:window-x="3840"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg15038" />
   <defs
      id="defs2861">

@@ -15,11 +15,11 @@
    viewBox="0 0 83.344994 95.516144"
    version="1.1"
    id="svg31779"
-   inkscape:version="0.92.1 r15371"
+   inkscape:version="0.92.3 (unknown)"
    sodipodi:docname="task-dictionary-examples.svg"
-   inkscape:export-filename="D:\Dropbox\Dropbox\taskonomy\assets\task-dictionary-examples.png"
-   inkscape:export-xdpi="140"
-   inkscape:export-ydpi="140">
+   inkscape:export-filename="task-dictionary-examples.png"
+   inkscape:export-xdpi="299.96185"
+   inkscape:export-ydpi="299.96185">
   <defs
      id="defs31773">
     <clipPath
@@ -623,17 +623,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="160.25447"
-     inkscape:cy="209.47847"
+     inkscape:zoom="1.979899"
+     inkscape:cx="61.150369"
+     inkscape:cy="175.29219"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="801"
-     inkscape:window-height="1048"
-     inkscape:window-x="1110"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata31776">
     <rdf:RDF>
@@ -642,7 +642,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

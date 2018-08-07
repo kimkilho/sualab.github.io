@@ -15,11 +15,11 @@
    viewBox="0 0 174.29744 50.410587"
    version="1.1"
    id="svg22024"
-   inkscape:version="0.92.1 r15371"
+   inkscape:version="0.92.3 (unknown)"
    sodipodi:docname="taskonomy-method-overview.svg"
-   inkscape:export-filename="D:\Dropbox\Dropbox\taskonomy\assets\taskonomy-method-overview.png"
-   inkscape:export-xdpi="133.39999"
-   inkscape:export-ydpi="133.39999">
+   inkscape:export-filename="taskonomy-method-overview.png"
+   inkscape:export-xdpi="239.83852"
+   inkscape:export-ydpi="239.83852">
   <defs
      id="defs22018">
     <clipPath
@@ -3338,17 +3338,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="266.30995"
-     inkscape:cy="24.15672"
+     inkscape:zoom="1.979899"
+     inkscape:cx="328.87697"
+     inkscape:cy="84.138168"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="706"
-     inkscape:window-height="1048"
-     inkscape:window-x="1205"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata22021">
     <rdf:RDF>
@@ -3357,7 +3357,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

@@ -31,7 +31,7 @@ name: taskonomy-task-transfer-learning
 
 본 논문의 연구는 바로 이런 문제 의식에서 출발합니다. 복수 개의 서로 다른 task들 간에 잠재적으로 존재하는 이러한 관계들을 graph 형태로 구조화하여 표현하고, 이를 사용하여 어느 새로운 task에 대한 딥러닝 모델의 학습을 보다 효과적이고(성능 향상) 효율적으로(레이블링된 데이터의 양 감소) 할 수 있는 **Taskonomy** 방법을 제안하였습니다. 이 때, 학습 모델은 deep neural networks(심층 신경망)으로, 데이터셋의 종류는 이미지 데이터셋으로 한정하였습니다.
 
-Source task에 대하여 학습한 neural network 모델의 feature representation을, target task에 그대로 적용하여 사후적으로 학습했을 때, target task를 단독으로 학습했을 경우 대비 성능 향상 수준을, 두 task들 간의 'transferability' 척도로 정의하였습니다. 이렇게 조사된 모든 task 쌍에 대한 pairwise transferability를 affinity matrix(유사도 행렬)로 표현한 후, 이로부터 일종의 Binary Integer Programming(이진 정수 계획법) 문제를 상정하여 특정한 target task에 대한 최적의 transfer policy를 찾아내는 방식을 채택했습니다. 모든 과정은 fully computational하게 진행되며, 각 task들에 대한 prior knowledge(사전 지식)가 전혀 개입하지 않도록 구성하였습니다. 이는 모든 문제 상황에 적용 가능하도록 하는 일반성을 확보하기 위함으로 보입니다.
+Source task에 대하여 학습한 neural network 모델의 feature representation을, target task에 그대로 적용하여 사후적으로 학습했을 때, target task를 단독으로 학습했을 경우 대비 성능 향상 수준을, 두 task들 간의 'transferability' 척도로 정의하였습니다. 이렇게 조사된 모든 task 쌍에 대한 pairwise transferability를 affinity matrix(유사도 행렬)로 표현한 후, 이로부터 일종의 Boolean Integer Programming(이진 정수 계획법) 문제를 상정하여 특정한 target task에 대한 최적의 transfer policy를 찾아내는 방식을 채택했습니다. 모든 과정은 fully computational하게 진행되며, 각 task들에 대한 prior knowledge(사전 지식)가 전혀 개입하지 않도록 구성하였습니다. 이는 모든 문제 상황에 적용 가능하도록 하는 일반성을 확보하기 위함으로 보입니다.
 
 
 ## 2. Related Work
@@ -55,7 +55,7 @@ Taskonomy 방법과 관련된 매우 다양한 관련 연구 주제들이 존재
 
 Taskonomy(task taxonomy)를 보다 엄밀하게 정의하면, '어느 task dictionary에 대하여 각 task들 간의 transferability를 담고 있는, 계산적으로 도출 가능한 directed <a href="https://en.wikipedia.org/wiki/Hypergraph" target="_blank">hypergraph</a>'라고 하고 있습니다. Taskonomy에서는 하나의 target task의 성능 극대화를 위해, 단일 source task가 아닌 여러 개의 source task들을 동시에 활용할 수 있다고 가정하기 때문에, 이를 반영하고자 이로 인해 일반적인 graph보다 좀 더 일반화된 hypergraph(하나의 edge가 복수 개의 node들을 연결할 수 있는 graph)로 정의하였다고 할 수 있습니다. 
 
-Taskonomy 방법에 대한 본격적인 설명에 앞서, 본문에서 사용하는 notation을 아래와 같이 일괄 정리하였습니다.
+Taskonomy 방법에 대한 본격적인 설명에 앞서, 본문에서 사용하는 주요한 notation들을 아래와 같이 일괄 정리하였습니다.
 
 - $$\mathcal{T} = \{t_1, ..., t_n\}$$ : Target task set; Taskonomy 적용 대상 target task들의 모음
   - $$t_j$$ : Taskonomy 상에서의 $$j$$번째 target task
@@ -93,13 +93,15 @@ Taskonomy 방법은 총 4개의 단계를 거칩니다. 1단계에서는 $$\math
 
 ### 3.1. Step I: Task-Specific Modeling
 
-맨 먼저 $$\mathcal{S}$$ 내의 각 task $$s_i$$에 대하여 task-specific networks를 독립적으로 학습합니다. 각 task-specific network는 공통적으로 아래와 같은 encoder-decoder 구조를 지닙니다.
+맨 먼저 $$\mathcal{S}$$ 내의 각 task $$s_i$$에 대하여 task-specific networks를 독립적으로 학습합니다. 각 task-specific network는 공통적으로 아래와 같은 encoder-decoder 구조를 지닙니다. 이 때, decoder의 경우 task의 목적에 따라 출력값을 생성하는 부분의 구조에 약간의 차이가 있습니다.
 
-*TODO: task-specific network의 encoder-decoder architecture 그림 추가* 
+{% include image.html name=page.name file="task-specific-network-architecture.png" description="Task-Specific network의 encoder-decoder 구조" class="large-image" %}
 
 ### 3.2. Step II: Transfer Modeling
 
 $$s \in \mathcal{S}$$와 $$t \in \mathcal{T}$$인 어느 source task $$s$$와 target task $$t$$에 대하여, $$s$$의 task-specific network의 encoder $$E_s(\cdot)$$와, parameters $$\theta$$로 표현되는 새로운 decoder $$D_{\theta}(\cdot)$$이 합쳐져 구성된 transfer network를 생성합니다. 그러면, 어느 입력 이미지 $$I$$에 대한 transfer network의 예측 레이블은 $$D_{\theta}(E_s(I))$$로 표현할 수 있습니다.
+
+{% include image.html name=page.name file="transfer-network-architecture.png" description="Transfer network의 구조" class="large-image" %}
 
 입력 이미지 $$I$$에 대한 target task $$t$$의 ground truth 레이블을 $$f_t(I)$$로 표현하고, 해당 task의 loss function(손실 함수)을 $$L_t$$로 표현한다면, 전체 training set $$\mathcal{D}$$에 대한 loss를 최소화하는 $$\theta$$는 아래의 minimization 수식으로 표현할 수 있습니다.
 
@@ -107,13 +109,13 @@ $$s \in \mathcal{S}$$와 $$t \in \mathcal{T}$$인 어느 source task $$s$$와 ta
 D\_{s \to t} := \arg\min\_{\theta} \mathbb{E}\_{I \in \mathcal{D}} \big[ L_t \big( D\_{\theta} ( E_s(I)), f_t(I) \big) \big]
 \end{equation}
 
-위 수식의 계산 결과 얻어진 최적의 transfer network $$D_{s \to t}$$를 *readout function*이라고 하며, $$D_{s \to t}$$의 성능이 우수할수록 두 task $$s$$, $$t$$ 간의 transferability가 높다고 해석할 수 있습니다. 모든 $$(s, t)$$ 조합에 대한 readout function들을 모두 구합니다.
+위 수식의 계산 결과 얻어진 최적의 transfer function $$D_{s \to t}$$를 *readout function*이라고도 하며, $$D_{s \to t}$$의 성능이 우수할수록 두 task $$s$$, $$t$$ 간의 transferability가 높다고 해석할 수 있습니다. 모든 $$(s, t)$$ 조합에 대한 readout function들을 모두 구합니다.
 
 한편 위에서 서술한 transfer modeling의 과정은, 엄밀하게는 transfer order $$k=1$$인 경우에 해당하였습니다. $$k$$가 1보다 큰 경우, 즉 source task들이 2개 이상 사용될 수 있는 경우에는, 모든 target task 경우에 대하여 전체 조합 경우의 수가 총 $$\vert \mathcal{T} \vert \times { {\vert \mathcal{S} \vert }\choose{k}}$$개가 됩니다. $$k=2$$인 경우만을 생각하더라도, $$\vert \mathcal{T} \vert=22$$, $$\vert \mathcal{S} \vert=25$$일 때 총 $$(22 \times { {25}\choose{2}})=6,600$$개가 됩니다. 
 
 지나치게 많은 계산을 방지하고자, Taskonomy 방법에서는 먼저 $$k=1$$로 하여 계산한 모든 $$D_{s \to t}$$의 성능을 기준으로 hypergraph를 그리고, 여기에 <a href="https://en.wikipedia.org/wiki/Beam_search" target="_blank">beam search</a>를 적용하여 $$D_{s \to t}$$ 성능 기준으로 상위에 속하는 5개($$k \leq 5$$인 경우) 또는 $$k$$개($$k \geq 5$$인 경우)의 source task들을 취사 선택하고, 이들 간의 $$k$$차 조합만을 고려하는 방식을 채택합니다. 이렇게 하여, 모든 $$({s_1, ..., s_k}, t)$$ 조합에 대한 readout function들을 모두 구합니다. 
 
-*TODO: k=2일 경우의 beam search 과정 예시 그림 추가*
+{% include image.html name=page.name file="beam-search-keq2-examples.png" description="Transfer order k=2인 경우의 beam search 과정 예시" class="full-image" %}
 
 ### 3.3. Step III: Ordinal Normalization using Analytic Hierarchy Process (AHP)
 
@@ -131,27 +133,42 @@ w_{i,j} = \mathbb{E}\_{I \in \mathcal{D}\_{test}} [\mathcal{D}\_{s_i \to t}(I) >
 w_{i,j}' = \frac { \mathbb{E}\_{I \in \mathcal{D}\_{test}} [\mathcal{D}\_{s_i \to t}(I) > \mathcal{D}\_{s_j \to t}(I)] } { \mathbb{E}\_{I \in \mathcal{D}\_{test}} [\mathcal{D}\_{s_i \to t}(I) < \mathcal{D}\_{s_j \to t}(I)] }
 \end{equation}
 
-이렇게 얻어진 $$W_t'$$의 principal eigenvector(eigenvalue가 가장 큰 eigenvector)를 계산합니다. 그러면 해당 principal eigenvector의 $$i$$번째 성분은, 곧 이에 대응되는 $$i$$번째 source task $$s_i$$의, source task들로 구성한 undirected graph 상에서의 <a href="https://en.wikipedia.org/wiki/Eigenvector_centrality" target="_blank">centrality(중심성, 구심성)</a>를 나타내게 됩니다. 이는 다른 source task들 대비, 해당 source task의 일종의 '영향력'이라고 봐도 크게 무리가 없겠습니다. 저자들은 이러한 normalization 방법을, operations research(경영과학) 등의 분야에서 흔히 사용되는 <a href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process" target="_blank">Analytic Hierarchy Process(AHP)</a>로부터 채택하였다고 언급하고 있습니다.
+이렇게 얻어진 $$W_t'$$의 principal eigenvector(eigenvalue가 가장 큰 eigenvector)를 계산합니다. 그러면 해당 principal eigenvector의 $$i$$번째 성분은, 곧 이에 대응되는 $$i$$번째 source task $$s_i$$의, source task들로 구성한 undirected graph 상에서의 <a href="https://en.wikipedia.org/wiki/Eigenvector_centrality" target="_blank">centrality(중심성, 구심성)</a>를 나타내게 됩니다. 이는 다른 source task들 대비, 해당 source task의 target task에 대한 일종의 '영향력'이라고 봐도 크게 무리가 없겠습니다. 저자들은 이러한 normalization 방법을, operations research(경영과학) 등의 분야에서 흔히 사용되는 <a href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process" target="_blank">Analytic Hierarchy Process(AHP)</a>로부터 채택하였다고 언급하고 있습니다.
 
 모든 $$t \in \mathcal{T}$$에 대하여 $$W_t'$$의 principal eigenvector들을 계산하여 이들을 row-wise로 쌓아올리면, 아래 그림과 같은 task affinity matrix $$P$$가 얻어집니다.
 
-{% include image.html name=page.name file="task-affinity-matrix-example.png" description="k=1일 때의 task affinity matrix 예시<br>(여기에서는 값이 작을수록, source->target transferability가 높음)" class="large-image" %}
+{% include image.html name=page.name file="task-affinity-matrix-1st-order-example.png" description="k=1일 때의 task affinity matrix 예시<br><small>(여기에서는 값이 작을수록, source->target transferability가 높음)</small>" class="full-image" %}
+
+논문 본문에서는 $$k=1$$인 경우만을 가지고 설명하였는데, $$k$$가 $$1$$보다 큰 경우에는 task affinity matrix를 계산하는 과정에서의 성능 비교 대상이, 엄밀히 말하면 source task들이 기준이 되는 것이 아니라, $$k$$차 조합으로 구성한 $$(s_1, ..., s_k, t)$$ 조합들이 기준이 됩니다. ($$k=1$$인 경우 $$(s_k, t)$$ 조합 안에 하나의 source task만이 포함되기 때문에 이를 source task 자체로 대표하여 표현할 수 있었던 것이라고 볼 수 있습니다.) 즉 다시 말해, task affinity matrix $$P$$ 상의 하나의 열은, 곧 하나의 $$(s_1, ..., s_k, t)$$ 조합을 대표한다고 이해하시면 되겠습니다. 이해를 돕기 위해, $$k=1$$과 $$k=2$$인 경우 $$P$$의 각 열을 설명하는 그림을 아래에 추가하였습니다.
+
+{% include image.html name=page.name file="task-affinity-matrix-higher-order-example.png" description="k >= 1일 때의 task affinity matrix 예시<br><small>(여기에서는 값이 작을수록, source->target transferability가 높음)</small>" class="full-image" %}
+
 
 ### 3.4. Step IV: Computing the Global Taxonomy
 
-Task affinity matrix $$P$$가 완성되면, 이를 사용하여 특정한 target task의 성능을 극대화하는 최적의 transfer policy를 탐색하는 작업을 마지막으로 진행합니다. 이는 최종적으로 구축한 Taskonomy hypergraph 상에서, 특정한 target task node를 포함하는 subgraph를 선택하는 문제라고 할 수 있습니다. Target task의 성능을 극대화하도록 하는 source task(node)들과 더불어 이들을 활용한 transfer(edge) 방법들을 선택하는데, 이 과정에서 선택된 source task들의 갯수가 처음에 상정했던 supervision budget $$\gamma$$를 초과하지 않도록 제약을 걸어야 합니다.
+Task affinity matrix $$P$$가 완성되면, 이를 사용하여 특정한 target task의 성능을 극대화하는 최적의 transfer policy를 탐색하는 작업을 마지막으로 진행합니다. 즉, target task의 성능을 극대화하도록 하는 $$(s_1, ..., s_k, t)$$ 조합을 선택하는데, 이 과정에서 선택된 source task들의 갯수가 처음에 상정했던 supervision budget $$\gamma$$를 초과하지 않도록 제약을 걸어야 합니다.
 
-앞서 찾은 $$P$$와, transfer 규칙 및 supervision budget과 관련된 제약 조건을 적용하여, <a href="https://en.wikipedia.org/wiki/Integer_programming" target="_blank">Boolean Integer Programming(BIP)</a> 문제의 objective function(목적 함수) 및 constraints(제약식)을 설정합니다. 이 때 boolean variables $$x = (x_1, x_2, ..., x_{\vert E \vert+ \vert \mathcal{V} \vert})$$은, 전체 $$E$$개의 transfer(edge)들과 $$\mathcal{V}$$개의 source task들 중에서 어느 것들을 선택할지를 $$\{0,1\}$$ 중 하나로 표시합니다. 결과적으로, 아래와 같은 BIP 문제를 풀면 됩니다:
+논문 본문에서는 이 지점부터 notation이 약간 바뀌어서 혼동될 수 있는데, 항상 기준은 $$(s_1, ..., s_k, t)$$ 조합으로 보면 됩니다. $$(s_1, ..., s_k)$$와 $$t$$를 연결하는 transfer(edge)를 기본 단위로 하여 최적의 transfer를 탐색합니다. $$i$$는 transfer, $$j$$는 target task의 index를 나타냅니다. 또한, $$sources(i)$$는 $$i$$번째 transfer의 source task들의 set을 지칭하고, $$target(i)$$는 $$i$$번째 transfer의 target task 하나를 지칭합니다.
 
-\begin{equation}
-\begin{split}
-\text{maximize} &\ c^Tx, \\
-\text{subject to} &\ Ax \leq b \ \\
-\text{and} &\ x \in \{0,1\}^{|E|+|\mathcal{V}|}
-\end{split}
-\end{equation}
+앞서 찾은 $$P$$와, transfer 규칙 및 supervision budget과 관련된 제약 조건을 적용하여, <a href="https://en.wikipedia.org/wiki/Integer_programming" target="_blank">Boolean Integer Programming(이하 BIP)</a> 문제의 objective function(목적 함수) 및 constraints(제약식)를 설정합니다. 이 때 boolean variables $$x = (x_1, x_2, ..., x_{\vert E \vert+ \vert \mathcal{V} \vert})$$은, 전체 $$E$$개의 transfer(edge)들과 $$\mathcal{V}$$개의 source task들 중에서 어느 것들을 선택할지를 $$\{0,1\}$$ 중 하나로 표시합니다. 결과적으로, 아래와 같은 BIP 문제를 풀면 됩니다:
 
-*TODO: A, x 설명용 그림 + 글 추가*
+{% include image.html name=page.name file="bip-objective-and-constraints.png" class="small-image" %}
+
+사실 이 대목에서 BIP를 이해하고자 너무 머리 싸매고(?) 노력하실 필요는 없을 것 같습니다. 중요한 것은 실제 Taskonomy hypergraph에서 고려하고자 하는 조건에 맞게 objective function의 weights와 더불어 constraints를 적절하게 입력하는 것이고, 일단 이것에 성공하면 실제 BIP 문제는 <a href="http://www.gurobi.com" target="_blank">Gurobi Optimizer</a> 등의 최적화 문제 풀이용 프로그램이 알아서 풀어줍니다. 단, 논문 본문에 나와 있는 weights 및 constraints에 대한 설명이 다소 혼동의 여지가 있어, 결과적으로 각각을 어떻게 입력하면 되는지 위주로 좀 더 자세히 서술해 보았습니다. 
+
+먼저 objective function weights의 경우, 전체 $$\vert E \vert+\vert \mathcal{V} \vert$$개의 원소 중 앞쪽 $$\vert E \vert$$개의 transfer(edge)들에 대응되는 것만 $$c_i := r_{target(i)} \cdot p_i$$를 넣어주고, 나머지 원소에는 $$0$$을 넣어주면 됩니다. 이 때, $$p_i$$는 $$i$$번째 transfer가 가리키는 target task에 대한 transferability 수준을 나타내며, 이는 앞서 계산하여 얻은 task affinity matrix $$P$$ 상에서 찾을 수 있습니다. 다음으로 $$r_{target(i)}$$는 $$i$$번째 transfer가 가리키는 target task의 상대적 중요성을 나타내며, 이는 필요에 따라 사용자가 적절하게 정하여 입력할 수 있습니다.
+
+{% include image.html name=page.name file="bip-weights-description.png" description="BIP 문제에서의 objective weights 값의 설정" class="large-image" %}
+
+다음으로 constraints에는 크게 다음 3가지 조건을 반영합니다. 
+
+1. 만약 어느 subgraph 상에 특정 transfer가 포함되어 있다면, 해당 transfer의 source task(node)들 또한 반드시 포함되어야 한다.
+2. 각 target task로 반드시 딱 하나의 transfer가 들어간다.
+3. 전체 supervision budget $$\gamma$$를 초과하지 않도록, source task들을 선정해야 한다.
+
+위 3가지 조건을 모두 반영하면 $$A \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1) \times (\vert E \vert + \vert \mathcal{V} \vert)}$$, $$b \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1)}$$를 얻을 수 있으며, 좀 더 구체적으로는 $$A$$와 $$b$$ 내 각 구역 별 원소의 값들을 아래 그림에 표시한 조건에 따라 결정하면 됩니다. 이 때, $$l_i$$는 $$i$$번째 transfer와 결부된 source task들을 레이블링할 시의 cost를 가리킵니다.
+
+{% include image.html name=page.name file="bip-constraints-description.png" description="BIP 문제에서의 constraints 설정<br><small>(클릭하면 확대하여 보실 수 있습니다)</small>" class="large-image" %}
 
 
 ## 4. Experiments
@@ -170,7 +187,7 @@ Task affinity matrix $$P$$가 완성되면, 이를 사용하여 특정한 target
 
 Supervision budget $$\gamma$$ 및 Transfer Order $$k$$를 변경해 가면서 학습한 결과 얻어진 몇 가지 예시 Taskonomy들을 아래 그림과 같이 나타냈습니다. 
 
-{% include image.html name=page.name file="computed-taxonomies.png" description="학습을 통해 얻어진 예시 Taskonomy<br>(BIP 문제를 해결하여 얻어진 transfer들을 화살표로 표현함; 흐릿하게 표시된 node들은 source-only task에 해당함)" class="full-image" %}
+{% include image.html name=page.name file="computed-taxonomies.png" description="학습을 통해 얻어진 예시 Taskonomy<br><small>(BIP 문제를 해결하여 얻어진 transfer들을 화살표로 표현함; 흐릿하게 표시된 node들은 source-only task에 해당함)</small><br><small>(클릭하면 확대하여 보실 수 있습니다)</small>" class="full-image" %}
 
 그림의 우측에 확대하여 나타낸 $$\gamma=8$$, $$k=4$$인 경우를 예로 들어 좀 더 자세히 살펴봅시다. 이미지 상의 물체들의 (각 방향으로의) 표면들을 검출하는 Surface Normal Estimation(*'Normals'*) task가, source task들 중 하나로써 다른 다양한 target task에 대하여 transfer되고 있는 것을 확인할 수 있습니다. 이는 이미지 상에 보여진 공간에 대한 이해를 수행하는 데 있어, 물체들의 표면을 검출하는 작업이 중대한 영향을 미칠 수 있다는 사실의 간접적인 증거로써 확인할 수 있었습니다. 한편 컴퓨터 비전 분야에서 전통적으로 연구되어 오던, 이미지 상의 특징적인 부분을 검출하는 Keypoint Detection('*2D Keypoints*')의 경우, Denoising, Colorization, In-painting 등의 Unsupervised Learning task들로부터의 transfer를 통해 도움을 얻을 수 있다는 흥미로운 결론도 확인할 수 있었습니다.
 
@@ -179,7 +196,7 @@ Supervision budget $$\gamma$$ 및 Transfer Order $$k$$를 변경해 가면서 �
 - *Gain*: Transfer network의 학습에 사용한 validation set(1.6만)으로, target task의 task-specific network를 처음부터 학습하는 방법을 baseline으로 설정했을 시의, taskonomy 방법의 win rate(%)
 - *Quality*: Task-specific network의 학습에 사용한 training set(12만)으로,  target task의 task-specific network를 처음부터 학습하는 방법을 baseline으로 설정했을 시의, taskonomy 방법의 win rate(%)
 
-{% include image.html name=page.name file="taxonomy-evaluation.png" description="완성된 taskonomy에 기반한 transfer 규칙을 각 target task에 적용하였을 시의 테스트 결과" class="large-image" %}
+{% include image.html name=page.name file="taxonomy-evaluation.png" description="완성된 taskonomy에 기반한 transfer 규칙을 각 target task에 적용하였을 시의 테스트 결과<br><small>(클릭하면 확대하여 보실 수 있습니다)</small>" class="large-image" %}
 
 일단 Maximum transfer order $$k$$를 증가시킬수록, 그리고 supervision budget $$\gamma$$를 증가시킬수록, Gain과 Quality가 점차적으로 증가하는 경향을 보였습니다. 이는 '더 많은 source task로부터 얻은 지식을 transfer할 수록 성능이 높아질 것이다'라는 우리의 상식적인 예상대로 전개된 결과라고 할 수 있습니다. 
 
@@ -191,7 +208,7 @@ Supervision budget $$\gamma$$ 및 Transfer Order $$k$$를 변경해 가면서 �
 
 이러한 상황을 재현하고자, 기존 task dictionary 내의 모든 task들을 source로, 기존 task dictionary에 없었던 어느 새로운 task를 단일 target으로 한 일반화 성능 검증 실험을 수행하였습니다. 이 때 target task와 관련된 학습 데이터는 validation set(1.6만)만을 사용하였음을 다시 강조합니다. 
 
-{% include image.html name=page.name file="generalization-to-novel-tasks.png" description="새로운 task에 대한 일반화 성능 검증 결과<br>(좌측: Gain과 Quality; 우측: 상기 명시된 방법들을 baseline으로 한 win rate(%))" class="large-image" %}
+{% include image.html name=page.name file="generalization-to-novel-tasks.png" description="새로운 task에 대한 일반화 성능 검증 결과<br><small>(좌측: Gain과 Quality; 우측: 상기 명시된 방법들을 baseline으로 한 win rate(%))</small><br><small>(클릭하면 확대하여 보실 수 있습니다)</small>" class="large-image" %}
 
 위 실험 결과 중 특히 우측에 나타낸, 최신 transfer learning 관련 방법들과의 비교 결과가 인상적입니다. 각종 self-supervised 방법들을 사용한 경우, ImageNet 데이터셋으로 학습한 AlexNet의 FC7을 features로 사용한 경우 등에 비해, 완성된 taskonomy에 기반하여 찾은 transfer policy에 따라 학습한 경우의 성능이 전체적으로 더 우수한 것으로 나타났습니다.
 
@@ -200,15 +217,15 @@ Supervision budget $$\gamma$$ 및 Transfer Order $$k$$를 변경해 가면서 �
 
 위의 과정을 거쳐 찾은 Taskonomy 결과에 대하여, 본 논문에서는 다양한 방법으로 검증을 시도하였습니다.
 
-{% include image.html name=page.name file="structure-significance.png" description="랜덤한 transfer policy 대비 Taskonomy 방법으로 찾은 최적의 transfer policy 적용 성능 비교 결과<br>(녹색: Taskonomy; 회색: 랜덤 transfer policy)" class="large-image" %}
+{% include image.html name=page.name file="structure-significance.png" description="랜덤한 transfer policy 대비 Taskonomy 방법으로 찾은 최적의 transfer policy 적용 성능 비교 결과<br><small>(녹색: Taskonomy; 회색: 랜덤 transfer policy)</small>" class="large-image" %}
 
 Taskonomy 방법을 통해 찾은 최적의 transfer policy가, 랜덤하게 정의된 transfer policy에 비해 얼마나 더 효과가 있는지 확인하기 위해, 간단한 유의성(significance) 검증 실험을 수행하였습니다. 모든 supervision budget $$\gamma$$에서 Taskonomy 방법을 통해 찾은 transfer policy의 성능이 Quality와 Gain 두 가지 지표에서 월등하게 우수한 것으로 확인되었습니다. 이는 곧 서로 다른 task들 간에 모종의 structure가 존재한다는 것을 방증하며, 이를 Taskonomy 방법이 잘 모델링하였다는 것을 보여줍니다.
 
 ### 5.1. Evaluation on MIT Places & ImageNet
 
-데이터셋 차원에서의 간단한 일반화 성능 검증을 위해, Object Classification task로 ImageNet, Scene Classification task로 MIT Places를 각각 target task의 데이터셋으로 선정하고, 여기에 대하여 각 source task들의 task-specific network들을 fine-tuning한 결과 테스트 성능을 조사하였습니다. 이렇게 각 source task로부터의 transfer 결과 성능을 기준으로 한 ranking 결과가, 앞서 taskonomy 방법을 통해 찾은 ranking 결과와 상관성이 존재하는지 알아보고자 하였습니다.
+데이터셋 차원에서의 간단한 일반화 성능 검증을 위해, Object Classification task로 ImageNet, Scene Classification task로 MIT Places를 각각 target task의 데이터셋으로 선정하고, 여기에 대하여 각 source task들의 task-specific network들을 fine-tuning한 결과 테스트 성능을 조사하였습니다. 이 성능을 기준으로 한 랭킹 결과를 산출하고, 이를 앞서 taskonomy 방법을 통해 찾은 transferability를 기준으로 한 랭킹 결과와 비교하여 서로 간에 상관성이 존재하는지 알아보고자 하였습니다.
 
-{% include image.html name=page.name file="transferability-correlations.png" description="ImageNet, MIT Places 데이터셋으로의 transferability 결과와의 상관성 조사 결과" class="large-image" %}
+{% include image.html name=page.name file="transferability-correlations.png" description="ImageNet, MIT Places 데이터셋으로의 transferability 결과와의 상관성 조사 결과<br><small>(클릭하면 확대하여 보실 수 있습니다)</small>" class="large-image" %}
 
 <a href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient" target="_blank">Spearman's rho</a>를 기준으로, MIT Places와 $$0.857$$, ImageNet과 $$0.823$$을 나타낸 것으로 볼 때, 유의미한 수준의 상관성이 존재함을 확인하였습니다.
 
@@ -236,7 +253,17 @@ Taskonomy 방법의 안정성 검증을 위해, 아래의 요소들을 변화시
 
 ## 6. Limitations and Discussion
 
-*TODO: 내용 작성*
+본 논문에서는 복수 개의 서로 다른 task들 간에 잠재적으로 존재하는 관계들을 모델링하는 Taskonomy 방법을 통해, 새로운 task에 대한 딥러닝 모델의 학습을 보다 효과적이고 효율적으로 수행할 수 있다는 것을 보였습니다. 이는 task들이 구성하는 모종의 공간인 task space가 존재함을 가정하고,  이를 규명하기 위한 최초의 시도를 했다고 할 수 있겠습니다. 다만, 저자들은 본 Taskonomy 방법을 구상할 때 몇 가지 가정이 들어갔기 때문에, 이들을 점차적으로 완화하는 것이 곧 향후 연구를 통해 추구해야 할 방향임을 역설하면서 내용을 마무리하였습니다.
+
+(1) Model Dependence: 본 논문에서는 학습 모델을 deep neural networks로, 데이터셋을 이미지 데이터셋으로 한정하였기 때문에, 실험 결과가 model-specific하면서 동시에 data-specific하다는 점을 지적하였습니다.
+
+(2) Compositionality: 본 논문에서 다룬 task들은 모두 사람이 정의한 task에 해당합니다. 만일 이들 task가 적절하게 조합될 경우, 이를 통해 모종의 새로운 subtask들을 발견할 수 있을지에 대한 의문을 제기하였습니다.
+
+(3) Space Regularity: 본 논문에서는 앞서 가정한 모종의 task space에서 샘플링을 통해 얻은 task dictionary를 사용한 결과만을 도출하였습니다. 이보다 좀 더 일반적인 task 샘플링 결과에 대해서도 그 효과가 검증될 수 있을지, 즉 '정규성'에 대한 검증이 추가로 필요함을 지적하였습니다.
+
+(4) Transferring to Non-visual and Robotic Tasks: 본 논문에서는 모두 이미지와 관련된 visual task들에 대해서만 검증을 수행하였습니다. 자연히, 로봇 조작과 같이 완전히 시각적이지 않은 분야에서도 Taskonomy 방법을 통해 transferability를 극대화할 수 있을지에 대한 의문을 제기하였습니다.
+
+(5) Lifelong Learning: 본 논문에서는 Taskonomy를 완성하는 작업을 단 한 번에 수행하였습니다. 다만 오늘날에는 어느 시스템 자체가 계속적인 학습을 수행하면서 그것이 수행할 수 있는 task를 점진적으로 확장시킬 수 있을지에 관심이 집중되고 있으며, 그것이 'lifelong learning'이라는 이름의 연구 주제로 진행되고 있습니다. 이에 따라 lifelong learning 셋팅에서의 Taskonomy 방법에 대한 검증을 고려해봐야 함을 지적하였습니다.
 
 
 ## References
