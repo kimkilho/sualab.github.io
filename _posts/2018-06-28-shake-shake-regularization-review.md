@@ -30,7 +30,7 @@ name: shake-shake-regularization-review
 
 {% include image.html name=page.name file="Image_Flip.PNG" description="이미지 반전 예시" class="full-image" %}
 
-가장 자주 사용되는 방법이며 이미지 회전(Rotation) 기법인데요, 말 그대로 이미지 자체를 좌우 혹은 상하로 반전시키는 것을 의미합니다.   
+가장 자주 사용되는 방법이며, 말 그대로 이미지 자체를 좌우 혹은 상하로 반전시키는 것을 의미합니다.   
 
 -	이미지 회전 (Rotation)   
 
