@@ -16,7 +16,7 @@
 title: SUALAB Research Blog
 web: http://sualab.com
 description: > # this means to ignore newlines until "baseurl:"
-    SuaLab research blog: covers subjects regarding machine learning, computer vision, high-performance computing, and so on.
+    SUALAB research blog: covers subjects regarding machine learning, computer vision, high-performance computing, and so on.
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "http://research.sualab.com" # the base hostname & protocol for your site, e.g. http://example.com
 facebook_username: sualab
