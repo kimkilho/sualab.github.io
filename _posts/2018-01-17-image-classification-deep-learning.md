@@ -1117,7 +1117,7 @@ print('Test accuracy: {}'.format(test_score))
 - 매 반복 회차에서의 손실 함수의 값
 - 매 epoch에 대하여 (1) 학습 데이터셋으로부터 추출한 미니배치에 대한 모델의 예측 정확도(이하 학습 정확도)와 (2) 검증 데이터셋에 대한 모델의 예측 정확도(이하 검증 정확도)
 
-{% include image.html name=page.name file="learning-curve-result.svg" description="학습 곡선 플롯팅 결과" class="large-image" %}
+{% include image.html name=page.name file="learning-curve-result.svg" description="학습 곡선 플롯팅 결과<br><small>(파란색: 학습 데이터셋 정확도, 빨간색: 검증 데이터셋 정확도)</small>" class="large-image" %}
 
 학습이 진행됨에 따라 손실 함수의 값은 (약간의 진동이 있으나) 점차적으로 감소하면서, 동시에 학습 정확도 및 검증 정확도는 점차적으로 증가하는, 꽤 예쁜(?) 결과를 보였습니다. 단, 학습 정확도가 1.0을 향해 가는 과정에서 검증 정확도는 약 0.9288 언저리에 머물렀는데, 이 차이는 모델이 학습 데이터셋에 대하여 과적합(overfitting)된 정도를 나타낸다고 할 수 있겠습니다. 
 
