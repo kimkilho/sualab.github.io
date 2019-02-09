@@ -3,7 +3,7 @@ layout: post
 title: "Learning Transferable Architectures for Scalable Image Recognition 리뷰"
 date: 2018-09-28 17:00:00 +0900
 author: hoseong_lee
-categories: [machine-learning, computer-vision]
+categories: [review]
 tags: [automl, architecture-search]
 comments: true
 name: nasnet-review

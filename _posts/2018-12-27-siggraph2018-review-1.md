@@ -3,7 +3,7 @@ layout: post
 title: "SIGGRAPH 2018 리뷰: (1) 참석 후기 및 프로그램 소개"
 date: 2018-12-27 14:00:00 +0900
 author: hoseong_lee
-categories: [machine-learning, computer-vision]
+categories: [review]
 tags: [siggraph2018, computer-graphics]
 comments: true
 name: siggraph2018-review-1
