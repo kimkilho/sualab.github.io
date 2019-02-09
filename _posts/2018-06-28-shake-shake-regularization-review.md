@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "Shake-Shake Regularization Review"
+title:  "Shake-Shake Regularization 리뷰 및 실습"
 date:   2018-06-28 10:50:01 
 author: hoseong_lee
-categories: [machine-learning, computer-vision]
+categories: [practice, review]
 tags: [shake-shake, regularization, tensorflow]
 comments: true
 name: shake-shake-regularization-review

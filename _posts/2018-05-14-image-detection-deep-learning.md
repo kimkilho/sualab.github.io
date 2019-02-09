@@ -3,7 +3,7 @@ layout: post
 title: "이미지 Detection 문제와 딥러닝: YOLOv2로 얼굴인식하기"
 date: 2018-05-14 09:00:00 +0900
 author: jongsoo_keum
-categories: [machine-learning, computer-vision]
+categories: [practice]
 tags: [detection, yolov2, tensorflow]
 comments: true
 name: image-detection-deep-learning

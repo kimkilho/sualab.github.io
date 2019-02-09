@@ -3,7 +3,7 @@ layout: post
 title: "이미지 인식 문제의 개요: PASCAL VOC Challenge를 중심으로 (1)"
 date: 2017-11-29 09:00:00 +0900
 author: kilho_kim
-categories: [computer-vision]
+categories: [introduction]
 tags: [pascal voc, classification, detection, segmentation]
 comments: true
 name: image-recognition-overview-1
