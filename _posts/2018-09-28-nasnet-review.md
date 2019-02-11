@@ -7,6 +7,7 @@ categories: [Review]
 tags: [automl, architecture-search]
 comments: true
 name: nasnet-review
+redirect_from: "/machine-learning/computer-vision/2018/09/28/nasnet-review.html"
 ---
 
 안녕하세요, 오늘은 최근 주목받고 있는 AutoML 관련 논문을 리뷰하려고 합니다. 

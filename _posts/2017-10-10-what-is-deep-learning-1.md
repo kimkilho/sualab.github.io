@@ -7,6 +7,7 @@ categories: [Introduction]
 tags: [deep learning, deep neural networks, representation learning]
 comments: true
 name: what-is-deep-learning-1
+redirect_from: "/machine-learning/2017/10/10/what-is-deep-learning-1.html"
 ---
 
 수아랩 리서치 블로그 두 번째 글의 주제는 '딥러닝이란 무엇인가?' 입니다. 오늘날의 AI(인공지능)를 가능하게 하는 기술이 '딥러닝'이라고들 하는데, 왜 수아랩 리서치 블로그에서 '머신러닝'부터 언급하고 '딥러닝'은 뒷전에 뒀는지 의아한 분들이 많으실 것으로 생각합니다. 이 글을 통해 그 궁금증을 풀어드리고자 합니다. 전체 글을 두 개의 포스팅으로 구분하여 게시하였습니다.

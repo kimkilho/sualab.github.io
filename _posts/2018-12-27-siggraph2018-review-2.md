@@ -7,6 +7,7 @@ categories: [Review]
 tags: [siggraph2018, visibility-metric]
 comments: true
 name: siggraph2018-review-2
+redirect_from: "/machine-learning/computer-vision/2018/12/27/siggraph2018-review-2.html"
 ---
 
 [(이전 포스팅 보기)]({{ page.url }}/../siggraph2018-review-1.html)

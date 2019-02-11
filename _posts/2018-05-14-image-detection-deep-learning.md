@@ -7,6 +7,7 @@ categories: [Practice]
 tags: [detection, yolov2, tensorflow]
 comments: true
 name: image-detection-deep-learning
+redirect_from: "/machine-learning/computer-vision/2018/05/14/image-detection-deep-learning.html"
 ---
 
 안녕하세요, 오랜만에 포스팅합니다. 이전 글인 Classification 문제에 이어 딥러닝을 적용하여 Detection 문제를 해결한 사례를 앞선 포스팅과 마찬가지로 **Tensorflow** 구현 코드와 함께 소개해드리겠습니다. 이미 많은 포스팅에서 **Detection**에 대한 설명과 그 중 한 방법론인 **YOLO(You Only Look Once)**의 개념 및 특징에 대해 훌륭한 설명이 많기 때문에 같은 설명을 반복하기 보다 개념적인 설명은 조금 뒤로하고 실제 구현 코드와 이를 뒷받침하는 설명을 중심으로 진행하도록 하겠습니다. 혹 설명이 부족하여 이해가 안되는 부분들 댓글달아주시면 답변드리겠습니다.

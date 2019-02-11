@@ -7,6 +7,7 @@ categories: [Introduction]
 tags: [pascal voc, classification, detection, segmentation]
 comments: true
 name: image-recognition-overview-1
+redirect_from: "/computer-vision/2017/11/29/image-recognition-overview-1.html"
 ---
 
 지난 번 글까지 해서 수아랩의 핵심 기술들 중 하나인 '딥러닝'에 대해 알아보았습니다. 오늘날 딥러닝 기술이 적용되고 있는 분야는 이미지 인식, 음성 인식, 자연어 처리 등 여러 가지가 있습니다. 오늘은 이러한 적용 분야들 중, 딥러닝의 위력을 가장 드라마틱하게 보여주고 있다고 할 수 있는 '이미지 인식' 분야에서 다루는 문제들을 정의하고, 이들의 주요 목표가 무엇인지, 모델의 예측 결과를 어떤 척도로 평가하는지 등에 대하여 살펴보고자 합니다. 우선 이미지 인식 분야에 대한 이해를 완벽하게 가져간 후에, 여기에 적용되는 딥러닝 기술에 대하여 추후에 자세히 살펴보도록 하겠습니다.

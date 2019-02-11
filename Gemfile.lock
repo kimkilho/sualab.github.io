@@ -246,6 +246,7 @@ DEPENDENCIES
   github-pages (= 193)
   jekyll (= 3.7.4)
   jekyll-feed
+  jekyll-redirect-from
   json
   minima
   tzinfo-data

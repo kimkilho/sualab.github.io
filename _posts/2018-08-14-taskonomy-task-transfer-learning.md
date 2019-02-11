@@ -7,6 +7,7 @@ categories: [Review]
 tags: [taskonomy, visual tasks, transfer learning]
 comments: true
 name: taskonomy-task-transfer-learning
+redirect_from: "/machine-learning/computer-vision/2018/08/14/taskonomy-task-transfer-learning.html"
 ---
 
 오늘날 딥러닝 분야에서 주요하게 연구되는 주제들 중 하나로 **transfer learning(전이 학습)**이 있습니다. 이는 어느 특정한 task(이하 source task; e.g. classification, detection, segmentation 등)에 대하여 학습된 딥러닝 모델을, 다른 task(이하 target task)로 '전이'하여 해당 모델을 사후적으로 학습하는 개념을 포괄합니다. 보통 특정한 task를 학습할 시 transfer learning 방법을 적용할 경우, 해당 task를 학습하기 위해 단순히 랜덤하게 초기화된 딥러닝 모델을 사용하는 것보다, 더 적은 양의 학습 데이터를 사용하면서 더 우수한 성능을 발휘하는 것으로 익히 알려져 왔습니다. 특히 딥러닝 기술이 적용되는 산업 현장에서는 학습 데이터를 구축하는 것 자체가 '비용'과 직결되기 때문에, 이 transfer learning의 연구 결과에 대해 지대한 관심을 가질 수밖에 없습니다.
