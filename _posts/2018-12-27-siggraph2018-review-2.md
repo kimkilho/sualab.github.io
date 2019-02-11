@@ -3,7 +3,7 @@ layout: post
 title: "SIGGRAPH 2018 리뷰: (2) 사람의 지각을 반영한 visibility metric 및 논문 4편 소개"
 date: 2018-12-27 14:00:00 +0900
 author: hoseong_lee
-categories: [review]
+categories: [Review]
 tags: [siggraph2018, visibility-metric]
 comments: true
 name: siggraph2018-review-2

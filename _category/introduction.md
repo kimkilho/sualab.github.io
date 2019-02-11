@@ -1,5 +1,5 @@
 ---
 layout: category
-category: introduction
+category: Introduction
 permalink: "/introduction"
 ---

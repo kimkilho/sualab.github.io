@@ -1,5 +1,5 @@
 ---
 layout: category
-category: review
+category: Review
 permalink: "/review"
 ---

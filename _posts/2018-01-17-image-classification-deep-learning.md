@@ -3,7 +3,7 @@ layout: post
 title: "이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양이 분류하기"
 date: 2018-01-17 09:00:00 +0900
 author: kilho_kim
-categories: [practice]
+categories: [Practice]
 tags: [classification, alexnet, tensorflow]
 comments: true
 name: image-classification-deep-learning

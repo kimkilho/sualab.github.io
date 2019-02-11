@@ -3,7 +3,7 @@ layout: post
 title: "Taskonomy: Disentangling Task Transfer Learning 리뷰"
 date: 2018-08-14 09:00:00 +0900
 author: kilho_kim
-categories: [review]
+categories: [Review]
 tags: [taskonomy, visual tasks, transfer learning]
 comments: true
 name: taskonomy-task-transfer-learning

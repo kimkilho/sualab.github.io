@@ -1,5 +1,5 @@
 ---
 layout: category
-category: practice
+category: Practice
 permalink: "/practice"
 ---

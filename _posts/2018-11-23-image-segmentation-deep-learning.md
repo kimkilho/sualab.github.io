@@ -3,7 +3,7 @@ layout: post
 title: "이미지 Segmentation 문제와 딥러닝: GCN으로 개 고양이 분류 및 분할하기"
 date: 2018-11-23 09:00:00 +0900
 author: jongsoo_keum
-categories: [practice]
+categories: [Practice]
 tags: [segmentation, GCN, tensorflow]
 comments: true
 name: image-segmentation-deep-learning

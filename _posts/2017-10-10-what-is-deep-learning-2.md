@@ -3,7 +3,7 @@ layout: post
 title: "딥러닝이란 무엇인가? (2)"
 date: 2017-10-10 10:00:00 +0900
 author: kilho_kim
-categories: [introduction]
+categories: [Introduction]
 tags: [deep learning, deep neural networks, representation learning]
 comments: true
 name: what-is-deep-learning-2
