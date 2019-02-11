@@ -1,5 +1,5 @@
 ---
 layout: category
 category: Review
-permalink: "/review"
+permalink: "/Review"
 ---

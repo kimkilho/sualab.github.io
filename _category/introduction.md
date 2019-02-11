@@ -1,5 +1,5 @@
 ---
 layout: category
 category: Introduction
-permalink: "/introduction"
+permalink: "/Introduction"
 ---
