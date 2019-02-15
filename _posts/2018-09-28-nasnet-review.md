@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Learning Transferable Architectures for Scalable Image Recognition 리뷰"
+title: "AutoML을 이용한 Architecture Search 소개 및 NASNet 논문 리뷰"
 date: 2018-09-28 17:00:00 +0900
 author: hoseong_lee
 categories: [Review]
