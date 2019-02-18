@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Bayesian Optimization 개요: 딥러닝 모델의 효과적인 hyperparameter 탐색 방법론 (1)"
-date: 2019-02-15 09:00:00 +0900
+date: 2019-02-19 09:00:00 +0900
 author: kilho_kim
-categories: [machine-learning, computer-vision]
+categories: [Introduction, Practice]
 tags: [bayesian optimization, hyperparameter optimization, gaussian process]
 comments: true
 name: bayesian-optimization-overview-1
@@ -15,16 +15,14 @@ name: bayesian-optimization-overview-1
 2. Architecture Search
 3. Hyperparameter Optimization
 
-본 글에서는, 위 연구 방향들 중 3번째 항목인 'Hyperparameter Optimization'에 대해 소개해 드리고, 딥러닝 분야에서의 Hyperparameter Optimization을 위한 주요 방법론들에 대한 대략적인 설명과 더불어, '학습'의 관점에서 최적의 hyperparameter를 탐색하기 위한 방법 중 하나인 'Bayesian Optimization'에 대하여 안내해 드리고자 합니다. 그리고, Bayesian Optimization을 위한 Python 라이브러리 중 하나인 <a href="https://github.com/fmfn/BayesianOptimization" target="_blank">bayesian-optimization</a>을 소개해 드리고, 실제로 이를 사용하여 이미지 Classification을 위한 딥러닝 모델의 주요 hyperparameter들의 최적값을 찾는 과정을 안내해 드리고자 합니다. 
+본 글에서는, 위 연구 방향들 중 3번째 항목인 'Hyperparameter Optimization'에 대해 소개해 드리고, 딥러닝 분야에서의 Hyperparameter Optimization을 위한 주요 방법론들에 대한 대략적인 설명과 더불어, '학습'의 관점에서 최적의 hyperparameter를 탐색하기 위한 방법 중 하나인 'Bayesian Optimization'에 대하여 안내해 드리고자 합니다.
 
 - **주의: 본 글은 아래와 같은 분들을 대상으로 합니다.**
   - 딥러닝 알고리즘의 기본 구동 원리 및 정규화(regularization) 등의 테크닉에 대한 기초적인 내용들을 이해하고 계신 분들
   - Python 언어 및 TensorFlow의 기본적인 사용법을 알고 계신 분들
 - 본 글의 목적은, 독자 여러분들로 하여금 Bayesian Optimization에 대한 깊은 이해를 유도하는 것이 아니라, **Bayesian Optimization에 대한 기초적인 이해만을 가지고 이를 딥러닝 모델의 Hyperparameter Optimization에 원활하게 적용할 수 있도록 하는 것**입니다. 이에 따라 본 글에서는 Bayesian Optimization의 대략적인 원리를 설명하는 단계에서 딥러닝 외적인 수학적 내용들에 대한 언급은 가급적 피하고자 하였으나, 최소한의 설명을 위해 수학적 내용이 약간은 등장할 수 있음을 양지해 주시길 바랍니다.
-- 본문에서는 지난 <a href="{{ site.url }}/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">\<이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양이 분류하기\></a> 글에서 사용했던 AlexNet 구현체를 그대로 가져와서, 딥러닝 모델 학습과 관련된 최적의 hyperparameter를 탐색하는 과정에 대해서만 bayesian-optimization 라이브러리를 사용하는 방법을 중심으로 설명합니다. 본문을 따라 구현체를 작성하고 시험적으로 구동해 보고자 하시는 분들은, 아래 사항들을 참조해 주십시오.
-	- 만일 \<이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양이 분류하기\> 글을 읽어보지 않으셨다면, 먼저 <a href="{{ site.url }}/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">해당 글</a>을 읽어보시면서 AlexNet 구현체 및 개vs고양이 분류 데이터셋에 대한 준비를 미리 완료해 주시길 바랍니다.
-  - 본 글에서 최적 hyperparameter 탐색을 수행하는 전체 구현체 코드는 *TODO: 링크 명시* 수아랩의 GitHub 저장소에서 자유롭게 확인하실 수 있습니다.
-    - 전체 구현체 코드 원본에는 모든 주석이 (일반적인 관습에 맞춰) 영문으로 작성되어 있으나, 본 글에서는 원활한 설명을 위해 이들을 한국어로 번역하였습니다.
+- 본 글의 2편에서는, Bayesian Optimization을 위한 Python 라이브러리 중 하나인 <a href="https://github.com/fmfn/BayesianOptimization" target="_blank">bayesian-optimization</a>을 소개해 드리고, 실제로 이를 사용하여 이미지 Classification을 위한 딥러닝 모델의 주요 hyperparameter들의 최적값을 찾는 과정을 안내해 드릴 것입니다. 본 1편의 내용을 잘 이해하실 수 있다면, 2편에서의 과정을 무리 없이 수행하실 수 있을 것이라고 기대합니다.
+
 
 ## 서론 
 
@@ -44,7 +42,7 @@ Manual Search는 Hyperparameter Optimization을 위한 가장 직관적인 방�
 
 {% include image.html name=page.name file="unluck-in-manual-search-process.gif" description="학습률에 대한 Manual Search 과정에서의 불운한 결과 예시" class="full-image" %}
 
-여러분이 제한된 시간 안에 $$0.001$$, $$0.005$$, $$0.003$$, $$0.002$$, $$0.0035$$, $$0.0025$$까지 총 6가지 학습률 값을 순서대로 적용하여 딥러닝 모델을 학습하고 그 성능을 측정한 결과가 위 그림의 상단 결과와 같이 나왔고, 이에 따라 $$0.0025$$를 최종 학습률 값으로 채택하였다고 가정해 보겠습니다. 이 탐색 과정은 나름의 직관을 적용해서 매 학습 때마다 조심스럽게 진행한 것일 거고, 사람의 심리 상 이렇게 심혈을 기울인 과정을 통해 얻은 결과가 최선의 결과임을 부정하기는 대단히 힘들 것입니다.
+여러분이 제한된 시간 안에 $$0.01$$, $$0.05$$, $$0.03$$, $$0.02$$, $$0.025$$, $$0.0225$$, $$0.0275$$, $$0.015$$, $$0.04$$까지 총 9가지 학습률 값을 순서대로 적용하여 딥러닝 모델을 학습하고 그 성능을 측정한 결과가 위 그림의 상단 결과와 같이 나왔고, 이에 따라 $$0.0025$$를 최종 학습률 값으로 채택하였다고 가정해 보겠습니다. 이 탐색 과정은 나름의 직관을 적용해서 매 학습 때마다 조심스럽게 진행한 것일 거고, 사람의 심리 상 이렇게 심혈을 기울인 과정을 통해 얻은 결과가 최선의 결과임을 부정하기는 대단히 힘들 것입니다.
 
 그러나 실제로 '학습률에 따른 (미지의) 일반화 성능 함수'가 그 바로 하단과 같았다면 어떨까요? 실제로는 $$0.0025$$가 최적의 학습률 값이 아니었음에도 불구하고($$0.003$$과 $$0.0035$$ 사이의 값이 최적), 기존의 수동적인 탐색 과정에서 여러분의 조급함과 편견으로 인해 아쉬운 결과가 얻어진 것이라고 추측해볼 수 있습니다. 본의 아니게 여러분이 과거에 행하셨을 법한 과오를 지적한(?) 꼴이 됐지만, 이건 비단 여러분의 책임만은 아닙니다. 주관과 직관에 기반한 Manual Search를 진행할 경우, 위 사례에서 보여진 것처럼, 여러분들이 찾은 최적 hyperparameter 값이 '실제로도' 최적이라는 사실을 보장하기가 상대적으로 어렵다는 단점이 있습니다.
 
@@ -65,11 +63,15 @@ Manual Search에 비해, Grid Search와 Random Search는 상대적으로 체계�
 
 **Grid Search**는 탐색의 대상이 되는 특정 구간 내의 후보 hyperparameter 값들을 일정한 간격을 두고 선정하여, 이들 각각에 대하여 측정한 성능 결과를 기록한 뒤, 가장 높은 성능을 발휘했던 hyperparameter 값을 선정하는 방법입니다. 전체 탐색 대상 구간을 어떻게 설정할지, 간격의 길이는 어떻게 설정할지 등을 결정하는 데 있어 여전히 사람의 손이 필요하나, 앞선 Manual Search와 비교하면 좀 더 균등하고 전역적인 탐색이 가능하다는 장점이 있습니다. 반면 탐색 대상 hyperparameter의 개수를 한 번에 여러 종류로 가져갈수록, 전체 탐색 시간이 기하급수적으로 증가한다는 단점이 있습니다.
 
-{% include image.html name=page.name file="grid-search-vs-random-search.png" description="Grid Search 결과와 Random Search 결과 비교 예시<br><small>\[Bergstra and Bengio(2012)\]</small>" class="full-image" %}
+{% include image.html name=page.name file="grid-search-process.gif" description="학습률에 대한 Grid Search 과정 예시" class="full-image" %}
 
 반면 **Random Search**는 Grid Search와 큰 맥락은 유사하나, 탐색 대상 구간 내의 후보 hyperparameter 값들을 랜덤 샘플링(sampling)을 통해 선정한다는 점이 다릅니다. Random Search는 Grid Search에 비해 불필요한 반복 수행 횟수를 대폭 줄이면서, 동시에 정해진 간격(grid) 사이에 위치한 값들에 대해서도 확률적으로 탐색이 가능하므로, 최적 hyperparameter 값을 더 빨리 찾을 수 있는 것으로 알려져 있습니다. 
 
-그럼에도 불구하고, Random Search도 '여전히 약간의 불필요한 탐색을 반복하는 것 같다'는 느낌을 지우기 어려우실 것이라고 생각합니다. 왜냐하면 Grid Search와 Random Search 모두, 바로 다음 번 시도할 후보 hyperparameter 값을 선정하는 과정에서, 이전까지의 조사 과정에서 얻어진 hyperparameter 값들의 성능 결과에 대한 '사전 지식'이 전혀 반영되지 않았기 때문입니다(반면 Manual Search 과정에서는 사전 지식이 매 차례마다 여러분들의 은연 중에 잘 반영된 바 있습니다). 
+{% include image.html name=page.name file="random-search-process.gif" description="학습률에 대한 Random Search 과정 예시<br><small>(구간 $$[0.01, 0.05)$$에서 Python의 random.random 함수 10회 실행 결과; random.seed=0)</small>" class="full-image" %}
+
+그럼에도 불구하고, Random Search도 '여전히 약간의 불필요한 탐색을 반복하는 것 같다'는 느낌을 지우기 어려우실 것이라고 생각합니다. 왜냐하면 Grid Search와 Random Search 모두, 바로 다음 번 시도할 후보 hyperparameter 값을 선정하는 과정에서, 이전까지의 조사 과정에서 얻어진 hyperparameter 값들의 성능 결과에 대한 '사전 지식'이 전혀 반영되어 있지 않기 때문입니다(반면 Manual Search 과정에서는 사전 지식이 매 차례마다 여러분들의 은연 중에 반영된 바 있습니다). 
+
+{% include image.html name=page.name file="grid-search-vs-random-search.png" description="Grid Search 결과와 Random Search 결과 비교 예시<br><small>\[Bergstra and Bengio(2012)\]</small>" class="full-image" %}
 
 매 회 새로운 hyperparameter 값에 대한 조사를 수행할 시 '사전 지식'을 충분히 반영하면서, 동시에 전체적인 탐색 과정을 체계적으로 수행할 수 있는 방법론으로, Bayesian Optimization을 들 수 있습니다.
 
@@ -78,11 +80,9 @@ Manual Search에 비해, Grid Search와 Random Search는 상대적으로 체계�
 
 **Bayesian Optimization**은 본래, 어느 입력값 $$x$$를 받는 미지의 목적 함수(objective function) $$f$$를 상정하여, 그 함숫값 $$f(x)$$를 최대로 만드는 최적해 $$x^{*}$$를 찾는 것을 목적으로 합니다. 보통은 목적 함수의 표현식을 명시적으로 알지 못하면서(i.e. black-box function), 하나의 함숫값 $$f(x)$$를 계산하는 데 오랜 시간이 소요되는 경우를 가정합니다. 이러한 상황에서, 가능한 한 적은 수의 입력값 후보들에 대해서만 그 함숫값을 순차적으로 조사하여, $$f(x)$$를 최대로 만드는 최적해 $$x^{*}$$를 *빠르고 효과적으로* 찾는 것이 주요 목표라고 할 수 있습니다. 
 
-이 때, 입력값 $$x$$를 '딥러닝 모델의 hyperparameter', 목적 함수의 함숫값 $$f(x)$$를 '해당 hyperparameter에 대한 딥러닝 모델의 성능 결과'로 간주하면, Bayesian Optimization 방법을 Hyperparameter Optimization에 그대로 적용할 수 있습니다. 이전까지의 조사 과정에서 얻어진 hyperparameter 값들의 성능 결과에 대한 '사전 지식'을 반영하여, 최종적으로 '최적 hyperparameter 값을 찾는 데 있어 가장 유용한 정보'를 가져다 줄 만한 hyperparameter 값 후보를 바로 다음 차례에 시도하는 것이, 전체 과정의 핵심이라고 할 수 있습니다. 이는 여러분이 은연 중에 수행했던 Manual Search 과정을 체계적으로 자동화한 것에 해당한다고 볼 수 있습니다.
-
 Bayesian Optimization에는 두 가지 필수 요소가 존재합니다. 먼저 **Surrogate Model**은, 현재까지 조사된 입력값-함숫값 점들 $$(x_1, f(x_1)), ..., (x_t, f(x_t))$$를 바탕으로, 미지의 목적 함수의 형태에 대한 확률적인 추정을 수행하는 모델을 지칭합니다. 그리고 **Acquisition Function**은, 목적 함수에 대한 현재까지의 확률적 추정 결과를 바탕으로, '최적 입력값 $$x^{*}$$를 찾는 데 있어 가장 유용할 만한' 다음 입력값 후보 $$x_{t+1}$$을 추천해 주는 함수를 지칭합니다.
 
-*TODO: Bayesian Optimization의 의사 코드(pseudo-code)*
+{% include image.html name=page.name file="bayesian-optimization-algorithm.png" description="Bayesian Optimization 알고리즘의 의사 코드(pseudo-code)" class="full-image" %}
 
 
 ### Surrogate Model
@@ -109,7 +109,7 @@ GP를 제대로 이해하고 사용하려면 베이지안 확률론(Bayesian pro
 
 #### GP 외의 Surrogate Models
 
-GP 외에도, 현재까지 조사된 입력값-함숫값 점들을 바탕으로 목적 함수 추정에 있어서의 '불확실성'을 커버할 수 있는 모델은 Surrogate Model로써 활용이 가능합니다. GP 외에 많이 사용되는 Surrogate model로는 Tree-structured Parzen Estimators(TPE), Random Forests, Deep Neural Networks 등이 있습니다. 
+GP 외에도, 현재까지 조사된 입력값-함숫값 점들을 바탕으로 목적 함수 추정에 있어서의 '불확실성'을 커버할 수 있는 모델은 Surrogate Model로써 활용이 가능합니다. GP 외에 많이 사용되는 Surrogate model로는 Tree-structured Parzen Estimators(TPE), Deep Neural Networks 등이 있습니다. 
 
 GP와 동일한 맥락에서, 이들 Surrogate Model들에 대한 깊은 이해가 없더라도, Bayesian Optimization의 큰 맥락을 이해하고 있다면 이와 관련된 라이브러리를 사용하여 Bayesian Optimization을 충분히 수행할 수 있습니다.
 
@@ -130,7 +130,7 @@ Exploration 전략과 exploitation 전략 모두, 최적 입력값 $$x^{*}$$를 
 
 **Expected Improvement(이하 EI)** 함수는 이러한 exploration 전략 및 exploitation 전략 모두를 내재적으로 일정 수준 포함하도록 설계된 것으로, Acquisition Function으로 가장 많이 사용됩니다. EI는 현재까지 추정된 목적 함수를 바탕으로, 어느 후보 입력값 $$x$$에 대하여 '현재까지 조사된 점들의 함숫값 $$f(x_1), ..., f(x_t)$$ 중 최대 함숫값 $$f(x^{+}) = \max_{i} f(x_i)$$보다 더 큰 함숫값을 도출할 확률(Probability of Improvement; 이하 *PI*)' 및 '그 함숫값과 $$f(x^{+})$$ 간의 *차이값*(magnitude)'을 종합적으로 고려하여, 해당 입력값 $$x$$의 '유용성'을 나타내는 숫자를 출력합니다. 이 때, PI의 개념을 이해해 보기 위해 아래 그림을 살펴보도록 하겠습니다.
 
-{% include image.html name=page.name file="probability-of-improvement-in-gaussian-process-example.png" description="'최대 함숫값 $$f(x^{+})$$보다 더 큰 함숫값을 도출할 확률(PI)'에 대한 시각화 예시<br><small>(세로 방향 점선: 입력값 $$x_1$$, $$x_2$$, $$x_3$$에서의 함숫값 $$f(x_1)$$, $$f(x_2)$$, $$f(x_3)$$ 각각에 대한 확률 분포, <br>초록색 음영: $$f(x_3)$$의 확률 분포 상에서, 그 값이 $$f(x^{+})$$보다 큰 영역)<br>[Brochu et al.(2010)]</small>" class="large-image" %}
+{% include image.html name=page.name file="probability-of-improvement-in-gaussian-process-example.png" description="GP 사용 시, '최대 함숫값 $$f(x^{+})$$보다 더 큰 함숫값을 도출할 확률(PI)'에 대한 시각화 예시<br><small>(세로 방향 점선: 입력값 $$x_1$$, $$x_2$$, $$x_3$$에서의 함숫값 $$f(x_1)$$, $$f(x_2)$$, $$f(x_3)$$ 각각에 대한 확률 분포, <br>초록색 음영: $$f(x_3)$$의 확률 분포 상에서, 그 값이 $$f(x^{+})$$보다 큰 영역)<br>[Brochu et al.(2010)]</small>" class="large-image" %}
 
 위 그림에서 현재까지 조사된 점들의 함숫값 중 최대 함숫값 $$f(x^{+})$$는 맨 오른쪽에 위치한 점에서 발생하였습니다. 이 때, 그보다 더 오른쪽에 위치한 후보 입력값 $$x_3$$에 대하여, 확률적 추정 결과에 의거하여 $$f(x_3)$$의 (세로축 값에 따른) 확률 분포를 그림과 같이 기울어진 가우시안 분포 형태로 나타내 볼 수 있습니다. 
 
@@ -138,7 +138,7 @@ Exploration 전략과 exploitation 전략 모두, 최적 입력값 $$x^{*}$$를 
 
 이렇게 입력값 $$x_3$$에 대하여 계산한 PI 값에, 함숫값 $$f(x_3)$$에 대한 평균 $$\mu(x_3)$$과 $$f(x^{+})$$ 간의 차이값 $$f(x_3)-f(x^{+})$$만큼을 가중하여, $$x_3$$에 대한 EI 값을 최종적으로 계산합니다. '기존 점들보다 더 큰 함숫값을 얻을 가능성이 높은 점을 찾는 것'도 중요하지만, '**그러한 가능성이 존재한다면, 실제로 그 값이 얼마나 더 큰가**'도 중요한 고려 대상이기 때문에, 이를 반영하기 위한 계산 방식이라고 이해하면 되겠습니다.
 
-참고용으로, EI의 계산식을 구체적으로 정리하면 아래와 같습니다. 아래 식에서 $$\Phi$$와 $$\phi$$는 각각 표준정규분포의 누적분포함수(CDF)와 확률분포함수(PDF)를 나타내며, $$\xi$$는 exploration과 exploitation 간의 상대적 강도를 조절해 주는 파라미터입니다.
+참고용으로, GP를 사용할 시의 EI의 계산식을 정리하여 표현하면 (<a href="http://ash-aldujaili.github.io/blog/2018/02/01/ei/" target="_blank">긴 유도 과정</a>을 거쳐) 아래와 같이 나옵니다. 아래 식에서 $$\Phi$$와 $$\phi$$는 각각 표준정규분포의 누적분포함수(CDF)와 확률분포함수(PDF)를 나타내며, $$\xi$$는 exploration과 exploitation 간의 상대적 강도를 조절해 주는 파라미터입니다. $$\xi$$를 크게 잡을수록 exploration의 강도가 높아지고, 작게 잡을수록 exploitation의 강도가 높아집니다.
 
 $$
 \begin{align}
@@ -159,7 +159,7 @@ Z =
 \end{cases}
 $$
 
-GP를 사용한 목적 함수 추정 과정의 $$t=4$$일 때의 상황에서, 각 입력값 $$x$$ 별 EI의 값 $$EI(x)$$를 계산한 결과를 도시하면, 아래 그림의 하단에 있는 초록색 실선과 같이 나타납니다. 
+앞서 GP를 사용한 목적 함수 추정 과정의 $$t=4$$일 때의 상황에서, 상기 EI 계산식을 그대로 사용하여 각 입력값 $$x$$ 별 EI의 값 $$EI(x)$$를 계산한 결과를 도시하면, 아래 그림의 하단에 있는 초록색 실선과 같이 나타납니다. 
 
 {% include image.html name=page.name file="bayesian-optimization-procedure-example-teq4.png" description="GP를 사용한 Bayesian Optimization 진행 과정 중 $$t=4$$일 때의 상황" class="full-image" %}
 
@@ -172,30 +172,39 @@ EI보다 이른 시기에 먼저 제안되었으면서, EI의 고려 대상들 �
 
 ## 딥러닝 모델의 hyperparameter 탐색을 위한 Bayesian Optimization 수행 과정
 
-지금까지 Bayesian Optimization의 필수 요소 및 이들의 기본적인 작동 방식을 파악해 보았습니다. 이제 실제로 딥러닝 모델의 hyperparameter를 탐색할 시 Bayesian Optimization이 적용되는 시나리오에 대하여 좀 더 구체적으로 가시화하여 보여 드리도록 하겠습니다. 설명의 편의를 위해 학습률(learning rate) 하나만을 탐색 대상 hyperparameter로 놓고 서술하였습니다.
+지금까지 Bayesian Optimization의 필수 요소 및 이들의 기본적인 작동 방식을 파악해 보았습니다. 이제 실제로 딥러닝 모델의 hyperparameter를 탐색할 시 Bayesian Optimization이 적용되는 시나리오에 대하여 좀 더 구체적으로 가시화하여 보여 드리도록 하겠습니다. 설명의 편의를 위해, 여기에서는 학습률(learning rate) 하나만을 탐색 대상 hyperparameter로 놓고 서술하였습니다.
 
-*TODO: 아래 과정을 나타내는 gif 그림 추가*
+{% include image.html name=page.name file="bayesian-optimization-process.gif" description="학습률에 대한 Bayesian Optimization(GP, EI) 과정 예시<br><small>(구간 $$[0.01, 0.09]$$에서 최초 3개($$n=3$$), 총 11개($$N=11$$)의 점에 대한 반복 조사 결과;<br>상단: 목적 함수 $$f(x)$$에 대한 GP의 확률적 추정 결과, 하단: 확률적 추정 결과에 대한 EI 함수 계산 결과;<br>*bayesian-optimization* 라이브러리 사용, random_seed=1)</small>" class="full-image" %}
 
-1. 입력값, 목적 함수 및 그 외 설정값들을 정의함.
+1. 입력값, 목적 함수 및 그 외 설정값들을 정의합니다.
   - 입력값 $$x$$: 학습률
   - 목적 함수 $$f(x)$$: 설정한 학습률을 적용하여 학습한 딥러닝 모델의 검증 데이터셋에 대한 성능 결과 수치(e.g. 정확도)
-  - 입력값 $$x$$의 탐색 대상 구간을 설정함: $$(a, b)$$.
+  - 입력값 $$x$$의 탐색 대상 구간: $$(a, b)$$.
   - 맨 처음에 조사할 입력값-함숫값 점들의 갯수: $$n$$
-  - 조사할 입력값-함숫값 점들의 최대 갯수: $$N$$
-2. 구간 $$(a, b)$$ 내에서 처음 $$n$$개의 입력값을 랜덤하게 샘플링함.
-3. 선택한 $$n$$개의 입력값 $$x_1, x_2, ..., x_n$$을 각각 학습률 값으로 설정하여 딥러닝 모델을 학습한 뒤, 검증 데이터셋을 사용하여 학습이 완료된 모델의 성능 결과 수치를 계산하고 이들을 각각 $$f(x_1), f(x_2), ..., f(x_n)$$ 값으로 간주함.
-4. 조사된 입력값-함숫값 점들이 총 $$N$$개에 도달할 때까지, 아래의 과정을 반복적으로 수행함($$t=n, n+1, ..., N$$). 조사된 점들의 갯수가 $$N$$개에 도달한 순간, GP를 사용한 확률적 추정까지만 수행하고, 나머지 과정을 중단함.
-    - 현재까지 조사된 입력값-함숫값 점들 $$(x_1, f(x_1)), (x_2, f(x_2)), ..., (x_t, f(x_t))$$을 바탕으로, GP를 사용하여 미지의 목적 함수에 대한 확률적인 추정을 수행함.
-    - 확률적 추정 결과에 대하여, 입력값 구간 $$(a, b)$$ 내에서 EI의 값을 계산하고, 그 값이 가장 큰 점을 다음 입력값 후보 $$x_{t+1}$$로 선정함.
-    - 다음 입력값 후보 $$x_{t+1}$$을 학습률 값으로 설정하여 딥러닝 모델을 학습한 뒤, 검증 데이터셋을 사용하여 학습이 완료된 모델의 성능 결과 수치를 계산하고 이를 $$f(x_{t+1})$$ 값으로 간주하고, 새로운 점 $$(x_{t+1}, f(x_{t+1}))$$을 기존 입력값-함숫값 점들의 모음에 추가함.
-5. 총 $$N$$개의 입력값-함숫값 점들로 추정된 목적 함수 결과물을 바탕으로, 평균 $$\mu(x)$$을 최대로 만드는 최적해 $$x^{*}$$를 최종 선택함.
+  - 맨 마지막 차례까지 조사할 입력값-함숫값 점들의 최대 갯수: $$N$$
+2. 설정한 탐색 대상 구간 $$(a, b)$$ 내에서 처음 $$n$$개의 입력값들을 랜덤하게 샘플링하여 선택합니다.
+3. 선택한 $$n$$개의 입력값 $$x_1, x_2, ..., x_n$$을 각각 학습률 값으로 설정하여 딥러닝 모델을 학습한 뒤, 검증 데이터셋을 사용하여 학습이 완료된 모델의 성능 결과 수치를 계산합니다. 이들을 각각 함숫값 $$f(x_1), f(x_2), ..., f(x_n)$$으로 간주합니다.
+4. 입력값-함숫값 점들의 모음 $$(x_1, f(x_1)), (x_2, f(x_2)), ..., (x_n, f(x_n))$$에 대하여 Surrogate Model로 확률적 추정을 수행합니다.
+5. 조사된 입력값-함숫값 점들이 총 $$N$$개에 도달할 때까지, 아래의 과정을 $$t=n, n+1, ..., N-1$$에 대하여 반복적으로 수행합니다.
+    - 기존 입력값-함숫값 점들의 모음 $$(x_1, f(x_1)), (x_2, f(x_2)), ..., (x_t, f(x_t))$$에 대한 Surrogate Model의 확률적 추정 결과를 바탕으로, 입력값 구간 $$(a, b)$$ 내에서의 EI의 값을 계산하고, 그 값이 가장 큰 점을 다음 입력값 후보 $$x_{t+1}$$로 선정합니다.
+    - 다음 입력값 후보 $$x_{t+1}$$을 학습률 값으로 설정하여 딥러닝 모델을 학습한 뒤, 검증 데이터셋을 사용하여 학습이 완료된 모델의 성능 결과 수치를 계산하고 이를 $$f(x_{t+1})$$ 값으로 간주합니다.
+    - 새로운 점 $$(x_{t+1}, f(x_{t+1}))$$을 기존 입력값-함숫값 점들의 모음에 추가하고, 갱신된 점들의 모음에 대하여 Surrogate Model로 확률적 추정을 다시 수행합니다.
+6. 총 $$N$$개의 입력값-함숫값 점들에 대하여 확률적으로 추정된 목적 함수 결과물을 바탕으로, 평균 함수 $$\mu(x)$$을 최대로 만드는 최적해 $$x^{*}$$를 최종 선택합니다. 추후 해당 $$x^{*}$$ 값을 학습률로 사용하여 딥러닝 모델을 학습하면, 일반화 성능이 극대화된 모델을 얻을 수 있습니다.
 
 
 ## 결론
 
-\*다음 회에서는, 지금까지의 이해를 바탕으로 하여 실제 Bayesian Optimization을 위한 Python 라이브러리인 bayesian-optimization을 사용하여 간단한 예시 함수의 최적해를 탐색하는 과정을 먼저 소개하고, 실제 딥러닝 모델의 hyperparameter 탐색 과정을 여러분들께 안내해 드리고자 합니다.
+딥러닝에서의 Hyperparameter Optimization이란, 딥러닝 모델의 학습을 수행하기 위해 사전에 설정해야 하는 값인 hyperparameter(하이퍼파라미터)의 최적값을 탐색하는 문제를 지칭합니다. 딥러닝 모델 학습 시의 대표적인 hyperparameter들로는 학습률(learning rate), 미니배치 크기(minibatch size), L2 정규화 계수(L2 regularization coefficient) 등이 있습니다.
 
-(다음 포스팅 보기: COMING SOON)
+Hyperparameter Optimization을 위한 가장 단순하고 직관적인 방법으로, 매 회차에 시도할 후보 hyperparameter 값을 주관적으로 선정하고, 이를 사용하여 학습을 수행한 후 검증 데이터셋에 대하여 측정한 성능 결과를 기록하는 과정을 반복하는 Manual Search가 흔히 사용됩니다. 이 방법은 최적 hyperparameter를 찾는 과정 상에서 은연 중에 발생하는 실험자의 편견으로 인해, 실제로도 최적인 hyperparamter 값을 찾기가 상대적으로 어렵다는 등의 단점이 있습니다. 이러한 Manual Search의 단점을 보완해줄 수 있는 체계적인 방법으로 Grid Search와 Random Search 등이 있으나, 이들 또한 hyperparameter 조사 과정에서 얻은 '사전 지식'을 전혀 반영하지 못한다는 한계가 존재합니다.
+
+Bayesian Optimization은, 매 회 새로운 hyperparameter 값에 대한 조사를 수행할 시 '사전 지식'을 충분히 반영하면서, 동시에 전체적인 탐색 과정을 좀 더 체계적으로 수행하기 위해 고려해볼 수 있는 Hyperparameter Optimization 방법론입니다. Bayesian Optimization의 두 구성 요소 중 하나인 Surrogate Model은, 현재까지 조사된 입력값-함숫값 점들을 바탕으로, 어느 미지의 목적 함수에 대한 확률적인 추정을 수행하는 모델을 지칭하며, Gaussian Process(GP)가 대표적입니다. 한편 또 다른 하나인 Acquisition Function은, 목적 함수에 대한 현재까지의 확률적 추정 결과를 바탕으로, '최적 입력값을 찾는 데 있어 가장 유용할 만한' 다음 입력값 후보를 추천해 주는 함수를 지칭하며, Expected Improvement(EI)가 대표적입니다.
+
+Bayesian Optimization의 입력값으로 '최적값을 탐색할 hyperparameter'를, 목적 함수의 함숫값으로 '특정 hyperparameter 값을 적용하여 학습한 딥러닝 모델의 검증 데이터셋에 대한 성능 결과 수치'를 적용하면, 딥러닝 모델의 Hyperparameter Optimization을 위해 Bayesian Optimization을 활용해볼 수 있습니다.
+
+\*다음 편에서는 지금까지의 이해를 바탕으로, 실제 Bayesian Optimization을 위한 Python 라이브러리인 *bayesian-optimization*을 사용하여 간단한 예시 함수의 최적해를 탐색하는 과정을 먼저 소개하고, 실제 딥러닝 모델의 최적 hyperparameter를 탐색하는 과정을 여러분들께 안내해 드리고자 합니다.
+
+(다음 포스팅 보기 - COMING SOON)
 
 
 ## References
@@ -212,3 +221,5 @@ EI보다 이른 시기에 먼저 제안되었으면서, EI의 고려 대상들 �
     - <a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf" target="_blank">Bergstra, James, and Yoshua Bengio. "Random search for hyper-parameter optimization." Journal of Machine Learning Research 13.Feb (2012): 281-305.</a>
 - Fernando Nogueira, bayesian-optimization: A Python implementation of global optimization with gaussian processes.
     - <a href="https://github.com/fmfn/BayesianOptimization" target="_blank">https://github.com/fmfn/BayesianOptimization</a>
+- Hunting Optima, Expected Improvement for Bayesian Optimization: A Derivation.
+    - <a href="http://ash-aldujaili.github.io/blog/2018/02/01/ei/" target="_blank">http://ash-aldujaili.github.io/blog/2018/02/01/ei/</a>
