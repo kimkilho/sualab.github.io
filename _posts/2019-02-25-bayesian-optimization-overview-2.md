@@ -16,7 +16,7 @@ name: bayesian-optimization-overview-2
 - **주의: 본 글은 아래와 같은 분들을 대상으로 합니다.**
   - 딥러닝 알고리즘의 기본 구동 원리 및 정규화(regularization) 등의 테크닉에 대한 기초적인 내용들을 이해하고 계신 분들
   - Python 언어 및 TensorFlow의 기본적인 사용법을 알고 계신 분들
-- 본 글의 중반부에 소개된, 예시 목적 함수에 대한 최적해를 탐색하는 과정은 *\<TODO: 링크 명시\>*여기에서 확인하실 수 있습니다.
+- 본 글의 중반부에 소개된, 예시 목적 함수에 대한 최적해를 탐색하는 과정은 <a href="https://github.com/sualab/sualab.github.io/blob/master/assets/notebooks/{{ page.name }}.ipynb" target="_blank">여기</a>에서 확인하실 수 있습니다.
 - 본 글의 후반부에서는 지난 <a href="{{ site.url }}/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">\<이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양이 분류하기\></a> 글에서 사용했던 AlexNet 구현체를 그대로 가져와서, 딥러닝 모델 학습과 관련된 최적의 hyperparameter를 탐색하는 과정에 대해서만 *bayesian-optimization* 라이브러리를 사용하는 방법을 중심으로 설명합니다. 본문을 따라 구현체를 작성하고 시험적으로 구동해 보고자 하시는 분들은, 아래 사항들을 참조해 주십시오.
 	- 만일 \<이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양이 분류하기\> 글을 읽어보지 않으셨다면, 먼저 해당 글을 읽어보시면서 AlexNet 구현체 및 개vs고양이 분류 데이터셋에 대한 준비를 미리 완료해 주시길 바랍니다.
   - 본 글에서 최적 hyperparameter 탐색을 수행하는 전체 구현체 코드는 <a href="https://github.com/sualab/asirra-dogs-cats-classification" target="_blank">수아랩의 GitHub 저장소</a>에서 자유롭게 확인하실 수 있습니다.
