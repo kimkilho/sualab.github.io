@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Bayesian Optimization 개요: 딥러닝 모델의 효과적인 hyperparameter 탐색 방법론 (2)"
-date: 2019-03-29 09:00:00 +0900
+date: 2019-04-01 09:00:00 +0900
 author: kilho_kim
 categories: [Introduction, Practice]
 tags: [bayesian optimization, hyperparameter optimization, gaussian process]
