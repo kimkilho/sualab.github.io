@@ -9,7 +9,7 @@ comments: true
 name: bayesian-optimization-overview-2
 ---
 
-[(이전 포스팅 보기)]({{ page.url }}/../bayesian-optimization-overview-2.html)
+[(이전 포스팅 보기)]({{ page.url }}/../bayesian-optimization-overview-1.html)
 
 지난 글에서 딥러닝 모델의 Hyperparamter Optimization을 위한 Bayesian Optimization 방법론의 대략적인 원리 및 행동 방식에 대한 설명을 드렸습니다. 이번 글에서는 실제 Bayesian Optimization을 위한 Python 라이브러리인 *bayesian-optimization*을 사용하여, 간단한 예시 목적 함수의 최적해를 탐색하는 과정을 먼저 소개하고, 실제 딥러닝 모델의 최적 hyperparameter를 탐색하는 과정을 안내해 드리도록 하겠습니다.
 
