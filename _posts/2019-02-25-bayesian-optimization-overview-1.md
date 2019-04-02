@@ -204,7 +204,7 @@ Bayesian Optimization의 입력값으로 '최적값을 탐색할 hyperparameter'
 
 \*다음 편에서는 지금까지의 이해를 바탕으로, 실제 Bayesian Optimization을 위한 Python 라이브러리인 *bayesian-optimization*을 사용하여 간단한 예시 함수의 최적해를 탐색하는 과정을 먼저 소개하고, 실제 딥러닝 모델의 최적 hyperparameter를 탐색하는 과정을 여러분들께 안내해 드리고자 합니다.
 
-[(다음 포스팅 보기)]({{ page.url }}/../bayesian-optimization-overview-2.html)
+[(다음 포스팅 보기)]({{ site.url }}/introduction/practice/2019/04/01/bayesian-optimization-overview-2.html)
 
 
 ## References
