@@ -9,7 +9,7 @@ comments: true
 name: generative-adversarial-network
 ---
 
-안녕하세요. 이번에 포스팅 할 주제는 기존에 다루었던 내용들과는 조금 다른 내용을 이야기 해볼까 합니다. **Generative adversarial network**(이하 GAN)으로 불리는 분야에 대하여 소개 해 드리려 합니다. 해당 분야는 처음 등장한 2014년 이후로 지금까지 매우 많은 관심을 받으며 관련 연구도 많이 진행되었기에 하나에 포스트로 전부 다루는 것은 어려울 것으로 생각하여 가장 근간이 되는 **GAN**과 **DCGAN**에 대해서 소개하고 DCGAN의 경우는 코드와 함께 설명하고자 합니다.
+안녕하세요. 이번에 포스팅 할 주제는 기존에 다루었던 내용들과는 조금 다른 내용을 이야기 해볼까 합니다. <a href="http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf" target="_blank">**Generative adversarial networks**(이하 GAN)</a>으로 불리는 분야에 대하여 소개 해 드리려 합니다. 해당 분야는 처음 등장한 2014년 이후로 지금까지 매우 많은 관심을 받으며 관련 연구도 많이 진행되었기에 하나에 포스트로 전부 다루는 것은 어려울 것으로 생각하여 가장 근간이 되는 **GAN**과 **DCGAN**에 대해서 소개하고 DCGAN의 경우는 코드와 함께 설명하고자 합니다.
 
 * **다음과 같은 사항을 알고계시면 더 이해하기 쉽습니다.**
   - 딥러닝에 대한 전반적인 이해
@@ -18,39 +18,39 @@ name: generative-adversarial-network
 * 이번 글에서는 과거 구현체와 마찬가지로 데이터셋(data set), 성능 평가(performance evaluation), 러닝 모델(learning model), 러닝 알고리즘(leaning algorithm) 4가지 요소를 나눠 구현하였으며, 중복을 피하기 위해 다르게 구현한 부분 위주로 설명합니다. 
   - 전체 구현체 코드는 <a href="https://github.com/sualab/DCGAN_Face_gen_tf" target="_blank">수아랩의 GitHub 저장소</a>에서 자유롭게 확인하실 수 있습니다.
   - 데이터셋은 <a href="https://drive.google.com/open?id=1uJkWCpLUM-BnXW3H_IgVMdfENeNDFNmC" target="_blank">여기</a>서 받을 수 있습니다.
-  - 성능평가에서 사용할 통계 데이터는 위의 수아랩 GitHub 저장소에서 구현체 코드를 통해 직접 계산할 수도 있지만 <a href="http://data.sualab.com:5001/sharing/JRtj90pqN" target="_blank">여기</a>서 받을 수 있습니다.
-  - 성능평가에서 사용할 pretrained Inception v3 그래프는 <a href="http://data.sualab.com:5001/sharing/d6M8MlQrk" target="_blank">여기</a>서 받을 수 있습니다.
+  - 성능평가에서 사용할 통계 데이터는 위의 수아랩 GitHub 저장소에서 구현체 코드를 통해 직접 계산할 수도 있지만 <a href="https://drive.google.com/file/d/14f5cQOCbiAoDODRmVmZvlNsg7wX0U92G/view?usp=sharing" target="_blank">여기</a>서 받을 수 있습니다.
+  - 성능평가에서 사용할 pretrained Inception v3 그래프는 <a href="https://drive.google.com/file/d/1thIXF4jvG0KluzSEpsg1TCNiKEzh8VFV/view?usp=sharing" target="_blank">여기</a>서 받을 수 있습니다.
   
 
 ## 서론
 
-GAN은 이미지를 생성하는 방법론으로 2014년 처음 등장한 이래로 매우 빠르게 연구되어 많은 방법론과 그 응용이 학계에 발표되었습니다. 단순히 이미지를 생성하는 수준에서 주어진 이미지를 다른 화풍의 이미지로 바꾸는 <a href="https://arxiv.org/pdf/1807.10201.pdf" target="_blank">style transfer</a>까지 다양한 응용이 가능하며 기존 <a href="https://arxiv.org/pdf/1807.10201.pdf" target="_blank">image recognition 작업의 성능을 향상</a>시킬 수도 있습니다.
+GAN은 이미지를 생성하는 방법론으로 2014년 처음 등장한 이래로 매우 빠르게 연구되어 많은 방법론과 그 응용이 학계에 발표되었습니다. 단순히 이미지를 생성하는 수준에서 주어진 이미지를 다른 화풍의 이미지로 바꾸는 <a href="https://arxiv.org/pdf/1807.10201.pdf" target="_blank">style transfer</a>까지 다양한 응용이 가능하며 기존 <a href="https://arxiv.org/pdf/1511.06434.pdf" target="_blank">image recognition 작업의 성능을 향상</a>시킬 수도 있습니다.
 
-{% include image.html name=page.name file="teaser_eccv18_cezanne.jpg" description="자동차 사진을 세잔 화풍으로 전이한 이미지.(출처 : https://compvis.github.io/adaptive-style-transfer/)" class="large-image" %}
+{% include image.html name=page.name file="teaser_eccv18_cezanne.jpg" description="자동차 사진을 세잔 화풍으로 전이한 이미지" class="large-image" %}
 
-GAN를 이해하기 위해서는 generative, adversarial 두가지 키워드에 대한 이해가 필요합니다. GAN에 대해 간략히 설명하자면 **adversarial process**를 통해 **generative model**을 생성하는 방법론과 생성된 network를 의미합니다. 따라서 generative model은 어떤 학습 모델이며 adversarial process는 어떤 방식인지를 알게 된다면 GAN이 어떤 분야인지 바로 이해하실 수 있습니다.
+GAN를 이해하기 위해서는 generative, adversarial 두가지 키워드에 대한 이해가 필요합니다. GAN에 대해 간략히 설명하자면 *adversarial learning**를 통해 **generative model**을 생성하는 방법론과 생성된 network를 의미합니다. 따라서 generative model은 어떤 학습 모델이며 adversarial learning는 어떤 방식인지를 알게 된다면 GAN이 어떤 분야인지 바로 이해하실 수 있습니다.
 
 본 포스팅은 최대한 수식을 배제하고 일부의 필요한 수식만을 사용하여 설명하고자 합니다. 복잡한 수식이 사용되거나 이론적으로 깊은 이해가 필요한 부분에 대해서는 간략하게 언급하고 넘어갈 예정입니다.
 
 ### Generative Model
 
-기존에 다루었던 image classification, object detection, image segmentation 문제들은 입력 이미지가 있을때 그에 따른 정답을 찾는 문제들입니다. image classification에서 주어진 이미지가 있을때, 그 이미지가 개의 이미지인지 고양이의 이미지인지 구별하는 문제등을 생각하면 됩니다. 이러한 모델은 **discriminative model**이라고 합니다. 말그대로 이미지를 구별하는데 초점을 맞춘 모델이라고 생각하시면 됩니다. 일반적인 discriminative model의 경우 주어진 이미지 X를 이미지를 구분하기 위한 특징점들을 찾는 것을 목표로 하고 있습니다. 모델을 사람에 비유한다면 주어진 사진에서 보여지는 동물의 눈, 수염, 귀, 꼬리와 같은 요소를 보고 사진속의 동물이 개인지 고양이인지 구별하는 형태입니다.
+기존에 다루었던 image classification, object detection, image segmentation 문제들은 입력 이미지($$x$$)가 있을때 그에 따른 정답($$y$$)을 찾는 문제들입니다. image classification에서 주어진 이미지가 있을때, 그 이미지가 개의 이미지인지 고양이의 이미지인지 구별하는 문제등을 생각하면 됩니다. 이러한 모델은 **discriminative model**이라고 합니다. 즉 $$p(y \mid x)$$의 분포를 학습하여 이미지를 구별하는데 초점을 맞춘 모델이라고 생각하시면 됩니다. 일반적인 discriminative model의 경우 주어진 이미지를 구분하기 위한 특징점들을 찾아 분류하는 것을 목표로 하고 있습니다. 모델을 사람에 비유한다면 주어진 사진에서 보여지는 동물의 눈, 수염, 귀, 꼬리와 같은 요소를 보고 사진속의 동물이 개인지 고양이인지 구별하는 형태입니다.
 
 {% include image.html name=page.name file="random-dogs-cats-predictions.png" description="개와 고양이를 구분하는 문제" class="large-image" %}
 
-Dicriminative model을 사용하면서 한번쯤은 생각해봤을 상상이 있습니다. 만약 개의 눈, 수염, 귀, 꼬리 등의 요소가 어떻게 생겼는지를 알고 있으면 이를 이용해 개의 모습을 그릴 수 있지 않을까요? 긴 허리, 짧은 다리, 검은색과 갈색 털, 접힌 귀, 검은 눈동자를 위치에 맞게 그리면 닥스훈트 한마리를 그릴 수 있는 것입니다. 이 생각에서 착안한 것이 바로 **generative model**입니다. Generative model은 데이터의 분포 $$p(x)$$를 학습하는 것을 목표로 하는 model을 의미합니다.
+Dicriminative model을 사용하면서 한번쯤은 생각해봤을 상상이 있습니다. 만약 개의 눈, 수염, 귀, 꼬리 등의 요소가 어떻게 생겼는지를 알고 있으면 이를 이용해 개의 모습을 그릴 수 있지 않을까요? 긴 허리, 짧은 다리, 검은색과 갈색 털, 접힌 귀, 검은 눈동자를 위치에 맞게 그리면 닥스훈트 한마리를 그릴 수 있는 것입니다. 이 생각에서 착안한 것이 바로 **generative model**입니다. 즉, Generative model은 데이터의 분포 $$p(x)$$를 학습하는 것을 목표로 하는 model을 의미합니다.
 
-{% include image.html name=page.name file="MiniDachshund1_wb.jpg" description="긴 허리, 짧은 다리 등으로 우리는 닥스훈트를 인식 할 수 있다(출처 : 위키피디아)" class="large-image" %}
-{% include image.html name=page.name file="drawn_dachshund.jpg" description="긴 허리, 짧은 다리 등을 그리면 닥스훈트를 그릴 수 있다.(출처 : VectorStock)" class="large-image" %}
+{% include image.html name=page.name file="MiniDachshund1_wb.jpg" description="긴 허리, 짧은 다리 등으로 우리는 닥스훈트를 인식 할 수 있다" class="large-image" %}
+{% include image.html name=page.name file="drawn_dachshund.jpg" description="긴 허리, 짧은 다리 등을 그리면 닥스훈트를 그릴 수 있다." class="large-image" %}
 
-일반적인 generative 모델은 discriminative 모델과 같이 오랜 기간 연구되어 왔습니다. 딥러닝이 보편화되기 이전에도 GMM(Gaussian Mixture Model), HMM(Hidden Markov Model)등의 방법론등을 중심으로 연구가 진행되어 왔습니다. 딥러닝이 보편화 된 이후 generative model은 **GAN(generative adversarial network)**, **VAE(variational auto-encoder)**, 시계열 데이터 생성에 적합하다고 알려진 RNN(Recurrent Neural Network)등의 방향으로 연구되고 있습니다. 이 포스팅은 그 중 GAN에 대해서만 설명하며 다른 방법론들에 대해서는 기회가 된다면 나중에 다뤄보겠습니다.
+일반적인 generative 모델은 discriminative 모델과 같이 오랜 기간 연구되어 왔습니다. 딥러닝이 보편화되기 이전에도 GMM(Gaussian Mixture Model), HMM(Hidden Markov Model)등의 방법론들을 중심으로 연구가 진행되어 왔습니다. 딥러닝이 보편화 된 이후 generative model은 **GAN(Generative Adversarial Networks)**, **VAE(Variational Auto-Encoder)**, 시계열 데이터 생성에 적합하다고 알려진 RNN(Recurrent Neural Network)등의 방향으로 연구되고 있습니다. 이 포스팅은 그 중 GAN에 대해서만 설명하며 다른 방법론들에 대해서는 기회가 된다면 나중에 다뤄보겠습니다.
 
-{% include image.html name=page.name file="gen_models_anim_1.gif" description="VAE 학습 과정(출처 : OpenAI)" class="large-image" %}
-{% include image.html name=page.name file="GAN_samples.gif" description="GAN 학습 과정. 이번 구현으로 만들 수 있다." class="large-image" %}
+{% include image.html name=page.name file="gen_models_anim_1.gif" description="VAE 학습 과정" class="large-image" %}
+{% include image.html name=page.name file="GAN_samples.gif" description="GAN 학습 과정.(이번 구현으로 만들 수 있다.)" class="large-image" %}
 
-### Adversarial process
+### Adversarial Learning
 
-**Adversarial process**는 적대적이라는 단어에서 알 수 있듯이 두 개의 모델이 서로를 적대하며 학습하는 방식을 말합니다. 어찌보면 adversarial learning과 유사하다고 볼 수 있습니다. Adversarial learning의 경우 학습된 model의 취약점을 찾아 model을 교란하고 model은 탐색된 취약점을 보완하는 방향으로 학습을 진행하는 방법론으로 모델이 취약한 입력 이미지를 넣는 등의 공격을 합니다. GAN에서 사용된 adversarial process도 이와 비슷하게 진행됩니다.
+**Adversarial learning**는 적대적이라는 단어에서 알 수 있듯이 두 개의 모델이 서로를 적대하며 학습하는 방식을 말합니다. 예를들어 두 모델을 각각 모델 A, 모델 B라고하면, 모델 A는 학습된 모델 B의 취약점을 찾아 교란하도록 학습하고 모델 B는 탐색된 취약점을 보완하는 방향으로 학습을 진행하는 방법론입니다. GAN에서 사용된 adversarial learning도 이와 비슷하게 진행됩니다.
 
 ## GAN
 
@@ -71,7 +71,7 @@ GAN은 이러한 두 모델간의 경쟁을 discriminator $$D$$와 generator $$G
 
 GAN을 학습하기 위해 사용하는 데이터로 **<a href="https://github.com/NVlabs/ffhq-dataset" target="_blank">Flickr Face HQ Dataset</a>** 을 사용하겠습니다. 이름에서 알 수 있듯이 Flickr를 통해 수집된 데이터들을 사용했으며 얼굴이미지만 모은 dataset이므로 별도의 annotation없이 학습이 진행됩니다. 실제로는 class정보를 이용하여 원하는 class의 데이터를 생성하는 것도 가능하지만 이번에 사용할 얼굴 데이터셋에서는 별도의 annotation이 없이 얼굴 이미지만 사용하여 GAN을 학습합니다.
 
-{% include image.html name=page.name file="FFHQ_image_sample.jpg" description="FFHQ 데이터셋" class="large-image" %}
+{% include image.html name=page.name file="FFHQ_image_sample.jpg" description="FFHQ 데이터셋 예시" class="large-image" %}
 
 데이터셋은 총 70000장으로 별도의 test나 evaluation용 데이터를 두지 않고 전부 학습에 사용합니다. 학습에는 64x64 크기의 이미지를 사용할 예정이므로 thumbnails128x128폴더의 데이터를 리사이즈 하여 사용합니다.
 
@@ -85,9 +85,9 @@ GAN을 학습하기 위해 사용하는 데이터로 **<a href="https://github.c
 def read_data(data_dir, image_size, crop_size=None):
     """
     GAN을 학습하기 위해 데이터를 전처리하고 불러옴
-    :param data_dir : image가 저장된 경로.
-    :image_size : tuple (width, height), 이미지를 resize할 경우 이미지 사이즈
-    :crop_size : int, 얼굴 이미지에서 배경을 제외한 얼굴만을 crop할경우 crop할 영역의 크기
+    :param data_dir : str, image가 저장된 경로.
+    :param image_size : tuple (width, height), 이미지를 resize할 경우 이미지 사이즈
+    :param crop_size : int, 얼굴 이미지에서 배경을 제외한 얼굴만을 crop할경우 crop할 영역의 크기
     :return: X_set : np.ndarray, shape: (N, H, W, C).
     """
     img_list = [img for img in os.listdir(data_dir) if img.split(".")[-1] in IMAGE_EXTS]
@@ -119,7 +119,7 @@ class Dataset(object):
     
     def __init__(self, images):
         """
-        Construct a new Dataset object.
+        새로운 DataSet 객체를 생성함.
         :param images : np.ndarray, (N, H, W, C)
         """
         self._num_examples = images.shape[0]
@@ -128,7 +128,7 @@ class Dataset(object):
         self._reset()
         
     def _reset(self):
-        """Reset some variables."""
+        """일부 변수를 재설정함."""
         self._epoch_completed = 0
         self._index_in_epoch = 0
         
@@ -142,9 +142,9 @@ class Dataset(object):
     
     def next_batch(self, batch_size, shuffle=True):
         """
-        Return the next 'batch_size' examples from this dataset.
-        :param batch_size : int, size of a single batch.
-        :param shuffle : bool, whether to shuffle the whole set while sampling a batch.
+        `batch_size` 개수만큼의 이미지들을 현재 데이터셋으로부터 추출하여 미니배치 형태로 반환함.
+        :param batch_size : int, 미니배치 크기.
+        :param shuffle : bool, 미치배치 추출에 앞서, 현재 데이터셋 내 이미지들의 순서를 랜덤하게 섞을 것인지 여부.
         :return: batch_images : np.ndarray, shape: (N,H,W,C)
         """
         
@@ -184,7 +184,7 @@ class Dataset(object):
 
 ## (2) 성능 평가 : Fréchet Inception Distance
 
-GAN의 성능을 평가하는 것은 완벽하지 않습니다. 초창기에는 생성된 이미지를 정성적으로 평가하는 방식으로 진행하였고 그 후에 **<a href="https://arxiv.org/pdf/1606.03498.pdf" target="_blank">Incepction Score(IS)</a>** 가 등장하면서 별도의 네트워크를 이용하여 생성된 이미지의 성능을 평가하기 시작하였습니다. 이 포스팅에서 사용할 성능 평가지표는 **<a href="https://arxiv.org/pdf/1706.08500.pdf">Fréchet Inception Distance(FID)</a>** 입니다. 두 지표의 이름에서 눈치채셨을 지도 모르겠지만 두 지표 모두 Inception network를 사용하여 성능을 측정합니다.
+GAN의 성능을 평가하는 것은 완벽하지 않습니다. 초창기에는 생성된 이미지를 정성적으로 평가하는 방식으로 진행하였고 그 후에 **<a href="https://arxiv.org/pdf/1606.03498.pdf" target="_blank">Inception Score(IS)</a>** 가 등장하면서 별도의 네트워크를 이용하여 생성된 이미지의 성능을 평가하기 시작하였습니다. 이 포스팅에서 사용할 성능 평가지표는 **<a href="https://arxiv.org/pdf/1706.08500.pdf" target="_blank">Fréchet Inception Distance(FID)</a>** 입니다. 두 지표의 이름에서 눈치채셨을 지도 모르겠지만 두 지표 모두 Inception network를 사용하여 성능을 측정합니다.
 
 FID는 간단하게 요약하면 **real data와 fake data의 feature space상에서의 거리**입니다. **Inception network**(Inception V3을 주로 사용합니다.) 를 이용하여 real data와 fake data의 feature를 추출한 뒤, 두 집합의 feature의 **mean과 covariance $$(m_r,C_r), (m_f,C_f)$$** 를 구한뒤 각 값을 이용하여 거리를 계산합니다. 계산식은 다음과 같습니다.
 
@@ -201,20 +201,18 @@ FID Evaluator를 구현하기 위해 먼저 `FID` 클래스를 구현합니다. 
 
 ```python
 class FID(object):
-    """class for calculate Frechet Inception Distance"""
+    """Frechet Inception Distance 를 계산하기 위한 클래스."""
     def __init__(self, model_path, dataset_stats_path, sess):
         """
-        FID initializer
-        model can be download with url : 
-        :param model_path : str, path of Inception model(*.pb) that calculate FID
-        :param dataset_path : Dataset object, dataset to calculate m_w and C_w
-        :param sess : tf.Session, session that feature extraction will be done 
-        using inception network
+        새로운 FID 객체를 생성함.
+        :param model_path : str, FID를 계산하는 Inception model(*.pb) 파일의 경로.
+        :param dataset_path : Dataset object, m_w 와 C_w 를 계산할 데이터셋.
+        :param sess : tf.Session, using inception network를 이용하여 피쳐를 추출하는 세션.
         """
         self.inception_layer = self.get_inception_layer(sess, model_path)
         self.mu_data, self.sigma_data = self.get_data_stats(dataset_stats_path)
         self.sess = sess
-        # 2048 is feature size of inception network
+        # 2048 은 inception network의 피쳐크기.
         self.feature_gen = np.empty((0, 2048))
 		
 		
@@ -269,19 +267,19 @@ class FID(object):
         pred_arr = self.feature_gen
         mu = np.mean(pred_arr, axis=0)
         sigma = np.cov(pred_arr, rowvar=False)
-		
+        
         if mu.shape != self.mu_data.shape:
             print("shape of mu is {}, shape of mu_data is {}".format(
                 mu.shape, self.mu_data.shape))
-		
+        
         assert mu.shape == self.mu_data.shape, "Two means have different lengths"
         assert sigma.shape == self.sigma_data.shape, "Tow cov have different size"
 
         diff = mu - self.mu_data
 
-		cov_mean, _ = linalg.sqrtm(sigma.dot(self.sigma_data), disp=False)
-		if not np.isfinite(cov_mean).all():
-			print("Singular product has happened when calculate FID. adding \
+        cov_mean, _ = linalg.sqrtm(sigma.dot(self.sigma_data), disp=False)
+        if not np.isfinite(cov_mean).all():
+            print("Singular product has happened when calculate FID. adding \
                   %s to diagonal of cov estimates" % 1e-6)
             offset = np.eye(sigma.shape[0]) * 1e-6
             cov_mean = linalg.sqrtm((sigma + offset).dot(self.sigma_data + offset))
@@ -296,30 +294,30 @@ class FID(object):
                        - 2 * np.trace(cov_mean))
 ```
 
-Pretrain된 Inception V3 network는 직접 구하셔도 되지만 편의를 위해 여기 에서 받는 것을 추천드립니다. 또 FFHQ data의 feature mean, feature covariance는 미리 계산하여 <a href="http://data.sualab.com:5001/sharing/JRtj90pqN" target="_blank">여기</a> 에 링크해 놓았으니 직접 계산하셔도 되고 받아서 사용하셔도 됩니다. `extract_inception_features`에서 -1에서 1사이의 값을 0부터 255사이의 값으로 바꾸어 Inception network에서 feature를 추출하였고 제공하는 Inception Network가 **rgb의 channel순서**로 입력 이미지가 구성되어있으므로 **채널의 순서를 유의하여 주시기 바랍니다**. Fake data의 mean을 구하기 위해서는 충분한 수의 sample이 있어야 하므로 학습시의 메모리를 고려하여 batch단위로 feature를 뽑도록 하였습니다. 이는 이후 `Evaluator` 클래스를 구현하는데 있어 `FID` 클래스를 별도로 구현한 이유이기도 합니다.
+Pretrain된 Inception V3 network는 직접 구하셔도 되지만 편의를 위해 <a href="https://drive.google.com/file/d/1thIXF4jvG0KluzSEpsg1TCNiKEzh8VFV/view?usp=sharing" target="_blank">여기</a>에서 받는 것을 추천드립니다. 또 FFHQ data의 feature mean, feature covariance는 미리 계산하여 <a href="https://drive.google.com/file/d/14f5cQOCbiAoDODRmVmZvlNsg7wX0U92G/view?usp=sharing" target="_blank">여기</a>에 링크해 놓았으니 직접 계산하셔도 되고 받아서 사용하셔도 됩니다. `extract_inception_features`에서 -1에서 1사이의 값을 0부터 255사이의 값으로 바꾸어 Inception network에서 feature를 추출하였고 제공하는 Inception Network가 **rgb의 channel순서**로 입력 이미지가 구성되어있으므로 **채널의 순서를 유의하여 주시기 바랍니다**. Fake data의 mean을 구하기 위해서는 충분한 수의 sample이 있어야 하므로 학습시의 메모리를 고려하여 batch단위로 feature를 뽑도록 하였습니다. 이는 이후 `Evaluator` 클래스를 구현하는데 있어 `FID` 클래스를 별도로 구현한 이유이기도 합니다.
 
 ### learning.evaluator 모듈
 
-`learning.evaluator` 모듈은 현재까지 학습된 모델의 성능 평가를 위한 'evaluator'의 클래스를 담고 있습니다. `Evaluator` 클래스는 image classification등에서 이미 구현한 바 있으므로 생략하겠습니다.
+`learning.evaluator` 모듈은 현재까지 학습된 모델의 성능 평가를 위한 'evaluator'의 클래스를 담고 있습니다. `Evaluator` 클래스는 <a href="http://research.sualab.com/practice/2018/01/17/image-classification-deep-learning.html" target="_blank">image classification 포스팅</a>등에서 이미 구현한 바 있으므로 생략하겠습니다.
 
 #### FIDEvaluator 클래스
 
 ```python
 class FIDEvaluator(Evaluator):
-    """Evaluator with FID score"""
+    """FID score를 평가 척도로 사용하는 evaluator 클래스."""
     
     @property
     def worst_score(self):
-        """The worst performance score."""
+        """최악의 성능 점수."""
         return 1000.0
 
     @property
     def mode(self):
-        """The mode for performance score."""
+        """점수가 높아야 성능이 우수한지, 낮아야 성능이 우수한지 여부."""
         return 'min'
 
     def score(self, sess, fid, model,**kwargs):
-        """Compute Recall for a given predicted bboxes"""
+        """FID에 기반한 성능 평가점수."""
         batch_size_eval = kwargs.pop('batch_size_eval', 50)
         eval_sample_size = kwargs.pop('eval_sample_size', 10000)
         n_iter = eval_sample_size // batch_size_eval
@@ -334,11 +332,11 @@ class FIDEvaluator(Evaluator):
 
     def is_better(self, curr, best, **kwargs):
         """
-        Return whether current performance scores is better than current best,
-        with consideration of the relative threshold to the given performance score.
-        :param kwargs: dict, extra arguments.
-            - score_threshold: float, relative threshold for measuring the new optimum,
-                               to only focus on significant changes.
+        상대적 문턱값을 고려하여, 현재 주어진 성능 점수가 현재까지의 최고 성능 점수보다
+        우수한지 여부를 반환하는 함수.
+        :param kwargs: dict, 추가 인자.
+            - score_threshold: float, 새로운 최적값 결정을 위한 상대적 문턱값으로,
+                               유의미한 차이가 발생했을 경우만을 반영하기 위함.
         """
         score_threshold = kwargs.pop('score_threshold', 1e-4)
         relative_eps = 1.0 - score_threshold
@@ -356,27 +354,30 @@ class FIDEvaluator(Evaluator):
 
 ```python
 def conv_layer(x, filters, kernel_size, strides, padding='SAME', use_bias=True):
-    return tf.layers.conv2d(x, filters, kernel_size, strides, padding, use_bias=use_bias, kernel_initializer=tf.initializers.random_normal(0.0, 0.02))
+    return tf.layers.conv2d(x, filters, kernel_size, strides, padding, use_bias=use_bias,
+                             kernel_initializer=tf.initializers.random_normal(0.0, 0.02))
 
 def deconv_layer(x, filters, kernel_size, strides, padding='SAME', use_bias=True):
-    return tf.layers.conv2d_transpose(x, filters, kernel_size, strides, padding, use_bias=use_bias, kernel_initializer=tf.initializers.random_normal(0.0, 0.02))
+    return tf.layers.conv2d_transpose(x, filters, kernel_size, strides, padding, use_bias=use_bias, 
+                                      kernel_initializer=tf.initializers.random_normal(0.0, 0.02))
 
 def batchNormalization(x, is_train):
     """
-    Add a new batchNormalization layer.
+    새로운 batchNormalization 층을 추가함.
     :param x: tf.Tensor, shape: (N, H, W, C) or (N, D)
-    :param is_train: tf.placeholder(bool), if True, train mode, else, test mode
+    :param is_train: tf.placeholder(bool), True이면 train mode, 아니면 test mode
     :return: tf.Tensor.
     """
-    return tf.layers.batch_normalization(x, training=is_train, momentum=0.9, epsilon=1e-5, center=True, scale=True)
+    return tf.layers.batch_normalization(x, training=is_train, momentum=0.9, epsilon=1e-5, 
+                                        center=True, scale=True)
 
 
 def conv_bn_lrelu(x, filters, kernel_size, is_train, strides=(1, 1), padding='SAME', bn=True, alpha=0.2):
     """
-    Add conv + bn + Leaky Relu layers.
-    see conv_layer and batchNormalization function
-    If you want relu, just change alpha to 0
-    If you don't want activation layer, change alpha to 1.0
+    conv + bn + Leaky Relu 으로 이루어진 층을 추가함.
+    conv_layer, batchNormalization 함수 참고.
+    relu를 사용하고 싶으면, alpha를 0으로 설정.
+    activation 층을 사용하고 싶지 않으면 alpha를 1.0으로 설정.
     """
     conv = conv_layer(x, filters, kernel_size, strides, padding, use_bias=True)
     if bn:
@@ -387,8 +388,8 @@ def conv_bn_lrelu(x, filters, kernel_size, is_train, strides=(1, 1), padding='SA
     
 def deconv_bn_relu(x, filters, kernel_size, is_train, strides=(1, 1), padding='SAME', bn=True, relu=True):
     """
-    Add conv + bn + Relu layers.
-    see conv_layer and batchNormalization function
+    deconv + bn + Relu 으로 이루어진 층을 추가함.
+    deconv_layer, batchNormalization 함수 참고.
     """
     deconv = deconv_layer(x, filters, kernel_size, strides, padding, use_bias=True)
     if bn:
@@ -403,9 +404,9 @@ def deconv_bn_relu(x, filters, kernel_size, is_train, strides=(1, 1), padding='S
 
 def fc_layer(x, out_dim, **kwargs):
     """
-    Add a new fully-connected layer.
+    새로운 완전 연결 층을 추가함.
     :param x: tf.Tensor, shape: (N, D).
-    :param out_dim: int, the dimension of output vector.
+    :param out_dim: int, 출력 벡터의 차원수.
     :return: tf.Tensor.
     """
     weights_stddev = kwargs.pop('weights_stddev', 0.02)
@@ -419,8 +420,8 @@ def fc_layer(x, out_dim, **kwargs):
 
 def fc_bn_lrelu(x, out_dim, is_train, alpha=0.2):
     """
-    Add fc + bn + Leaky Relu layers
-    see fc_layer and batchNormalization function
+    fc + bn + Leaky Relu 으로 이루어진 층을 추가함.
+    fc_layer, batchNormalization 함수 참고.
     """
     fc = fc_layer(x, out_dim)
     bn = batchNormalization(fc, is_train)
@@ -438,11 +439,11 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
 
 ```python
 class GAN(metaclass=ABCMeta):
-    """Base class for Generative Adversarial Network"""
+    """Generative Adversarial Network의 베이스 클래스."""
     
     def __init__(self, input_shape, **kwargs):
         """
-        model initializer
+        모델을 초기화한다.
         :param input_shape: np.array, shape [H,W,C]
         """
 
@@ -465,24 +466,24 @@ class GAN(metaclass=ABCMeta):
     @abstractmethod
     def _build_generator(self, **kwargs):
         """
-        Build Generator.
-        This should be implemented.
+        Generator를 빌드.
+        해당 함수를 추후 구현해야 함.
         """
         pass
     
     @abstractmethod
     def _build_sampler(self, **kwargs):
         """
-        Build Generator.
-        This should be implemented.
+        Sampler를 빌드.
+        해당 함수를 추후 구현해야 함.
         """
         pass
     
     @abstractmethod
     def _build_discriminator(self, **kwargs):
         """
-        Build Discriminator.
-        This should be implemented.
+        Discriminator를 빌드.
+        해당 함수를 추후 구현해야 함.
         """
         pass
     
@@ -490,20 +491,20 @@ class GAN(metaclass=ABCMeta):
     @abstractmethod
     def _build_loss(self, **kwargs):
         """
-        Build loss function for the model training.
-        It returns loss for generator and loss for discriminator.
-        This should be implemented.
+        모델 학습을 위한 손실 함수 생성.
+        generator 와 discriminator를 위한 로스를 반환함.
+        해당 함수를 추후 구현해야 함.
         """
         pass
     
     def generate(self, sess, z, verbose=False, **kwargs):
         """
-        Generate images using z vector.
+        z 벡터를 이용해서 이미지를 생성함.
         :param sess: tf.Session
         :param z: np.ndarray, (N, z_dim)
-        :param verbose: bool, whether to print details during generation.
-        :params kwargs: dict, extra argments for generation. 
-                -batch_size: int, batch_size for iteration.
+        :param verbose: bool, 생성 과정에서 구체적인 정보를 출력할 것인지 여부.
+        :params kwargs: dict, 생성을 위한 추가 인자.
+                -batch_size: int, 각 반복 회차에서의 미니배치 크기.
         :return _image_gen: np.ndarray, shape: shape of (N, H, W, C)
         """
         
@@ -551,11 +552,16 @@ class GAN(metaclass=ABCMeta):
 ```python
 class DCGAN(GAN):
     """
-    DCGAN class
+    DCGAN 클래스
     see: Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks
     https://arxiv.org/abs/1511.06434
     """
     def _build_generator(self, **kwargs):
+        """
+        generator 생성.
+        :param kwargs: dict, generator 생성을 위한 추가 인자.
+        :return tf.Tensor
+        """
         d = dict()
         c_dim = self.X.shape[-1]
         kernel_size = (5,5)
@@ -576,6 +582,11 @@ class DCGAN(GAN):
         return d['tanh']
 	
     def _build_sampler(self, **kwargs):
+        """
+        sampler 생성.
+        :param kwargs: dict, sampler 생성을 위한 추가 인자.
+        :return tf.Tensor
+        """
         d = dict()
         c_dim = self.X.shape[-1]
         kernel_size = (5,5)
@@ -597,6 +608,12 @@ class DCGAN(GAN):
         return d['tanh']
     
     def _build_discriminator(self, fake_image=False, **kwargs):
+        """
+        discriminator 생성.
+        :param fake_images: bool, 생성한 가상 이미지인지 여부.
+        :param kwargs: dict, discriminator 생성을 위한 추가 인자.
+        :return (tf.Tensor, tf.Tensor, tf.Tensor)
+        """
         d = dict()
         kernel_size = (5,5)
         if fake_image:
@@ -621,7 +638,7 @@ class DCGAN(GAN):
     
     def _build_loss(self, **kwargs):
         """
-        Build loss function for the model training
+        모델 학습을 위한 손실 함수 생성
         :return tf.Tensor
         """
         d_loss_real = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_logits, labels=tf.ones_like(self.D)))
@@ -632,7 +649,7 @@ class DCGAN(GAN):
         return g_loss, d_loss
 ```
 
-`_build_generator` 함수는 임의의 random vector $$z$$로부터 이미지를 생성하는 네트워크를 구성합니다. DCGAN 논문이 많은 영향을 준 부분이 이 부분입니다. 초창기 GAN에서는 generator를 구성할때 주로 Fully-connected layer를 사용하였지만 DCGAN이라는 이름에서 알 수 있듯이 이 논문에서 **Convolution layer** 를 사용하게 됩니다. Generator에서 사용하는 conv layer는 편의상 deconv로 표기 했지만 정식 명칭은 **fractionally-stride convolution**으로 stride convolution이 일반적으로 이미지의 크기를 줄여주는 것과 반대 역할을 하게 됩니다.
+`_build_generator` 함수는 임의의 random vector $$z$$로부터 이미지를 생성하는 네트워크를 구성합니다. DCGAN 논문이 많은 영향을 준 부분이 이 부분입니다. 초창기 GAN에서는 generator를 구성할때 주로 Fully-connected layer를 사용하였지만 DCGAN이라는 이름에서 알 수 있듯이 이 논문에서 **Convolution layer** 를 사용하게 됩니다. Generator에서 사용하는 conv layer는 편의상 deconv로 표기 했지만 정식 명칭은 **fractionally-strided convolution**으로 strided convolution이 일반적으로 이미지의 크기를 줄여주는 것과 반대 역할을 하게 됩니다.
 
 `_build_sampler`함수는 기본적으로 generator와 같은 network를 사용하는 것을 목적으로 생성합니다. variable을 reuse하여 별도의 망을 만드는 것이 아닌 `_build_generator`로 생성된 망을 사용하게 합니다.
 
@@ -640,11 +657,11 @@ class DCGAN(GAN):
 
 DCGAN 논문에서 제안하는 바는 사용하는 batch normalization과 activation layer에도 있습니다. `_build_generator`의 마지막 layer와 `_build_discriminator`의 첫 layer에는 batch normalization을 사용하지 않았습니다. 또, activation layer의 경우 `_build_generator`에서는 마지막 layer에 tanh를 적용한 것 이외에 전부 ReLU를 사용하였고, `_build_discriminator`에서는 LeakyReLU를 사용하였습니다.
 
-`_build_loss`함수는 손실함수를 구현하였습니다. 기본적인 손실 함수 자체는 GAN에서 제안한 식을 그대로 사용하였습니다. 먼저 discriminator loss는 real image에서 1이 나와야 하고 fake image에서 0이 나와야 합니다. 따라서 `d_loss_real`은 1 bit logit이 1이 나오도록 sigmoid cross-entropy loss를 구성하였고, `d_loss_fake`는 1 bit logit이 0이 나오도록 sigmoid cross-entropy loss를 구성하였습니다. 그리고 discriminator loss는 두 loss의 합이 됩니다. 한편 `g_loss`는 오직 fake image를 disctiminator에 넣었을때 1 bit logit이 1이 나와야 하므로 `d_loss_fake`와는 반대로 sigmoid cross-entropy loss를 구성하였습니다. Discriminator, generator는 따로 학습을 해야 하므로 두 loss를 합하지 않고 별도로 저장합니다.
+`_build_loss`함수는 손실함수를 구현하였습니다. 기본적인 손실 함수 자체는 GAN에서 제안한 식을 그대로 사용하였습니다. 먼저 discriminator loss는 real image에서 1이 나와야 하고 fake image에서 0이 나와야 합니다. 따라서 `d_loss_real`은 1 bit logit이 1이 나오도록 sigmoid cross-entropy loss를 구성하였고, `d_loss_fake`는 1 bit logit이 0이 나오도록 sigmoid cross-entropy loss를 구성하였습니다. 그리고 discriminator loss는 두 loss의 합이 됩니다. 한편 `g_loss`는 오직 fake image를 discriminator에 넣었을때 1 bit logit이 1이 나와야 하므로 `d_loss_fake`와는 반대로 sigmoid cross-entropy loss를 구성하였습니다. Discriminator, generator는 따로 학습을 해야 하므로 두 loss를 합하지 않고 별도로 저장합니다.
 
 ## (4) 러닝 알고리즘 : SGD+Momentum
 
-러닝 알고리즘은 앞서 다룬 문제들과 크게 다르지 않습니다. **모멘텀(momentum)**을 적용한 **확률적 경사 하강법(stochastic gradient descent; 이하 SGD)**을 채택하였으며, 베이스 클래스를 먼저 정의한 뒤, 이를 모멘텀 SGD에 기반한 optimizer 클래스가 상속받는 형태로 구현하였습니다. Pretrained model weights를 불러오는 부분을 제외하고 Detection 포스팅 때와 동일하니 설명은 생략하도록 하겠습니다.
+러닝 알고리즘은 앞서 다룬 문제들과 크게 다르지 않습니다. **모멘텀(momentum)**을 적용한 **확률적 경사 하강법(stochastic gradient descent; 이하 SGD)**을 채택하였으며, 베이스 클래스를 먼저 정의한 뒤, 이를 모멘텀 SGD에 기반한 optimizer 클래스가 상속받는 형태로 구현하였습니다. Pretrained model weights를 불러오는 부분을 제외하고 <a href="http://research.sualab.com/practice/2018/05/14/image-detection-deep-learning.html" target="_blank">Detection 포스팅</a>때와 동일하니 설명은 생략하도록 하겠습니다.
 
 ### learning.optimizer 모듈
 
@@ -652,19 +669,19 @@ DCGAN 논문에서 제안하는 바는 사용하는 batch normalization과 activ
 
 ```python
 class Optimizer(metaclass=ABCMeta):
-    """Base class for gradient-based optimization algorithms."""
+    """경사 하강 러닝 알고리즘 기반 optimizer의 베이스 클래스"""
 
     def __init__(self, model, train_set, evaluator, **kwargs):
         """
-        Optimizer initializer.
-        :param model: Net, the model to be learned.
-        :param train_set: DataSet, training set to be used.
-        :param evaluator: Evaluator, for computing performance scores during training.
-        :param val_set: Datset, validation set to be used, which can be None if not used.
-        :param kwargs: dict, extra argument containing training hyperparameters.
-            - batch_size: int, batch size for each iteration.
-            - num_epochs: int, total number of epochs for training.
-            - init_learning_rate: float, initial learning rate.
+        Optimizer 생성자.
+        :param model: Net, 학습할 모델.
+        :param train_set: DataSet, 학습에 사용할 학습 데이터셋.
+        :param evaluator: Evaluator, 학습 수행 과정에서 성능 평가에 사용할 evaluator.
+        :param val_set: Datset, 검증 데이터셋, 주어지지 않은 경우 None으로 남겨둘 수 있음.
+        :param kwargs: dict, 학습 관련 하이퍼파라미터로 구성된 추가 인자.
+                - batch_size: int, 각 반복 회차에서의 미니배치 크기.
+                - num_epochs: int, 총 epoch 수.
+                - init_learning_rate: float, 학습률 초기값.
         """
         self.model = model
         self.train_set = train_set
@@ -674,7 +691,7 @@ class Optimizer(metaclass=ABCMeta):
         z_dim = kwargs.pop('z_dim', 100)
         self.sample_z = self.z_sample(self.sample_H, self.sample_W, z_dim)
 
-        # Training hyperparameters
+        # 학습 하이퍼파라미터
         self.batch_size = kwargs.pop('batch_size', 8)
         self.num_epochs = kwargs.pop('num_epochs', 100)
         self.init_learning_rate = kwargs.pop('init_learning_rate', 0.001)
@@ -686,11 +703,11 @@ class Optimizer(metaclass=ABCMeta):
         self._reset()
 
     def _reset(self):
-        """Reset some variables."""
+        """일부 변수를 재설정."""
         self.curr_epoch = 1
-        # number of bad epochs, where the model is updated without improvement.
+        # 'bad epochs' 수: 성능 향상이 연속적으로 이루어지지 않은 epochs 수.
         self.num_bad_epochs = 0
-        # initialize best score with the worst one
+        # 최저 성능 점수로, 현 최고 점수를 초기화함.
         self.best_score = self.evaluator.worst_score	
         self.curr_learning_rate = self.init_learning_rate
        
@@ -702,35 +719,36 @@ class Optimizer(metaclass=ABCMeta):
     @abstractmethod
     def _optimize_op(self, mode, **kwargs):
         """
-        tf.train.Optimizer.minimize Op for a gradient update.
-        This should be implemented, and should not be called manually.
+        경사 하강 업데이트를 위한 tf.train.Optimizer.minimize Op.
+        해당 함수를 추후 구현해야 하며, 외부에서 임의로 호출할 수 없음.
         """
         pass
 
     @abstractmethod
     def _update_learning_rate(self, **kwargs):
         """
-        Update current learning rate (if needed) on every epcoh, by its own schedule.
-        This should be implemented, and should not be called manually.
+        고유의 학습률 스케줄링 방법에 따라, (필요한 경우) 매 epoch마다 현 학습률 값을 업데이트함.
+        해당 함수를 추후 구현해야 하며, 외부에서 임의로 호출할 수 없음.
         """
         pass
 
     def _step(self, sess, **kwargs):
         """
-        Make a single gradient update and return its results.
-        This should not be called manually.
+        경사 하강 업데이트를 1회 수행하며, 관련된 값을 반환함.
+        해당 함수를 추후 구현해야 하며, 외부에서 임의로 호출할 수 없음.
         :param sess, tf.Session.
-        :return loss: float, loss value for the single iteration step.
-            y_true: np.ndarray, true label from the training set.
-            y_pred: np.ndarray, predicted label from the model.
+        :return generator loss: float, 1회 반복 회차 결과 gnerator의 손실 함수값.
+                dicriminator loss: float, 1회 반복 회차 결과 discriminator의 손실 함수값.
+                X: np.ndarray, 학습 데이터셋의 실제 이미지.
+                G: np.ndarray, 모델이 생성한 이미지.
         """
 
-        # Sample a single batch
+        # 미니배치 하나를 추출함
         X = self.train_set.next_batch(self.batch_size, shuffle=True)
         z = np.random.uniform(-1.0, 1.0, size=(self.batch_size, 
                                                self.model.z_dim)).astype(np.float32)
-        # Compute the loss and make update
-        # Generator will be updated twice
+        # 손실 함숫값을 계산하고, 모델 업데이트를 수행함
+        # Generator는 두번 업데이트 됨.
         _, D_loss = \
             sess.run([self.optimize_D, self.model.discr_loss, self.model.D_l4],
                 feed_dict={self.model.z: z, self.model.X: X, self.model.is_train: True, 
@@ -747,17 +765,17 @@ class Optimizer(metaclass=ABCMeta):
     
     def train(self, sess, save_dir='/tmp', details=False, verbose=True, **kwargs):
         """
-        Run optimizer to train the model.
+        Optimizer를 실행하고, 모델을 학습함.
         :param sess: tf.Session.
-        :param save_dir: str, the directory to save the learned weights of the model.
-        :param details: bool, whether to return detailed results.
-        :param verbose: bool, whether to print details during training.
-        :param kwargs: dict, extra arguments containing training hyperparameters.
-            - nms_flag: bool, whether to do non maximum supression(nms) for evaluation.
-        :return train_results: dict, containing detailed results of training.
+        :param save_dir: str, 학습된 모델의 파라미터들을 저장할 디렉터리 경로.
+        :param details: bool, 학습 결과 관련 구체적인 정보를, 학습 종료 후 반환할지 여부.
+        :param verbose: bool, 학습 과정에서 구체적인 정보를 출력할지 여부.
+        :param kwargs: dict, 학습 관련 하이퍼파라미터로 구성된 추가 인자.
+                - nms_flag: bool, nms(non maximum supression)를 수행할 지 여부.
+        :return train_results: dict, 구체적인 학습 결과를 담은 dict
         """
         saver = tf.train.Saver()
-        sess.run(tf.global_variables_initializer())	# initialize all weights
+        sess.run(tf.global_variables_initializer())	# 모든 파라미터들을 초기화.
         
         inception_path = kwargs.pop('inception_path', 
                                     './inception/inception-2015-12-05/ \
@@ -784,18 +802,18 @@ class Optimizer(metaclass=ABCMeta):
         step_losses_G, step_losses_D, step_scores, eval_scores = [], [], [], []
         start_time = time.time()
 
-        # Start training loop
+        # 학습 루프를 실행함.
         for i in range(num_steps):
-            # Perform a gradient update from a single minibatch
+            # 미니배치 하나로부터 경사 하강 업데이트를 1회 수행함
             step_loss_G, step_loss_D, step_X, gen_img, D = self._step(sess, **kwargs)
             step_losses_G.append(step_loss_G)
             step_losses_D.append(step_loss_D)
-            # Perform evaluation in the end of each epoch
+            # 매 epoch의 말미에서, 성능 평가를 수행함
             if (i) % 10 == 0:
                 print('[step {}]\tG_loss: {:.6f}|D_loss:{:.6f} |lr: {:.6f}'\
                       .format(i, step_loss_G, step_loss_D, self.curr_learning_rate))
             if (i) % num_steps_per_epoch == num_steps_per_epoch - 1:
-                # Evaluate model with current minibatch, from training set
+                # 학습셋에서 추출한 현재 미니배치로 모델을 평가함.
                 fid.reset_FID()
                 fid.extract_inception_features(gen_img)
                 step_score = fid.calculate_FID()
@@ -811,20 +829,19 @@ class Optimizer(metaclass=ABCMeta):
                 eval_scores.append(eval_score)
 
                 if verbose:
-                    # Print intermediate results
+                    # 중간 결과 출력.
                     print('[epoch {}]\tG_loss: {:.6f}|D_loss:{:.6f} |Train score: {:.6f} \
                     |Eval score: {:.6f} |lr: {:.6f}'\
                         .format(self.curr_epoch, step_loss_G, step_loss_D, step_score, 
                                 eval_score, self.curr_learning_rate))
-                    # Plot intermediate results
+                    # 중간 결과 플롯팅함.
                     plot_learning_curve(-1, step_losses_G, step_losses_D, step_scores, 
                                         eval_scores=eval_scores, img_dir=save_dir)
 
                 curr_score = eval_score
 
-                # Keep track of the current best model,
-                # by comparing current score and the best score
-                
+                # 현재의 성능 점수의 현재까지의 최고 성능 점수를 비교하고, 
+                # 최고 성능 점수가 갱신된 경우 해당 성능을 발휘한 모델의 파라미터들을 저장함
                 if self.evaluator.is_better(curr_score, self.best_score, **kwargs):
                     self.best_score = curr_score
                     self.num_bad_epochs = 0
@@ -833,7 +850,7 @@ class Optimizer(metaclass=ABCMeta):
                                             'model_{}.ckpt'.format(self.curr_epoch)))
                 else:
                     self.num_bad_epochs += 1
-                # Uncomment if you want to update learning rate
+
 # 			    self._update_learning_rate(**kwargs)
                 self.curr_epoch += 1
 
@@ -845,9 +862,9 @@ class Optimizer(metaclass=ABCMeta):
         print('Done.')
 
         if details:
-            # Save last model
+            # 모델 저장.
             saver.save(sess, os.path.join(save_dir, 'model.ckpt'))
-            # Store training results in a dictionary
+            # 학습 결과를 dict에 저장함.
             train_results['step_losses_G'] = step_losses_G
             train_results['step_losses_D'] = step_losses_D
             train_results['step_scores'] = step_scores
@@ -866,13 +883,12 @@ class Optimizer(metaclass=ABCMeta):
 
 ```python
 class MomentumOptimizer(Optimizer):
-    """Gradient descent optimizer, with Momentum algorithm."""
-
+    """모멘텀 알고리즘을 포함한 경사 하강 optimizer 클래스."""
     def _optimize_op(self, mode, **kwargs):
         """
-        tf.train.MomentumOptimizer.minimize Op for a gradient update.
-        :param kwargs: dict, extra arguments for optimizer.
-            -momentum: float, the momentum coefficent.
+        경사 하강 업데이트를 위한 tf.train.MomentumOptimizer.minimize Op.
+        :param kwargs: dict, optimizer의 추가 인자.
+                -momentum: float, 모멘텀 계수.
         :return tf.Operation.
         """
         
@@ -894,14 +910,13 @@ class MomentumOptimizer(Optimizer):
 
     def _update_learning_rate(self, **kwargs):
         """
-        Update current learning rate, when evaluation score plateaus.
-        :param kwargs: dict, extra arguments for learning rate scheduling.
-            - learning_rate_patience: int, number of epochs with no improvement after
-            which learning rate will be reduced.
-            - learning_rate_decay: float, 
-            factor by which the learning rate will be updated.
-            -eps: float, if the difference between 
-            new and old learning rate is smller than eps, the update is ignored.
+        성능 평가 점수 상에 개선이 없을 때, 현 학습률 값을 업데이트함.
+        :param kwargs: dict, 학습률 스케줄링을 위한 추가 인자.
+            - learning_rate_patience: int, 성능 향상이 연속적으로 이루어지지 않은 epochs 수가 
+                                      해당 값을 초과할 경우, 학습률 값을 감소시킴.
+            - learning_rate_decay: float, 학습률 업데이트 비율.
+            - eps: float, 업데이트된 학습률 값과 기존 학습률 값 간의 차이가 해당 값보다 작을 경우,
+                          학습률 업데이트를 취소함.
         """
         learning_rate_patience = kwargs.pop('learning_rate_patience', 10)
         learning_rate_decay = kwargs.pop('learning_rate_decay', 0.1)
@@ -909,7 +924,7 @@ class MomentumOptimizer(Optimizer):
 
         if self.num_bad_epochs > learning_rate_patience:
             new_learning_rate = self.curr_learning_rate * learning_rate_decay
-            # Decay learning rate only when the difference is higher than epsilon.
+            # 새 학습률 값과 기존 학습률 값 간의 차이가 eps보다 큰 경우에 한해서만 업데이트를 수행함
             if self.curr_learning_rate - new_learning_rate > eps:
                 self.curr_learning_rate = new_learning_rate
             self.num_bad_epochs = 0
@@ -917,30 +932,30 @@ class MomentumOptimizer(Optimizer):
 
 ## 학습 수행 및 테스트 결과
 
-`train.py` 스크립트에서 실제 학습을 수행하는 과정을 구현하며, `test.py` 스크립트에서 테스트 데이터셋에 대해 학습이 완료된 모델을 테스트하여 성능 수치를 보여주고 실제로 생성된 이미지를 그려줍니다. 또, DCGAN이 단순히 이미지를 외워서 그리는 것이 아니라 실제로 생성하는 것을 확인 하기 위해 두 이미지 사이의 interpolate 결과도 확인합니다.
+`train.py` 스크립트에서 실제 학습을 수행하는 과정을 구현하며, `test.py` 스크립트에서 테스트 데이터셋에 대해 학습이 완료된 모델을 테스트하여 성능 수치를 보여주고 실제로 생성된 이미지를 그려줍니다. 또, DCGAN이 단순히 이미지를 외워서 그리는 것이 아니라 실제로 생성하는 것을 확인 하기 위해 두 이미지 사이의 interpolation 결과도 확인합니다.
 
 ### train.py 스크립트
 
 ```python
-""" 1. Load and split datasets """
+""" 1. 원본 데이터셋을 메모리에 로드하고 분리함 """
 root_dir = os.path.join('data/FFHQ/')
 trainval_dir = os.path.join(root_dir, 'thumbnails128x128')
 
-# Set image size and number of class
+# 이미지 크기를 지정함.
 IM_SIZE = (64, 64)
 
-# Load trainval set
+# 학습 셋 로드.
 X_trainval = dataset.read_data(trainval_dir, IM_SIZE, 96)
 trainval_size = X_trainval.shape[0]
 train_set = dataset.Dataset(X_trainval)
 print(train_set.num_examples)
 
-""" 2. Set training hyperparameters"""
+""" 2. 학습 수행 및 성능 평가를 위한 하이퍼파라미터 설정"""
 hp_d = dict()
 
 save_dir = './DCGAN_training_FFHQ_z_100/'
 
-# FIXME: Training hyperparameters
+# FIXME: 학습 하이퍼 파라미터.
 hp_d['batch_size'] = 64
 hp_d['num_epochs'] = 100
 hp_d['init_learning_rate'] = 2e-4
@@ -968,7 +983,7 @@ hp_d['D_channel'] = 64
 with open(os.path.join(save_dir, 'hyperparam.json'), 'w') as f:
 	json.dump(hp_d, f, indent='\t')
 
-""" 3. Build graph, initialize a session and start training """
+""" 3. Graph 생성, session 초기화 및 학습 시작 """
 graph = tf.get_default_graph()
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -997,7 +1012,7 @@ train_results = optimizer.train(sess,
 ### test.py 스크립트
 
 ```python
-""" 1. Load training hyperparameters"""
+""" 1. 원본 데이터셋을 메모리에 로드함 """
 hp_d = dict()
 
 save_dir = './DCGAN_training_FFHQ_z_100/'
@@ -1006,10 +1021,10 @@ with open(os.path.join(save_dir, 'hyperparam.json'), 'r') as f:
     hp_d = json.load(f)
     
 
-# Set image size
+# 이미지 크기를 지정함.
 IM_SIZE = (64, 64)
 
-""" 2. Build graph, initialize a session and load model """
+""" 2. 테스트를 위한 하이퍼파라미터 설정 """
 graph = tf.get_default_graph()
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -1021,7 +1036,7 @@ saver = tf.train.Saver()
 sess = tf.Session(graph=graph, config=config)
 saver.restore(sess, os.path.join(save_dir, 'model_94.ckpt'))
 
-""" 3. Test random generated image """
+""" 3. Graph 생성, 파라미터 로드, session 초기화 및 테스트 시작 """
 W = hp_d["sample_W"]
 H = hp_d["sample_H"]
 
@@ -1030,7 +1045,7 @@ z = np.random.uniform(-1.0, 1.0, size=(W*H,hp_d["z_dim"]))
 gen_img = model.generate(sess, z, verbose=True)
 save_sample_images(save_dir, 'sample_random', gen_img, H, W)
 
-""" 4. interpolate image from one to other"""
+""" 4. 하나의 이미지에서 다른이미지로 interpolation 수행."""
 from_z = np.random.uniform(-1.0, 1.0, size=(1,hp_d["z_dim"]))
 to_z = np.random.uniform(-1.0, 1.0, size=(1,hp_d["z_dim"]))
 
@@ -1038,7 +1053,7 @@ latent_intp = interpolate(from_z, to_z, 9)
 img_intp = model.generate(sess, latent_intp, verbose=True)
 save_sample_images(save_dir, 'interpolate', img_intp, 1, 11)
 
-""" 5. calculate FID score"""
+""" 5. FID 점수를 계산"""
 fid = FID(hp_d["inception_path"], hp_d["dataset_stats_path"], sess)
 
 fid.reset_FID()
@@ -1080,8 +1095,20 @@ print(result)
 ## References
 
 - GAN 논문
-  - <a href="http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf" target="_blank">Generative Adversarial Nets</a>
+  - <a href="http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf" target="_blank">Goodfellow et al., "Generative Adversarial Nets", NIPS, 2014</a>
+- Style Transfer 관련 논문
+  - <a href="https://arxiv.org/pdf/1807.10201.pdf" target="_blank">Sanakoyeu et al., "A Style-Aware Content Loss for Real-time HD Style Transfer", ECCV, 2018</a>
 - DCGAN 논문
-  - <a href="https://arxiv.org/abs/1511.06434" target="_blank">Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks</a>
-- Flickr-Face-HQ Dataset
-  - <a href="https://github.com/NVlabs/ffhq-dataset" target="_blank">Flickr-Face-HQ Dataset</a>
+  - <a href="https://arxiv.org/abs/1511.06434" target="_blank">Radford et al., "Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks", 2016</a>
+- Inception Score 관련 논문
+  - <a href="https://arxiv.org/pdf/1606.03498.pdf" target="_blank">Salimans et al., "Improved Techniques for Training GANs", NIPS, 2016</a>
+- Fréchet Inception Distance 관련 논문
+  - <a href="https://arxiv.org/pdf/1706.08500.pdf" target="_blank">Heusel et al. "GANs Trained by a Two Time-Scale Update Rule
+Converge to a Local Nash Equilibrium", NIPS, 2017</a>
+- <a href="https://github.com/NVlabs/ffhq-dataset" target="_blank">Flickr-Face-HQ Dataset</a>
+- 그림
+  - <a href="https://compvis.github.io/adaptive-style-transfer" target="_blank">자동차 사진을 세잔 화풍으로 전이한 이미지</a>
+  - <a href="https://research.sualab.com/practice/2018/01/17/image-classification-deep-learning.html" target="_blank"> 개와 고양이를 구분하는 문제 예시</a>
+  - <a href="https://commons.wikimedia.org/wiki/File:MiniDachshund1_wb.jpg" target="_blank">닥스훈트 사진</a>
+  - <a href="https://www.vectorstock.com/royalty-free-vector/hand-drawn-dachshund-vector-22545919" target="_blank">닥스훈트 그림</a>
+  - <a href="https://openai.com/blog/generative-models/" target="_blank">VAE 학습 과정</a>
