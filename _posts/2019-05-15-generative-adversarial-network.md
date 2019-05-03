@@ -28,7 +28,7 @@ GAN은 이미지를 생성하는 방법론으로 2014년 처음 등장한 이래
 
 {% include image.html name=page.name file="teaser_eccv18_cezanne.jpg" description="자동차 사진을 세잔 화풍으로 전이한 이미지" class="large-image" %}
 
-GAN를 이해하기 위해서는 generative, adversarial 두가지 키워드에 대한 이해가 필요합니다. GAN에 대해 간략히 설명하자면 *adversarial learning**를 통해 **generative model**을 생성하는 방법론과 생성된 network를 의미합니다. 따라서 generative model은 어떤 학습 모델이며 adversarial learning는 어떤 방식인지를 알게 된다면 GAN이 어떤 분야인지 바로 이해하실 수 있습니다.
+GAN를 이해하기 위해서는 generative, adversarial 두가지 키워드에 대한 이해가 필요합니다. GAN에 대해 간략히 설명하자면 **adversarial learning**를 통해 **generative model**을 생성하는 방법론과 생성된 network를 의미합니다. 따라서 generative model은 어떤 학습 모델이며 adversarial learning는 어떤 방식인지를 알게 된다면 GAN이 어떤 분야인지 바로 이해하실 수 있습니다.
 
 본 포스팅은 최대한 수식을 배제하고 일부의 필요한 수식만을 사용하여 설명하고자 합니다. 복잡한 수식이 사용되거나 이론적으로 깊은 이해가 필요한 부분에 대해서는 간략하게 언급하고 넘어갈 예정입니다.
 
@@ -38,7 +38,7 @@ GAN를 이해하기 위해서는 generative, adversarial 두가지 키워드에 
 
 {% include image.html name=page.name file="random-dogs-cats-predictions.png" description="개와 고양이를 구분하는 문제" class="large-image" %}
 
-Dicriminative model을 사용하면서 한번쯤은 생각해봤을 상상이 있습니다. 만약 개의 눈, 수염, 귀, 꼬리 등의 요소가 어떻게 생겼는지를 알고 있으면 이를 이용해 개의 모습을 그릴 수 있지 않을까요? 긴 허리, 짧은 다리, 검은색과 갈색 털, 접힌 귀, 검은 눈동자를 위치에 맞게 그리면 닥스훈트 한마리를 그릴 수 있는 것입니다. 이 생각에서 착안한 것이 바로 **generative model**입니다. 즉, Generative model은 데이터의 분포 $$p(x)$$를 학습하는 것을 목표로 하는 model을 의미합니다.
+Dicriminative model을 사용하면서 한번쯤은 생각해봤을 상상이 있습니다. 만약 개의 눈, 수염, 귀, 꼬리 등의 요소가 어떻게 생겼는지를 알고 있으면 이를 이용해 개의 모습을 그릴 수 있지 않을까요? 긴 허리, 짧은 다리, 검은색과 갈색 털, 접힌 귀, 검은 눈동자를 위치에 맞게 그리면 닥스훈트 한마리를 그릴 수 있는 것입니다. 이 생각에서 착안한 것이 바로 **generative model**입니다. 즉, generative model은 데이터의 분포 $$p(x)$$를 학습하는 것을 목표로 하는 model을 의미합니다.
 
 {% include image.html name=page.name file="MiniDachshund1_wb.jpg" description="긴 허리, 짧은 다리 등으로 우리는 닥스훈트를 인식 할 수 있다" class="large-image" %}
 {% include image.html name=page.name file="drawn_dachshund.jpg" description="긴 허리, 짧은 다리 등을 그리면 닥스훈트를 그릴 수 있다." class="large-image" %}
@@ -545,8 +545,6 @@ class GAN(metaclass=ABCMeta):
 
 `GAN` 클래스는 기본 추상 베이스 클래스로, 확장성을 위해 전반적인 GAN을 포괄하도록 구현하였습니다. `_build_generator`, `_build_discriminator`, `_build_sampler`, `_build_loss` 함수는 `GAN`의 자식 클래스에서 구현하도록 하였고, `generate` 함수는 학습한 generator에서 이미지를 생성합니다. `_build_sampler` 함수는 기본적으로 `_build_generator` 함수와 같지만 학습에 직접적으로 사용하는 것이 아니라 evaluation이나 test 단계에서 사용할 수 있도록 별도의 함수로 구성하였습니다. 또한 **$$z$$** 라고 하는 placeholder를 정의한 것을 확인 할 수 있습니다. 이는 GAN에서 이미지를 생성하는데 중요한 입력으로 **학습이후에 이미지를 생성할때 이미지의 속성을 결정할 vector**가 됩니다.
 
-{% include image.html name=page.name file="DCGAN_gen.JPG" description="DCGAN에서 사용한 Generator 구조. 사용한 Dataset이 FFHQ와는 다르므로 일부 값이 변경됨" class="full-image" %}
-
 #### DCGAN 클래스
 
 ```python
@@ -650,6 +648,9 @@ class DCGAN(GAN):
 ```
 
 `_build_generator` 함수는 임의의 random vector $$z$$로부터 이미지를 생성하는 네트워크를 구성합니다. DCGAN 논문이 많은 영향을 준 부분이 이 부분입니다. 초창기 GAN에서는 generator를 구성할때 주로 Fully-connected layer를 사용하였지만 DCGAN이라는 이름에서 알 수 있듯이 이 논문에서 **Convolution layer** 를 사용하게 됩니다. Generator에서 사용하는 conv layer는 편의상 deconv로 표기 했지만 정식 명칭은 **fractionally-strided convolution**으로 strided convolution이 일반적으로 이미지의 크기를 줄여주는 것과 반대 역할을 하게 됩니다.
+
+
+{% include image.html name=page.name file="DCGAN_gen.JPG" description="DCGAN에서 사용한 Generator 구조. 사용한 Dataset이 FFHQ와는 다르므로 일부 값이 변경됨" class="full-image" %}
 
 `_build_sampler`함수는 기본적으로 generator와 같은 network를 사용하는 것을 목적으로 생성합니다. variable을 reuse하여 별도의 망을 만드는 것이 아닌 `_build_generator`로 생성된 망을 사용하게 합니다.
 
@@ -1090,7 +1091,7 @@ print(result)
 
 ## 결론
 
-본 포스팅에서는 이미지를 생성하는 분야에 있어서 최근 매우 많은 주목을 받고 있는 GAN에 대하여 간략히 설명을 하였고 **Face generation**을 목표로 **DCGAN**을 Python과 Tensorflow를 이용하여 구현하였습니다. 학습에 사용한 데이터의 양이 충분하진 않았지만 어느정도 얼굴이라고 인식 할만한 이미지를 생성하는 것을 확인하였고 단순히 이미지를 기억해서 만드는 것이 아닌 이미지의 주요 feature를 학습하여 생성하는 것을 확인하였습니다. 실제 GAN을 구현해 보시는 분들에게 많은 도움이 되기를 바라는 마음에서 이 포스팅을 작성하였습니다. 이론적인 부분이나 구현상에서 이해가 되지 않으시는 부분이 있다면 언제든 문의주시기 바랍니다.
+본 포스팅에서는 이미지를 생성하는 분야에 있어서 최근 매우 많은 주목을 받고 있는 GAN에 대하여 간략히 설명을 하였고 **Face generation**을 목표로 **DCGAN**을 Python과 Tensorflow를 이용하여 구현하였습니다. 학습에 사용한 데이터의 양이 충분하진 않았지만 어느정도 얼굴이라고 인식 할만한 이미지를 생성하는 것을 확인하였고 단순히 이미지를 기억해서 만드는 것이 아닌 이미지의 주요 feature를 학습하여 생성하는 것을 확인하였습니다. 실제 GAN을 구현해 보시는 분들에게 많은 도움이 되기를 바라는 마음에서 이 포스팅을 작성하였습니다. 도움이 되셨는지는 모르겠지만 긴 글 읽어주셔서 감사합니다. 
 
 ## References
 
