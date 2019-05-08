@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Generative Adversarial Network : DCGAN을 이용한 이미지 생성"
-date:   2019-05-15 09:00:00 +0900
+date:   2019-05-08 09:00:00 +0900
 author: hyunjun_kim
 categories: [Introduction, Practice]
 tags: [generative adversarial network, DCGAN, tensorflow]
