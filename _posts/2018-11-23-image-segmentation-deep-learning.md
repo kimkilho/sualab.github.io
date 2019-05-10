@@ -10,7 +10,7 @@ name: image-segmentation-deep-learning
 redirect_from: "/machine-learning/computer-vision/2018/11/23/image-segmentation-deep-learning.html"
 ---
 
-안녕하세요! 딥러닝을 이용한 Detection 문제 해결 포스팅에 이어, 정말 오랜만에 이미지 인식 **Segmentation**에 관한 문제 해결 사례를 소개해드리도록 하겠습니다. 이번 포스팅도 앞선 포스팅과 마찬가지로 **TensorFlow** 구현 코드와 함께 진행됩니다. Segmentation의 경우 많은 시간 및 메모리를 소모하며 설명자료가 Classification 문제에 비해 많지 않아 어렵게 느껴질 수도 있지만, Segmentation은 **Pixel-wise classification**으로 생각할 수 있기 때문에 구현 자체 난이도는 Classification과 크게 다르지 않습니다. 다소 난해한 Detection에 비해 금방 이해할 수 있으리라 생각하며, 이전 포스팅과 마찬가지로 개념적인 설명은 조금 뒤로하고 **구현 위주**로 설명해 드리도록 하겠습니다. 이해 안 되는 부분은 언제든 댓글 남겨주세요!
+안녕하세요! 딥러닝을 이용한 Detection 문제 해결 포스팅에 이어, 정말 오랜만에 이미지 인식 **Segmentation**에 관한 문제 해결 사례를 소개해드리도록 하겠습니다. 이번 포스팅도 앞선 포스팅과 마찬가지로 **TensorFlow** 구현 코드와 함께 진행됩니다. Segmentation의 경우 많은 시간 및 메모리를 소모하며 설명자료가 Classification 문제에 비해 많지 않아 어렵게 느껴질 수도 있지만, Segmentation은 **Pixel-wise classification**으로 생각할 수 있기 때문에 구현 자체 난이도는 Classification과 크게 다르지 않습니다. 다소 난해한 Detection에 비해 금방 이해할 수 있으리라 생각하며, 이전 포스팅과 마찬가지로 개념적인 설명은 조금 뒤로하고 **구현 위주**로 설명해 드리도록 하겠습니다.
 
 * **다음과 같은 사항을 알고 계시면 더 이해하기 쉽습니다.**
   - 딥러닝에 대한 전반적인 이해
@@ -928,7 +928,7 @@ Classification 문제때와 마찬가지로 학습 수행 과정동안 학습 �
 
 ## 결론
 
-본 포스팅에서는 이미지 인식 분야에서 중요하게 다뤄지는 Segmentation 문제를 응용할 수 있는 **개vs고양이 분할 문제** 사례를 소개하고 이를 GCN 모델과 TensorFlow를 이용한 딥러닝 알고리즘으로 해결하는 과정을 간단하게 안내해드렸습니다. 실제 Segmentation을 해야할 상황보다 쉬운 Task이기 때문에 엄밀하게 풀어냈다라고 할 수는 없지만, 실제 Segmentation 문제를 공부하고 처음 구현해보시는 분들에게는 약간이나마 도움이 됐을 것이라 생각합니다. 이론적인 부분이나 구현에서 이해안되는 부분있으시면 언제든 댓글 남겨주세요.
+본 포스팅에서는 이미지 인식 분야에서 중요하게 다뤄지는 Segmentation 문제를 응용할 수 있는 **개vs고양이 분할 문제** 사례를 소개하고 이를 GCN 모델과 TensorFlow를 이용한 딥러닝 알고리즘으로 해결하는 과정을 간단하게 안내해드렸습니다. 실제 Segmentation을 해야할 상황보다 쉬운 Task이기 때문에 엄밀하게 풀어냈다라고 할 수는 없지만, 실제 Segmentation 문제를 공부하고 처음 구현해보시는 분들에게는 약간이나마 도움이 됐을 것이라 생각합니다.
 
 ** 이로써 이미지 인식 분야에서 다뤄지는 세가지 문제(Classification, Detection, Segmentation)에 대해 간단한 데이터셋을 가지고 데이터 로드부터 구현 및 성능 체크과정까지 모두 다뤄보았습니다. 기획한 이미지 인식 분야 문제 해결과정에 대한 글은 여기서 마무리하지만, 그 외 딥러닝에 관한 글은 계속해서 블로그에 게시됩니다.
 
