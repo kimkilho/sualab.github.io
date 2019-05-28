@@ -21,7 +21,6 @@ description: ICLR 2019 학회에 다녀온 후기와 학회에 대한 소개, Be
 <a href="https://hoya012.github.io/blog/ICLR-image-recognition-paper-guide/" target="_blank"><b> “ICLR 2019 image recognition paper list guide”</b></a>
 글에서 확인하실 수 있습니다.  
 
-
 이 글에서 말씀드린 것처럼 매년 학회의 규모가 커지면서 2019년 올해에는 약 1600편 정도가 제출이 되었고, 그 중 500편이 accept이 되었습니다. 이 중 23편이 Oral Paper로 선정이 되었으며 이 중 2편의 논문이 Best Paper에 선정이 되었습니다. 
 
 ### [5/6(월) Workshop]
@@ -188,3 +187,13 @@ Simple ConvNet의 실험 결과도 앞서 설명한 LeNet의 실험 결과와 �
 {% include image.html name=page.name file="11.PNG" class="full-image" %}
 
 마지막으로 ICLR 2019가 열렸던 도시 뉴올리언스의 Ernest N. Morial Convention Center 앞에서 찍은 사진을 보여드리면서 글을 마치도록 하겠습니다! 읽어주셔서 감사합니다!
+
+## 참고 문헌
+- <a href="https://hoya012.github.io/blog/ICLR-image-recognition-paper-guide/" target="_blank"> “ICLR 2019 image recognition paper list guide”, 이호성 블로그</a>
+- <a href="https://slideslive.com/iclr" target="_blank"> ICLR Slides Live </a> 
+- <a href="https://iclr.cc" target="_blank"> ICLR2019 페이지 </a> 
+- <a href="https://www.facebook.com/pg/iclr.cc/videos/?ref=page_internal" target="_blank"> ICLR 페이스북 페이지</a> 
+- <a href="https://pdfs.semanticscholar.org/1ff9/a37d766e3a4f39757f5e1b235a42dacf18ff.pdf" target="_blank">Han, Song, et al. "Learning both weights and connections for efficient neural network." NIPS 2015. </a> 
+- <a href="https://openreview.net/pdf?id=rJl-b3RcF7" target="_blank">Frankle, Jonathan, and Michael Carbin. "The lottery ticket hypothesis: Finding sparse, trainable neural networks." ICLR 2019 </a>
+- <a href="https://openreview.net/pdf?id=B1VZqjAcYX" target="_blank"> Lee, Namhoon, Thalaiyasingam Ajanthan, and Philip HS Torr. "SNIP: Single-shot network pruning based on connection sensitivity." ICLR 2019</a> 
+- <a href="https://openreview.net/pdf?id=rJlnB3C5Ym" target="_blank"> Liu, Zhuang, et al. "Rethinking the value of network pruning." ICLR 2019</a> 
