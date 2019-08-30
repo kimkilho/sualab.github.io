@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Interpretable Machine Learning 개요: (1) 머신러닝 모델에 대한 해석력 확보를 위한 방법"
-date: 2019-08-16 09:00:00 +0900
+date: 2019-08-30 09:00:00 +0900
 author: kilho_kim
 categories: [Introduction]
 tags: [interpretable machine learning, interpretability, explainable artificial intelligence]
