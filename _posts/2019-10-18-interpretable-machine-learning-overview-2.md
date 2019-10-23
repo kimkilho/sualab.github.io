@@ -38,7 +38,7 @@ Activation Visualization의 필수 조건을 꼽는다면, 해석 대상이 되�
 
 {% include image.html name=page.name file="weight-visualization-example.png" description="컨볼루션 신경망의 1, 2, 3번째 컨볼루션 layer에서의 weight visualization 결과 예시<br><small>(Jost Tobias Springenberg et al.)</small>" class="full-image" %}
 
-다만, 여러분이 위 예시 그림을 보면서도 느끼시겠지만, Weight Visualization 결과만을 관찰하는 것만으로는 신경망의 각 weights가 이미지 상의 어떤 시각적 특징을 커버하는지 직관적으로 이해하기가 어렵습니다. 관찰 대상이 되는 layer을 상위 레벨로 이동할 수록 더 많은 필터들이 등장하기 때문에, weights에 대한 해석의 난해함은 점점 심해지는 경향을 보입니다. 그렇기 때문에 보통 Weight Visualization의 경우 현재 학습 중인 컨볼루션 신경망의 상태를 점검하기 위한 목적 정도로만 쓰이는 경우가 많으며, 그로부터 그 이상의 시사점을 확인하기는 현실적으로 어렵다고 볼 수 있습니다.
+다만, 여러분이 위 예시 그림을 보면서도 느끼시겠지만, Weight Visualization 결과만을 관찰하는 것만으로는 신경망의 각 weights가 이미지 상의 어떤 시각적 특징을 커버하는지 직관적으로 이해하기가 어렵습니다. 관찰 대상이 되는 layer를 상위 레벨로 이동할 수록 더 많은 필터들이 등장하기 때문에, weights에 대한 해석의 난해함은 점점 심해지는 경향을 보입니다. 그렇기 때문에 보통 Weight Visualization의 경우 현재 학습 중인 컨볼루션 신경망의 상태를 점검하기 위한 목적 정도로만 쓰이는 경우가 많으며, 그로부터 그 이상의 시사점을 확인하기는 현실적으로 어렵다고 볼 수 있습니다.
 
 
 ## Activation Maximization
@@ -63,29 +63,29 @@ Maximally Activating Images는 각 feature map을 최대로 활성화시키는 �
 
 ### Maximization by Optimization
 
-Maximally Activating Images는 feature map 등이 커버하는 현실적 특징을 파악하기에는 용이하나, 그 탐색 범위가 현재 보유한 데이터셋 상의 이미지들로 한정된다는 약점이 있습니다. 이에 따라 만약 현재 보유하고 있는 이미지 수가 매우 적다면, Maximally Activating Images를 탐색하였을 시의 효용이 그다지 크지 않을 것이라고 예상할 수 있습니다.
+Maximally Activating Images는 feature map 등이 커버하는 시각적 특징을 파악하기에는 용이하나, 그 탐색 범위가 현재 보유한 데이터셋 상의 이미지들로 한정된다는 약점이 있습니다. 이에 따라 만약 현재 보유하고 있는 이미지 수가 매우 적다면, Maximally Activating Images를 탐색하였을 시의 효용이 그다지 크지 않을 것이라고 예상할 수 있습니다.
 
-보유한 데이터셋에 의존하지 않고 feature map 등이 커버하는 현실적 특징을 좀 더 직접적으로 조사하고자, gradient ascent(경사 상승법)에 기반한 optimization(최적화)을 통해 타겟 출력값을 최대로 활성화하는 입력 이미지를 직접 *생성*하는 접근이 시도되었습니다. 이러한 방법을 여기에서는 '**Maximization by Optimization**(최적화 기반 최대화)'이라고 부르겠습니다.  <small>(엄밀하게는, 보통 Activation Maximization이라고 하면, 이 Maximization by Optimization 방법을 의미합니다. Christopher Olah et al. 에서는 이를 '<a href="https://distill.pub/2017/feature-visualization" target="_blank">Feature Visualization</a>'이라고 표현하기도 합니다.)</small>
+보유한 데이터셋에 의존하지 않고 feature map 등이 커버하는 시각적 특징을 좀 더 직접적으로 조사하고자, gradient ascent(경사 상승법)에 기반한 optimization(최적화)을 통해 타겟 출력값을 최대로 활성화하는 입력 이미지를 직접 *생성*하는 접근이 시도되었습니다. 이러한 방법을 여기에서는 '**Maximization by Optimization**(최적화 기반 최대화)'이라고 부르겠습니다.  <small>(엄밀하게는, 보통 Activation Maximization이라고 하면, 이 Maximization by Optimization 방법을 의미합니다. Christopher Olah et al. 에서는 이를 '<a href="https://distill.pub/2017/feature-visualization" target="_blank">Feature Visualization</a>'이라고 표현하기도 합니다.)</small>
 
 {% include image.html name=page.name file="maximization-by-optimization-concept.png" description="Maximization by Optimization 예시<br><small>('argmax': 'TARGET'을 최대로 활성화하는 'INPUT'을 생성)</small>" class="full-image" %}
 
 예를 들어, 랜덤 노이즈(random noise) 형태의 이미지 $$X_0$$에서 출발하여, 위 그림과 같이 특정한 하나의 feature map $$f_k$$를 타겟 출력값으로 지정했다고 가정하겠습니다. 현재 이미지 $$X_0$$를 기준으로 feature map $$f_k$$의 이미지 $$X$$에 대한 gradient $$\partial f_{\cdot,\cdot,k} / \partial X$$를 계산하여 이를 현재 이미지에 더해주면, 기존보다 해당 feature map을 더 강하게 활성화시키는 새로운 이미지 $$X_1$$을 얻을 수 있습니다. 매 반복 회차 $$t$$마다 아래의 수식에 따라 이러한 과정을 반복하면서, 전체 반복 횟수 $$T$$를 충분히 많이 가져가면, 해당 feature map을 '최대로 활성화시키는 이미지'를 얻을 수 있습니다.
 
 $$
-X_{t+1} = X_t + \alpha \cdot \frac{\partial f_{\cdot,\cdot,k}}{\partial X}
+X_{t+1} = X_t + \alpha \cdot \frac{\partial f_{\cdot,\cdot,k}}{\partial X} \quad (t=0,1,...,T-1)
 $$
 
-아래의 예시 그림들은 타겟 출력값을 서로 다른 feature map으로 설정했을 시 Maximization by Optimization 결과가 달라지는 것을 잘 보여주고 있습니다. 대체로 앞쪽 layer에 위치한 feature map들의 경우 단순하고 반복적인 패턴(edges, textures)을 커버하는 경향을 보이며, 뒷쪽 layer에 위치한 feature map들의 경우 그보다는 좀 더 복잡한 무늬, 사물의 일부분 또는 전체를 커버하는 경향을 보임을 확인할 수 있습니다.
+아래의 예시 그림들은 타겟 출력값을 서로 다른 feature map으로 설정했을 시 Maximization by Optimization 결과가 달라지는 것을 잘 보여주고 있습니다. 대체로 앞쪽 layer에 위치한 feature map들의 경우 단순하고 반복적인 패턴(edges, textures)을 커버하는 경향을 보이며, 뒷쪽 layer에 위치한 feature map들의 경우 그보다는 좀 더 복잡한 무늬, 모종의 사물의 일부분 또는 전체를 커버하는 경향을 보임을 확인할 수 있습니다.
 
-{% include image.html name=page.name file="maximization-by-optimization-on-feature-map-examples.png" description="타겟 출력값을 서로 다른 feature map으로 설정했을 시의 서로 다른 Maximization by Optimization 수행 결과 예시 <small>(Christopher Olah et al.)</small>" class="full-image" %}
+{% include image.html name=page.name file="maximization-by-optimization-on-feature-map-examples.png" description="타겟 출력값을 서로 다른 feature map으로 설정했을 시의 다양한 Maximization by Optimization 수행 결과 예시 <small>(Christopher Olah et al.)</small>" class="full-image" %}
 
 만일 Maximization by Optimization의 타겟 출력값을 feature map 대신 layer로 설정할 경우, 아래의 예시 그림들과 같이 상당히 드라마틱한 결과를 얻을 수 있습니다. 이들이 마치 꿈 속에서만 등장할 것 같은 생소한 인상을 주었기 때문에, 연구자들은 여기에 '**DeepDream**'이라는 이름을 붙였습니다. 그림에서도 확인하실 수 있듯이 layer 상의 feature map들에서 커버하는 패턴 또는 모양이 하나로 융합된 듯한 결과물을 생산해 내는데, 해석 가능성의 측면에서 봤을 땐 feature map 각각에 대한 관찰 결과에 비해 다소 난해한 듯한 특징을 보여주고 있습니다.
 
-{% include image.html name=page.name file="deepdream-result-examples.png" description="타겟 출력값을 서로 다른 layer로 설정했을 시의 서로 다른 Maximization by Optimization(DeepDream) 수행 결과 예시 <small>(DeepDreaming with TensorFlow로 저자가 직접 생성한 결과물)</small>" class="full-image" %}
+{% include image.html name=page.name file="deepdream-result-examples.png" description="타겟 출력값을 서로 다른 layer로 설정했을 시의 다양한 Maximization by Optimization(DeepDream) 수행 결과 예시 <small>(DeepDreaming with TensorFlow로 저자가 직접 생성한 결과물)</small>" class="full-image" %}
 
 한편, Maximization by Optimization의 타겟 출력값을 최종 prediction layer의 logit으로 설정할 경우, 아래의 예시 그림들과 같이 좀 더 온전한 사물에 가까운 결과를 확인할 수 있습니다. 해당 logit에 대응되는 클래스(class)를 대표하는 '전형적인' 사물을 만들어 냈다고 할 수 있습니다. 이에 대한 관찰을 통해, 각 클래스에 대하여 주어진 학습 데이터셋으로부터 컨볼루션 신경망이 학습을 수행한 결과가 대략 어떤 형태인지 집약적으로 확인해 볼 수 있습니다.
 
-{% include image.html name=page.name file="maximization-by-optimization-on-logit-examples.png" description="타겟 출력값을 logit으로 설정했을 시의 서로 다른 Maximization by Optimization 수행 결과 예시 <small>(Anh Nguyen et al.)</small>" class="full-image" %}
+{% include image.html name=page.name file="maximization-by-optimization-on-logit-examples.png" description="타겟 출력값을 서로 다른 클래스 logit으로 설정했을 시의 다양한 Maximization by Optimization 수행 결과 예시 <small>(Anh Nguyen et al.)</small>" class="full-image" %}
 
 
 ## Attribution
@@ -129,15 +129,15 @@ Attribution이 단일 입력 이미지에 대한 컨볼루션 신경망의 예�
 
 {% include image.html name=page.name file="dataset-visualization-concept.png" description="컨볼루션 layer 상의 feature maps의 2D feature space로의 Dataset Visualization 예시" class="full-image" %}
 
-Dataset Visualization을 위한 대표적인 Dimensionality Reduction 방법으로는 <a href="https://en.wikipedia.org/wiki/Principal_component_analysis" target="_blank">PCA(principal component analysis)</a>, <a href="http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf" target="_blank">t-SNE(t-Distributed Stochastic Neighbor Embedding)</a>, <a href="https://arxiv.org/pdf/1802.03426" target="_blank">UMAP</a> 등이 있습니다. 이들은 컨볼루션 신경망의 feature maps 뿐만 아니라, 다른 high-dimensional(고차원) 데이터의 시각화를 위해서도 범용적으로 적용할 수 있는 Dimensionality Reduction 방법에 해당합니다. 예를 들어 <a href="{{ site.url }}{% post_url 2017-11-29-image-recognition-overview-1 %}#인간의-인식-성능을-좇기-위한-도전" target="_blank">MNIST 데이터셋</a>으로 학습한 컨볼루션 신경망에 대하여 t-SNE를 적용할 경우, 아래 그림과 같은 형태의 Dataset Visualization 결과를 도출할 수 있습니다.
+Dataset Visualization을 위한 대표적인 Dimensionality Reduction 방법으로는 <a href="https://en.wikipedia.org/wiki/Principal_component_analysis" target="_blank">PCA(principal component analysis)</a>, <a href="http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf" target="_blank">t-SNE(t-distributed stochastic neighbor embedding)</a>, <a href="https://arxiv.org/pdf/1802.03426" target="_blank">UMAP(uniform manifold approximation and projection)</a> 등이 있습니다. 이들은 컨볼루션 신경망의 feature maps 뿐만 아니라, 다른 high-dimensional(고차원) 데이터의 시각화를 위해서도 범용적으로 적용할 수 있는 Dimensionality Reduction 방법에 해당합니다. 예를 들어 <a href="{{ site.url }}{% post_url 2017-11-29-image-recognition-overview-1 %}#인간의-인식-성능을-좇기-위한-도전" target="_blank">MNIST 데이터셋</a>으로 학습한 컨볼루션 신경망에 대하여 t-SNE를 적용할 경우, 아래 그림과 같은 형태의 Dataset Visualization 결과를 도출할 수 있습니다.
 
-{% include image.html name=page.name file="tsne-visualization-example.png" description="MNIST 데이터셋에 대한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과 예시 <small>(Laurens van der Maaten and Geoffrey Hinton)</small>" class="large-image" %}
+{% include image.html name=page.name file="tsne-visualization-example.png" description="MNIST 데이터셋으로 학습한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과를 원본 이미지로 표현한 예시 <small>(Laurens van der Maaten and Geoffrey Hinton)</small>" class="large-image" %}
 
-혹은, <a href="http://www.image-net.org/challenges/LSVRC/2014/" target="_blank">ILSVRC</a>와 같은 데이터셋 상의 자연계 이미지에 대해서도 동일한 방법으로 t-SNE를 적용하고, 이를 통해 얻어진 2D feature space 상의 공간적 위치에 의거하여, 이미지들을 균일한 간격으로 배치한 아래와 같은 Dataset Visualization 결과도 도출할 수 있습니다.
+혹은, <a href="http://www.image-net.org/challenges/LSVRC/2014/" target="_blank">ILSVRC</a>와 같은 데이터셋 상의 자연계 이미지들로 학습한 컨볼루션 신경망에 대해서도 동일한 방법으로 t-SNE를 적용하고, 이를 통해 얻어진 2D feature space 상의 공간적 위치에 의거하여, 이미지들을 이에 맞게 균일한 간격으로 배치한 아래와 같은 Dataset Visualization 결과도 도출할 수 있습니다.
 
-{% include image.html name=page.name file="cnn-embed-full-1k.jpg" description="ILSVRC 데이터셋에 대한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과를 원본 이미지로 표현한 예시 <small>(Andrej Karpathy)</small>" class="large-image" %}
+{% include image.html name=page.name file="cnn-embed-full-1k.jpg" description="ILSVRC 데이터셋으로 학습한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과를 원본 이미지로 표현한 예시 <small>(Andrej Karpathy)</small>" class="large-image" %}
 
-MNIST 데이터셋과 ILSVRC 데이터셋에 대한 Dataset Visualization 결과 모두에서, 대체로 동일하거나 유사한 클래스 이미지들이 공간적으로 서로 모여 군집(cluster)을 이루고 있는 경향을 확인할 수 있습니다. 이와 같이 Dataset Visualization을 통해, 데이터셋 상에 포함된 전체 이미지들에 대한 컨볼루션 신경망의 예측 결과의 전반적인 경향성 및 각 예측 결과들 간의 거리 관계 등을 한 눈에 확인할 수 있습니다.
+MNIST 데이터셋과 ILSVRC 데이터셋에 대한 Dataset Visualization 결과 모두에서, 대체로 동일하거나 유사한 클래스의 이미지들이 공간적으로 서로 모여 군집(cluster)을 이루고 있는 경향을 확인할 수 있습니다. 이와 같이 Dataset Visualization을 통해, 데이터셋 상에 포함된 전체 이미지들에 대한 컨볼루션 신경망의 예측 결과의 전반적인 경향성 및 각 예측 결과들 간의 거리 관계 등을 한 눈에 확인할 수 있습니다.
 
 
 ## 결론
@@ -146,7 +146,7 @@ MNIST 데이터셋과 ILSVRC 데이터셋에 대한 Dataset Visualization 결과
 
 Activation Maximization은 컨볼루션 신경망의 다양한 중간 출력값들이 커버하는 시각적 특징을 좀 더 효과적으로 확인할 수 있도록 하는 방법입니다. 컨볼루션 신경망 상의 특정 타겟 출력값을 최대로 활성화하는 입력 이미지들을 현재 가지고 있는 데이터셋 상에서 '탐색'하여 Maximally Activating Images를 얻거나, 혹은 gradient ascent에 기반한 optimization을 통해 이를 직접 '생성'하는 Maximization by Optimization을 시도할 수 있음을 확인하였습니다. 관심의 대상이 되는 타겟 출력값으로는 neuron, feature map(=channel), layer 혹은 prediction layer의 logit 등이 될 수 있으며, 이를 어떻게 설정하느냐에 따라 Activation Maximization 수행 결과가 크게 달라짐을 확인할 수 있었습니다.
 
-반면 컨볼루션 신경망의 중간 출력값보다는 예측 결과 자체에 집중하여 여기에 대한 '설명'을 제공하기 위한 방법으로 Attribution이 있습니다. Saliency Map은 예측 클래스 logit의 입력 이미지에 대한 gradient를 계산하여 생성해 낸 Attribution 수단으로, 이를 관찰함으로써 컨볼루션 신경망의 특정 예측 결과가 이미지 상의 어느 부분에 기인하였는지 가시적으로 확인할 수 있습니다. 한편 Class Activation Map은 컨볼루션 layer의 feature map들에 대한 가중합을 계산하는 방식을 통해 Attribution 결과를 생성해 낸 결과물로, 좀 더 부드러운 Attribution 결과를 보여준다는 특징이 있습니다.
+반면 컨볼루션 신경망의 중간 출력값보다는 예측 결과 자체에 집중하여 여기에 대한 '설명'을 제공하기 위한 방법으로 Attribution이 있습니다. Saliency Map은 예측 클래스 logit의 입력 이미지에 대한 gradient를 계산하여 생성해 낸 Attribution 수단으로, 이를 관찰함으로써 컨볼루션 신경망의 특정 예측 결과가 이미지 상의 어느 부분에 기인하였는지 가시적으로 확인할 수 있습니다. 한편 Class Activation Map은 컨볼루션 layer의 feature map들에 대한 가중합을 계산하는 방식을 통해 Attribution 결과를 생성해 낸 것으로, 좀 더 부드러운 Attribution 결과를 보여준다는 특징이 있습니다.
 
 만일 어느 데이터셋 상의 전체 이미지들에 대한 컨볼루션 신경망의 예측 결과들을 조망하고 이들의 일반적 경향성을 확인하고 싶은 경우, PCA, t-SNE, UMAP과 같은 Dimensionality Reduction 방법을 적용하여 Dataset Visualization을 시도해볼 수 있습니다. 이를 통해 컨볼루션 신경망이 주어진 데이터셋에 대하여 좀 더 거시적인 맥락에서 어떻게 동작하도록 학습되었는지 간접적으로 파악할 수 있음을 확인하였습니다.
 
@@ -174,7 +174,7 @@ Activation Maximization은 컨볼루션 신경망의 다양한 중간 출력값�
   - <a href="https://colab.research.google.com/github/tensorflow/examples/blob/master/community/en/r1/deepdream.ipynb" target="_blank">DeepDreaming with TensorFlow</a>
 - PCA(principal component analysis)
   - <a href="https://en.wikipedia.org/wiki/Principal_component_analysis" target="_blank">Wikipedia contributors. "Principal component analysis." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 9 Oct. 2019. Web. 22 Oct. 2019. </a>
-- t-SNE(t-Distributed Stochastic Neighbor Embedding)
+- t-SNE(t-distributed stochastic neighbor embedding)
   - <a href="http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf" target="_blank">Maaten, Laurens van der, and Geoffrey Hinton. "Visualizing data using t-SNE." Journal of machine learning research 9.Nov (2008): 2579-2605.</a>
 - UMAP(uniform manifold approximation and projection)
   - <a href="https://arxiv.org/pdf/1802.03426" target="_blank">McInnes, Leland, John Healy, and James Melville. "Umap: Uniform manifold approximation and projection for dimension reduction." arXiv preprint arXiv:1802.03426 (2018).</a>
