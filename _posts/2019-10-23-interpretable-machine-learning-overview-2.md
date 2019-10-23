@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Interpretable Machine Learning 개요: (2) 이미지 인식 문제에서의 딥러닝 모델의 주요 해석 방법"
-date: 2019-10-18 09:00:00 +0900
+date: 2019-10-23 09:00:00 +0900
 author: kilho_kim
 categories: [Introduction]
 tags: [interpretable machine learning, interpretability, explainable artificial intelligence]
@@ -26,7 +26,7 @@ name: interpretable-machine-learning-overview-2
 
 {% include image.html name=page.name file="image-features-prediction-diagram.png" description="컨볼루션 신경망의 기본 구성" class="large-image" %}
 
-컨볼루션 신경망이 특정 예측 결과를 도출하게 된 근거를 해석하기 위해 가장 직관적으로 생각할 수 있는 방법으로, 중간 계산 과정에서 생성된 feature map 각각을 들여다 보는 방법이 있습니다. 보통 일반적인 머신러닝 모델에서 feature를 '들여다 본다' 함은, feature로 계산된 값의 크기를 비교하고 통계적 분포 등을 조사하는 것이 될 것입니다. 그러나 컨볼루션 신경망의 feature map은 그 특유의 2차원적 구조 때문에 이를 마치 이미지처럼 그려볼 수 있다는 장점이 있습니다. 
+컨볼루션 신경망이 특정 예측 결과를 도출하게 된 근거를 해석하기 위해 가장 직관적으로 생각할 수 있는 방법으로, 중간 계산 과정에서 생성된 feature map 각각을 들여다보는 방법이 있습니다. 보통 일반적인 머신러닝 모델에서 feature를 '들여다본다' 함은, feature로 계산된 값의 크기를 비교하고 통계적 분포 등을 조사하는 것이 될 것입니다. 그러나 컨볼루션 신경망의 feature map은 그 특유의 2차원적 구조 때문에 이를 마치 이미지처럼 그려볼 수 있다는 장점이 있습니다. 
  
 {% include image.html name=page.name file="activation-visualization-example.jpeg" description="컨볼루션 신경망의 각 layer에서의 activation visualization 결과 예시 <small>(Andrej Karpathy)</small>" class="full-image" %}
 
@@ -38,7 +38,7 @@ Activation Visualization의 필수 조건을 꼽는다면, 해석 대상이 되�
 
 {% include image.html name=page.name file="weight-visualization-example.png" description="컨볼루션 신경망의 1, 2, 3번째 컨볼루션 layer에서의 weight visualization 결과 예시<br><small>(Jost Tobias Springenberg et al.)</small>" class="full-image" %}
 
-다만, 여러분이 위 예시 그림을 보면서도 느끼시겠지만, Weight Visualization 결과만을 관찰하는 것만으로는 신경망의 각 weights가 이미지 상의 어떤 시각적 특징을 커버하는지 직관적으로 이해하기가 어렵습니다. 관찰 대상이 되는 layer를 상위 레벨로 이동할 수록 더 많은 필터들이 등장하기 때문에, weights에 대한 해석의 난해함은 점점 심해지는 경향을 보입니다. 그렇기 때문에 보통 Weight Visualization의 경우 현재 학습 중인 컨볼루션 신경망의 상태를 점검하기 위한 목적 정도로만 쓰이는 경우가 많으며, 그로부터 그 이상의 시사점을 확인하기는 현실적으로 어렵다고 볼 수 있습니다.
+다만, 여러분이 위 예시 그림을 보면서도 느끼시겠지만, Weight Visualization 결과만을 관찰하는 것만으로는 신경망의 각 weights가 이미지 상의 어떤 시각적 특징을 커버하는지 직관적으로 이해하기가 어렵습니다. 관찰 대상이 되는 layer를 상위 레벨로 이동할수록 더 많은 필터들이 등장하기 때문에, weights에 대한 해석의 난해함은 점점 심해지는 경향을 보입니다. 그렇기 때문에 보통 Weight Visualization의 경우 현재 학습 중인 컨볼루션 신경망의 상태를 점검하기 위한 목적 정도로만 쓰이는 경우가 많으며, 그로부터 그 이상의 시사점을 확인하기는 현실적으로 어렵다고 볼 수 있습니다.
 
 
 ## Activation Maximization
@@ -47,7 +47,7 @@ Activation/Weight Visualization 이후로, 각 feature map이 커버하는 시�
 
 {% include image.html name=page.name file="activation-maximization-concept.png" description="Activation Maximization의 기본 컨셉<br><small>('argmax': 'TARGET'을 최대로 활성화하는 'INPUT' 탐색 또는 생성)</small>" class="large-image" %}
 
-예를 들어, 위 그림과 같이 어느 feature map 상의 특정 neuron(뉴런)을 조사 타겟으로 설정하고, 이를 *최대 수준으로 활성화시키는* 입력 이미지의 형태를 조사하는 것이 가장 대표적인 Activation Maximization이라고 할 수 있습니다. 이 때, feature map 상의 특정 neuron 외에도 feature map(=channel) 또는 복수 개의 feature map들을 포괄하는 하나의 layer 등도 타겟으로 설정할 수 있으며, 최종 prediction layer의 특정 logit(로짓) 또한 타겟으로 설정할 수 있습니다. 
+예를 들어, 위 그림과 같이 어느 feature map 상의 특정 neuron(뉴런)을 조사 타겟으로 설정하고, 이를 *최대 수준으로 활성화시키는* 입력 이미지의 형태를 조사하는 것이 가장 대표적인 Activation Maximization이라고 할 수 있습니다. 이때, feature map 상의 특정 neuron 외에도 feature map(=channel) 또는 복수 개의 feature map들을 포괄하는 하나의 layer 등도 타겟으로 설정할 수 있으며, 최종 prediction layer의 특정 logit(로짓) 또한 타겟으로 설정할 수 있습니다. 
 
 {% include image.html name=page.name file="types-of-target-activation.png" description="컨볼루션 신경망 상의 타겟 출력값 후보 <small>(Christopher Olah et al.)</small>" class="large-image" %}
 
@@ -57,7 +57,7 @@ Activation Maximization을 위한 나이브한 방법으로, 컨볼루션 신경
 
 {% include image.html name=page.name file="maximally-activating-images-concept.png" description="Maximally Activating Images 탐색 예시<br><small>('argmax': 'TARGET'을 최대로 활성화하는 'INPUT'을 데이터셋 상에서 탐색)</small>" class="full-image" %}
 
-Maximally Activating Images는 각 feature map을 최대로 활성화시키는 입력 이미지를 실제 데이터셋으로부터 탐색한다는 점에서, feature map이 커버하는 현실 이미지 상의 시각적 특징을 좀 더 직접적으로 파악하는 데 도움을 줍니다. 보통은 상위 몇 개의 Maximally Activating Images를 일단 뽑아낸 뒤 이들 각각에 대하여 Activation Visualization을 추가로 수행함으로써, 해당 feature map이 Maximally Activating Images 상의 어느 부분에 초점을 맞추는지 보다 면밀하게 확인할 수 있습니다. 그 결과, 특정 layer 내 각 feature map이 커버하는 현실 이미지 상의 시각적 특징들(e.g. 검정색 원형 부분, 물체의 곡선 경계, 알파벳 글자 등)을 아래 그림과 같이 patch(패치) 형태로 자세히 확인해볼 수 있습니다.
+Maximally Activating Images는 각 feature map을 최대로 활성화시키는 입력 이미지를 실제 데이터셋으로부터 탐색한다는 점에서, feature map이 커버하는 현실 이미지 상의 시각적 특징을 좀 더 직접적으로 파악하는 데 도움을 줍니다. 보통은 상위 몇 개의 Maximally Activating Images를 일단 뽑아낸 뒤 이들 각각에 대하여 Activation Visualization을 추가로 수행함으로써, 해당 feature map이 Maximally Activating Images 상의 어느 부분에 초점을 맞추는지 보다 면밀하게 확인할 수 있습니다. 그 결과, 특정 layer 내 각 feature map이 커버하는 현실 이미지 상의 시각적 특징들(e.g. 검은색 원형 부분, 물체의 곡선 경계, 알파벳 글자 등)을 아래 그림과 같이 patch(패치) 형태로 자세히 확인해볼 수 있습니다.
 
 {% include image.html name=page.name file="maximally-activating-patches-example.png" description="컨볼루션 신경망의 6, 9번째 컨볼루션 layer 내 각 feature map의 상위 10개 Maximally Activating *Patches* 예시 <small>(Jost Tobias Springenberg et al.)</small><br><small>(각 행은 하나의 feature map에 대응되며, 좌측부터 활성값의 내림차순으로 상위 10개 이미지를 나타냄)</small>" class="full-image" %}
 
@@ -79,7 +79,7 @@ $$
 
 {% include image.html name=page.name file="maximization-by-optimization-on-feature-map-examples.png" description="타겟 출력값을 서로 다른 feature map으로 설정했을 시의 다양한 Maximization by Optimization 수행 결과 예시 <small>(Christopher Olah et al.)</small>" class="full-image" %}
 
-만일 Maximization by Optimization의 타겟 출력값을 feature map 대신 layer로 설정할 경우, 아래의 예시 그림들과 같이 상당히 드라마틱한 결과를 얻을 수 있습니다. 이들이 마치 꿈 속에서만 등장할 것 같은 생소한 인상을 주었기 때문에, 연구자들은 여기에 '**DeepDream**'이라는 이름을 붙였습니다. 그림에서도 확인하실 수 있듯이 layer 상의 feature map들에서 커버하는 패턴 또는 모양이 하나로 융합된 듯한 결과물을 생산해 내는데, 해석 가능성의 측면에서 봤을 땐 feature map 각각에 대한 관찰 결과에 비해 다소 난해한 듯한 특징을 보여주고 있습니다.
+만일 Maximization by Optimization의 타겟 출력값을 feature map 대신 layer로 설정할 경우, 아래의 예시 그림들과 같이 상당히 드라마틱한 결과를 얻을 수 있습니다. 이들이 마치 꿈속에서만 등장할 것 같은 생소한 인상을 주었기 때문에, 연구자들은 여기에 '**DeepDream**'이라는 이름을 붙였습니다. 그림에서도 확인하실 수 있듯이 layer 상의 feature map들에서 커버하는 패턴 또는 모양이 하나로 융합된 듯한 결과물을 생산해 내는데, 해석 가능성의 측면에서 봤을 땐 feature map 각각에 대한 관찰 결과에 비해 다소 난해한 듯한 특징을 보여주고 있습니다.
 
 {% include image.html name=page.name file="deepdream-result-examples.png" description="타겟 출력값을 서로 다른 layer로 설정했을 시의 다양한 Maximization by Optimization(DeepDream) 수행 결과 예시 <small>(DeepDreaming with TensorFlow로 저자가 직접 생성한 결과물)</small>" class="full-image" %}
 
@@ -114,7 +114,7 @@ Saliency Map을 관찰함으로써, 컨볼루션 신경망의 특정 예측 결�
 
 Attribution을 위해 Saliency Map 외에 많이 사용되는 또 다른 수단으로 '**Class Activation Map**(클래스 활성화 맵)'이 있습니다. 이는 최종 prediction layer 직전에 위치한 layer의 각 feature map에 대하여 *global average pooling(GAP)*을 수행하도록 설계된 컨볼루션 신경망에 대하여 범용적으로 적용할 수 있는 Attribution 방법에 해당합니다.
 
-앞서 보았던 Activation Visualization이 feature map의 시각화 결과를 각각 시각화하는 방법이었다면, Class Activation Map은 prediction layer 직전의 weights를 사용하여 해당 feature map들의 가중합을 계산한 결과물만을 시각화함으로써, 특정 예측 클래스에 대한 전체 feature map들의 '평균적인' 활성화 결과를 확인하는 방법이라고 할 수 있습니다. Class Activation Map을 제안한 저자<small>(Bolei Zhou et al.)</small>의 논문에 수록된 아래 그림을 통해, 이러한 컨셉을 한 눈에 이해할 수 있습니다.
+앞서 보았던 Activation Visualization이 feature map의 시각화 결과를 각각 시각화하는 방법이었다면, Class Activation Map은 prediction layer 직전의 weights를 사용하여 해당 feature map들의 가중합을 계산한 결과물만을 시각화함으로써, 특정 예측 클래스에 대한 전체 feature map들의 '평균적인' 활성화 결과를 확인하는 방법이라고 할 수 있습니다. Class Activation Map을 제안한 저자<small>(Bolei Zhou et al.)</small>의 논문에 수록된 아래 그림을 통해, 이러한 컨셉을 한눈에 이해할 수 있습니다.
 
 {% include image.html name=page.name file="class-activation-mapping.png" description="예측 클래스에 대해 얻어진 Class Activation Map 예시 <small>(Bolei Zhou et al.)</small>" class="full-image" %}
 
@@ -137,7 +137,7 @@ Dataset Visualization을 위한 대표적인 Dimensionality Reduction 방법으�
 
 {% include image.html name=page.name file="cnn-embed-full-1k.jpg" description="ILSVRC 데이터셋으로 학습한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과를 원본 이미지로 표현한 예시 <small>(Andrej Karpathy)</small>" class="large-image" %}
 
-MNIST 데이터셋과 ILSVRC 데이터셋에 대한 Dataset Visualization 결과 모두에서, 대체로 동일하거나 유사한 클래스의 이미지들이 공간적으로 서로 모여 군집(cluster)을 이루고 있는 경향을 확인할 수 있습니다. 이와 같이 Dataset Visualization을 통해, 데이터셋 상에 포함된 전체 이미지들에 대한 컨볼루션 신경망의 예측 결과의 전반적인 경향성 및 각 예측 결과들 간의 거리 관계 등을 한 눈에 확인할 수 있습니다.
+MNIST 데이터셋과 ILSVRC 데이터셋에 대한 Dataset Visualization 결과 모두에서, 대체로 동일하거나 유사한 클래스의 이미지들이 공간적으로 서로 모여 군집(cluster)을 이루고 있는 경향을 확인할 수 있습니다. 이와 같이 Dataset Visualization을 통해, 데이터셋 상에 포함된 전체 이미지들에 대한 컨볼루션 신경망의 예측 결과의 전반적인 경향성 및 각 예측 결과들 간의 거리 관계 등을 한눈에 확인할 수 있습니다.
 
 
 ## 결론
