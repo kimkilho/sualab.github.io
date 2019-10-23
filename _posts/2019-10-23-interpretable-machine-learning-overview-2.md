@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Interpretable Machine Learning 개요: (2) 이미지 인식 문제에서의 딥러닝 모델의 주요 해석 방법"
-date: 2019-10-18 09:00:00 +0900
+date: 2019-10-23 09:00:00 +0900
 author: kilho_kim
 categories: [Introduction]
 tags: [interpretable machine learning, interpretability, explainable artificial intelligence]
