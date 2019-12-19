@@ -17,7 +17,7 @@ name: generative-adversarial-network
 * **GAN 방법론의 경우 random으로 sampling한 latent vector z에 의해 학습시 생성되는 이미지가 달라지므로 매번 같은 학습 결과가 나오지 않습니다.**
 * 이번 글에서는 과거 구현체와 마찬가지로 데이터셋(data set), 성능 평가(performance evaluation), 러닝 모델(learning model), 러닝 알고리즘(leaning algorithm) 4가지 요소를 나눠 구현하였으며, 중복을 피하기 위해 다르게 구현한 부분 위주로 설명합니다. 
   - 전체 구현체 코드는 <a href="https://github.com/sualab/DCGAN_Face_gen_tf" target="_blank">수아랩의 GitHub 저장소</a>에서 자유롭게 확인하실 수 있습니다.
-  - 데이터셋은 <a href="https://drive.google.com/open?id=1uJkWCpLUM-BnXW3H_IgVMdfENeNDFNmC" target="_blank">여기</a>서 받을 수 있습니다.
+  - 데이터셋은 <a href="https://drive.google.com/file/d/1sR5PNAEWPmWGyEBYtprura4LsV_IUsYQ/view?usp=sharing" target="_blank">여기</a>서 받을 수 있습니다.
   - 성능평가에서 사용할 통계 데이터는 위의 수아랩 GitHub 저장소에서 구현체 코드를 통해 직접 계산할 수도 있지만 <a href="https://drive.google.com/file/d/14f5cQOCbiAoDODRmVmZvlNsg7wX0U92G/view?usp=sharing" target="_blank">여기</a>서 받을 수 있습니다.
   - 성능평가에서 사용할 pretrained Inception v3 그래프는 <a href="https://drive.google.com/file/d/1thIXF4jvG0KluzSEpsg1TCNiKEzh8VFV/view?usp=sharing" target="_blank">여기</a>서 받을 수 있습니다.
   
