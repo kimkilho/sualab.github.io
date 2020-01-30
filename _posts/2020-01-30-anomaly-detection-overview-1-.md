@@ -99,7 +99,7 @@ In-distribution 데이터 셋에 위의 예시 그림처럼 흰색 강아지만 
 
 위에서 Anomaly Detection의 방법론, 문제 상황 등을 정리하였다면 이번엔 산업 전반적인 분야의 대표적인 적용 사례들을 하나씩 소개드릴 예정입니다. 대부분의 예시는 <a href="https://arxiv.org/abs/1901.03407" target="_blank"><b> “Deep Learning for Anomaly Detection: A Survey,” 2019 arXiv </b></a> 2019년에 작성된 서베이 논문을 참고하여 작성하였습니다. 
 
-{% include image.html name=page.name file="applications.PNG" description="Anomaly Detection의 적용 사례” class="full-image" %}
+{% include image.html name=page.name file="applications.PNG" description="Anomaly Detection의 적용 사례" class="full-image" %}
 
 
 Anomaly Detection이 적용될 수 있는 주요 사례는 다음과 같습니다. 
