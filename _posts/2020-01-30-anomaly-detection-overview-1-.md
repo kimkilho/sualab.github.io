@@ -11,20 +11,21 @@ description: 이상치 탐지 (Anomaly Detection) 분야에 대해 주요 용어
 
 안녕하세요. 이번 포스팅에서는 Anomaly Detection(이상 탐지)에 대해 소개를 드리고자 합니다. Anomaly Detection이란, Normal(정상) sample과 Abnormal(비정상, 이상치, 특이치) sample을 구별해내는 문제를 의미하며 수아랩이 다루고 있는 제조업뿐만 아니라 CCTV, 의료 영상, Social Network 등 다양한 분야에서 응용이 되고 있습니다. 그러나 Anomaly Detection 용어 외에도 다양한 용어가 비슷한 의미로 사용되고 있어서 이 용어들을 기준에 따라 정리하고 각 용어에 대해 자세히 설명하겠습니다. 이어질 포스팅에서는 Anomaly Detection 연구 분야에서 다루는 Out-of-distribution(OOD) Detection 문제에 대해 여러 논문과 함께 깊이 있게 소개할 예정입니다. 
 
-<blockquote> Anomaly Detection 연구 분야 용어 정리 </blockquote>  
+## Anomaly Detection 연구 분야 용어 정리
+
 Anomaly Detection은 학습 데이터 셋에 비정상적인 sample이 포함되는지, 각 sample의 label이 존재하는지, 비정상적인 sample의 성격이 정상 sample과 어떻게 다른지, 정상 sample의 class가 단일 class 인지 Multi-class 인지 등에 따라 다른 용어를 사용합니다. 이 용어들을 정리하기 위해 학계에서 다뤄지고 있는 Anomaly Detection 논문 서베이를 수행하고 각 논문을 참고하여 용어를 정리해보았습니다. 
 
 -	논문 서베이 자료는 <a href="https://github.com/hoya012/awesome-anomaly-detection" target="_blank"><b> “awesome-anomaly-detection” GitHub Repository </b></a> 에서 확인하실 수 있습니다. 
 
-## 1. 학습시 비정상 sample의 사용여부 및 label 유무에 따른 분류
-### Supervised Anomaly Detection
+### 1. 학습시 비정상 sample의 사용여부 및 label 유무에 따른 분류
+#### Supervised Anomaly Detection
 주어진 학습 데이터 셋에 정상 sample과 비정상 sample의 Data와 Label이 모두 존재하는 경우 Supervised Learning 방식이기 때문에 Supervised Anomaly Detection이라 부릅니다. Supervised Learning 방식은 다른 방법 대비 정확도가 높은 특징이 있습니다. 그래서 높은 정확도를 요구로 하는 경우에 주로 사용되며, 비정상 sample을 다양하게 보유할수록 더 높은 성능을 달성할 수 있습니다. 
 
 하지만 Anomaly Detection이 적용되는 일반적인 산업 현장에서는 정상 sample보다 비정상 sample의 발생 빈도가 현저히 적기 때문에 **Class-Imbalance(불균형)** 문제를 자주 겪게 됩니다. 이러한 문제를 해결하기 위해 Data Augmentation(증강), Loss function 재설계, Batch Sampling 등 다양한 연구가 수행되고 있습니다. 
 -	장점: 양/불 판정 정확도가 높다.
 -	단점: 비정상 sample을 취득하는데 시간과 비용이 많이 든다. Class-Imbalance 문제를 해결해야 한다. 
 
-### Semi-supervised (One-Class) Anomaly Detection
+#### Semi-supervised (One-Class) Anomaly Detection
 Supervised Anomaly Detection 방식의 가장 큰 문제는 비정상 sample을 확보하는데 많은 시간과 비용이 든다는 것입니다. 제조업의 경우를 예로 들면, 수백만 장의 정상 sample이 취득되는 동안 단 1~2장의 비정상 sample이 취득되는 상황이 종종 발생합니다. 
 
 제조업에서 Supervised Learning 방식으로 학습하기 위해 각 class 당 최소 100장의 이미지가 필요하다고 가정하면, 실제로는 sample 1억 장을 모아야 100장 정도의 비정상 sample을 확보할 수 있습니다. 이런 상황에서는 데이터 셋을 확보하는데 굉장히 오랜 시간이 소요되겠죠?
@@ -38,7 +39,7 @@ Supervised Anomaly Detection 방식의 가장 큰 문제는 비정상 sample을 
 -	장점: 비교적 활발하게 연구가 진행되고 있으며, 정상 sample만 있어도 학습이 가능하다.
 -	단점: Supervised Anomaly Detection 방법론과 비교했을 때 상대적으로 양/불 판정 정확도가 떨어진다. 
 
-### Unsupervised Anomaly Detection
+#### Unsupervised Anomaly Detection
 위에서 설명드린 One-Class(Semi-supervised) Anomaly Detection 방식은 정상 sample이 필요합니다. 수많은 데이터 중에 어떤 것이 정상 sample 인지 알기 위해서는 반드시 정상 sample에 대한 Label을 확보하는 과정이 필요합니다. 이러한 점에 주목해, 대부분의 데이터가 정상 sample이라는 가정을 하여 Label 취득 없이 학습을 시키는 Unsupervised Anomaly Detection 방법론도 연구가 이뤄지고 있습니다. 
 
 가장 단순하게는 주어진 데이터에 대해 Principal Component Analysis(PCA, 주성분 분석)를 이용하여 차원을 축소하고 복원을 하는 과정을 통해 비정상 sample을 검출할 수 있습니다. , Neural Network 기반으로는 대표적으로 Autoencoder 기반의 방법론이 주로 사용되고 있습니다. Autoencoder는 입력을 code 혹은 latent variable로 압축하는 Encoding과, 이를 다시 원본과 가깝게 복원해내는 Decoding 과정으로 진행이 되며 이를 통해 데이터의 중요한 정보들만 압축적으로 배울 수 있다는 점에서 데이터의 주성분을 배울 수 있는 PCA와 유사한 동작을 한다고 볼 수 있습니다. 
@@ -60,7 +61,7 @@ Autoencoder를 이용하면 데이터에 대한 labeling을 하지 않아도 데
 -	장점: Labeling 과정이 필요하지 않다. 
 -	단점: 양/불 판정 정확도가 높지 않고 hyper parameter에 매우 민감하다. 
 
-## 2. 비정상 sample 정의에 따른 분류
+### 2. 비정상 sample 정의에 따른 분류
 다음은 비정상 sample의 정의에 따른 분류입니다. 이 분류는 엄밀하게 정의가 되지 않아 틀린 부분이 있을 수도 있습니다. 이 점 미리 양해 바라며 나름대로 정리한 내용을 설명하겠습니다.
 
 저는 비정상 sample을 정의하는 방식에 따라 크게 Novelty Detection과 Outlier Detection으로 구분합니다. 다만 종종 두 방법론을 합쳐서 Anomaly Detection라 부르기도 합니다. 개인적인 생각으로는 Novelty Detection과 Outlier Detection은 용어가 가지는 뉘앙스의 차이가 존재하다고 느껴서, 예시를 통해 두 용어의 차이를 설명을 드리겠습니다. 
@@ -75,7 +76,7 @@ Autoencoder를 이용하면 데이터에 대한 labeling을 하지 않아도 데
 
 Novelty Detection은 지금까지 등장하지 않았지만 충분히 등장할 수 있는 sample을 찾아내는 연구, 즉 데이터가 오염이 되지 않은 상황을 가정하는 연구와 관련된 용어라고 할 수 있고, Outlier Detection은 등장할 가능성이 거의 없는, 데이터에 오염이 발생했을 가능성이 있는 sample을 찾아 내는 연구와 관련된 용어 정도로 구분하여 정리할 수 있습니다. 
 
-## 3. 정상 sample의 class 개수에 따른 분류
+### 3. 정상 sample의 class 개수에 따른 분류
 앞서 설명드린 두 가지 기준은 데이터 셋이 정상 sample이 단일 class로 구성이 되어있고, 단순 양/불 판정을 하는 경우에 대해서만 가정했지만, 실제 환경에서는 정상 sample이 여러 개의 class로 구성될 수 있습니다. 
 
 그러나 정상 sample이 Multi-Class인 상황에서도 위의 Novelty Detection, Outlier Detection 기준을 똑같이 적용할 수 있습니다. 보통 이러한 경우 정상 sample이라는 표현 대신 In-distribution sample이라는 표현을 사용합니다.  
@@ -95,11 +96,11 @@ In-distribution 데이터 셋에 위의 예시 그림처럼 흰색 강아지만 
 
 각 용어가 지니는 의미와 문제 상황 등을 잘 이해하신다면 추후 Anomaly Detection 관련 논문을 읽으실 때 도움이 될 것이라 생각합니다. 
 
-<blockquote> Anomaly Detection의 다양한 적용 사례 </blockquote>  
+## Anomaly Detection의 다양한 적용 사례
 
 위에서 Anomaly Detection의 방법론, 문제 상황 등을 정리하였다면 이번엔 산업 전반적인 분야의 대표적인 적용 사례들을 하나씩 소개드릴 예정입니다. 대부분의 예시는 <a href="https://arxiv.org/abs/1901.03407" target="_blank"><b> “Deep Learning for Anomaly Detection: A Survey,” 2019 arXiv </b></a> 2019년에 작성된 서베이 논문을 참고하여 작성하였습니다. 
 
-{% include image.html name=page.name file="applications.PNG" description="Anomaly Detection의 적용 사례” class="full-image" %}
+{% include image.html name=page.name file="applications.PNG" description="Anomaly Detection의 적용 사례" class="full-image" %}
 
 
 Anomaly Detection이 적용될 수 있는 주요 사례는 다음과 같습니다. 
@@ -116,7 +117,7 @@ Anomaly Detection이 적용될 수 있는 주요 사례는 다음과 같습니�
 
 소개 드린 9가지 예시 외에도 다양한 분야에서 Anomaly Detection이 적용될 수 있으며, 하나의 모델로 모든 문제를 잘 풀기가 어려워서 각 도메인의 특성을 잘 반영하려는 시도들이 논문을 통해 드러나고 있는 것 같습니다. 
 
-<blockquote> 결론 </blockquote>
+## 결론
 지금까지 이상치 탐지 (Anomaly Detection) 분야에 대한 전반적인 내용을 크게 연구 분야 용어 정리를 통한 연구 방향 소개와 각종 산업 현장의 적용 사례로 나눠서 설명을 드렸습니다.
 
 학계와 여러 게시물 등에서 Anomaly Detection, Novelty Detection, Outlier Detection 등 여러 용어가 혼재된 채 사용이 되고 있어서 이를 처한 문제 상황에 따라 용어를 정리를 해보았고, 보유하고 있는 데이터 셋의 특징에 따라 Supervised, One-Class(Semi-Supervised), Unsupervised로 나눠서 각각의 특징과 장단점을 소개 드렸습니다.
@@ -125,7 +126,7 @@ Anomaly Detection이 적용될 수 있는 주요 사례는 다음과 같습니�
 또한 Anomaly Detection이 실제 산업 현장에서 적용되는 대표적인 9가지 사례를 소개 드리고, 각각 사례가 어떤 문제를 풀고 있는지, 어떠한 데이터를 주로 다루는지 등을 알아보았습니다. 
 
 이어지는 포스팅에서는 위에서 소개 드린 Out-of-distribution Detection이 학계에서 어떻게 연구가 되고 있는지 초창기 논문부터 최신 논문까지 논문을 리뷰하며 각각 논문들의 특징들을 요약하여 설명을 드릴 예정입니다.
-<blockquote> Reference </blockquote>
+## Reference 
 
 -	<a href="https://github.com/hoya012/awesome-anomaly-detection" target="_blank"><b> “awesome-anomaly-detection” GitHub Repository </b></a>
 -	<a href="http://www.jmlr.org/papers/volume2/manevitz01a/manevitz01a.pdf" target="_blank"><b> Larry M. Manevitz, Malik Yousef. “One-Class SVMs for Document Classification.” Journal of Machine Learning Research, 2001. </b></a>
