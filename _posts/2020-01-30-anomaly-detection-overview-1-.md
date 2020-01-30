@@ -1,12 +1,12 @@
 ---
 layout: post
 title:  “Anomaly Detection 개요： (1) 이상치 탐지 분야에 대한 소개 및 주요 문제와 핵심 용어, 산업 현장 적용 사례 정리”
-date:   2020-1-30
+date:   2020-1-30 12:00:00 +0900
 author: hoseong_lee
 tags: [Anomaly-Detection]
 categories: [Introduction, Review]
+comments: false
 name: anomaly-detection-overview-1
-description: 이상치 탐지 (Anomaly Detection) 분야에 대해 주요 용어들을 정리하며 소개를 드리고 산업 현장에 적용되는 여러 가지 사례들을 소개 드립니다. 
 ---
 
 안녕하세요. 이번 포스팅에서는 Anomaly Detection(이상 탐지)에 대해 소개를 드리고자 합니다. Anomaly Detection이란, Normal(정상) sample과 Abnormal(비정상, 이상치, 특이치) sample을 구별해내는 문제를 의미하며 수아랩이 다루고 있는 제조업뿐만 아니라 CCTV, 의료 영상, Social Network 등 다양한 분야에서 응용이 되고 있습니다. 그러나 Anomaly Detection 용어 외에도 다양한 용어가 비슷한 의미로 사용되고 있어서 이 용어들을 기준에 따라 정리하고 각 용어에 대해 자세히 설명하겠습니다. 이어질 포스팅에서는 Anomaly Detection 연구 분야에서 다루는 Out-of-distribution(OOD) Detection 문제에 대해 여러 논문과 함께 깊이 있게 소개할 예정입니다. 
