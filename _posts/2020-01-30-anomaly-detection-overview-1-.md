@@ -1,6 +1,6 @@
 ---
 layout: post
-title: “Anomaly Detection 개요： (1) 이상치 탐지 분야에 대한 소개 및 주요 문제와 핵심 용어, 산업 현장 적용 사례 정리”
+title: Anomaly Detection 개요： (1) 이상치 탐지 분야에 대한 소개 및 주요 문제와 핵심 용어, 산업 현장 적용 사례 정리
 date: 2020-1-30 12:00:00 +0900
 author: hoseong_lee
 tags: [Anomaly-Detection]
