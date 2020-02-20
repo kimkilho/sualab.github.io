@@ -141,7 +141,7 @@ CIFAR-10으로 training을 시킨 뒤, CIFAR-10, TrafficSign, SVHN 등으로 tes
 
 Out-of-distribution Detection 문제는 Computer Vision 분야 외에도 자연어 처리, 음성 인식 등 다양한 분야에서 활용이 될 수 있습니다. 오늘 소개 드린 내용이 독자분들이 공부하시는 데 도움이 되었으면 좋겠습니다. 긴 글 읽어 주셔서 감사합니다!
 
-<blockquote> Reference </blockquote>
+## Reference 
 - <a href="https://machinelearningmastery.com/roc-curves-and-precision-recall-curves-for-classification-in-python/" target="_blank"><b> AUROC, AUPR 그림 인용 블로그 글</b></a>  
 - <a href="https://mnist-demo.herokuapp.com/" target="_blank"><b> MNIST Web Demo </b></a>  
 - <a href="https://arxiv.org/pdf/1610.02136.pdf" target="_blank"><b> “A Baseline for Detecting Misclassified and Out-of-Distribution Examples in Neural Networks”, </b></a> 2017 ICLR  
