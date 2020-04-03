@@ -1,3 +1,18 @@
+---
+layout: post
+title: "Boost Interprocess 자원들의 Lifetime을 테스트해보자"
+date: 2020-04-03 23:00:00 +0900
+author: namgoo_lee
+categories: [etc.]
+tags: [boost, c++, gdb]
+comments: true
+name: lifetime-of-boost-interprocess-mechanisms
+---
+
+이번 포스트에서는 Boost의 Interproces에 포함된 자원들의 지속시간(Lifetime)을 테스트해본 경험을 공유하려합니다. 이런 테스트를 해 본 계기는 개발 과정에서 프로그램이 비정상종료는 경우, 혹은 디버거를 이용한 디버깅 도중 자원을 해제하는 부분에 도달하기 전에 프로세스가 종료되는 경우 자원이 해제되지 않아(혹은, shared lock 같은 경우 unlock이 되지 않아) 문제가 발생하는 상황을 없애고 싶다는 요구에서였습니다. 이것을 위해선 프로세스가 종료될 경우 자동으로 해제되는 자원이 필요했습니다. Boost의 Interprocess 라이브러리에서 제공하는 자원들 중에서 이런 요구사항에 부합하는 자원을 찾기 위해 진행한 테스트들을 정리해보았습니다.
+
+-----------------------------------------
+
 C++ 프로그램에서 프로세스 간 통신(IPC, Inter-Process Communication)을 위해 `boost::interprocess`에서 제공하는 객체(Object)들을 사용하게 되었습니다. 프로세스 간 공유 메모리(Inter-Process shared memory)나 프로세스 간 뮤텍스(Inter-Process Mutex)를 사용하려고 하다보니, 자연스럽게 다음과 같은 의문점이 생겼습니다.
 
 "어떤 프로세스가 내부적으로 할당하여 그 프로세스만 사용하게 될 자원들은 그 프로세스가 종료되는 순간 자동으로 반환된다. 명시적으로 자원을 반환하는 코드가 없더라도 운영체제 수준에서 이것을 처리한다. 그렇다면, 프로세스 간 통신을 위해 공유 메모리에 할당된 자원은 언제 반환되는가? 다시 말해서, 공유 메모리에 생성된 객체의 인스턴스는 언제 해제되는가(destructed)?"
