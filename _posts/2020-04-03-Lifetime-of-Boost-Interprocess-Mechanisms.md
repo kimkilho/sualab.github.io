@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Boost Interprocess 자원들의 Lifetime을 테스트해보자"
-date: 2020-04-03 23:00:00 +0900
+title: "Boost Interprocess 자원 지속시간(Lifetime) 테스트"
+date: 2020-04-06 23:00:00 +0900
 author: namgoo_lee
 categories: [etc.]
 tags: [boost, c++, gdb]
@@ -11,13 +11,13 @@ name: lifetime-of-boost-interprocess-mechanisms
 
 이번 포스트에서는 Boost의 Interproces에 포함된 자원들의 지속시간(Lifetime)을 테스트해본 경험을 공유하려합니다. 이런 테스트를 해 본 계기는 개발 과정에서 프로그램이 비정상종료는 경우, 혹은 디버거를 이용한 디버깅 도중 자원을 해제하는 부분에 도달하기 전에 프로세스가 종료되는 경우 자원이 해제되지 않아(혹은, shared lock 같은 경우 unlock이 되지 않아) 문제가 발생하는 상황을 없애고 싶다는 요구에서였습니다. 이것을 위해선 프로세스가 종료될 경우 자동으로 해제되는 자원이 필요했습니다. Boost의 Interprocess 라이브러리에서 제공하는 자원들 중에서 이런 요구사항에 부합하는 자원을 찾기 위해 진행한 테스트들을 정리해보았습니다.
 
------------------------------------------
+## 서론: Boost Interprocess 사용시 의문점
 
 C++ 프로그램에서 프로세스 간 통신(IPC, Inter-Process Communication)을 위해 `boost::interprocess`에서 제공하는 객체(Object)들을 사용하게 되었습니다. 프로세스 간 공유 메모리(Inter-Process shared memory)나 프로세스 간 뮤텍스(Inter-Process Mutex)를 사용하려고 하다보니, 자연스럽게 다음과 같은 의문점이 생겼습니다.
 
 "어떤 프로세스가 내부적으로 할당하여 그 프로세스만 사용하게 될 자원들은 그 프로세스가 종료되는 순간 자동으로 반환된다. 명시적으로 자원을 반환하는 코드가 없더라도 운영체제 수준에서 이것을 처리한다. 그렇다면, 프로세스 간 통신을 위해 공유 메모리에 할당된 자원은 언제 반환되는가? 다시 말해서, 공유 메모리에 생성된 객체의 인스턴스는 언제 해제되는가(destructed)?"
 
-자원을 명시적으로 해제할 경우 당연히 그 자원은 반환될 것입니다. 그러나 자원을 명시적으로 해제하지 않는다면 어떻게 될까요? 시스템을 재부팅해야 자원이 해제가 될까요? 아니면 재부팅하지 않더라도 그 자원을 사용했던 프로세스들이 종료되면 자동으로 해제가 될까요? `boost::interprocess` 관련 문서를 뒤적인 결과 다음과 같은 [항목](https://www.boost.org/doc/libs/1_71_0/doc/html/interprocess/some_basic_explanations.html#interprocess.some_basic_explanations.persistence)을 발견할 수 있었습니다. 원문은 영어로 되어있고 의역하면 다음과 같습니다.
+자원을 명시적으로 해제할 경우 당연히 그 자원은 반환될 것입니다. 그러나 자원을 명시적으로 해제하지 않는다면 어떻게 될까요? 시스템을 재부팅해야 자원이 해제가 될까요? 아니면 재부팅하지 않더라도 그 자원을 사용했던 프로세스들이 종료되면 자동으로 해제가 될까요? `boost::interprocess` 관련 문서를 뒤적인 결과 다음과 같은 <a href="https://www.boost.org/doc/libs/1_71_0/doc/html/interprocess/some_basic_explanations.html#interprocess.some_basic_explanations.persistence" target="_blank">항목</a>을 발견할 수 있었습니다. 원문은 영어로 되어있고 의역하면 다음과 같습니다.
 
 > **프로세스 간 통신에 사용되는 자원들은 언제까지 지속되는가**
 >
@@ -26,9 +26,11 @@ C++ 프로그램에서 프로세스 간 통신(IPC, Inter-Process Communication)
 > * 커널 수준 지속: 운영체제의 커널이 재시작(reboot)되거나 자원이 명시적으로 삭제(delete)될 때까지 유지된다.
 > * 파일시스템 수준 지속: 자원이 명시적으로 삭제(delete)될 때까지 유지된다.
 
-각각의 수준에 대해 매우 잘 정리되어 있음을 알 수 있습니다. 위의 내용을 토대로 제게 필요했던 기능은 **프로세스 수준 지속**을 지원하는 자원이라는 것도 명확하게 판단할 수 있었습니다. 하지만 문제는, `boost::interprocess`가 제공하는 자원들이 위 세가지 중 어디에 속하는지가 명확히 정리되어 있지 않았다는 점입니다. 그래서 테스트 코드를 직접 짜 보면서 실험을 해보기로 했습니다. `boost::interprocess`에서 제공하는 모든 종류의 자원을 테스트해보지는 못했고, 제가 확인이 필요했던 것들만 테스트해보았습니다. 이 포스트에서 테스트해보지 못한 다른 종류의 자원들도 이 포스트에서 소개하는 방식과 동일하게 테스트해볼 수 있을 것입니다.
+각각의 수준에 대해 매우 잘 정리되어 있음을 알 수 있습니다. 위의 내용을 토대로 제게 필요했던 기능은 **프로세스 수준 지속**을 지원하는 자원이라는 것도 명확하게 판단할 수 있었습니다. 하지만 문제는, `boost::interprocess`가 제공하는 자원들이 위 세가지 중 어디에 속하는지가 명확히 정리되어 있지 않았다는 점입니다. 그래서 테스트 코드를 직접 짜 보면서 실험을 해보기로 했습니다. `boost::interprocess`에서 제공하는 모든 종류의 자원을 테스트해보지는 못했고, 제가 확인이 필요했던 4가지 자원들에대해 테스트해보았습니다. 이 포스트에서 테스트해보지 못한 다른 종류의 자원들도 이 포스트에서 소개하는 방식과 동일하게 테스트해볼 수 있을 것입니다.
 
-## managed_xsi_shared_memory : 커널 수준 지속
+## Boost Interprocess 자원별 지속시간 테스트 및 결과
+
+### managed_xsi_shared_memory : 커널 수준 지속
 
 이 공유 메모리는 리눅스에서만 사용할 수 있습니다. 리눅스에서 진행되었던 모든 테스트는 Ubuntu 18.04(g++ 7.5.0), x86_64 환경에서 진행되었습니다. Boost 버전은 1.71.0 을 사용하였고, `/usr/local/boost-1.71.0`에 설치되었다고 가정하였습니다.
 
@@ -56,13 +58,13 @@ $
 
 따라서 `managed_xsi_shared_memory` 인스턴스의 경우 커널이 재시작 하고 나서 자원이 해재된 것을 보니 **커널 수준 지속**임을 알 수 있습니다.
 
-## managed_windows_shared_memory : 프로세스 수준 지속
+### managed_windows_shared_memory : 프로세스 수준 지속
 
 이 공유 메모리는 윈도우에서만 사용할 수 있습니다. 다음과 같은 코드로 컴파일 후 연속적으로 실행하면 항상 `shared memory created`가 출력됩니다. 따라서 **프로세스 수준 지속**임을 알 수 있습니다. (테스트 환경: Windows 10, Visual Studio 2019, NuGet 패키지 인스톨러 이용하여 boost 1.71.0 버전 설치)
 
 <script src="https://gist.github.com/nglee/f89b6448a05edcb9ed382a94e8aa13d5.js"></script>
 
-## interprocess_mutex : 커널 수준 지속 (managed_xsi_shared_memory에 할당된 경우)
+### interprocess_mutex : 커널 수준 지속 (managed_xsi_shared_memory에 할당된 경우)
 
 <script src="https://gist.github.com/nglee/a03ed8c2de387608f6d9d98ce53beb51.js"></script>
 ```
@@ -91,7 +93,6 @@ This is the second process.
 The second process is going to lock an interprocess mutex,
 and if it succeeds, then a message will be shown.
 If it fails, it will run indefinitely.
-
 ```
 
 위의 예제에서 볼 수 있듯이 `unlock`이 자동으로 되지 않음을 알 수 있습니다. 이런 상황을 막기 위해서는 다음과 같이 `scoped_lock`을 사용해야 합니다.
@@ -141,9 +142,9 @@ __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
 
 위에서 볼 수 있듯이 `unlock`이 자동으로 되지 않음을 알 수 있습니다. 이는 디버깅 과정에서 문제가 될 수 있습니다. 이럴 때 사용할 수 있는 것이 `file_lock`입니다.
 
-## file_lock : 프로세스 수준 지속
+### file_lock : 프로세스 수준 지속
 
-`file_lock`은 [문서](https://www.boost.org/doc/libs/1_71_0/doc/html/interprocess/synchronization_mechanisms.html#interprocess.synchronization_mechanisms.file_lock)에도 명시되어 있듯이 **프로세스 수준 지속**입니다. 따라서 `file_lock`의 장점은 무엇보다 `lock`을 한 프로세스가 명시적으로 `unlock`을 하지 않은 상태로 종료되더라도(정상종료이든, 비정상종료이든 관계 없이) 자동으로 `unlock`이 된다는 점입니다.
+`file_lock`은 <a href="https://www.boost.org/doc/libs/1_71_0/doc/html/interprocess/synchronization_mechanisms.html#interprocess.synchronization_mechanisms.file_lock" target="_blank">문서</a>에도 명시되어 있듯이 **프로세스 수준 지속**입니다. 따라서 `file_lock`의 장점은 무엇보다 `lock`을 한 프로세스가 명시적으로 `unlock`을 하지 않은 상태로 종료되더라도(정상종료이든, 비정상종료이든 관계 없이) 자동으로 `unlock`이 된다는 점입니다.
 
 <script src="https://gist.github.com/nglee/164bde324c6c03a50047648c222d0b28.js"></script>
 ```
@@ -170,3 +171,7 @@ The process locked an file_lock,
 and is going to exit without unlocking the lock.
 (gdb)
 ```
+
+## 결론
+
+여기까지 C++ 프로세스 통신간 사용하는 `Boost::interprocess`에서 제공하는 자원 중 `managed_xsi_shared_memory`, `managed_windows_shared_memory`, `interprocess_mutex`, `file_lock` 에 대해 지속 시간을 테스트 해보았습니다. 각 자원에 대해 조금씩 다른 테스트 방법을 사용하여 각각 커널 수준, 프로세스 수준, 커널 수준, 프로세스 수준 지속임을 확인하였습니다. 앞서도 말씀드렸지만 본 글에서 테스트 해본 것들 이외의 자원에 대해서도 테스트를 해보고 싶다면, 이를 참고하여 비슷한 방식으로 테스트 할 수 있을 것이라 생각합니다.
