@@ -3,7 +3,7 @@ layout: post
 title: "Boost Interprocess 자원 지속시간(Lifetime) 테스트"
 date: 2020-04-06 23:00:00 +0900
 author: namgoo_lee
-categories: [etc.]
+categories: [Development]
 tags: [boost, c++, gdb]
 comments: true
 name: lifetime-of-boost-interprocess-mechanisms

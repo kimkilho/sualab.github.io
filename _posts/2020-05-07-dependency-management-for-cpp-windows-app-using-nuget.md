@@ -3,7 +3,7 @@ layout: post
 title: "C++ 기반 윈도우 데스크톱 애플리케이션 의존성 관리"
 date: 2020-05-07 23:00:00 +0900
 author: gigone_lee
-categories: [etc.]
+categories: [Development]
 tags: [c++, nuget]
 comments: true
 name: dependency-management-for-cpp-windows-app-using-nuget

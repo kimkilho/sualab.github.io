@@ -3,7 +3,7 @@ layout: post
 title: "Jetson TX1에 CNTK Evaluation 라이브러리 설치하기"
 date: 2017-12-07 16:00:00 +0900
 author: namgoo_lee
-categories: [etc.]
+categories: [Development]
 tags: [embedded, tx1, cntk]
 comments: true
 name: setup-cntk-evaluation-library-on-jetson-tx1

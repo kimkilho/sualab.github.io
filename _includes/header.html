@@ -3,8 +3,8 @@
 <div class="wrapper">
   {% assign default_paths = site.pages | map: "path" %}
   {% assign page_paths = site.header_pages | default: default_paths %}
-	<div class="sualab-logo-div">
-		<img class="sualab-logo-img" src="/assets/images/sualab_logo.png" />
+	<div class="cognex-logo-div">
+		<img class="cognex-logo-img" src="/assets/images/Cognex_logo.png" />
 	</div>
 	<div>
   	<a class="site-title" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
@@ -27,10 +27,11 @@
           <a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a>
           {% endif %}
         {% endfor %}
-        <a class="page-link" href="https://research.sualab.com/Introduction.html"> Introduction </a>
-        <a class="page-link" href="https://research.sualab.com/Practice.html"> Practice </a>
-        <a class="page-link" href="https://research.sualab.com/Review.html"> Review </a>
-        <a class="page-link" href="https://research.sualab.com/etc..html"> etc. </a>
+	<a class="page-link" href="{{ "/Introduction.html" | relative_url }}"> Introduction </a>
+	<a class="page-link" href="{{ "/Practive.html" | relative_url }}"> Practice </a>
+	<a class="page-link" href="{{ "/Development.html" | relative_url }}"> Development </a>
+	<a class="page-link" href="{{ "/Review.html" | relative_url }}"> Review </a>
+	<a class="page-link" href="{{ "/etc..html" | relative_url }}"> etc. </a>
       </div>
     </nav>
   {% endif %}
