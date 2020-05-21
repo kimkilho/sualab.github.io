@@ -13,12 +13,15 @@ category: machine-learning
   <ul class="post-list">
     {% for post in site.categories[page.category] %}
       <li>
+	<div class="single_post">
         {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
+	<img class="thumbnail-img" src="/assets/images/sualab_logo.png" />
         <span class="post-meta">{{ post.date | date: date_format }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-        </h2>
+	
+          <h2>
+            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+          </h2>
+	</div>
       </li>
     {% endfor %}
   </ul>
