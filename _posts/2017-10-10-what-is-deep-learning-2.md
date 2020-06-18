@@ -8,6 +8,7 @@ tags: [deep learning, deep neural networks, representation learning]
 comments: true
 name: what-is-deep-learning-2
 redirect_from: "/machine-learning/2017/10/10/what-is-deep-learning-2.html"
+image: production-line-example.png
 ---
 
 [(이전 포스팅 보기)]({{ page.url }}/../what-is-deep-learning-1.html)

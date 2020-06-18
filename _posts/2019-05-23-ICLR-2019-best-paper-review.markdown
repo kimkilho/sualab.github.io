@@ -7,6 +7,7 @@ tags: [ICLR2019, network-pruning]
 categories: [Review]
 name: iclr_2019_review
 description: ICLR 2019 학회에 다녀온 후기와 학회에 대한 소개, Best Paper에 대한 리뷰를 글로 작성하였습니다.
+image: 4.PNG
 ---
 
 안녕하세요, 이번 포스팅에서는 2019년 5월 6일 ~ 9일 미국 뉴올리언스에서 개최된

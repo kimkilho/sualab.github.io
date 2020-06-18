@@ -7,6 +7,7 @@ categories: [Introduction]
 tags: [interpretable machine learning, interpretability, explainable artificial intelligence]
 comments: true
 name: interpretable-machine-learning-overview-1
+image: post-hoc-methods.png
 ---
 
 지금까지의 포스팅을 통해, 수아랩 블로그에서는 다양한 문제 상황에 대하여 동작하는 딥러닝 모델을 직접 제작하고 학습해 왔습니다. 다만 대부분 맨 마지막 과정에서 학습이 완료된 모델을 테스트하는데, 일정 크기의 테스트 데이터셋에 대한 모델의 예측 결과를 바탕으로 정확도(accuracy)와 같이 하나의 숫자로 표현되는 정량적 지표의 값을 계산하고, 그 크기를 보아 '딥러닝 모델이 예측을 얼마나 잘 했는지'를 판단하였습니다. 여기에 덧붙여 보완적으로, 올바르게 예측하였거나 잘못 예측한 예시 결과들을 몇 개 샘플링하여 관찰하고, 모델의 예측 결과에 대한 근거를 '추측'한 바 있습니다.

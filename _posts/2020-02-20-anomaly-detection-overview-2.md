@@ -7,6 +7,7 @@ tags: [Anomaly-Detection]
 categories: [Introduction, Review]
 comments: false
 name: anomaly-detection-overview-2
+image: high-confidence.PNG
 ---
 
 안녕하세요, 이번 포스팅에서는 지난 포스팅에 이어 Anomaly Detection(이상 탐지)에 대한 내용을 다룰 예정이며 Anomaly Detection 연구 분야 중 Out-of-distribution(OOD) Detection 문제에 대해 여러 논문을 토대로 깊이 있게 소개를 드릴 예정입니다. 

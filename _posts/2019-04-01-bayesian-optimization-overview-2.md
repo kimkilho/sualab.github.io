@@ -7,6 +7,7 @@ categories: [Introduction, Practice]
 tags: [bayesian optimization, hyperparameter optimization, gaussian process]
 comments: true
 name: bayesian-optimization-overview-2
+image: 2d-bayesian-optimization-process.gif
 ---
 
 [(이전 포스팅 보기)]({{ site.url }}{% post_url 2019-02-19-bayesian-optimization-overview-1 %})

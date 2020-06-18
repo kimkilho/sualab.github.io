@@ -7,6 +7,7 @@ categories: [Introduction]
 tags: [interpretable machine learning, interpretability, explainable artificial intelligence]
 comments: true
 name: interpretable-machine-learning-overview-2
+image: saliency-map-examples.png
 ---
 
 앞선 글에서 머신러닝 모델에 대한 해석력 확보를 위한 Interpretable Machine Learning(이하 IML)의 개요를 다뤘습니다. 이번 글에서는 IML에 대한 지금까지의 이해를 바탕으로, 많은 분들이 관심을 가지고 계실 딥러닝 모델에 대한 주요 IML 방법론들에 대해 알아보고자 합니다.

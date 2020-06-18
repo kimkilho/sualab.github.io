@@ -7,6 +7,7 @@ categories: [Introduction, Practice]
 tags: [generative adversarial network, DCGAN, tensorflow]
 comments: true
 name: generative-adversarial-network
+image: sample_image_random.jpg
 ---
 
 안녕하세요. 이번에 포스팅 할 주제는 기존에 다루었던 내용들과는 조금 다른 내용을 이야기 해볼까 합니다. <a href="http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf" target="_blank">**Generative adversarial networks**(이하 GAN)</a>으로 불리는 분야에 대하여 소개 해 드리려 합니다. 해당 분야는 처음 등장한 2014년 이후로 지금까지 매우 많은 관심을 받으며 관련 연구도 많이 진행되었기에 하나에 포스트로 전부 다루는 것은 어려울 것으로 생각하여 가장 근간이 되는 **GAN**과 **DCGAN**에 대해서 소개하고 DCGAN의 경우는 코드와 함께 설명하고자 합니다.

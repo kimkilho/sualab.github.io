@@ -14,25 +14,31 @@ layout: default
 	  <div class='single_post'>
           {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
 	  <a href="{{ post.url | relative_url }}">
-	    <img class="thumbnail-img" src="/assets/images/sualab_logo.png"/>
+	  {% if post.image %}
+	    {% capture thumbnail_path %}{% asset_path {{ post.image }} {{ post.id }} %}{% endcapture %}
+	    {% thumbnail {{ thumbnail_path }} 128x128 %}
+	  {% else %}
+	    {% thumbnail /assets/images/Cognex_Logo.jpg 128x128 %}
+	  {% endif %}
 	  </a>
 	  <div class='post_info'>
-          <div style='height: 24px; flex: 0 1 auto;'>
-          <span class="post-meta">{{ post.date | date: date_format }}</span>
-          {% if post.categories.size > 0 %} • 
-            {% for category in post.categories %}
-              <span itemprop="category" itemscope itemtype="http://schema.org/Category"><a href="/{{ category }}.html">{{ category }}</a>{% if forloop.last == false %}, {% endif %}</span>
-            {% endfor %}
-          {% endif %}
-	  </div>
+            <div>
+              <span class="post-meta">{{ post.date | date: date_format }}</span>
+                {% if post.categories.size > 0 %} • 
+                  {% for category in post.categories %}
+                    <span itemprop="category" itemscope itemtype="http://schema.org/Category"><a href="/{{ category }}.html">{{ category }}</a>{% if forloop.last == false %}, {% endif %}</span>
+                  {% endfor %}
+                {% endif %}
+	    </div>
 
             <h2>
-              <a class='post-link' href="{{post.url | relative_url }}">{{ post.title | escape }}</a>
+              <a class='post-link' href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
             </h2>
-	  <div class='post_summary'>
-	    <h4 class='excerpt-text'>
-              {{ post.content | strip_html | truncatewords: 20 }}
-	    </h4>
+	    <div class='post_summary'>
+	      <h4 class='excerpt-text'>
+                {{ post.content | strip_html | truncatewords: 20 }}
+	      </h4>
+	    </div>
 	  </div>
 	</div>
       </li>

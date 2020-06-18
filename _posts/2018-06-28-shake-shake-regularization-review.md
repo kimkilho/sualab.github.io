@@ -8,6 +8,7 @@ tags: [shake-shake, regularization, tensorflow]
 comments: true
 name: shake-shake-regularization-review
 redirect_from: "/machine-learning/computer-vision/2018/06/28/shake-shake-regularization-review.html"
+image: Fig_1_shake_shake_example.PNG
 ---
 
 

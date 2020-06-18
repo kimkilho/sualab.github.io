@@ -7,6 +7,7 @@ categories: [Introduction, Practice]
 tags: [bayesian optimization, hyperparameter optimization, gaussian process]
 comments: true
 name: bayesian-optimization-overview-1
+image: bayesian-optimization-procedure-example.png
 ---
 
 지난 <a href="{{ site.url }}/machine-learning/computer-vision/2018/09/28/nasnet-review.html" target="_blank">\<Learning Transferable Architectures for Scalable Image Recognition 리뷰\></a> 글의 서두에서 'AutoML'이라는 주제에 대해 간단히 소개해 드린 적이 있습니다. AutoML을 한 문장으로 표현하자면 'Machine Learning으로 설계하는 Machine Learning'이라고 하였으며, 현재 3가지 방향으로 연구가 진행된다고 하였습니다.

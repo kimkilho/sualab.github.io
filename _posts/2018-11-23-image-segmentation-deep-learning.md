@@ -8,6 +8,7 @@ tags: [segmentation, GCN, tensorflow]
 comments: true
 name: image-segmentation-deep-learning
 redirect_from: "/machine-learning/computer-vision/2018/11/23/image-segmentation-deep-learning.html"
+image: correct.png
 ---
 
 안녕하세요! 딥러닝을 이용한 Detection 문제 해결 포스팅에 이어, 정말 오랜만에 이미지 인식 **Segmentation**에 관한 문제 해결 사례를 소개해드리도록 하겠습니다. 이번 포스팅도 앞선 포스팅과 마찬가지로 **TensorFlow** 구현 코드와 함께 진행됩니다. Segmentation의 경우 많은 시간 및 메모리를 소모하며 설명자료가 Classification 문제에 비해 많지 않아 어렵게 느껴질 수도 있지만, Segmentation은 **Pixel-wise classification**으로 생각할 수 있기 때문에 구현 자체 난이도는 Classification과 크게 다르지 않습니다. 다소 난해한 Detection에 비해 금방 이해할 수 있으리라 생각하며, 이전 포스팅과 마찬가지로 개념적인 설명은 조금 뒤로하고 **구현 위주**로 설명해 드리도록 하겠습니다.

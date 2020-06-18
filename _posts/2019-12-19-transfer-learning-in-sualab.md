@@ -7,6 +7,7 @@ categories: [Introduction, Review]
 tags: [transfer learning]
 comments: false
 name: transfer-learning-in-sualab
+image: intro-luckkey.jpg
 ---
 
  본 글에서는 전이 학습(transfer learning)이라는 분야에 대해 소개해드리고, 해당 분야를 수아랩이 어떤 식으로 연구하고 있는지 직접 수행한 작업들과 간단한 실험 결과 일부를 공유드리면서, 추후 연구 방향에 대해 이야기해보려고 합니다. 지금까지 수아랩 기술 블로그에서는 다른 연구자의 연구에 대한 소개가 주를 이루었었는데, 처음으로 수아랩에서 직접 연구한 내용을 소개해드리게 되었습니다. 흥미롭게 읽어주시면 감사하겠습니다.

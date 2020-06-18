@@ -8,11 +8,14 @@ tags: [embedded, tx1, cntk]
 comments: true
 name: setup-cntk-evaluation-library-on-jetson-tx1
 redirect_from: "/etc/2017/12/07/Setup-CNTK-Evaluation-Library-on-Jetson-TX1-KOR.html"
+image: JetsonTX1_DevKit_3Quarter_ON.png
 ---
 
 이 포스트에서는 Jetson TX1에 CNTK를 이용한 모델 evaluation에 필요한 라이브러리들을 설치하는 방법을 설명하겠습니다. 전체 소요 시간은 약 2시간입니다. 이 포스트는 공식 CNTK 사이트의 [Setup CNTK on Linux](https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-Linux) 문서를 참조하였습니다.
 
 CNTK 프로젝트 팀은 리눅스 환경에서 실행할 수 있는 도커 이미지를 제공하고 있습니다. 그런데 현재 [도커 허브](https://hub.docker.com/r/microsoft/cntk/)에 제공되어 있는 이미지들은 GPU 기능이 활성화된 버전을 이용하고 싶을 경우 [nvidia-docker](https://github.com/nvidia/nvidia-docker)를 이용해야 한다고 안내되어 있습니다. 문제는 이 nvidia-docker가 [테그라 플랫폼(Tegra platform)을 지원하지 않는다는 데에 있습니다.](https://github.com/NVIDIA/nvidia-docker/wiki/Frequently-Asked-Questions#platform-support) 따라서 TX1에서 CNTK를 돌리기 위해서는 어쩔 수 없이 CNTK 소스코드를 받아서 직접 빌드해야 합니다.
+
+{% include image.html name=page.name file="JetsonTX1_DevKit_3Quarter_ON.png" description="High-confidence prediction을 보여주는 예시" class="full-image" %}
 
 # 빌드대상
 

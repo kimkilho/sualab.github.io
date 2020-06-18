@@ -8,6 +8,7 @@ tags: [supervised learning, data set, learning model, learning algorithm]
 comments: true
 name: what-is-machine-learning
 redirect_from: "/machine-learning/2017/09/04/what-is-machine-learning.html"
+image: tree_example.png
 ---
 
 수아랩 리서치 블로그 첫 번째 글의 주제는 '머신러닝이란 무엇인가?' 입니다. AI(인공지능)를 가능하게 하는 핵심 기술이라고 할 수 있는 머신러닝에 대해서, 글을 읽는 모든 분들이 이해하실 수 있도록 최대한 쉬운 언어로 이야기를 풀어나가고자 합니다.

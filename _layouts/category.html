@@ -14,13 +14,27 @@ category: machine-learning
     {% for post in site.categories[page.category] %}
       <li>
 	<div class="single_post">
-        {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
-	<img class="thumbnail-img" src="/assets/images/sualab_logo.png" />
-        <span class="post-meta">{{ post.date | date: date_format }}</span>
-	
-          <h2>
-            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-          </h2>
+          {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
+	  <a href="{{ post.url | relative_url }}">
+          {% if post.image %}
+            {% capture thumbnail_path %}{% asset_path {{ post.image }} {{ post.id }} %}{% endcapture %}
+            {% thumbnail {{ thumbnail_path }} 128x128 %}
+          {% else %}
+            {% thumbnail /assets/images/sualab_logo.png 128x128 %}
+          {% endif %}
+	  </a>
+          <div class='post_info'>
+            <span class="post-meta">{{ post.date | date: date_format }}</span>
+        
+            <h2>
+              <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+            </h2>
+	    <div class='post_summary'>
+              <h4 class='excerpt-text'>
+                {{ post.content | strip_html | truncatewords: 20 }}
+	      </h4>
+	    </div>
+	  </div>
 	</div>
       </li>
     {% endfor %}

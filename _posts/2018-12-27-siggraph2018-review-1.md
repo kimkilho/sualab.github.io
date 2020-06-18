@@ -8,6 +8,7 @@ tags: [siggraph2018, computer-graphics]
 comments: true
 name: siggraph2018-review-1
 redirect_from: "/machine-learning/computer-vision/2018/12/27/siggraph2018-review-1.html"
+image: fig1.PNG
 ---
 
 안녕하세요, 다소 늦은 감이 있지만 지난 8월 캐나다 밴쿠버에서 개최되었던 SIGGRAPH 2018 학회의 참석 후기와, 주요 프로그램에 대한 소개, 그리고 제가 재미있게 들었던 논문 한편에 대한 리뷰 및 4편에 대한 간단한 소개를 다룰 예정입니다. 

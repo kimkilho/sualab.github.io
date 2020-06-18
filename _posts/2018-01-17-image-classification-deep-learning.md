@@ -8,6 +8,7 @@ tags: [classification, alexnet, tensorflow]
 comments: true
 name: image-classification-deep-learning
 redirect_from: "/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html"
+image: random-dogs-cats-predictions.png
 ---
 
 지금까지 딥러닝과 이미지 인식 문제에 대해서 알아보았습니다. 해결하고자 하는 문제(이미지 인식)의 개괄을 살펴보았고 문제 해결을 위한 도구(딥러닝)에 대해 알아보았으니, 이제는 좀 더 구체적으로 이미지 인식 문제에 딥러닝을 직접 적용한 사례를 하나 제시하고, 이를 실제 **TensorFlow** 구현 코드와 함께 소개해 드리고자 합니다. 지금까지의 글들이 대부분 '개념적인' 이야기들 위주였다면, 본 글에서는 코드에 기반한 '실제적인' 내용이 다뤄진다고 이해하시면 될 것 같습니다.

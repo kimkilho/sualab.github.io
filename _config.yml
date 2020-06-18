@@ -13,13 +13,13 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Research Blog
-web: http://sualab.com
+title: Cognex Deep Learning Lab-KOR Research Blog
+web: https://www.cognex.co.kr/
 description: > # this means to ignore newlines until "baseurl:"
-    SUALAB research blog: covers subjects regarding machine learning, computer vision, high-performance computing, and so on.
+    Cognex Deep Learning Lab-KOR research blog: covers subjects regarding machine learning, computer vision, high-performance computing, and so on.
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "http://research.sualab.com" # the base hostname & protocol for your site, e.g. http://example.com
-facebook_username: sualab
+facebook_username: cognexcorp
 
 # Build settings
 markdown: kramdown

@@ -7,6 +7,7 @@ categories: [Development]
 tags: [c++, nuget]
 comments: true
 name: dependency-management-for-cpp-windows-app-using-nuget
+image: boost_in_nuget.png
 ---
 
 라이브러리를 사용할 때는 프로젝트가 사용하는 라이브러리 목록과 버전을 명확히 관리해야 합니다. 개발 환경과 배포 환경의 라이브러리 버전 차이가 의도치 않은 동작을 만들 수 있기 때문입니다. 또한 모든 팀원이 같은 라이브러리 버전을 사용해야 팀원 개개인이 동일한 동작을 기대하고 기능을 개발할 수 있습니다.

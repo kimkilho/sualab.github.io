@@ -8,6 +8,7 @@ tags: [pascal voc, classification, detection, segmentation]
 comments: true
 name: image-recognition-overview-2
 redirect_from: "/computer-vision/2017/11/29/image-recognition-overview-2.html"
+image: pascal-voc-detection-bbox-example.png
 ---
 
 [(이전 포스팅 보기)]({{ page.url }}/../image-recognition-overview-1.html)
