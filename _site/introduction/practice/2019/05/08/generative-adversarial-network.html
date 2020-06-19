@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Page metadata --> 
+  <!-- Reference: http://jovandeginste.github.io/2016/05/18/add-metadata-tags-to-jekyll-blog-posts.html -->
+  <meta name="description" content="안녕하세요. 이번에 포스팅 할 주제는 기존에 다루었던 내용들과는 조금 다른 내용을 이야기 해볼까 합니다. Generative adversarial networks(이하 GAN)으로 불리는 분야에 대하여 소개 해 드리려 합니다. 해당 분야는 처음 등장한 2014년 이후로 지금까지 매...">
+
+  <meta property="og:site_name" content="Cognex Deep Learning Lab-KOR Research Blog">
+  
+  <meta property="og:title" content="Generative Adversarial Network : DCGAN을 이용한 이미지 생성">
+  <meta property="og:type" content="article">
+  <meta property="og:description" content="안녕하세요. 이번에 포스팅 할 주제는 기존에 다루었던 내용들과는 조금 다른 내용을 이야기 해볼까 합니다. Generative adversarial networks(이하 GAN)으로 불리는 분야에 대하여 소개 해 드리려 합니다. 해당 분야는 처음 등장한 2014년 이후로 지금까지 매우 많은 관심을 받으며 관련 연구도 많이 진행되었기에 하나에 포스트로 전부 다루는 것은 어려울 것으로 생각하여 가장 근간이 되는 GAN과 DCGAN에 대해서 소개하고 DCGAN의 경우는 코드와 함께 설명하고자 합니다.
+
+"/>
+  
+  
+  <meta property="article:published_time" content="2019-05-08T09:00:00+09:00">
+  <meta property="article:author" content="http://0.0.0.0:4000/about/">
+  
+  <meta property="og:url" content="http://0.0.0.0:4000/introduction/practice/2019/05/08/generative-adversarial-network.html" />
+  
+  <meta itemprop="keywords" content="generative adversarial network,DCGAN,tensorflow" />
+  
+  <meta property="article:tag" content="generative adversarial network">
+  
+  <meta property="article:tag" content="DCGAN">
+  
+  <meta property="article:tag" content="tensorflow">
+  
+  
+  
+  <!-- end of Page metadata -->
+
+  <title>Generative Adversarial Network : DCGAN을 이용한 이미지 생성</title>
+  <meta name="description" content="안녕하세요. 이번에 포스팅 할 주제는 기존에 다루었던 내용들과는 조금 다른 내용을 이야기 해볼까 합니다. Generative adversarial networks(이하 GAN)으로 불리는 분야에 대하여 소개 해 드리려 합니다. 해당 분야는 처음 등장한 2014년 이후로 지금까지 매...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://0.0.0.0:4000/introduction/practice/2019/05/08/generative-adversarial-network.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <!-- Enabling line-breaking for MathJax equations -->
+  <!-- @reference: https://stackoverflow.com/questions/29893923/how-to-make-formula-with-mathjax-responsive/29904718 -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+       "HTML-CSS": { linebreaks: { automatic: true } },
+                SVG: { linebreaks: { automatic: true } }
+                });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+  
+</head>
+<body><header class="site-header" role="banner">
+
+<div class="wrapper">
+  
+  
+	<div class="cognex-logo-div">
+		<img class="cognex-logo-img" src="/assets/images/Cognex_logo.png" />
+	</div>
+	<div>
+  	<a class="site-title" href="/">Cognex Deep Learning Lab-KOR Research Blog</a>
+	</div>
+
+  
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg></span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+	<a class="page-link" href="/Introduction.html"> Introduction </a>
+	<a class="page-link" href="/Practice.html"> Practice </a>
+	<a class="page-link" href="/Development.html"> Development </a>
+	<a class="page-link" href="/Review.html"> Review </a>
+	<a class="page-link" href="/etc..html"> etc. </a>
+  <a class="page-link" href="https://jobs.cognex.com/" target="_blank"> Jobs </a>
+      </div>
+    </nav>
+  
+</div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <!-- Look the author details up from the site config. -->
+
+<!-- Post metadata -->
+<!-- Reference: http://jovandeginste.github.io/2016/05/18/add-metadata-tags-to-jekyll-blog-posts.html -->
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Generative Adversarial Network : DCGAN을 이용한 이미지 생성</h1>
+    <p class="post-meta">
+      <time datetime="2019-05-08T09:00:00+09:00" itemprop="datePublished">
+        
+        May 8, 2019
+      </time>
+       • 
+        
+          <span itemprop="category" itemscope itemtype="http://schema.org/Category"><a href="/Introduction.html">Introduction</a>, </span>
+        
+          <span itemprop="category" itemscope itemtype="http://schema.org/Category"><a href="/Practice.html">Practice</a></span>
+        
+      
+      
+        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://github.com/kiki9014" target="_blank">김현준</a></span></span>
+        <!-- Author metadata -->
+        <meta itemprop="email" content="Hyunjun.Kim@cognex.com" />
+        <meta itemprop="web" content="https://github.com/kiki9014" />
+        <!-- end of Author metadata -->
+      
+      
+         <br>Tags: generative adversarial network, DCGAN, tensorflow
+      
+    </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>안녕하세요. 이번에 포스팅 할 주제는 기존에 다루었던 내용들과는 조금 다른 내용을 이야기 해볼까 합니다. <a href="http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf" target="_blank"><strong>Generative adversarial networks</strong>(이하 GAN)</a>으로 불리는 분야에 대하여 소개 해 드리려 합니다. 해당 분야는 처음 등장한 2014년 이후로 지금까지 매우 많은 관심을 받으며 관련 연구도 많이 진행되었기에 하나에 포스트로 전부 다루는 것은 어려울 것으로 생각하여 가장 근간이 되는 <strong>GAN</strong>과 <strong>DCGAN</strong>에 대해서 소개하고 DCGAN의 경우는 코드와 함께 설명하고자 합니다.</p>
+
+<ul>
+  <li><strong>다음과 같은 사항을 알고계시면 더 이해하기 쉽습니다.</strong>
+    <ul>
+      <li>딥러닝에 대한 전반적인 이해</li>
+      <li>Python 언어 및 TensorFlow 프레임워크에 대한 이해</li>
+    </ul>
+  </li>
+  <li><strong>GAN 방법론의 경우 random으로 sampling한 latent vector z에 의해 학습시 생성되는 이미지가 달라지므로 매번 같은 학습 결과가 나오지 않습니다.</strong></li>
+  <li>이번 글에서는 과거 구현체와 마찬가지로 데이터셋(data set), 성능 평가(performance evaluation), 러닝 모델(learning model), 러닝 알고리즘(leaning algorithm) 4가지 요소를 나눠 구현하였으며, 중복을 피하기 위해 다르게 구현한 부분 위주로 설명합니다.
+    <ul>
+      <li>전체 구현체 코드는 <a href="https://github.com/sualab/DCGAN_Face_gen_tf" target="_blank">수아랩의 GitHub 저장소</a>에서 자유롭게 확인하실 수 있습니다.</li>
+      <li>데이터셋은 <a href="https://drive.google.com/file/d/1sR5PNAEWPmWGyEBYtprura4LsV_IUsYQ/view?usp=sharing" target="_blank">여기</a>서 받을 수 있습니다.</li>
+      <li>성능평가에서 사용할 통계 데이터는 위의 수아랩 GitHub 저장소에서 구현체 코드를 통해 직접 계산할 수도 있지만 <a href="https://drive.google.com/file/d/14f5cQOCbiAoDODRmVmZvlNsg7wX0U92G/view?usp=sharing" target="_blank">여기</a>서 받을 수 있습니다.</li>
+      <li>성능평가에서 사용할 pretrained Inception v3 그래프는 <a href="https://drive.google.com/file/d/1thIXF4jvG0KluzSEpsg1TCNiKEzh8VFV/view?usp=sharing" target="_blank">여기</a>서 받을 수 있습니다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="서론">서론</h2>
+
+<p>GAN은 이미지를 생성하는 방법론으로 2014년 처음 등장한 이래로 매우 빠르게 연구되어 많은 방법론과 그 응용이 학계에 발표되었습니다. 단순히 이미지를 생성하는 수준에서 주어진 이미지를 다른 화풍의 이미지로 바꾸는 <a href="https://arxiv.org/pdf/1807.10201.pdf" target="_blank">style transfer</a>까지 다양한 응용이 가능하며 기존 <a href="https://arxiv.org/pdf/1511.06434.pdf" target="_blank">image recognition 작업의 성능을 향상</a>시킬 수도 있습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/teaser_eccv18_cezanne.jpg" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/teaser_eccv18_cezanne.jpg" alt="자동차 사진을 세잔 화풍으로 전이한 이미지" />
+</a>
+<span class="caption">자동차 사진을 세잔 화풍으로 전이한 이미지</span></p>
+
+<p>GAN를 이해하기 위해서는 generative, adversarial 두가지 키워드에 대한 이해가 필요합니다. GAN에 대해 간략히 설명하자면 <strong>adversarial learning</strong>를 통해 <strong>generative model</strong>을 생성하는 방법론과 생성된 network를 의미합니다. 따라서 generative model은 어떤 학습 모델이며 adversarial learning는 어떤 방식인지를 알게 된다면 GAN이 어떤 분야인지 바로 이해하실 수 있습니다.</p>
+
+<p>본 포스팅은 최대한 수식을 배제하고 일부의 필요한 수식만을 사용하여 설명하고자 합니다. 복잡한 수식이 사용되거나 이론적으로 깊은 이해가 필요한 부분에 대해서는 간략하게 언급하고 넘어갈 예정입니다.</p>
+
+<h3 id="generative-model">Generative Model</h3>
+
+<p>기존에 다루었던 image classification, object detection, image segmentation 문제들은 입력 이미지(<script type="math/tex">x</script>)가 있을때 그에 따른 정답(<script type="math/tex">y</script>)을 찾는 문제들입니다. image classification에서 주어진 이미지가 있을때, 그 이미지가 개의 이미지인지 고양이의 이미지인지 구별하는 문제등을 생각하면 됩니다. 이러한 모델은 <strong>discriminative model</strong>이라고 합니다. 즉 <script type="math/tex">p(y \mid x)</script>의 분포를 학습하여 이미지를 구별하는데 초점을 맞춘 모델이라고 생각하시면 됩니다. 일반적인 discriminative model의 경우 주어진 이미지를 구분하기 위한 특징점들을 찾아 분류하는 것을 목표로 하고 있습니다. 모델을 사람에 비유한다면 주어진 사진에서 보여지는 동물의 눈, 수염, 귀, 꼬리와 같은 요소를 보고 사진속의 동물이 개인지 고양이인지 구별하는 형태입니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/random-dogs-cats-predictions.png" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/random-dogs-cats-predictions.png" alt="개와 고양이를 구분하는 문제" />
+</a>
+<span class="caption">개와 고양이를 구분하는 문제</span></p>
+
+<p>Dicriminative model을 사용하면서 한번쯤은 생각해봤을 상상이 있습니다. 만약 개의 눈, 수염, 귀, 꼬리 등의 요소가 어떻게 생겼는지를 알고 있으면 이를 이용해 개의 모습을 그릴 수 있지 않을까요? 긴 허리, 짧은 다리, 검은색과 갈색 털, 접힌 귀, 검은 눈동자를 위치에 맞게 그리면 닥스훈트 한마리를 그릴 수 있는 것입니다. 이 생각에서 착안한 것이 바로 <strong>generative model</strong>입니다. 즉, generative model은 데이터의 분포 <script type="math/tex">p(x)</script>를 학습하는 것을 목표로 하는 model을 의미합니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/MiniDachshund1_wb.jpg" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/MiniDachshund1_wb.jpg" alt="긴 허리, 짧은 다리 등으로 우리는 닥스훈트를 인식 할 수 있다" />
+</a>
+<span class="caption">긴 허리, 짧은 다리 등으로 우리는 닥스훈트를 인식 할 수 있다</span></p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/drawn_dachshund.jpg" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/drawn_dachshund.jpg" alt="긴 허리, 짧은 다리 등을 그리면 닥스훈트를 그릴 수 있다." />
+</a>
+<span class="caption">긴 허리, 짧은 다리 등을 그리면 닥스훈트를 그릴 수 있다.</span></p>
+
+<p>일반적인 generative 모델은 discriminative 모델과 같이 오랜 기간 연구되어 왔습니다. 딥러닝이 보편화되기 이전에도 GMM(Gaussian Mixture Model), HMM(Hidden Markov Model)등의 방법론들을 중심으로 연구가 진행되어 왔습니다. 딥러닝이 보편화 된 이후 generative model은 <strong>GAN(Generative Adversarial Networks)</strong>, <strong>VAE(Variational Auto-Encoder)</strong>, 시계열 데이터 생성에 적합하다고 알려진 RNN(Recurrent Neural Network)등의 방향으로 연구되고 있습니다. 이 포스팅은 그 중 GAN에 대해서만 설명하며 다른 방법론들에 대해서는 기회가 된다면 나중에 다뤄보겠습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/gen_models_anim_1.gif" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/gen_models_anim_1.gif" alt="VAE 학습 과정" />
+</a>
+<span class="caption">VAE 학습 과정</span></p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/GAN_samples.gif" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/GAN_samples.gif" alt="GAN 학습 과정.(이번 구현으로 만들 수 있다.)" />
+</a>
+<span class="caption">GAN 학습 과정.(이번 구현으로 만들 수 있다.)</span></p>
+
+<h3 id="adversarial-learning">Adversarial Learning</h3>
+
+<p><strong>Adversarial learning</strong>는 적대적이라는 단어에서 알 수 있듯이 두 개의 모델이 서로를 적대하며 학습하는 방식을 말합니다. 예를들어 두 모델을 각각 모델 A, 모델 B라고하면, 모델 A는 학습된 모델 B의 취약점을 찾아 교란하도록 학습하고 모델 B는 탐색된 취약점을 보완하는 방향으로 학습을 진행하는 방법론입니다. GAN에서 사용된 adversarial learning도 이와 비슷하게 진행됩니다.</p>
+
+<h2 id="gan">GAN</h2>
+
+<p>GAN은 이미지를 생성하기 위하여 2가지 모델을 동시에 사용합니다. <strong>Generator model</strong>과 <strong>discriminator model</strong>이 그것으로 두 모델은 서로에 대해 적대적인 관계를 가집니다. 자주 인용되는 비유로 <strong>화폐 위조범과 경찰</strong>이 있습니다. 화폐 위조범은 경찰의 눈을 속여 <strong>가짜 화폐를 만들고</strong> 경찰은 시중에 돌아다니는 <strong>진짜 화폐와 가짜 화폐를 구분</strong>합니다. 화폐 위조범은 적발을 피하기 위해 최대한 진짜 지폐와 유사하게 위폐를 만들 것이고, 경찰은 최대한 위폐와 진짜 화폐를 구별하기 위해 화폐의 여러 주요 포인트를 살펴볼 것입니다. 이러한 과정을 끝없이 반복하게 되면 <strong>진짜 화폐와 똑같이 생긴 가짜 화폐를 만들게 되는 것</strong>입니다.</p>
+
+<p>GAN은 이러한 두 모델간의 경쟁을 discriminator <script type="math/tex">D</script>와 generator <script type="math/tex">G</script> 사이의 <strong>minimax game</strong>으로 정의합니다. 둘 사이의 점수를 두고 한쪽(<script type="math/tex">G</script>)은 점수를 최소로, 다른 한쪽(<script type="math/tex">D</script>)은 점수를 최대로 하는 게임입니다. 일반적으로 경쟁을 하는 점수는 다음과 같이 표현합니다.</p>
+
+<p>\begin{equation}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\min_G \max_D V(D, G) = \E_{x \sim {p_{data}(x)}}[ \,\log(D(x))] \, +  \E_{z \sim {p_{z}(z)}}[ \, 1 - \log(D(G(z)))]\, 
+\end{equation}</p>
+
+<p>실제로 D, G를 각각 maximize, minimize하기보다 <script type="math/tex">1 - \log(D(G(z)))</script> 대신 <script type="math/tex">\log(D(G(z)))</script> 를 사용하여 해당 값을 maximize하는 방식으로 GAN을 학습하게 됩니다.</p>
+
+<p>이 포스팅은 GAN을 직접 구현하는 것에 초점을 두고 있으므로 GAN의 수렴 여부 증명등 복잡한 수식을 설명하기 보다는 바로 코드를 통해 GAN에 대하여 설명하겠습니다. 처음에 등장한 GAN을 구현하는 것 보다는 조금 더 자주 쓰이는 DCGAN을 구현할 예정입니다. DCGAN은 GAN을 좀 더 개량한 논문으로 이후 등장하는 많은 GAN 논문들의 generator와 discriminator의 architecture를 구성하는데 많은 영감을 준 논문입니다.</p>
+
+<h2 id="1-dataset-얼굴-데이터셋-ffhq">(1) Dataset: 얼굴 데이터셋 FFHQ</h2>
+
+<p>GAN을 학습하기 위해 사용하는 데이터로 <strong><a href="https://github.com/NVlabs/ffhq-dataset" target="_blank">Flickr Face HQ Dataset</a></strong> 을 사용하겠습니다. 이름에서 알 수 있듯이 Flickr를 통해 수집된 데이터들을 사용했으며 얼굴이미지만 모은 dataset이므로 별도의 annotation없이 학습이 진행됩니다. 실제로는 class정보를 이용하여 원하는 class의 데이터를 생성하는 것도 가능하지만 이번에 사용할 얼굴 데이터셋에서는 별도의 annotation이 없이 얼굴 이미지만 사용하여 GAN을 학습합니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/FFHQ_image_sample.jpg" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/FFHQ_image_sample.jpg" alt="FFHQ 데이터셋 예시" />
+</a>
+<span class="caption">FFHQ 데이터셋 예시</span></p>
+
+<p>데이터셋은 총 70000장으로 별도의 test나 evaluation용 데이터를 두지 않고 전부 학습에 사용합니다. 학습에는 64x64 크기의 이미지를 사용할 예정이므로 thumbnails128x128폴더의 데이터를 리사이즈 하여 사용합니다.</p>
+
+<h3 id="datasetsdata-모듈">datasets.data 모듈</h3>
+
+<p><code class="highlighter-rouge">datasets.data</code>모듈은 데이터셋에 관련된 함수와 클래스를 가지고 있습니다. Classification 문제나 Detection, Segmentation 문제와 마찬가지로 이 모듈은 데이터셋을 메모리에 로드하고 학습 과정에서 이들을 미니 배치(minibatch) 단위로 제공합니다.</p>
+
+<h4 id="read_data-함수">read_data 함수</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">image_size</span><span class="p">,</span> <span class="n">crop_size</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="s">"""
+    GAN을 학습하기 위해 데이터를 전처리하고 불러옴
+    :param data_dir : str, image가 저장된 경로.
+    :param image_size : tuple (width, height), 이미지를 resize할 경우 이미지 사이즈
+    :param crop_size : int, 얼굴 이미지에서 배경을 제외한 얼굴만을 crop할경우 crop할 영역의 크기
+    :return: X_set : np.ndarray, shape: (N, H, W, C).
+    """</span>
+    <span class="n">img_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">img</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span> <span class="k">if</span> <span class="n">img</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">IMAGE_EXTS</span><span class="p">]</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">img_list</span><span class="p">:</span>
+        <span class="n">img_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">crop_size</span><span class="p">:</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">center_crop</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">crop_size</span><span class="p">,</span> <span class="n">crop_size</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">resize</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="p">(</span><span class="n">image_size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">image_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">im</span><span class="o">/</span><span class="mf">127.5</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">im</span><span class="p">[:,:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">images</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+        
+    <span class="n">X_set</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">X_set</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">read_data</code>함수는 데이터셋을 불러와 각 이미지를 crop하거나 resize하여 <code class="highlighter-rouge">numpy.ndarray</code> 형태로 변환합니다. crop을 하는 이유는 만약 생성하고 싶은 부분이 전체 이미지보다 작은 부분일 경우 해당 영역만을 잘라 generate를 도와주기 위함입니다. 또 generator에서 생성될 이미지 사이즈를 고려하여 resize 작업 역시 진행합니다. Generator의 작업을 원할하게 하기 위하여 학습 이미지를 <strong>-1에서 1사이의 값으로 normalize</strong>합니다. 또, GAN의 성능을 평가하기 위해 이미지의 채널 순서를 맞춰 주는 것이 중요합니다. 이 부분은 Evaluator를 설명하면서 같이 설명하겠습니다.</p>
+
+<h4 id="dataset-클래스">DataSet 클래스</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
+        <span class="s">"""
+        새로운 DataSet 객체를 생성함.
+        :param images : np.ndarray, (N, H, W, C)
+        """</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_num_examples</span> <span class="o">=</span> <span class="n">images</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_images</span> <span class="o">=</span> <span class="n">images</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_indices</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">_num_examples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">uint</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_reset</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""일부 변수를 재설정함."""</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_epoch_completed</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_index_in_epoch</span> <span class="o">=</span> <span class="mi">0</span>
+        
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">_images</span>
+    
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">num_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">_num_examples</span>
+    
+    <span class="k">def</span> <span class="nf">next_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="s">"""
+        `batch_size` 개수만큼의 이미지들을 현재 데이터셋으로부터 추출하여 미니배치 형태로 반환함.
+        :param batch_size : int, 미니배치 크기.
+        :param shuffle : bool, 미치배치 추출에 앞서, 현재 데이터셋 내 이미지들의 순서를 랜덤하게 섞을 것인지 여부.
+        :return: batch_images : np.ndarray, shape: (N,H,W,C)
+        """</span>
+        
+        <span class="n">start_index</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_index_in_epoch</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">_epoch_completed</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">start_index</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">shuffle</span><span class="p">:</span>
+            <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">_indices</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">start_index</span> <span class="o">+</span> <span class="n">batch_size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">_num_examples</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">_epoch_completed</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">rest_num_examples</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_num_examples</span> <span class="o">-</span> <span class="n">start_index</span>
+            
+            <span class="n">indices_rest_part</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_indices</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span><span class="bp">self</span><span class="p">.</span><span class="n">_num_examples</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+                <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">_indices</span><span class="p">)</span>
+            
+            <span class="n">start_index</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">_index_in_epoch</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="o">-</span> <span class="n">rest_num_examples</span>
+            <span class="n">end_index</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_index_in_epoch</span>
+            <span class="n">indices_new_part</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_indices</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span><span class="n">end_index</span><span class="p">]</span>
+            
+            <span class="n">images_rest_part</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_images</span><span class="p">[</span><span class="n">indices_rest_part</span><span class="p">]</span>
+            <span class="n">images_new_part</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_images</span><span class="p">[</span><span class="n">indices_new_part</span><span class="p">]</span>
+            <span class="n">batch_images</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">images_rest_part</span><span class="p">,</span> <span class="n">images_new_part</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">_index_in_epoch</span> <span class="o">+=</span> <span class="n">batch_size</span>
+            <span class="n">end_index</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_index_in_epoch</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_indices</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span><span class="n">end_index</span><span class="p">]</span>
+            <span class="n">batch_images</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_images</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="n">batch_images</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">Dataset</code> 클래스를 이용하여 메모리에 로드된 <code class="highlighter-rouge">X_set</code>을 미니배치(minibatch) 단위로 반환합니다.</p>
+
+<h2 id="2-성능-평가--fréchet-inception-distance">(2) 성능 평가 : Fréchet Inception Distance</h2>
+
+<p>GAN의 성능을 평가하는 것은 완벽하지 않습니다. 초창기에는 생성된 이미지를 정성적으로 평가하는 방식으로 진행하였고 그 후에 <strong><a href="https://arxiv.org/pdf/1606.03498.pdf" target="_blank">Inception Score(IS)</a></strong> 가 등장하면서 별도의 네트워크를 이용하여 생성된 이미지의 성능을 평가하기 시작하였습니다. 이 포스팅에서 사용할 성능 평가지표는 <strong><a href="https://arxiv.org/pdf/1706.08500.pdf" target="_blank">Fréchet Inception Distance(FID)</a></strong> 입니다. 두 지표의 이름에서 눈치채셨을 지도 모르겠지만 두 지표 모두 Inception network를 사용하여 성능을 측정합니다.</p>
+
+<p>FID는 간단하게 요약하면 <strong>real data와 fake data의 feature space상에서의 거리</strong>입니다. <strong>Inception network</strong>(Inception V3을 주로 사용합니다.) 를 이용하여 real data와 fake data의 feature를 추출한 뒤, 두 집합의 feature의 <strong>mean과 covariance <script type="math/tex">(m_r,C_r), (m_f,C_f)</script></strong> 를 구한뒤 각 값을 이용하여 거리를 계산합니다. 계산식은 다음과 같습니다.</p>
+
+<p>\begin{equation}
+\DeclareMathOperator{\Tr}{Tr}
+FID^2 = ||m_f - m_r||^2_2 + \Tr(C_f + C_r - 2(C_f C_r)^{1/2})
+\end{equation}</p>
+
+<h3 id="learningfid-모듈">learning.fid 모듈</h3>
+
+<p>FID Evaluator를 구현하기 위해 먼저 <code class="highlighter-rouge">FID</code> 클래스를 구현합니다. 이는 <code class="highlighter-rouge">learning.fid</code> 모듈에 구현하였습니다.</p>
+
+<h4 id="fid-클래스">FID 클래스</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">FID</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Frechet Inception Distance 를 계산하기 위한 클래스."""</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">dataset_stats_path</span><span class="p">,</span> <span class="n">sess</span><span class="p">):</span>
+        <span class="s">"""
+        새로운 FID 객체를 생성함.
+        :param model_path : str, FID를 계산하는 Inception model(*.pb) 파일의 경로.
+        :param dataset_path : Dataset object, m_w 와 C_w 를 계산할 데이터셋.
+        :param sess : tf.Session, using inception network를 이용하여 피쳐를 추출하는 세션.
+        """</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">inception_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_inception_layer</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">model_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">mu_data</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">sigma_data</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_data_stats</span><span class="p">(</span><span class="n">dataset_stats_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">sess</span> <span class="o">=</span> <span class="n">sess</span>
+        <span class="c1"># 2048 은 inception network의 피쳐크기.
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">feature_gen</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2048</span><span class="p">))</span>
+		
+		
+    <span class="k">def</span> <span class="nf">get_inception_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span> <span class="n">model_path</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pool_layer</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">graph</span><span class="p">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span>
+                <span class="s">"FID/InceptionV3/Logits/AvgPool_1a_8x8/AvgPool:0"</span><span class="p">)</span>
+        <span class="k">except</span> <span class="nb">KeyError</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">gfile</span><span class="p">.</span><span class="n">FastGFile</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">graph_def</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">GraphDef</span><span class="p">()</span>
+                <span class="n">graph_def</span><span class="p">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">())</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">import_graph_def</span><span class="p">(</span><span class="n">graph_def</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"FID"</span><span class="p">)</span>
+            <span class="n">pool_layer</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">graph</span><span class="p">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span>
+                <span class="s">"FID/InceptionV3/Logits/AvgPool_1a_8x8/AvgPool:0"</span><span class="p">)</span>
+        
+        <span class="n">ops</span> <span class="o">=</span> <span class="n">pool_layer</span><span class="p">.</span><span class="n">graph</span><span class="p">.</span><span class="n">get_operations</span><span class="p">()</span>
+        
+        <span class="k">for</span> <span class="n">op_idx</span><span class="p">,</span> <span class="n">op</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ops</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">op</span><span class="p">.</span><span class="n">outputs</span><span class="p">:</span>
+                <span class="n">shape</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">get_shape</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">shape</span><span class="p">.</span><span class="n">_dims</span> <span class="o">!=</span> <span class="p">[]</span> <span class="ow">and</span> <span class="p">(</span><span class="n">shape</span><span class="p">.</span><span class="n">_dims</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
+                    <span class="n">shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">]</span>
+                    <span class="n">new_shape</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">new_shape</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">new_shape</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                    <span class="n">o</span><span class="p">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s">'_shape_val'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">TensorShape</span><span class="p">(</span><span class="n">new_shape</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">pool_layer</span>
+    
+    <span class="k">def</span> <span class="nf">get_data_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_stats_path</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dataset_stats_path</span><span class="p">)</span>
+        
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dataset_stats_path</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="n">pkl</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">stats</span><span class="p">[</span><span class="s">"mu"</span><span class="p">],</span> <span class="n">stats</span><span class="p">[</span><span class="s">"sigma"</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">reset_FID</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">feature_gen</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2048</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">extract_inception_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">images</span><span class="p">):</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">images</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="p">(</span><span class="n">images</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">127.5</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">inception_layer</span><span class="p">,</span> <span class="p">{</span><span class="s">'FID/input:0'</span> <span class="p">:</span> <span class="n">images</span><span class="p">})</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">feature_gen</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">feature_gen</span><span class="p">,</span>
+                                     <span class="n">pred</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">calculate_FID</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pred_arr</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">feature_gen</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pred_arr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cov</span><span class="p">(</span><span class="n">pred_arr</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">mu</span><span class="p">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">.</span><span class="n">mu_data</span><span class="p">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"shape of mu is {}, shape of mu_data is {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+                <span class="n">mu</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">mu_data</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+        
+        <span class="k">assert</span> <span class="n">mu</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">mu_data</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="s">"Two means have different lengths"</span>
+        <span class="k">assert</span> <span class="n">sigma</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">sigma_data</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="s">"Tow cov have different size"</span>
+
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">mu_data</span>
+
+        <span class="n">cov_mean</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">linalg</span><span class="p">.</span><span class="n">sqrtm</span><span class="p">(</span><span class="n">sigma</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">sigma_data</span><span class="p">),</span> <span class="n">disp</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="p">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">cov_mean</span><span class="p">).</span><span class="nb">all</span><span class="p">():</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Singular product has happened when calculate FID. adding </span><span class="se">\
+</span><span class="s">                  %s to diagonal of cov estimates"</span> <span class="o">%</span> <span class="mf">1e-6</span><span class="p">)</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">sigma</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="mf">1e-6</span>
+            <span class="n">cov_mean</span> <span class="o">=</span> <span class="n">linalg</span><span class="p">.</span><span class="n">sqrtm</span><span class="p">((</span><span class="n">sigma</span> <span class="o">+</span> <span class="n">offset</span><span class="p">).</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">sigma_data</span> <span class="o">+</span> <span class="n">offset</span><span class="p">))</span>
+            
+        <span class="k">if</span> <span class="n">np</span><span class="p">.</span><span class="n">iscomplexobj</span><span class="p">(</span><span class="n">cov_mean</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="p">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">cov_mean</span><span class="p">).</span><span class="n">imag</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">cov_mean</span><span class="p">.</span><span class="n">imag</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">"Imaginary component {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+            <span class="n">cov_mean</span> <span class="o">=</span> <span class="n">cov_mean</span><span class="p">.</span><span class="n">real</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">diff</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">sigma_data</span><span class="p">)</span> 
+                       <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="n">cov_mean</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Pretrain된 Inception V3 network는 직접 구하셔도 되지만 편의를 위해 <a href="https://drive.google.com/file/d/1thIXF4jvG0KluzSEpsg1TCNiKEzh8VFV/view?usp=sharing" target="_blank">여기</a>에서 받는 것을 추천드립니다. 또 FFHQ data의 feature mean, feature covariance는 미리 계산하여 <a href="https://drive.google.com/file/d/14f5cQOCbiAoDODRmVmZvlNsg7wX0U92G/view?usp=sharing" target="_blank">여기</a>에 링크해 놓았으니 직접 계산하셔도 되고 받아서 사용하셔도 됩니다. <code class="highlighter-rouge">extract_inception_features</code>에서 -1에서 1사이의 값을 0부터 255사이의 값으로 바꾸어 Inception network에서 feature를 추출하였고 제공하는 Inception Network가 <strong>rgb의 channel순서</strong>로 입력 이미지가 구성되어있으므로 <strong>채널의 순서를 유의하여 주시기 바랍니다</strong>. Fake data의 mean을 구하기 위해서는 충분한 수의 sample이 있어야 하므로 학습시의 메모리를 고려하여 batch단위로 feature를 뽑도록 하였습니다. 이는 이후 <code class="highlighter-rouge">Evaluator</code> 클래스를 구현하는데 있어 <code class="highlighter-rouge">FID</code> 클래스를 별도로 구현한 이유이기도 합니다.</p>
+
+<h3 id="learningevaluator-모듈">learning.evaluator 모듈</h3>
+
+<p><code class="highlighter-rouge">learning.evaluator</code> 모듈은 현재까지 학습된 모델의 성능 평가를 위한 ‘evaluator’의 클래스를 담고 있습니다. <code class="highlighter-rouge">Evaluator</code> 클래스는 <a href="http://research.sualab.com/practice/2018/01/17/image-classification-deep-learning.html" target="_blank">image classification 포스팅</a>등에서 이미 구현한 바 있으므로 생략하겠습니다.</p>
+
+<h4 id="fidevaluator-클래스">FIDEvaluator 클래스</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">FIDEvaluator</span><span class="p">(</span><span class="n">Evaluator</span><span class="p">):</span>
+    <span class="s">"""FID score를 평가 척도로 사용하는 evaluator 클래스."""</span>
+    
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">worst_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""최악의 성능 점수."""</span>
+        <span class="k">return</span> <span class="mf">1000.0</span>
+
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""점수가 높아야 성능이 우수한지, 낮아야 성능이 우수한지 여부."""</span>
+        <span class="k">return</span> <span class="s">'min'</span>
+
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""FID에 기반한 성능 평가점수."""</span>
+        <span class="n">batch_size_eval</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'batch_size_eval'</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">eval_sample_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'eval_sample_size'</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+        <span class="n">n_iter</span> <span class="o">=</span> <span class="n">eval_sample_size</span> <span class="o">//</span> <span class="n">batch_size_eval</span>
+        <span class="n">fid</span><span class="p">.</span><span class="n">reset_FID</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">):</span>
+            <span class="n">z_eval</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">batch_size_eval</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">z_dim</span><span class="p">))</span>
+            <span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="n">eval_generated</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">generate</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">z_eval</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">fid</span><span class="p">.</span><span class="n">extract_inception_features</span><span class="p">(</span><span class="n">eval_generated</span><span class="p">)</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">fid</span><span class="p">.</span><span class="n">calculate_FID</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">score</span>
+
+    <span class="k">def</span> <span class="nf">is_better</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curr</span><span class="p">,</span> <span class="n">best</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        상대적 문턱값을 고려하여, 현재 주어진 성능 점수가 현재까지의 최고 성능 점수보다
+        우수한지 여부를 반환하는 함수.
+        :param kwargs: dict, 추가 인자.
+            - score_threshold: float, 새로운 최적값 결정을 위한 상대적 문턱값으로,
+                               유의미한 차이가 발생했을 경우만을 반영하기 위함.
+        """</span>
+        <span class="n">score_threshold</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'score_threshold'</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">)</span>
+        <span class="n">relative_eps</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">score_threshold</span>
+        <span class="k">return</span> <span class="n">curr</span> <span class="o">&lt;</span> <span class="n">best</span> <span class="o">*</span> <span class="n">relative_eps</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">Evaluator</code> 클래스를 상속받아 <code class="highlighter-rouge">FIDEvlauator</code> 클래스를 구현하였습니다. 학습된 model의 generate 함수를 통해 fake image를 생성하고 이를 <code class="highlighter-rouge">FID</code> 클래스의 <code class="highlighter-rouge">extract_inception_features</code>함수를 통해 feature를 추출합니다. evaluate를 위한 sample의 사이즈가 커 한번에 feature를 뽑을 수 없기에 minibatch로 나누어 진행합니다. 이후 <code class="highlighter-rouge">calculate_FID</code> 함수를 통해 FID값을 계산합니다.
+낮을 수록 좋은 성능 척도이므로 <code class="highlighter-rouge">mode</code>를 ‘min’으로 <code class="highlighter-rouge">score_threshold</code> 값을 1e-4로 설정하였습니다.</p>
+
+<h2 id="3-러닝-모델-dcgan-deep-convolution-generative-adversarial-network">(3) 러닝 모델: DCGAN (Deep Convolution Generative Adversarial Network)</h2>
+
+<p>러닝 모델로는 앞서 언급한대로 DCGAN을 사용합니다. 다른 포스팅과 마찬가지로 주로 사용하는 층(layer)들을 생성하는 함수를 <code class="highlighter-rouge">models.layers</code>에서 먼저 정의하고 <code class="highlighter-rouge">models.nn</code>모듈에서 일반적인 GAN 모델을 정의하고 이를 DCGAN이 상속 받도록 구현하였습니다.</p>
+
+<h3 id="modelslayers-모듈">models.layers 모듈</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">conv_layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">'SAME'</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="n">use_bias</span><span class="p">,</span>
+                             <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">initializers</span><span class="p">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">deconv_layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">'SAME'</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">conv2d_transpose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="n">use_bias</span><span class="p">,</span> 
+                                      <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">initializers</span><span class="p">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">batchNormalization</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">is_train</span><span class="p">):</span>
+    <span class="s">"""
+    새로운 batchNormalization 층을 추가함.
+    :param x: tf.Tensor, shape: (N, H, W, C) or (N, D)
+    :param is_train: tf.placeholder(bool), True이면 train mode, 아니면 test mode
+    :return: tf.Tensor.
+    """</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">batch_normalization</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="n">is_train</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> 
+                                        <span class="n">center</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">conv_bn_lrelu</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s">'SAME'</span><span class="p">,</span> <span class="n">bn</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+    <span class="s">"""
+    conv + bn + Leaky Relu 으로 이루어진 층을 추가함.
+    conv_layer, batchNormalization 함수 참고.
+    relu를 사용하고 싶으면, alpha를 0으로 설정.
+    activation 층을 사용하고 싶지 않으면 alpha를 1.0으로 설정.
+    """</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">conv_layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">bn</span><span class="p">:</span>
+        <span class="n">_bn</span> <span class="o">=</span> <span class="n">batchNormalization</span><span class="p">(</span><span class="n">conv</span><span class="p">,</span> <span class="n">is_train</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">_bn</span> <span class="o">=</span> <span class="n">conv</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">leaky_relu</span><span class="p">(</span><span class="n">_bn</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+    
+<span class="k">def</span> <span class="nf">deconv_bn_relu</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s">'SAME'</span><span class="p">,</span> <span class="n">bn</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">relu</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="s">"""
+    deconv + bn + Relu 으로 이루어진 층을 추가함.
+    deconv_layer, batchNormalization 함수 참고.
+    """</span>
+    <span class="n">deconv</span> <span class="o">=</span> <span class="n">deconv_layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">bn</span><span class="p">:</span>
+        <span class="n">_bn</span> <span class="o">=</span> <span class="n">batchNormalization</span><span class="p">(</span><span class="n">deconv</span><span class="p">,</span> <span class="n">is_train</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">_bn</span> <span class="o">=</span> <span class="n">deconv</span>
+    <span class="k">if</span> <span class="n">relu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">_bn</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_bn</span>
+
+
+<span class="k">def</span> <span class="nf">fc_layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="s">"""
+    새로운 완전 연결 층을 추가함.
+    :param x: tf.Tensor, shape: (N, D).
+    :param out_dim: int, 출력 벡터의 차원수.
+    :return: tf.Tensor.
+    """</span>
+    <span class="n">weights_stddev</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'weights_stddev'</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+    <span class="n">biases_value</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'biases_value'</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">in_dim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">get_shape</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">weight_variable</span><span class="p">([</span><span class="n">in_dim</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="n">weights_stddev</span><span class="p">)</span>
+    <span class="n">biases</span> <span class="o">=</span> <span class="n">bias_variable</span><span class="p">([</span><span class="n">out_dim</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="n">biases_value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span> <span class="o">+</span> <span class="n">biases</span>
+
+
+<span class="k">def</span> <span class="nf">fc_bn_lrelu</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">,</span> <span class="n">is_train</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+    <span class="s">"""
+    fc + bn + Leaky Relu 으로 이루어진 층을 추가함.
+    fc_layer, batchNormalization 함수 참고.
+    """</span>
+    <span class="n">fc</span> <span class="o">=</span> <span class="n">fc_layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">)</span>
+    <span class="n">bn</span> <span class="o">=</span> <span class="n">batchNormalization</span><span class="p">(</span><span class="n">fc</span><span class="p">,</span> <span class="n">is_train</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">leaky_relu</span><span class="p">(</span><span class="n">bn</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">models.layers</code> 모듈은 신경망을 구성하는데 필요한 layer들에 대해 정의한 모듈입니다. tf.layer 모듈을 이용하여 간편하게 정의하였으며 기존에 사용하던 ReLU이외에 LeakyReLU를 사용한 layer도 구현하였습니다.
+LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는 것이 아니라 일정 비율을 입력에 곱한 값을 출력으로 내보내는 함수입니다. DCGAN에서는 discriminator를 구성하는데 사용됩니다. fc_layer는 image classification에서 사용한 함수를 그대로 사용하였습니다.</p>
+
+<h3 id="modelsnn-모듈">models.nn 모듈</h3>
+
+<p><code class="highlighter-rouge">models.nn</code> 모듈은 신경망을 표현하는 클래스를 가지고 있습니다.</p>
+
+<h4 id="gan-클래스">GAN 클래스</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">GAN</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="s">"""Generative Adversarial Network의 베이스 클래스."""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        모델을 초기화한다.
+        :param input_shape: np.array, shape [H,W,C]
+        """</span>
+
+        <span class="k">if</span> <span class="n">input_shape</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">input_shape</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">z_dim</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'z_dim'</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">c_dim</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            
+        <span class="bp">self</span><span class="p">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">input_shape</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">z_dim</span><span class="p">])</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="nb">bool</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">G</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_build_generator</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">D_logits</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">D_l4</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_build_discriminator</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">D_</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">D_logits_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_build_discriminator</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">G_</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_build_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">gen_loss</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">discr_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_build_loss</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+    <span class="o">@</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_build_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        Generator를 빌드.
+        해당 함수를 추후 구현해야 함.
+        """</span>
+        <span class="k">pass</span>
+    
+    <span class="o">@</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_build_sampler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        Sampler를 빌드.
+        해당 함수를 추후 구현해야 함.
+        """</span>
+        <span class="k">pass</span>
+    
+    <span class="o">@</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_build_discriminator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        Discriminator를 빌드.
+        해당 함수를 추후 구현해야 함.
+        """</span>
+        <span class="k">pass</span>
+    
+    
+    <span class="o">@</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_build_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        모델 학습을 위한 손실 함수 생성.
+        generator 와 discriminator를 위한 로스를 반환함.
+        해당 함수를 추후 구현해야 함.
+        """</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        z 벡터를 이용해서 이미지를 생성함.
+        :param sess: tf.Session
+        :param z: np.ndarray, (N, z_dim)
+        :param verbose: bool, 생성 과정에서 구체적인 정보를 출력할 것인지 여부.
+        :params kwargs: dict, 생성을 위한 추가 인자.
+                -batch_size: int, 각 반복 회차에서의 미니배치 크기.
+        :return _image_gen: np.ndarray, shape: shape of (N, H, W, C)
+        """</span>
+        
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'batch_size'</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+        
+        <span class="n">num_image</span> <span class="o">=</span> <span class="n">z</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">num_steps</span> <span class="o">=</span> <span class="n">num_image</span><span class="o">//</span><span class="n">batch_size</span>
+        
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Running generation loop..."</span><span class="p">)</span>
+        
+        
+        <span class="n">_image_gen</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">start_batch</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">batch_size</span>
+            
+            <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="n">num_steps</span><span class="p">:</span>
+                <span class="n">_batch_size</span> <span class="o">=</span> <span class="n">num_image</span> <span class="o">-</span> <span class="n">num_steps</span> <span class="o">*</span> <span class="n">batch_size</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+            
+            <span class="n">end_batch</span> <span class="o">=</span> <span class="n">start_batch</span> <span class="o">+</span> <span class="n">_batch_size</span>
+            <span class="n">z_batch</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="n">start_batch</span><span class="p">:</span><span class="n">end_batch</span><span class="p">]</span>
+            
+            <span class="n">image_gen</span> <span class="o">=</span> <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">G_</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span>
+                                <span class="bp">self</span><span class="p">.</span><span class="n">z</span> <span class="p">:</span> <span class="n">z_batch</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">:</span> <span class="bp">False</span><span class="p">})</span>
+            <span class="n">_image_gen</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_gen</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Total generation time(sec): {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+                <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
+        
+        <span class="n">_image_gen</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">_image_gen</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">_image_gen</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">GAN</code> 클래스는 기본 추상 베이스 클래스로, 확장성을 위해 전반적인 GAN을 포괄하도록 구현하였습니다. <code class="highlighter-rouge">_build_generator</code>, <code class="highlighter-rouge">_build_discriminator</code>, <code class="highlighter-rouge">_build_sampler</code>, <code class="highlighter-rouge">_build_loss</code> 함수는 <code class="highlighter-rouge">GAN</code>의 자식 클래스에서 구현하도록 하였고, <code class="highlighter-rouge">generate</code> 함수는 학습한 generator에서 이미지를 생성합니다. <code class="highlighter-rouge">_build_sampler</code> 함수는 기본적으로 <code class="highlighter-rouge">_build_generator</code> 함수와 같지만 학습에 직접적으로 사용하는 것이 아니라 evaluation이나 test 단계에서 사용할 수 있도록 별도의 함수로 구성하였습니다. 또한 <strong><script type="math/tex">z</script></strong> 라고 하는 placeholder를 정의한 것을 확인 할 수 있습니다. 이는 GAN에서 이미지를 생성하는데 중요한 입력으로 <strong>학습이후에 이미지를 생성할때 이미지의 속성을 결정할 vector</strong>가 됩니다.</p>
+
+<h4 id="dcgan-클래스">DCGAN 클래스</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DCGAN</span><span class="p">(</span><span class="n">GAN</span><span class="p">):</span>
+    <span class="s">"""
+    DCGAN 클래스
+    see: Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks
+    https://arxiv.org/abs/1511.06434
+    """</span>
+    <span class="k">def</span> <span class="nf">_build_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        generator 생성.
+        :param kwargs: dict, generator 생성을 위한 추가 인자.
+        :return tf.Tensor
+        """</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">c_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">fc_channel</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'G_FC_layer_channel'</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+        <span class="n">G_channel</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'G_channel'</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+        
+        <span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s">"generator"</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
+            <span class="n">z_input</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">z</span>
+            
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">fc_layer</span><span class="p">(</span><span class="n">z_input</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="mi">4</span><span class="o">*</span><span class="n">fc_channel</span><span class="p">)</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'reshape'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">batchNormalization</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_1'</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">fc_channel</span><span class="p">]),</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">deconv_bn_relu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'reshape'</span><span class="p">],</span> <span class="n">G_channel</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_3'</span><span class="p">]</span> <span class="o">=</span> <span class="n">deconv_bn_relu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_2'</span><span class="p">],</span> <span class="n">G_channel</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_4'</span><span class="p">]</span> <span class="o">=</span> <span class="n">deconv_bn_relu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_3'</span><span class="p">],</span> <span class="n">G_channel</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_5'</span><span class="p">]</span> <span class="o">=</span> <span class="n">deconv_bn_relu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_4'</span><span class="p">],</span> <span class="n">c_dim</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">bn</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">relu</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'tanh'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_5'</span><span class="p">])</span>
+            
+        <span class="k">return</span> <span class="n">d</span><span class="p">[</span><span class="s">'tanh'</span><span class="p">]</span>
+	
+    <span class="k">def</span> <span class="nf">_build_sampler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        sampler 생성.
+        :param kwargs: dict, sampler 생성을 위한 추가 인자.
+        :return tf.Tensor
+        """</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">c_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">fc_channel</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'G_FC_layer_channel'</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+        <span class="n">G_channel</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'G_channel'</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+        
+        <span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s">"generator"</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
+            <span class="n">scope</span><span class="p">.</span><span class="n">reuse_variables</span><span class="p">()</span>
+            <span class="n">z_input</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">z</span>
+            
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">fc_layer</span><span class="p">(</span><span class="n">z_input</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="mi">4</span><span class="o">*</span><span class="n">fc_channel</span><span class="p">)</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'reshape'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">batchNormalization</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_1'</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">fc_channel</span><span class="p">]),</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">deconv_bn_relu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'reshape'</span><span class="p">],</span> <span class="n">G_channel</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_3'</span><span class="p">]</span> <span class="o">=</span> <span class="n">deconv_bn_relu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_2'</span><span class="p">],</span> <span class="n">G_channel</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_4'</span><span class="p">]</span> <span class="o">=</span> <span class="n">deconv_bn_relu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_3'</span><span class="p">],</span> <span class="n">G_channel</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_5'</span><span class="p">]</span> <span class="o">=</span> <span class="n">deconv_bn_relu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_4'</span><span class="p">],</span> <span class="n">c_dim</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">bn</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">relu</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'tanh'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_5'</span><span class="p">])</span>
+            
+        <span class="k">return</span> <span class="n">d</span><span class="p">[</span><span class="s">'tanh'</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">_build_discriminator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fake_image</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        discriminator 생성.
+        :param fake_images: bool, 생성한 가상 이미지인지 여부.
+        :param kwargs: dict, discriminator 생성을 위한 추가 인자.
+        :return (tf.Tensor, tf.Tensor, tf.Tensor)
+        """</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fake_image</span><span class="p">:</span>
+            <span class="n">input_image</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">G</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">input_image</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">X</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'batch_size'</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="n">D_channel</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'D_channel'</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+        
+        <span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s">"discriminator"</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fake_image</span><span class="p">:</span>
+                <span class="n">scope</span><span class="p">.</span><span class="n">reuse_variables</span><span class="p">()</span>
+            
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">conv_bn_lrelu</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">D_channel</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">bn</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">conv_bn_lrelu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_1'</span><span class="p">],</span> <span class="n">D_channel</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_3'</span><span class="p">]</span> <span class="o">=</span> <span class="n">conv_bn_lrelu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_2'</span><span class="p">],</span> <span class="n">D_channel</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_4'</span><span class="p">]</span> <span class="o">=</span> <span class="n">conv_bn_lrelu</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_3'</span><span class="p">],</span> <span class="n">D_channel</span><span class="o">*</span><span class="mi">8</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_train</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'layer_5'</span><span class="p">]</span> <span class="o">=</span> <span class="n">fc_layer</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">contrib</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_4'</span><span class="p">]),</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">d</span><span class="p">[</span><span class="s">'sigmoid'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">'layer_5'</span><span class="p">])</span>
+			
+        <span class="k">return</span> <span class="n">d</span><span class="p">[</span><span class="s">'sigmoid'</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s">'layer_5'</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s">'layer_1'</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">_build_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        모델 학습을 위한 손실 함수 생성
+        :return tf.Tensor
+        """</span>
+        <span class="n">d_loss_real</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">sigmoid_cross_entropy_with_logits</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">D_logits</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">D</span><span class="p">)))</span>
+        <span class="n">d_loss_fake</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">sigmoid_cross_entropy_with_logits</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">D_logits_</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">D_</span><span class="p">)))</span>
+        <span class="n">g_loss</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">sigmoid_cross_entropy_with_logits</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">D_logits_</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">D_</span><span class="p">)))</span>
+        
+        <span class="n">d_loss</span> <span class="o">=</span> <span class="n">d_loss_real</span> <span class="o">+</span> <span class="n">d_loss_fake</span>
+        <span class="k">return</span> <span class="n">g_loss</span><span class="p">,</span> <span class="n">d_loss</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">_build_generator</code> 함수는 임의의 random vector <script type="math/tex">z</script>로부터 이미지를 생성하는 네트워크를 구성합니다. DCGAN 논문이 많은 영향을 준 부분이 이 부분입니다. 초창기 GAN에서는 generator를 구성할때 주로 Fully-connected layer를 사용하였지만 DCGAN이라는 이름에서 알 수 있듯이 이 논문에서 <strong>Convolution layer</strong> 를 사용하게 됩니다. Generator에서 사용하는 conv layer는 편의상 deconv로 표기 했지만 정식 명칭은 <strong>fractionally-strided convolution</strong>으로 strided convolution이 일반적으로 이미지의 크기를 줄여주는 것과 반대 역할을 하게 됩니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/DCGAN_gen.JPG" target="_blank">
+  <img class="full-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/DCGAN_gen.JPG" alt="DCGAN에서 사용한 Generator 구조. 사용한 Dataset이 FFHQ와는 다르므로 일부 값이 변경됨" />
+</a>
+<span class="caption">DCGAN에서 사용한 Generator 구조. 사용한 Dataset이 FFHQ와는 다르므로 일부 값이 변경됨</span></p>
+
+<p><code class="highlighter-rouge">_build_sampler</code>함수는 기본적으로 generator와 같은 network를 사용하는 것을 목적으로 생성합니다. variable을 reuse하여 별도의 망을 만드는 것이 아닌 <code class="highlighter-rouge">_build_generator</code>로 생성된 망을 사용하게 합니다.</p>
+
+<p><code class="highlighter-rouge">_build_discriminator</code> 함수는 <code class="highlighter-rouge">_build_generator</code>에서 생성된 이미지나 학습에 사용된 real 이미지를 입력으로 받아 이 이미지가 real인지 fake인지 1-bit의 logit으로 출력하도록 하는 망을 생성합니다. real이면 1, fake면 0이 나오는 망입니다. fake image와 real image에서의 logit이 다르게 나와야 하므로 <code class="highlighter-rouge">GAN</code> 클래스에서 <code class="highlighter-rouge">self.D_</code>이나 <code class="highlighter-rouge">self.D_logits_</code>라는 별도의 변수를 통해 fake image에 대한 network을 구성합니다.</p>
+
+<p>DCGAN 논문에서 제안하는 바는 사용하는 batch normalization과 activation layer에도 있습니다. <code class="highlighter-rouge">_build_generator</code>의 마지막 layer와 <code class="highlighter-rouge">_build_discriminator</code>의 첫 layer에는 batch normalization을 사용하지 않았습니다. 또, activation layer의 경우 <code class="highlighter-rouge">_build_generator</code>에서는 마지막 layer에 tanh를 적용한 것 이외에 전부 ReLU를 사용하였고, <code class="highlighter-rouge">_build_discriminator</code>에서는 LeakyReLU를 사용하였습니다.</p>
+
+<p><code class="highlighter-rouge">_build_loss</code>함수는 손실함수를 구현하였습니다. 기본적인 손실 함수 자체는 GAN에서 제안한 식을 그대로 사용하였습니다. 먼저 discriminator loss는 real image에서 1이 나와야 하고 fake image에서 0이 나와야 합니다. 따라서 <code class="highlighter-rouge">d_loss_real</code>은 1 bit logit이 1이 나오도록 sigmoid cross-entropy loss를 구성하였고, <code class="highlighter-rouge">d_loss_fake</code>는 1 bit logit이 0이 나오도록 sigmoid cross-entropy loss를 구성하였습니다. 그리고 discriminator loss는 두 loss의 합이 됩니다. 한편 <code class="highlighter-rouge">g_loss</code>는 오직 fake image를 discriminator에 넣었을때 1 bit logit이 1이 나와야 하므로 <code class="highlighter-rouge">d_loss_fake</code>와는 반대로 sigmoid cross-entropy loss를 구성하였습니다. Discriminator, generator는 따로 학습을 해야 하므로 두 loss를 합하지 않고 별도로 저장합니다.</p>
+
+<h2 id="4-러닝-알고리즘--sgdmomentum">(4) 러닝 알고리즘 : SGD+Momentum</h2>
+
+<p>러닝 알고리즘은 앞서 다룬 문제들과 크게 다르지 않습니다. <strong>모멘텀(momentum)</strong>을 적용한 <strong>확률적 경사 하강법(stochastic gradient descent; 이하 SGD)</strong>을 채택하였으며, 베이스 클래스를 먼저 정의한 뒤, 이를 모멘텀 SGD에 기반한 optimizer 클래스가 상속받는 형태로 구현하였습니다. Pretrained model weights를 불러오는 부분을 제외하고 <a href="http://research.sualab.com/practice/2018/05/14/image-detection-deep-learning.html" target="_blank">Detection 포스팅</a>때와 동일하니 설명은 생략하도록 하겠습니다.</p>
+
+<h3 id="learningoptimizer-모듈">learning.optimizer 모듈</h3>
+
+<h4 id="optimizer-클래스">Optimizer 클래스</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Optimizer</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="s">"""경사 하강 러닝 알고리즘 기반 optimizer의 베이스 클래스"""</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        Optimizer 생성자.
+        :param model: Net, 학습할 모델.
+        :param train_set: DataSet, 학습에 사용할 학습 데이터셋.
+        :param evaluator: Evaluator, 학습 수행 과정에서 성능 평가에 사용할 evaluator.
+        :param val_set: Datset, 검증 데이터셋, 주어지지 않은 경우 None으로 남겨둘 수 있음.
+        :param kwargs: dict, 학습 관련 하이퍼파라미터로 구성된 추가 인자.
+                - batch_size: int, 각 반복 회차에서의 미니배치 크기.
+                - num_epochs: int, 총 epoch 수.
+                - init_learning_rate: float, 학습률 초기값.
+        """</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">train_set</span> <span class="o">=</span> <span class="n">train_set</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">evaluator</span> <span class="o">=</span> <span class="n">evaluator</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">sample_H</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'sample_H'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">sample_W</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'sample_W'</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">z_dim</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'z_dim'</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">sample_z</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">z_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">sample_H</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">sample_W</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">)</span>
+
+        <span class="c1"># 학습 하이퍼파라미터
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'batch_size'</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">num_epochs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'num_epochs'</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">init_learning_rate</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'init_learning_rate'</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">learning_rate_placeholder</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+           
+        <span class="bp">self</span><span class="p">.</span><span class="n">optimize_G</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_optimize_op</span><span class="p">(</span><span class="s">"generator"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">optimize_D</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_optimize_op</span><span class="p">(</span><span class="s">"discriminator"</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">_reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""일부 변수를 재설정."""</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">curr_epoch</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c1"># 'bad epochs' 수: 성능 향상이 연속적으로 이루어지지 않은 epochs 수.
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">num_bad_epochs</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># 최저 성능 점수로, 현 최고 점수를 초기화함.
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">best_score</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">evaluator</span><span class="p">.</span><span class="n">worst_score</span>	
+        <span class="bp">self</span><span class="p">.</span><span class="n">curr_learning_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">init_learning_rate</span>
+       
+    <span class="k">def</span> <span class="nf">z_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">W</span><span class="o">*</span><span class="n">H</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">z</span>
+
+
+    <span class="o">@</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_optimize_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        경사 하강 업데이트를 위한 tf.train.Optimizer.minimize Op.
+        해당 함수를 추후 구현해야 하며, 외부에서 임의로 호출할 수 없음.
+        """</span>
+        <span class="k">pass</span>
+
+    <span class="o">@</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_update_learning_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        고유의 학습률 스케줄링 방법에 따라, (필요한 경우) 매 epoch마다 현 학습률 값을 업데이트함.
+        해당 함수를 추후 구현해야 하며, 외부에서 임의로 호출할 수 없음.
+        """</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        경사 하강 업데이트를 1회 수행하며, 관련된 값을 반환함.
+        해당 함수를 추후 구현해야 하며, 외부에서 임의로 호출할 수 없음.
+        :param sess, tf.Session.
+        :return generator loss: float, 1회 반복 회차 결과 gnerator의 손실 함수값.
+                dicriminator loss: float, 1회 반복 회차 결과 discriminator의 손실 함수값.
+                X: np.ndarray, 학습 데이터셋의 실제 이미지.
+                G: np.ndarray, 모델이 생성한 이미지.
+        """</span>
+
+        <span class="c1"># 미니배치 하나를 추출함
+</span>        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">train_set</span><span class="p">.</span><span class="n">next_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">batch_size</span><span class="p">,</span> 
+                                               <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">z_dim</span><span class="p">)).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="c1"># 손실 함숫값을 계산하고, 모델 업데이트를 수행함
+</span>        <span class="c1"># Generator는 두번 업데이트 됨.
+</span>        <span class="n">_</span><span class="p">,</span> <span class="n">D_loss</span> <span class="o">=</span> \
+            <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">([</span><span class="bp">self</span><span class="p">.</span><span class="n">optimize_D</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">discr_loss</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">D_l4</span><span class="p">],</span>
+                <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">z</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">X</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">is_train</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> 
+                           <span class="bp">self</span><span class="p">.</span><span class="n">learning_rate_placeholder</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">curr_learning_rate</span><span class="p">})</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">G_loss</span><span class="p">,</span> <span class="n">G</span> <span class="o">=</span> \
+            <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">([</span><span class="bp">self</span><span class="p">.</span><span class="n">optimize_G</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">gen_loss</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">G</span><span class="p">],</span>
+                <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">z</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">X</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">is_train</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> 
+                           <span class="bp">self</span><span class="p">.</span><span class="n">learning_rate_placeholder</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">curr_learning_rate</span><span class="p">})</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">G_loss</span><span class="p">,</span> <span class="n">G</span> <span class="o">=</span> \
+            <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">([</span><span class="bp">self</span><span class="p">.</span><span class="n">optimize_G</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">gen_loss</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">G</span><span class="p">],</span>
+                <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">z</span><span class="p">:</span> <span class="n">z</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">X</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">is_train</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> 
+                           <span class="bp">self</span><span class="p">.</span><span class="n">learning_rate_placeholder</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">curr_learning_rate</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">G_loss</span><span class="p">,</span> <span class="n">D_loss</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">G</span>
+    
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s">'/tmp'</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        Optimizer를 실행하고, 모델을 학습함.
+        :param sess: tf.Session.
+        :param save_dir: str, 학습된 모델의 파라미터들을 저장할 디렉터리 경로.
+        :param details: bool, 학습 결과 관련 구체적인 정보를, 학습 종료 후 반환할지 여부.
+        :param verbose: bool, 학습 과정에서 구체적인 정보를 출력할지 여부.
+        :param kwargs: dict, 학습 관련 하이퍼파라미터로 구성된 추가 인자.
+                - nms_flag: bool, nms(non maximum supression)를 수행할 지 여부.
+        :return train_results: dict, 구체적인 학습 결과를 담은 dict
+        """</span>
+        <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Saver</span><span class="p">()</span>
+        <span class="n">sess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>	<span class="c1"># 모든 파라미터들을 초기화.
+</span>        
+        <span class="n">inception_path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'inception_path'</span><span class="p">,</span> 
+                                    <span class="s">'./inception/inception-2015-12-05/ </span><span class="se">\
+</span><span class="s">                                    classify_image_graph_def.pb'</span><span class="p">)</span>
+        <span class="n">dataset_stats_path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'dataset_stats_path'</span><span class="p">,</span> 
+                                        <span class="s">'./data/thumbnails128x128/stats.pkl'</span><span class="p">)</span>
+        <span class="n">fid</span> <span class="o">=</span> <span class="n">FID</span><span class="p">(</span><span class="n">inception_path</span><span class="p">,</span> <span class="n">dataset_stats_path</span><span class="p">,</span> <span class="n">sess</span><span class="p">)</span>
+
+        <span class="n">train_results</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">train_size</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">train_set</span><span class="p">.</span><span class="n">num_examples</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Size of train set :"</span><span class="p">,</span> <span class="n">train_size</span><span class="p">)</span>
+        <span class="n">num_steps_per_epoch</span> <span class="o">=</span> <span class="n">train_size</span> <span class="o">//</span> <span class="bp">self</span><span class="p">.</span><span class="n">batch_size</span>
+        <span class="n">num_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">num_epochs</span> <span class="o">*</span> <span class="n">num_steps_per_epoch</span>
+
+        <span class="n">n_eval</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'eval_sample_size'</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+        <span class="n">batch_size_eval</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'batch_size_eval'</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+        
+        <span class="n">sample_dir</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'sample_dir'</span><span class="p">,</span> <span class="n">save_dir</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Running training loop...'</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Number of training iterations: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">num_steps</span><span class="p">))</span>
+
+        <span class="n">step_losses_G</span><span class="p">,</span> <span class="n">step_losses_D</span><span class="p">,</span> <span class="n">step_scores</span><span class="p">,</span> <span class="n">eval_scores</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="c1"># 학습 루프를 실행함.
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+            <span class="c1"># 미니배치 하나로부터 경사 하강 업데이트를 1회 수행함
+</span>            <span class="n">step_loss_G</span><span class="p">,</span> <span class="n">step_loss_D</span><span class="p">,</span> <span class="n">step_X</span><span class="p">,</span> <span class="n">gen_img</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_step</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">step_losses_G</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">step_loss_G</span><span class="p">)</span>
+            <span class="n">step_losses_D</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">step_loss_D</span><span class="p">)</span>
+            <span class="c1"># 매 epoch의 말미에서, 성능 평가를 수행함
+</span>            <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">'[step {}]</span><span class="se">\t</span><span class="s">G_loss: {:.6f}|D_loss:{:.6f} |lr: {:.6f}'</span>\
+                      <span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">step_loss_G</span><span class="p">,</span> <span class="n">step_loss_D</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">curr_learning_rate</span><span class="p">))</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="n">num_steps_per_epoch</span> <span class="o">==</span> <span class="n">num_steps_per_epoch</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># 학습셋에서 추출한 현재 미니배치로 모델을 평가함.
+</span>                <span class="n">fid</span><span class="p">.</span><span class="n">reset_FID</span><span class="p">()</span>
+                <span class="n">fid</span><span class="p">.</span><span class="n">extract_inception_features</span><span class="p">(</span><span class="n">gen_img</span><span class="p">)</span>
+                <span class="n">step_score</span> <span class="o">=</span> <span class="n">fid</span><span class="p">.</span><span class="n">calculate_FID</span><span class="p">()</span>
+                <span class="n">step_scores</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">step_score</span><span class="p">)</span>
+
+                <span class="n">sample_image</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">generate</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">sample_z</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
+                                                   <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                   
+                <span class="n">save_sample_images</span><span class="p">(</span><span class="n">sample_dir</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">sample_image</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">sample_H</span><span class="p">,</span> 
+                                   <span class="bp">self</span><span class="p">.</span><span class="n">sample_W</span><span class="p">)</span>
+                                
+                <span class="n">eval_score</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">evaluator</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">fid</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="n">eval_scores</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">eval_score</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="c1"># 중간 결과 출력.
+</span>                    <span class="k">print</span><span class="p">(</span><span class="s">'[epoch {}]</span><span class="se">\t</span><span class="s">G_loss: {:.6f}|D_loss:{:.6f} |Train score: {:.6f} </span><span class="se">\
+</span><span class="s">                    |Eval score: {:.6f} |lr: {:.6f}'</span>\
+                        <span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">curr_epoch</span><span class="p">,</span> <span class="n">step_loss_G</span><span class="p">,</span> <span class="n">step_loss_D</span><span class="p">,</span> <span class="n">step_score</span><span class="p">,</span> 
+                                <span class="n">eval_score</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">curr_learning_rate</span><span class="p">))</span>
+                    <span class="c1"># 중간 결과 플롯팅함.
+</span>                    <span class="n">plot_learning_curve</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">step_losses_G</span><span class="p">,</span> <span class="n">step_losses_D</span><span class="p">,</span> <span class="n">step_scores</span><span class="p">,</span> 
+                                        <span class="n">eval_scores</span><span class="o">=</span><span class="n">eval_scores</span><span class="p">,</span> <span class="n">img_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">)</span>
+
+                <span class="n">curr_score</span> <span class="o">=</span> <span class="n">eval_score</span>
+
+                <span class="c1"># 현재의 성능 점수의 현재까지의 최고 성능 점수를 비교하고, 
+</span>                <span class="c1"># 최고 성능 점수가 갱신된 경우 해당 성능을 발휘한 모델의 파라미터들을 저장함
+</span>                <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">evaluator</span><span class="p">.</span><span class="n">is_better</span><span class="p">(</span><span class="n">curr_score</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">best_score</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="p">.</span><span class="n">best_score</span> <span class="o">=</span> <span class="n">curr_score</span>
+                    <span class="bp">self</span><span class="p">.</span><span class="n">num_bad_epochs</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">saver</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> 
+                               <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> 
+                                            <span class="s">'model_{}.ckpt'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">curr_epoch</span><span class="p">)))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="p">.</span><span class="n">num_bad_epochs</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># 			    self._update_learning_rate(**kwargs)
+</span>                <span class="bp">self</span><span class="p">.</span><span class="n">curr_epoch</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Total training time(sec): {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Best {} score: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">'evaluation'</span> <span class="k">if</span> <span class="nb">eval</span> <span class="k">else</span> <span class="s">'training'</span><span class="p">,</span> 
+                                             <span class="bp">self</span><span class="p">.</span><span class="n">best_score</span><span class="p">))</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s">'Done.'</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">details</span><span class="p">:</span>
+            <span class="c1"># 모델 저장.
+</span>            <span class="n">saver</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s">'model.ckpt'</span><span class="p">))</span>
+            <span class="c1"># 학습 결과를 dict에 저장함.
+</span>            <span class="n">train_results</span><span class="p">[</span><span class="s">'step_losses_G'</span><span class="p">]</span> <span class="o">=</span> <span class="n">step_losses_G</span>
+            <span class="n">train_results</span><span class="p">[</span><span class="s">'step_losses_D'</span><span class="p">]</span> <span class="o">=</span> <span class="n">step_losses_D</span>
+            <span class="n">train_results</span><span class="p">[</span><span class="s">'step_scores'</span><span class="p">]</span> <span class="o">=</span> <span class="n">step_scores</span>
+            <span class="n">train_results</span><span class="p">[</span><span class="s">'eval_scores'</span><span class="p">]</span> <span class="o">=</span> <span class="n">eval_scores</span>
+
+            <span class="k">return</span> <span class="n">train_results</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">Optimizer</code> 클래스에서 주목해야 할 부분은 <code class="highlighter-rouge">_step</code> 함수입니다. 일반적으로 discriminator와 generator의 학습을 동등하게 진행되면 좋지만 일반적으로 discriminator가 먼저 학습되는 경우가 많아 <strong>generator를 한번에 두번씩 학습</strong>하게 됩니다. 이 부분은 논문과 다른 부분이며 필요에 따라 generator의 학습을 한번 더 진행하는 등의 시도를 해보실 수 있습니다.</p>
+
+<p>또, 중간중간 이미지가 어떻게 생성되었는지를 확인하기 위해 정해진 sample_z를 이용하여 생성되는 이미지를 저장하여 비교 할 수 있도록 구현합니다. 해당 부분을 구현하게 되면 생성되는 이미지들을 가지고 다음처럼 변화 여부를 확인 할 수도 있습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/GAN_samples.gif" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/GAN_samples.gif" alt="GAN 학습 과정" />
+</a>
+<span class="caption">GAN 학습 과정</span></p>
+
+<h4 id="momentumoptimizer-클래스">MomentumOptimizer 클래스</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MomentumOptimizer</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+    <span class="s">"""모멘텀 알고리즘을 포함한 경사 하강 optimizer 클래스."""</span>
+    <span class="k">def</span> <span class="nf">_optimize_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        경사 하강 업데이트를 위한 tf.train.MomentumOptimizer.minimize Op.
+        :param kwargs: dict, optimizer의 추가 인자.
+                -momentum: float, 모멘텀 계수.
+        :return tf.Operation.
+        """</span>
+        
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'generator'</span><span class="p">:</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">gen_loss</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">discr_loss</span>
+        
+        <span class="n">momentum</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'momentum'</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+        <span class="n">extra_update_ops</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">GraphKeys</span><span class="p">.</span><span class="n">UPDATE_OPS</span><span class="p">)</span>
+        <span class="n">update_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">tf</span><span class="p">.</span><span class="n">trainable_variables</span><span class="p">()</span> <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">var</span><span class="p">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"{} vars will be trained for mode {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">update_vars</span><span class="p">),</span> <span class="n">mode</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">update_vars</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"{} variable has {} shape"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">var</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="p">.</span><span class="n">control_dependencies</span><span class="p">(</span><span class="n">extra_update_ops</span><span class="p">):</span>
+            <span class="n">train_op</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">learning_rate_placeholder</span><span class="p">,</span> <span class="n">momentum</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">var_list</span><span class="o">=</span><span class="n">update_vars</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">train_op</span>
+
+    <span class="k">def</span> <span class="nf">_update_learning_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+        성능 평가 점수 상에 개선이 없을 때, 현 학습률 값을 업데이트함.
+        :param kwargs: dict, 학습률 스케줄링을 위한 추가 인자.
+            - learning_rate_patience: int, 성능 향상이 연속적으로 이루어지지 않은 epochs 수가 
+                                      해당 값을 초과할 경우, 학습률 값을 감소시킴.
+            - learning_rate_decay: float, 학습률 업데이트 비율.
+            - eps: float, 업데이트된 학습률 값과 기존 학습률 값 간의 차이가 해당 값보다 작을 경우,
+                          학습률 업데이트를 취소함.
+        """</span>
+        <span class="n">learning_rate_patience</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'learning_rate_patience'</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">learning_rate_decay</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'learning_rate_decay'</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'eps'</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">num_bad_epochs</span> <span class="o">&gt;</span> <span class="n">learning_rate_patience</span><span class="p">:</span>
+            <span class="n">new_learning_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">curr_learning_rate</span> <span class="o">*</span> <span class="n">learning_rate_decay</span>
+            <span class="c1"># 새 학습률 값과 기존 학습률 값 간의 차이가 eps보다 큰 경우에 한해서만 업데이트를 수행함
+</span>            <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">curr_learning_rate</span> <span class="o">-</span> <span class="n">new_learning_rate</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">curr_learning_rate</span> <span class="o">=</span> <span class="n">new_learning_rate</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">num_bad_epochs</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<h2 id="학습-수행-및-테스트-결과">학습 수행 및 테스트 결과</h2>
+
+<p><code class="highlighter-rouge">train.py</code> 스크립트에서 실제 학습을 수행하는 과정을 구현하며, <code class="highlighter-rouge">test.py</code> 스크립트에서 테스트 데이터셋에 대해 학습이 완료된 모델을 테스트하여 성능 수치를 보여주고 실제로 생성된 이미지를 그려줍니다. 또, DCGAN이 단순히 이미지를 외워서 그리는 것이 아니라 실제로 생성하는 것을 확인 하기 위해 두 이미지 사이의 interpolation 결과도 확인합니다.</p>
+
+<h3 id="trainpy-스크립트">train.py 스크립트</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">""" 1. 원본 데이터셋을 메모리에 로드하고 분리함 """</span>
+<span class="n">root_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="s">'data/FFHQ/'</span><span class="p">)</span>
+<span class="n">trainval_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_dir</span><span class="p">,</span> <span class="s">'thumbnails128x128'</span><span class="p">)</span>
+
+<span class="c1"># 이미지 크기를 지정함.
+</span><span class="n">IM_SIZE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+
+<span class="c1"># 학습 셋 로드.
+</span><span class="n">X_trainval</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">read_data</span><span class="p">(</span><span class="n">trainval_dir</span><span class="p">,</span> <span class="n">IM_SIZE</span><span class="p">,</span> <span class="mi">96</span><span class="p">)</span>
+<span class="n">trainval_size</span> <span class="o">=</span> <span class="n">X_trainval</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">X_trainval</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">train_set</span><span class="p">.</span><span class="n">num_examples</span><span class="p">)</span>
+
+<span class="s">""" 2. 학습 수행 및 성능 평가를 위한 하이퍼파라미터 설정"""</span>
+<span class="n">hp_d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+<span class="n">save_dir</span> <span class="o">=</span> <span class="s">'./DCGAN_training_FFHQ_z_100/'</span>
+
+<span class="c1"># FIXME: 학습 하이퍼 파라미터.
+</span><span class="n">hp_d</span><span class="p">[</span><span class="s">'batch_size'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'num_epochs'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'init_learning_rate'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2e-4</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'momentum'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'learning_rate_patience'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'learning_rate_decay'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'eps'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-8</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'score_threshold'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-4</span>
+<span class="c1"># FID를 측정하기 위한 inception 파일 경로와 미리 측정한 FFHQ의 mean, cov
+</span><span class="n">hp_d</span><span class="p">[</span><span class="s">'inception_path'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'inception/inception_v3_fr.pb'</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'dataset_stats_path'</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">trainval_dir</span><span class="p">,</span> <span class="s">'stats.pkl'</span><span class="p">)</span>
+<span class="c1"># FID를 측정할 샘플의 수
+</span><span class="n">hp_d</span><span class="p">[</span><span class="s">'eval_sample_size'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'batch_size_eval'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="c1"># 학습 중간중간 이미지를 display할 설정
+</span><span class="n">hp_d</span><span class="p">[</span><span class="s">'sample_H'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'sample_W'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'sample_dir'</span><span class="p">]</span> <span class="o">=</span> <span class="n">save_dir</span>
+<span class="c1"># 학습에 사용할 architecture parameter
+</span><span class="n">hp_d</span><span class="p">[</span><span class="s">'z_dim'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'G_FC_layer_channel'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'G_channel'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">hp_d</span><span class="p">[</span><span class="s">'D_channel'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">64</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s">'hyperparam.json'</span><span class="p">),</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+	<span class="n">json</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="n">hp_d</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)</span>
+
+<span class="s">""" 3. Graph 생성, session 초기화 및 학습 시작 """</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">get_default_graph</span><span class="p">()</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">ConfigProto</span><span class="p">()</span>
+<span class="n">config</span><span class="p">.</span><span class="n">gpu_options</span><span class="p">.</span><span class="n">allow_growth</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">GAN</span><span class="p">([</span><span class="n">IM_SIZE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">IM_SIZE</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">],</span> <span class="o">**</span><span class="n">hp_d</span><span class="p">)</span>
+
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">()</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">Optimizer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="o">**</span><span class="n">hp_d</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_dir</span><span class="p">):</span>
+	<span class="n">os</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
+
+	
+<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">(</span><span class="n">graph</span><span class="o">=</span><span class="n">graph</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="n">train_results</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> 
+                                <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">hp_d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">train.py</code> 스크립트에서는 마찬가지로 3단계로 진행됩니다.</p>
+
+<ol>
+  <li>원본 학습 데이터셋을 메모리에 로드하고 이를 이용하여 객체 생성.</li>
+  <li>학습 관련 하이퍼파라미터 설정.</li>
+  <li><code class="highlighter-rouge">ConvNet</code> 객체, <code class="highlighter-rouge">Evaluator</code> 객체 및 <code class="highlighter-rouge">Optimizer</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="highlighter-rouge">Optimizer.train</code> 함수를 호출하여 모델 학습을 수행함</li>
+</ol>
+
+<ul>
+  <li>원본 데이터셋 저장 경로, 하이퍼파라미터 등 <code class="highlighter-rouge">FIXME</code>로 표시된 부분은 여러분의 상황에 맞게 수정하시면 됩니다.</li>
+</ul>
+
+<h3 id="testpy-스크립트">test.py 스크립트</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">""" 1. 원본 데이터셋을 메모리에 로드함 """</span>
+<span class="n">hp_d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+<span class="n">save_dir</span> <span class="o">=</span> <span class="s">'./DCGAN_training_FFHQ_z_100/'</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s">'hyperparam.json'</span><span class="p">),</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">hp_d</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    
+
+<span class="c1"># 이미지 크기를 지정함.
+</span><span class="n">IM_SIZE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+
+<span class="s">""" 2. 테스트를 위한 하이퍼파라미터 설정 """</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">get_default_graph</span><span class="p">()</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">ConfigProto</span><span class="p">()</span>
+<span class="n">config</span><span class="p">.</span><span class="n">gpu_options</span><span class="p">.</span><span class="n">allow_growth</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">config</span><span class="p">.</span><span class="n">gpu_options</span><span class="p">.</span><span class="n">visible_device_list</span> <span class="o">=</span> <span class="s">'1'</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">GAN</span><span class="p">([</span><span class="n">IM_SIZE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">IM_SIZE</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">],</span> <span class="o">**</span><span class="n">hp_d</span><span class="p">)</span>
+
+<span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">Saver</span><span class="p">()</span>
+
+<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">Session</span><span class="p">(</span><span class="n">graph</span><span class="o">=</span><span class="n">graph</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="n">saver</span><span class="p">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s">'model_94.ckpt'</span><span class="p">))</span>
+
+<span class="s">""" 3. Graph 생성, 파라미터 로드, session 초기화 및 테스트 시작 """</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">hp_d</span><span class="p">[</span><span class="s">"sample_W"</span><span class="p">]</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">hp_d</span><span class="p">[</span><span class="s">"sample_H"</span><span class="p">]</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">W</span><span class="o">*</span><span class="n">H</span><span class="p">,</span><span class="n">hp_d</span><span class="p">[</span><span class="s">"z_dim"</span><span class="p">]))</span>
+
+<span class="n">gen_img</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">generate</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">save_sample_images</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s">'sample_random'</span><span class="p">,</span> <span class="n">gen_img</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+
+<span class="s">""" 4. 하나의 이미지에서 다른이미지로 interpolation 수행."""</span>
+<span class="n">from_z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">hp_d</span><span class="p">[</span><span class="s">"z_dim"</span><span class="p">]))</span>
+<span class="n">to_z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">hp_d</span><span class="p">[</span><span class="s">"z_dim"</span><span class="p">]))</span>
+
+<span class="n">latent_intp</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">from_z</span><span class="p">,</span> <span class="n">to_z</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">img_intp</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">generate</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">latent_intp</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">save_sample_images</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s">'interpolate'</span><span class="p">,</span> <span class="n">img_intp</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+<span class="s">""" 5. FID 점수를 계산"""</span>
+<span class="n">fid</span> <span class="o">=</span> <span class="n">FID</span><span class="p">(</span><span class="n">hp_d</span><span class="p">[</span><span class="s">"inception_path"</span><span class="p">],</span> <span class="n">hp_d</span><span class="p">[</span><span class="s">"dataset_stats_path"</span><span class="p">],</span> <span class="n">sess</span><span class="p">)</span>
+
+<span class="n">fid</span><span class="p">.</span><span class="n">reset_FID</span><span class="p">()</span>
+<span class="n">sample_size</span> <span class="o">=</span> <span class="n">hp_d</span><span class="p">[</span><span class="s">"eval_sample_size"</span><span class="p">]</span>
+<span class="n">sample_batch_size</span> <span class="o">=</span> <span class="n">hp_d</span><span class="p">[</span><span class="s">'batch_size_eval'</span><span class="p">]</span>
+<span class="n">n_batch</span> <span class="o">=</span> <span class="n">sample_size</span> <span class="o">//</span> <span class="n">sample_batch_size</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_batch</span><span class="p">):</span>
+    <span class="n">eval_z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">sample_batch_size</span><span class="p">,</span> <span class="n">hp_d</span><span class="p">[</span><span class="s">"z_dim"</span><span class="p">]))</span>
+    <span class="n">g_img</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">generate</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">eval_z</span><span class="p">)</span>
+    <span class="n">fid</span><span class="p">.</span><span class="n">extract_inception_features</span><span class="p">(</span><span class="n">g_img</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fid</span><span class="p">.</span><span class="n">calculate_FID</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">test.py</code> 스크립트는 모델을 불러와서 여러 실험을 합니다. Random으로 이미지를 생성하기도 하고 interpolated 된 이미지를 생성하기도 하고 FID score를 계산하기도 합니다.</p>
+
+<h2 id="학습-결과-분석">학습 결과 분석</h2>
+
+<p>다른 문제들과 마찬가지로 학습 수행 과정동안 학습 곡선을 그려보았습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/learning_curve-result-1.png" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/learning_curve-result-1.png" alt="학습 곡선 플롯팅 결과&lt;br&gt;&lt;small&gt;(상단 파란색: Discriminator loss, 상단 빨간색: Generator loss)(하단 파란색: 학습 batch FID, 하단 빨간색: Random하게 생성된 다수의 이미지로 측정한 FID)&lt;/small&gt;" />
+</a>
+<span class="caption">학습 곡선 플롯팅 결과<br /><small>(상단 파란색: Discriminator loss, 상단 빨간색: Generator loss)(하단 파란색: 학습 batch FID, 하단 빨간색: Random하게 생성된 다수의 이미지로 측정한 FID)</small></span></p>
+
+<p>학습이 진행됨에 따라, 두 Loss의 변화 양상이 다르게 되는 것을 확인 할 수 있습니다. Generator가 완전히 학습되지 않는 것을 알 수 있고 초기 단계 GAN이다 보니 완벽하게 잘 학습하는 것은 아닌 것을 확인 할 수 있습니다. FID의 경우 학습 batch의 크기가 크지 않아 일정 이상 줄어들지 않는 것을 알 수 있었고 대신 충분히 큰 크기로 sample한 데이터의 FID가 줄어드는 것으로 확인 되어 학습을 어느정도 잘 하고 있다는 것을 확인할 수 있습니다.</p>
+
+<h3 id="테스트-결과">테스트 결과</h3>
+
+<p>가장 잘 나온 모델을 사용하여 측정한 FID의 값은 <strong>34.73</strong>이었습니다. 현재 state-of-the-art로 불리는 방법론들이 10이하인 것을 고려하면 아직은 부족한 결과이긴 합니다. 생성된 이미지를 보면 대부분은 잘 생성되었지만 일부 이미지가 비현실적인 것을 확인 하실 수 있습니다. 완벽하게 학습되지 않은 것을 알 수 있는 부분입니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/sample_image_random.jpg" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/sample_image_random.jpg" alt="random하게 생성된 얼굴 이미지들" />
+</a>
+<span class="caption">random하게 생성된 얼굴 이미지들</span></p>
+
+<p>또한, 양 끝의 두 상이한 이미지에 대해 서로의 이미지로 매끄럽게 이동하는 것을 확인 하실 수 있습니다. DCGAN 논문에서 이를 <strong>walking in the latent space</strong>라는 재밌는 표현으로 정의하였습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://0.0.0.0:4000/assets/images/generative-adversarial-network/sample_image_interpolate.jpg" target="_blank">
+  <img class="large-image" src="http://0.0.0.0:4000/assets/images/generative-adversarial-network/sample_image_interpolate.jpg" alt="안경 쓴 남자가 안경 안 쓴 여자로 바뀌는 모습" />
+</a>
+<span class="caption">안경 쓴 남자가 안경 안 쓴 여자로 바뀌는 모습</span></p>
+
+<h2 id="결론">결론</h2>
+
+<p>본 포스팅에서는 이미지를 생성하는 분야에 있어서 최근 매우 많은 주목을 받고 있는 GAN에 대하여 간략히 설명을 하였고 <strong>Face generation</strong>을 목표로 <strong>DCGAN</strong>을 Python과 Tensorflow를 이용하여 구현하였습니다. 학습에 사용한 데이터의 양이 충분하진 않았지만 어느정도 얼굴이라고 인식 할만한 이미지를 생성하는 것을 확인하였고 단순히 이미지를 기억해서 만드는 것이 아닌 이미지의 주요 feature를 학습하여 생성하는 것을 확인하였습니다. 실제 GAN을 구현해 보시는 분들에게 많은 도움이 되기를 바라는 마음에서 이 포스팅을 작성하였습니다. 도움이 되셨는지는 모르겠지만 긴 글 읽어주셔서 감사합니다.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>GAN 논문
+    <ul>
+      <li><a href="http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf" target="_blank">Goodfellow et al., “Generative Adversarial Nets”, NIPS, 2014</a></li>
+    </ul>
+  </li>
+  <li>Style Transfer 관련 논문
+    <ul>
+      <li><a href="https://arxiv.org/pdf/1807.10201.pdf" target="_blank">Sanakoyeu et al., “A Style-Aware Content Loss for Real-time HD Style Transfer”, ECCV, 2018</a></li>
+    </ul>
+  </li>
+  <li>DCGAN 논문
+    <ul>
+      <li><a href="https://arxiv.org/abs/1511.06434" target="_blank">Radford et al., “Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks”, 2016</a></li>
+    </ul>
+  </li>
+  <li>Inception Score 관련 논문
+    <ul>
+      <li><a href="https://arxiv.org/pdf/1606.03498.pdf" target="_blank">Salimans et al., “Improved Techniques for Training GANs”, NIPS, 2016</a></li>
+    </ul>
+  </li>
+  <li>Fréchet Inception Distance 관련 논문
+    <ul>
+      <li><a href="https://arxiv.org/pdf/1706.08500.pdf" target="_blank">Heusel et al. “GANs Trained by a Two Time-Scale Update Rule
+Converge to a Local Nash Equilibrium”, NIPS, 2017</a></li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/NVlabs/ffhq-dataset" target="_blank">Flickr-Face-HQ Dataset</a></li>
+  <li>그림
+    <ul>
+      <li><a href="https://compvis.github.io/adaptive-style-transfer" target="_blank">자동차 사진을 세잔 화풍으로 전이한 이미지</a></li>
+      <li><a href="https://research.sualab.com/practice/2018/01/17/image-classification-deep-learning.html" target="_blank"> 개와 고양이를 구분하는 문제 예시</a></li>
+      <li><a href="https://commons.wikimedia.org/wiki/File:MiniDachshund1_wb.jpg" target="_blank">닥스훈트 사진</a></li>
+      <li><a href="https://www.vectorstock.com/royalty-free-vector/hand-drawn-dachshund-vector-22545919" target="_blank">닥스훈트 그림</a></li>
+      <li><a href="https://openai.com/blog/generative-models/" target="_blank">VAE 학습 과정</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Cognex Deep Learning Lab-KOR Research Blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              Cognex Deep Learning Lab-KOR Research Blog
+            
+            </li>
+            
+            <li><a href="https://www.cognex.co.kr/" target="_blank">https://www.cognex.co.kr/</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          
+          <li>
+            <a href="https://facebook.com/cognexcorp" target="_blank"><i class="fa fa-facebook"></i> <span class="username">cognexcorp</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Cognex Deep Learning Lab-KOR research blog: covers subjects regarding machine learning, computer vision, high-performance computing, and so on.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
