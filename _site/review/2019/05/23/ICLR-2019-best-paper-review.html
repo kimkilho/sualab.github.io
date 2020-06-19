@@ -20,9 +20,9 @@
   
   
   <meta property="article:published_time" content="2019-05-23T00:00:00+09:00">
-  <meta property="article:author" content="http://0.0.0.0:4000/about/">
+  <meta property="article:author" content="http://research.sualab.com/about/">
   
-  <meta property="og:url" content="http://0.0.0.0:4000/review/2019/05/23/ICLR-2019-best-paper-review.html" />
+  <meta property="og:url" content="http://research.sualab.com/review/2019/05/23/ICLR-2019-best-paper-review.html" />
   
   <meta itemprop="keywords" content="ICLR2019,network-pruning" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="안녕하세요, 이번 포스팅에서는 2019년 5월 6일 ~ 9일 미국 뉴올리언스에서 개최된 ICLR 2019 학회의 다녀온 뒤 느낀 점들과 학회가 어떤 식으로 구성이 되고 진행이 되는지 간단하게 소개를 드리고자 합니다.">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://0.0.0.0:4000/review/2019/05/23/ICLR-2019-best-paper-review.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://research.sualab.com/review/2019/05/23/ICLR-2019-best-paper-review.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -270,8 +270,8 @@
 논문이 가장 잘 알려져 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/iclr_2019_review/1.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/iclr_2019_review/1.png" alt="Network Pruning 예시" />
+<p><a href="http://research.sualab.com/assets/images/iclr_2019_review/1.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/iclr_2019_review/1.png" alt="Network Pruning 예시" />
 </a>
 <span class="caption">Network Pruning 예시</span></p>
 
@@ -285,8 +285,8 @@
 
 <p>본 논문에서는 dense 한 neural network와 이 network를 pruning하여 얻은 subnetwork가 있을 때, 아래 그림의 조건을 만족시키는 subnetwork가 존재한다는 가설을 세우고 연구를 시작하였습니다. 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<a href="http://0.0.0.0:4000/assets/images/iclr_2019_review/2.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/iclr_2019_review/2.png" alt="The Lottery Ticket Hypothesis" />
+<a href="http://research.sualab.com/assets/images/iclr_2019_review/2.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/iclr_2019_review/2.png" alt="The Lottery Ticket Hypothesis" />
 </a>
 <span class="caption">The Lottery Ticket Hypothesis</span></p>
 
@@ -296,16 +296,16 @@
 
 <p>서론의 이야기만 들으면, 굉장히 어려운 방법을 통해 lottery ticket을 찾을 것 같은데, 방법론은 실제로 매우 간단합니다. 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<a href="http://0.0.0.0:4000/assets/images/iclr_2019_review/3.PNG" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/iclr_2019_review/3.PNG" alt="논문에 서술된 lottery ticket을 찾는 방법론" />
+<a href="http://research.sualab.com/assets/images/iclr_2019_review/3.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/iclr_2019_review/3.PNG" alt="논문에 서술된 lottery ticket을 찾는 방법론" />
 </a>
 <span class="caption">논문에 서술된 lottery ticket을 찾는 방법론</span></p>
 
 <p>본 논문에서 발견한 winning ticket을 찾는 방법은 다음과 같습니다. 우선 여기 나와있는 1~4번의 방법 중 3번까지는 기존에 진행하는 network pruning과 동일하며 4번의 방법만 추가된 것입니다. 여기서 주목할 것은 1번 방법에 빨간 네모로 강조해둔 <strong>weight initialization</strong> 입니다. 처음 neural network를 initialization 하였을 때의 그 초기 weight들을 저장하고 있다가, 학습시키고 pruning을 한 뒤에 subnetwork의 weight에 다시 넣어주는 굉장히 간단한 방식을 제안하고 있습니다. 이 과정을 그림으로 나타내면 다음과 같습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/iclr_2019_review/4.PNG" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/iclr_2019_review/4.PNG" alt="방법론 도식도" />
+<p><a href="http://research.sualab.com/assets/images/iclr_2019_review/4.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/iclr_2019_review/4.PNG" alt="방법론 도식도" />
 </a>
 <span class="caption">방법론 도식도</span></p>
 
@@ -319,8 +319,8 @@
 
 <p>각 실험에서 사용한 network와 hyper-parameter 셋팅은 다음 표에서 확인하실 수 있습니다.
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<a href="http://0.0.0.0:4000/assets/images/iclr_2019_review/5.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/iclr_2019_review/5.png" alt="각 실험에 사용한 네트워크와 하이퍼 파라미터 설정" />
+<a href="http://research.sualab.com/assets/images/iclr_2019_review/5.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/iclr_2019_review/5.png" alt="각 실험에 사용한 네트워크와 하이퍼 파라미터 설정" />
 </a>
 <span class="caption">각 실험에 사용한 네트워크와 하이퍼 파라미터 설정</span></p>
 
@@ -329,8 +329,8 @@
 <p>우선 LeNet에 대한 실험은 layer-wise pruning을 적용하였으며 단순하게 각 layer마다 weight의 magnitude가 작은 순서대로 pruning을 하는 방식을 사용했습니다. 또한 모든 weight를 한번에 pruning 하는 <strong>one-shot pruning</strong> 대신 여러번에 걸쳐서 pruning하는 <strong>iterative pruning</strong> 방식을 사용하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/iclr_2019_review/6.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/iclr_2019_review/6.png" alt="LeNet 실험 결과" />
+<p><a href="http://research.sualab.com/assets/images/iclr_2019_review/6.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/iclr_2019_review/6.png" alt="LeNet 실험 결과" />
 </a>
 <span class="caption">LeNet 실험 결과</span></p>
 
@@ -340,8 +340,8 @@
 
 <p>Simple ConvNet의 실험 결과도 앞서 설명한 LeNet의 실험 결과와 거의 유사한 양상을 보입니다. 마찬가지로 reinit을 하였을 때 보다 winning ticket 방식을 적용하였을 때 더 좋은 성능을 보였으며, 이번에는 heuristic으로 <strong>dropout</strong> 을 같이 사용하였더니 더 성능이 좋아졌다는 결과를 제시하고 있습니다. 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<a href="http://0.0.0.0:4000/assets/images/iclr_2019_review/8.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/iclr_2019_review/8.png" alt="Simple ConvNet 실험 결과" />
+<a href="http://research.sualab.com/assets/images/iclr_2019_review/8.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/iclr_2019_review/8.png" alt="Simple ConvNet 실험 결과" />
 </a>
 <span class="caption">Simple ConvNet 실험 결과</span></p>
 
@@ -354,8 +354,8 @@
 <p>또한 이 실험에서도 heuristic이 들어가는데 이번에는 <strong>learning rate warmup</strong> 을 사용하였습니다. Learning rate warmup 이란 초기의 learning rate를 초반 iteration 동안 linear하게 증가시키는 방법을 의미합니다. 우선 0.1의 initial learning rate를 사용하면 network가 학습이 잘 되지만 pruning을 할 시 winning ticket을 찾지 못하고, 0.01의 learning rate를 사용하면 winning ticket은 찾지만 높은 정확도를 얻을 수 없는 문제가 발생합니다. 이를 해결하기 위해 learning rate warmup을 사용하였으며 그 결과 winning ticket도 찾고, 높은 정확도도 얻을 수 있었다고 합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/iclr_2019_review/9.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/iclr_2019_review/9.png" alt="Deep ConvNet 실험 결과" />
+<p><a href="http://research.sualab.com/assets/images/iclr_2019_review/9.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/iclr_2019_review/9.png" alt="Deep ConvNet 실험 결과" />
 </a>
 <span class="caption">Deep ConvNet 실험 결과</span></p>
 
@@ -394,8 +394,8 @@
 <p>우선 제목에서 알 수 있듯이 MNIST, CIFAR10 보다 큰 데이터셋인 ImageNet에 대해 lottery ticket hypothesis를 검증하였으며, SNIP, “Rethinking the Value of Network Pruning” 논문과도 성능을 비교하는 내용을 논문에서 확인할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/iclr_2019_review/10.PNG" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/iclr_2019_review/10.PNG" alt="The Lottery Ticket Hypothsis at Scale 논문의 실험 결과" />
+<p><a href="http://research.sualab.com/assets/images/iclr_2019_review/10.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/iclr_2019_review/10.PNG" alt="The Lottery Ticket Hypothsis at Scale 논문의 실험 결과" />
 </a>
 <span class="caption">The Lottery Ticket Hypothsis at Scale 논문의 실험 결과</span></p>
 
@@ -405,8 +405,8 @@
 <p>이번에는 ICLR 2019에 직접 다녀온 뒤 블로그 글을 작성을 하였습니다. ICLR 학회의 각 요일마다 어떠한 프로그램들이 진행되는지 소개 드렸고, 각 프로그램마다 참고할 수 있는 자료를 같이 소개 드렸습니다. 또한 각 프로그램마다 느낀 점들을 간략하게 소개 드렸고, 2편의 Best Paper 중 Network Pruning과 관련 있는 “The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks”에 대해 리뷰를 해보았습니다. 최근 학계에서 굉장히 핫한 학회에 참석하다 보니 자극도 많이 받을 수 있었고, 최신 연구들의 흐름도 느낄 수 있어서 보람이 있었습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/iclr_2019_review/11.PNG" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/iclr_2019_review/11.PNG" alt="" />
+<p><a href="http://research.sualab.com/assets/images/iclr_2019_review/11.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/iclr_2019_review/11.PNG" alt="" />
 </a>
 <span class="caption"></span></p>
 

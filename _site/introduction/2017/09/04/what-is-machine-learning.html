@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2017-09-04T09:00:00+09:00">
-  <meta property="article:author" content="http://0.0.0.0:4000/about/">
+  <meta property="article:author" content="http://research.sualab.com/about/">
   
-  <meta property="og:url" content="http://0.0.0.0:4000/introduction/2017/09/04/what-is-machine-learning.html" />
+  <meta property="og:url" content="http://research.sualab.com/introduction/2017/09/04/what-is-machine-learning.html" />
   
   <meta itemprop="keywords" content="supervised learning,data set,learning model,learning algorithm" />
   
@@ -40,7 +40,7 @@
   <meta name="description" content="수아랩 리서치 블로그 첫 번째 글의 주제는 ‘머신러닝이란 무엇인가?’ 입니다. AI(인공지능)를 가능하게 하는 핵심 기술이라고 할 수 있는 머신러닝에 대해서, 글을 읽는 모든 분들이 이해하실 수 있도록 최대한 쉬운 언어로 이야기를 풀어나가고자 합니다.">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://0.0.0.0:4000/introduction/2017/09/04/what-is-machine-learning.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://research.sualab.com/introduction/2017/09/04/what-is-machine-learning.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -217,8 +217,8 @@
 <p>여러분이 아주 어렸을 적, 꼬마 시절 기억을 떠올려봅시다. 여러분이 어느 대상의 개념을 처음 익힐 때를 기억하시나요? 말을 시작한 지 얼마 되지 않은 네살배기 꼬마 여러분이 어머니의 손을 붙잡고 공원으로 나간 상황을 가정해봅시다. 여러분을 둘러싼 주변의 수많은 대상들을 관찰하던 와중에, 여러분은 아래 그림과 같이 생긴 대상을 관찰하게 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/tree_example.png" target="_blank">
-  <img class="large-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/tree_example.png" alt="나무의 전형적인 예시 이미지" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/tree_example.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/tree_example.png" alt="나무의 전형적인 예시 이미지" />
 </a>
 <span class="caption">나무의 전형적인 예시 이미지</span></p>
 
@@ -259,8 +259,8 @@
 <p>이 때 중요한 것은, 기계로 하여금 어느 대상의 이미지를 주고 그것이 나무인지 아닌지 구별하도록 하기 위해서는, 나무 이미지뿐만 아니라 나무가 아닌 이미지도 충분히 많이 제시해줘야 합니다. 따라서 실제로는 어느 랜덤한 이미지를 주고 {‘나무’, ‘나무X’} 중 하나의 표식을 붙여 그것의 정체를 나타내도록 하는데, 이를 ‘<strong>레이블(label)</strong>‘이라고 합니다. 다시 말해, 머신러닝(정확히는 <em>지도 학습(supervised learning)</em> 패러다임에서의 머신러닝)에서는 수많은 (예시, 레이블) 쌍의 집합이 한 덩어리의 데이터가 되어 기계로 전달됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/treelike-things-with-labels.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/treelike-things-with-labels.png" alt="'나무' vs '나무X' 데이터 - 예시와 레이블의 나열" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/treelike-things-with-labels.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/treelike-things-with-labels.png" alt="'나무' vs '나무X' 데이터 - 예시와 레이블의 나열" />
 </a>
 <span class="caption">‘나무’ vs ‘나무X’ 데이터 - 예시와 레이블의 나열</span></p>
 
@@ -359,24 +359,24 @@
 <p>다음으로 중요한 것이 사람으로 따지면 ‘뇌’에 해당하는 것인데, 머신러닝에서는 이를 ‘<strong>러닝 모델(learning model)</strong>‘이라고 합니다. 러닝 모델은, 아주 간단히 말해서 하나의 커다란 함수로 구성되어 있다고 보면 됩니다. 여러분이 학창 시절 지식을 떠올려 보면, 대략 함수는 어떤 주어진 입력 변수에 대하여 특정한 연산을 수행한 결과를 출력 변수로 내뱉는 장치라고 배웠을 것입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/function-diagram.png" target="_blank">
-  <img class="small-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/function-diagram.png" alt="함수의 구조" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/function-diagram.png" target="_blank">
+  <img class="small-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/function-diagram.png" alt="함수의 구조" />
 </a>
 <span class="caption">함수의 구조</span></p>
 
 <p>우리가 만들어내고자 하는 ‘나무 여부 구별 기계’의 경우에도, 이를 하나의 함수로 보아 단순화시키면, 입력 변숫값이 이미지이고 출력 변숫값이 {‘나무’, ‘나무X’} 중 하나인 함수라고 할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/image-to-istree-classifier.png" target="_blank">
-  <img class="small-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/image-to-istree-classifier.png" alt="나무인지 아닌지 구별하는 함수" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/image-to-istree-classifier.png" target="_blank">
+  <img class="small-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/image-to-istree-classifier.png" alt="나무인지 아닌지 구별하는 함수" />
 </a>
 <span class="caption">나무인지 아닌지 구별하는 함수</span></p>
 
 <p>한편 ‘3개월 내 채무 이행여부 예측 기계’의 경우, 입력 변숫값이 신규 고객의 ‘나이’와 ‘연봉’이고, 출력 변숫값이 {‘이행’, ‘이행X’} 중 하나인 함수라고 할 수 있습니다. 예를 들어 오늘 막 대출한 신규 고객 ‘김호구’씨가 있는데, 이 사람의 나이가 40세이고 연봉이 40백만원(=4천만원)일 때 향후 3개월 내로 채무를 이행할지 여부를 맞추는 것입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/customer-data-to-fulfillment-classifier.png" target="_blank">
-  <img class="small-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/customer-data-to-fulfillment-classifier.png" alt="채무 이행여부 예측 함수" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/customer-data-to-fulfillment-classifier.png" target="_blank">
+  <img class="small-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/customer-data-to-fulfillment-classifier.png" alt="채무 이행여부 예측 함수" />
 </a>
 <span class="caption">채무 이행여부 예측 함수</span></p>
 
@@ -391,8 +391,8 @@
 <p>앞서 빨대론의 11명 고객 데이터를 표로 나타내었는데, 표는 한 눈에 들어오지 않으므로 이를 플롯으로 찍어보도록 하겠습니다. 표기의 편의 상 나이를 <script type="math/tex">x_1</script>, 연봉을 <script type="math/tex">x_2</script>로 하고, 고객이 채무를 이행한 경우 해당 고객의 <script type="math/tex">(x_1, x_2)</script> 좌표에 ‘O’, 그렇지 않으면 ‘X’로 표기하도록 하겠습니다. 그럼 아래와 같은 플롯을 얻게 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/age-to-salary-plot.png" target="_blank">
-  <img class="large-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/age-to-salary-plot.png" alt="X1-X2 플롯" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-plot.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-plot.png" alt="X1-X2 플롯" />
 </a>
 <span class="caption">X1-X2 플롯</span></p>
 
@@ -417,24 +417,24 @@ w_0 + w_1x_1 + w_2x_2 = 0
 <p>이를 위해, 먼저 <script type="math/tex">w_0</script>, <script type="math/tex">w_1</script>, <script type="math/tex">w_2</script>의 초깃값을 (대충) <em>적절하게</em> 잡겠습니다. 예를 들어, <script type="math/tex">w_0=80</script>, <script type="math/tex">w_1=-3</script>, <script type="math/tex">w_2=1</script>로 잡았다고 하겠습니다. 이 직선을 플롯 상에 나타내면 아래와 같이 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/age-to-salary-with-initialized-model-plot.png" target="_blank">
-  <img class="large-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/age-to-salary-with-initialized-model-plot.png" alt="X1-X2 플롯과 초기 선형 모델" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-with-initialized-model-plot.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-with-initialized-model-plot.png" alt="X1-X2 플롯과 초기 선형 모델" />
 </a>
 <span class="caption">X1-X2 플롯과 초기 선형 모델</span></p>
 
 <p>그런 다음 각 점들을 돌아가면서 관찰하여, 해당 점이 직선에 의해 제대로 분류되었는지 살펴보겠습니다. 위 플롯에 표시된 바와 같이, ‘O’인데도 직선 아랫쪽으로, ‘X’인데도 직선 윗쪽으로 잘못 위치한 점들이 4개 있습니다. 이들 점에 해당하는 예시들을 제대로 분류하려면, 현재 직선의 기울기를 낮춰야 할 것 같습니다. 러닝 모델은, 이에 결부되어 있는 모종의 <strong>러닝 알고리즘(learning algorithm)</strong>에 의거하여 <script type="math/tex">w_0</script>, <script type="math/tex">w_1</script>, <script type="math/tex">w_2</script>의 값을 적절하게 조정, 잘못 분류된 점이 제대로 분류되도록 합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/age-to-salary-with-improved-model-plot.png" target="_blank">
-  <img class="large-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/age-to-salary-with-improved-model-plot.png" alt="X1-X2 플롯과 1차 학습된 선형 모델" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-with-improved-model-plot.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-with-improved-model-plot.png" alt="X1-X2 플롯과 1차 학습된 선형 모델" />
 </a>
 <span class="caption">X1-X2 플롯과 1차 학습된 선형 모델</span></p>
 
 <p><script type="math/tex">w_0=40</script>, <script type="math/tex">w_1=-3</script>, <script type="math/tex">w_2=2</script>로 조정하였더니, 방금 전보다 잘못 분류된 점의 수가 감소하였습니다. 그런데, 여전히 잘못 분류된 점이 있습니다. 러닝 모델은 러닝 알고리즘에 의해 <script type="math/tex">w_0</script>, <script type="math/tex">w_1</script>, <script type="math/tex">w_2</script>의 값을 다시 한 번 조정합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/age-to-salary-with-learned-model-plot.png" target="_blank">
-  <img class="large-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/age-to-salary-with-learned-model-plot.png" alt="X1-X2 플롯과 학습이 완료된 선형 모델" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-with-learned-model-plot.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-with-learned-model-plot.png" alt="X1-X2 플롯과 학습이 완료된 선형 모델" />
 </a>
 <span class="caption">X1-X2 플롯과 학습이 완료된 선형 모델</span></p>
 
@@ -451,8 +451,8 @@ f(40, 40) = -50 -40 + 2\cdot40 &lt; 0
 \end{equation}</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/age-to-salary-classify-sample-plot.png" target="_blank">
-  <img class="large-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/age-to-salary-classify-sample-plot.png" alt="김호구 씨의 채무 이행 여부 확인 결과" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-classify-sample-plot.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-classify-sample-plot.png" alt="김호구 씨의 채무 이행 여부 확인 결과" />
 </a>
 <span class="caption">김호구 씨의 채무 이행 여부 확인 결과</span></p>
 
@@ -473,8 +473,8 @@ f(40, 40) = -50 -40 + 2\cdot40 &lt; 0
 <p>그래서 이미지의 경우, 다음과 같은 방법으로 먼저 데이터를 ‘수치화’시키는 과정을 거쳐야 합니다. 먼저, 주어진 이미지를 <a href="https://ko.wikipedia.org/wiki/%ED%99%94%EC%86%8C" target="_blank">픽셀(pixel, 이미지 상에서의 하나의 점)</a> 단위로 잘게 자릅니다. 그런 다음, 각 픽셀이 어떤 색상을 나타내는지를 <a href="https://ko.wikipedia.org/wiki/RGB_%EA%B0%80%EC%82%B0%ED%98%BC%ED%95%A9" target="_blank">RGB 가산혼합</a> 방식으로 나타냅니다(픽셀과 RGB 가산혼합에 대한 내용은, 각 단어에 연결된 링크를 참조하시길 바랍니다). 이미지의 특정 픽셀 위치를 ‘이미지 맨 위에서부터 <script type="math/tex">Y</script>번째, 맨 왼쪽에서부터 <script type="math/tex">X</script>번째’ 식으로 생각하면 <script type="math/tex">(X, Y)</script>와 같이 좌표 형태로 나타낼 수 있을 것인데, 예를 들면 <script type="math/tex">(53, 121)</script>에 위치한 픽셀의 RGB 값은 <script type="math/tex">[77, 140, 86]</script>이 되는 식입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/isTree-classifier-pixels.png" target="_blank">
-  <img class="large-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/isTree-classifier-pixels.png" alt="나무 이미지의 (53, 121)에 위치한 픽셀의 RGB 값*&lt;br&gt;&lt;small&gt;(*주의: 격자 안의 하나의 정사각형의 크기는 실제 1픽셀보다는 크며, 설명을 돕기 위해 과장하였습니다.)&lt;/small&gt;" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/isTree-classifier-pixels.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/isTree-classifier-pixels.png" alt="나무 이미지의 (53, 121)에 위치한 픽셀의 RGB 값*&lt;br&gt;&lt;small&gt;(*주의: 격자 안의 하나의 정사각형의 크기는 실제 1픽셀보다는 크며, 설명을 돕기 위해 과장하였습니다.)&lt;/small&gt;" />
 </a>
 <span class="caption">나무 이미지의 (53, 121)에 위치한 픽셀의 RGB 값*<br /><small>(*주의: 격자 안의 하나의 정사각형의 크기는 실제 1픽셀보다는 크며, 설명을 돕기 위해 과장하였습니다.)</small></span></p>
 
@@ -631,16 +631,16 @@ f(x_1, x_2, …, x_6) = w_0 + w_1x_1 + w_2x_2 + … + w_6x_6
 <p>필자가 막 지어낸 엄청나게 허접해보이는(?) 요인이지만, 적어도 제 생각에는 앞선 ‘RGB 평균값’ 요인보다는 이게 더 나을 것 같습니다. 일반적인 나무 이미지를 생각해보면, 윗쪽 중앙에는 무성한 초록색 잎사귀가 위치해 있고, 아랫쪽 중앙에는 줄기가 위치해 있지 않았던가요? 이 때문에 나무 이미지의 경우 윗쪽 중앙의 [R, G, B] 값이 녹색에 해당하는 값에 가까울 것이고, 아랫쪽 중앙의 [R, G, B] 값은 갈색에 해당하는 값에 가까울 것입니다. 러닝 모델은 6개의 입력 변수로부터 이러한 경향을 받아들인 뒤, 이러한 특성을 잘 설명할 수 있는 방향으로 계수를 조절할 것으로 기대할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/isTree-classifier-successful-features.png" target="_blank">
-  <img class="large-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/isTree-classifier-successful-features.png" alt="나무 이미지의 윗쪽 절반 중앙 픽셀 색상과 아랫쪽 절반 중앙 픽셀 색상" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/isTree-classifier-successful-features.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/isTree-classifier-successful-features.png" alt="나무 이미지의 윗쪽 절반 중앙 픽셀 색상과 아랫쪽 절반 중앙 픽셀 색상" />
 </a>
 <span class="caption">나무 이미지의 윗쪽 절반 중앙 픽셀 색상과 아랫쪽 절반 중앙 픽셀 색상</span></p>
 
 <p>참고로, 위에서 소개한 2가지 요인은 이해를 돕기 위해 대충(?) 급조해 낸 요인들이며, 실제 <strong>이미지 인식(image recognition)</strong> 문제에서는 절대 사용되지 않습니다. 실제 이미지 인식 문제에서 일반적으로 많이 사용되는 요인 추출 기법은 대부분 이미지 상의 픽셀들을 영역별, 혹은 횡적/종적으로 스캔하면서 이 과정에서의 픽셀 강도의 변화 경향을 추적하며, 이를 수치화시킨 형태로 정의합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/image-feature-extractors.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/image-feature-extractors.png" alt="이미지 인식 분야에서의 대표적인 요인 추출 알고리즘" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/image-feature-extractors.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/image-feature-extractors.png" alt="이미지 인식 분야에서의 대표적인 요인 추출 알고리즘" />
 </a>
 <span class="caption">이미지 인식 분야에서의 대표적인 요인 추출 알고리즘</span></p>
 
@@ -653,8 +653,8 @@ f(x_1, x_2, …, x_6) = w_0 + w_1x_1 + w_2x_2 + … + w_6x_6
 <p>그래서, 실제 이미지 인식 분야에서는 선형 모델 대신 인공신경망(artificial neural networks)과 같은 복잡성이 높은 러닝 모델을 사용합니다. 이렇게 복잡성이 높은 신경망(neural networks) 구조를 러닝 모델로 사용하는 머신러닝 패러다임을 ‘<strong>딥 러닝(deep learning)</strong>‘이라고 합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/what-is-machine-learning/learning-models-and-algorithms.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/what-is-machine-learning/learning-models-and-algorithms.png" alt="주요한 러닝 모델 및 러닝 알고리즘" />
+<p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/learning-models-and-algorithms.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/what-is-machine-learning/learning-models-and-algorithms.png" alt="주요한 러닝 모델 및 러닝 알고리즘" />
 </a>
 <span class="caption">주요한 러닝 모델 및 러닝 알고리즘</span></p>
 
