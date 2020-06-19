@@ -82,7 +82,7 @@ module Jekyll
     def render(context)
       if @markup.empty?
         return 'Error processing input, expected syntax: ' \
-               '{% asset_path filename post_id %}'
+               '{% assets filename post_id %}'
       end
 
       # render the markup
@@ -133,4 +133,4 @@ module Jekyll
   end
 end
 
-Liquid::Template.register_tag('asset_path', Jekyll::AssetPathTag)
+Liquid::Template.register_tag('assets', Jekyll::AssetPathTag)

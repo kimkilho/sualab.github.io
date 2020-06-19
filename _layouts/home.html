@@ -15,7 +15,7 @@ layout: default
           {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
 	  <a href="{{ post.url | relative_url }}">
 	  {% if post.image %}
-	    {% capture thumbnail_path %}{% asset_path {{ post.image }} {{ post.id }} %}{% endcapture %}
+	    {% capture thumbnail_path %}{% assets {{ post.image }} {{ post.id }} %}{% endcapture %}
 	    {% thumbnail {{ thumbnail_path }} 128x128 %}
 	  {% else %}
 	    {% thumbnail /assets/images/Cognex_Logo.jpg 128x128 %}
