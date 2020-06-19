@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2020-05-07T23:00:00+09:00">
-  <meta property="article:author" content="http://0.0.0.0:4000/about/">
+  <meta property="article:author" content="http://research.sualab.com/about/">
   
-  <meta property="og:url" content="http://0.0.0.0:4000/development/2020/05/07/dependency-management-for-cpp-windows-app-using-nuget.html" />
+  <meta property="og:url" content="http://research.sualab.com/development/2020/05/07/dependency-management-for-cpp-windows-app-using-nuget.html" />
   
   <meta itemprop="keywords" content="c++,nuget" />
   
@@ -36,7 +36,7 @@
   <meta name="description" content="라이브러리를 사용할 때는 프로젝트가 사용하는 라이브러리 목록과 버전을 명확히 관리해야 합니다. 개발 환경과 배포 환경의 라이브러리 버전 차이가 의도치 않은 동작을 만들 수 있기 때문입니다. 또한 모든 팀원이 같은 라이브러리 버전을 사용해야 팀원 개개인이 동일한 동작을 기대하고 기능...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://0.0.0.0:4000/development/2020/05/07/dependency-management-for-cpp-windows-app-using-nuget.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://research.sualab.com/development/2020/05/07/dependency-management-for-cpp-windows-app-using-nuget.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -194,8 +194,8 @@
 <p>대부분의 개발 환경은 손쉽게 라이브러리 목록과 버전을 관리할 수 있습니다. 파이썬을 예로 들면, requirements.txt 파일을 통해 프로젝트가 사용하는 라이브러리와 버전을 명확하게 관리할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/python_requirement_txt.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/python_requirement_txt.png" alt="Python 기반 프로젝트의 라이브러리 의존성 관리 파일(requirements.txt)" />
+<p><a href="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/python_requirement_txt.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/python_requirement_txt.png" alt="Python 기반 프로젝트의 라이브러리 의존성 관리 파일(requirements.txt)" />
 </a>
 <span class="caption">Python 기반 프로젝트의 라이브러리 의존성 관리 파일(requirements.txt)</span></p>
 
@@ -212,8 +212,8 @@
 <p>Nuget은 파이썬의 PIP나 자바스크립트의 NPM처럼 .NET 소프트웨어의 라이브러리를 쉽게 사용할 수 있게 만든 패키지 저장소입니다. C++를 직접적으로 지원하는 건 아니지만 Visual Studio IDE와 연동되는 장점이 있기 때문에 몇 가지만 설정하면 충분히 C++ 라이브러리 저장소로도 사용이 가능합니다. Boost와 같은 범용적인 라이브러리는 이미 Nuget 공개 저장소에 올라왔을 정도로, 많은 사람들이 사용하고 있기도 합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/boost_in_nuget.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/boost_in_nuget.png" alt="Nuget 저장소에 있는 boost 라이브러리" />
+<p><a href="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/boost_in_nuget.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/boost_in_nuget.png" alt="Nuget 저장소에 있는 boost 라이브러리" />
 </a>
 <span class="caption">Nuget 저장소에 있는 boost 라이브러리</span></p>
 
@@ -260,8 +260,8 @@
 <p>저장소에서 이 라이브러리를 설치하는 것 만으로 boost 라이브러리가 함께 설치됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/dependency_example.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/dependency_example.png" alt="설정된 boost 라이브러리 종속성" />
+<p><a href="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/dependency_example.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/dependency_example.png" alt="설정된 boost 라이브러리 종속성" />
 </a>
 <span class="caption">설정된 boost 라이브러리 종속성</span></p>
 
@@ -274,8 +274,8 @@
 <p>다음 그림을 보면, 로컬 디렉토리가 사설 저장소로 설정된 것을 볼 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/set_local_directory_as_private_repository.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/set_local_directory_as_private_repository.png" alt="로컬 디렉토리를 사설 저장소로 설정" />
+<p><a href="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/set_local_directory_as_private_repository.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/set_local_directory_as_private_repository.png" alt="로컬 디렉토리를 사설 저장소로 설정" />
 </a>
 <span class="caption">로컬 디렉토리를 사설 저장소로 설정</span></p>
 
@@ -288,16 +288,16 @@
 <p>처음에는 컴파일에 사용할 include 파일을 찾을 수 없는 문제가 생겼습니다. 이 문제는 추가 포함 디렉토리에 패키지 경로를 지정하면 해결이 가능했습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/add_path_of_package.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/add_path_of_package.png" alt="추가 포함 디렉토리에 지정된 패키지 경로" />
+<p><a href="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/add_path_of_package.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/add_path_of_package.png" alt="추가 포함 디렉토리에 지정된 패키지 경로" />
 </a>
 <span class="caption">추가 포함 디렉토리에 지정된 패키지 경로</span></p>
 
 <p>두 번째 문제는, 런타임 시 사용할 DLL이 빌드 결과물에 포함되지 않는다는 것이었습니다. 그래서 컴파일이 되도 실행은 되지 않는 문제가 발생했습니다. 그러나 이 문제 또한 빌드 이벤트에 DLL을 복사하게 설정하는 것으로 쉽게 해결하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/add_build_event.png" target="_blank">
-  <img class="full-image" src="http://0.0.0.0:4000/assets/images/dependency-management-for-cpp-windows-app-using-nuget/add_build_event.png" alt="빌드 이벤트에 DLL 복사를 설정" />
+<p><a href="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/add_build_event.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/dependency-management-for-cpp-windows-app-using-nuget/add_build_event.png" alt="빌드 이벤트에 DLL 복사를 설정" />
 </a>
 <span class="caption">빌드 이벤트에 DLL 복사를 설정</span></p>
 
