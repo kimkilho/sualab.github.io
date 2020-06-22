@@ -56,7 +56,6 @@ build-iPhoneSimulator/
 .sass-cache
 .jekyll-metadata
 _source/
-.nojekyll
 
 # Mac OS X
 .DS_Store
