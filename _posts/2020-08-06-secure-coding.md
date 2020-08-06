@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "안전한 C++ 코드 만들기"
-date: 2020-08-06 18:00:00 +0900
+date: 2020-08-06 20:00:00 +0900
 author: gigone_lee
 categories: [Development]
 tags: [c++, modern c++, convention]

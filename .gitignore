@@ -52,7 +52,7 @@ build-iPhoneSimulator/
 
 
 # Jekyll
-_site
+# _site
 .sass-cache
 .jekyll-metadata
 _source/
