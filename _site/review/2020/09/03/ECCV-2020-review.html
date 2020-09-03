@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Page metadata --> 
+  <!-- Reference: http://jovandeginste.github.io/2016/05/18/add-metadata-tags-to-jekyll-blog-posts.html -->
+  <meta name="description" content="안녕하세요, 오늘은 지난 8월 23일(일) ~ 8월 28일(금) 6일간 진행된 European Conference on Computer Vision(이하 ECCV) 2020 학회를 Virtual로 참석하며 느낀 점들을 공유 드리고, 주요 프로그램들을 소개 드리겠습니다.ECCV는 2...">
+
+  <meta property="og:site_name" content="Cognex Deep Learning Lab-KOR Research Blog">
+  
+  <meta property="og:title" content="ECCV 2020 Virtual Conference 참석 후기 및 프로그램 소개">
+  <meta property="og:type" content="article">
+  <meta property="og:description" content="안녕하세요, 오늘은 지난 8월 23일(일) ~ 8월 28일(금) 6일간 진행된 European Conference on Computer Vision(이하 ECCV) 2020 학회를 Virtual로 참석하며 느낀 점들을 공유 드리고, 주요 프로그램들을 소개 드리겠습니다.
+
+ECCV는 2년마다 열리며 짝수 년도에 열리는 Computer Vision 학회입니다. 비슷한 학회로 International Conference on Computer Vision(ICCV)가 있죠. ICCV도 2년마다 열리며 홀수 년도에 열립니다. 저는 원래 올해 영국 Glasgow에서 열리는 ECCV를 현장에서 참석하려고 8월달만 기다리고 있었는데 전세계적으로 퍼진 COVID-19로 인해 올해 모든 Machine Learning, Computer Vision 관련 학회들이 Virtual로 진행되었습니다.
+
+저는 Virtual로 학회에 참석한 적이 처음이라 집에서 듣는 학회가 과연 얼마나 효율적일지 궁금했는데요, 직접 일주일간 집(혹은 회사)에서 학회를 참석한 후기를 들려드리겠습니다.
+
+ ECCV 2020 주요 통계 
+이번  ECCV 2020은 올해로 16번째 열렸고 학회가 개최된 첫날 Opening 행사에서 주요 통계치들을 공개하였습니다. 사진 자료는  Kosta Derpanis 라는 분의 트위터의 게시물에서 인용하였습니다.
+
+
+
+  
+
+Submitted and accepted papers
+
+우선 총 5150편의 submission이 있었고, 그 중 1360편이 accept 되었으며 accepted rate는 약 26%를 보였습니다. 2014년이 28%, 2016년이 27%, 2018년이 32%였고 올해가 26%로 대체로 비슷한 비율을 유지하고 있습니다. 전체 Accepted paper 중 Oral paper는 7.5%, Spotlight paper는 11.8%의 비율을 보이고 있습니다.
+
+
+
+  
+
+Area of submitted papers
+
+다음은 전체 제출된 논문들의 연구 분야를 분류한 자료입니다. Deep Learning의 응용, 방법론, 이론을 다룬 논문이 주를 이뤘고, 아무래도 Computer Vision 학회이다 보니 인식 쪽 논문도 많은 비율을 보이고 있습니다. Unsupervised Learning 논문이 352편이나 되는 점도 인상깊네요.
+
+
+
+  
+
+Institutions of submitted papers
+
+다음은 Accepted paper들의 저자들이 속한 기관이 대한 자료입니다. 구글이 1위를 차지하였고 페이스북이 5위를, 마이크로소프트가 7위를, 화웨이가 11위를 차지하였습니다. 대체로 학계에 계신 분들의 비중이 높았으며 Computer Vision은 역시 중국이 강세임을 보여주고 있습니다.
+
+
+
+  
+
+Growth of ECCV
+
+마지막으로 2년전과 비교했을 때 학회에 제출된 논문의 편수가 얼마나 증가했는지를 보여주고 있습니다. 우선 ECCV 2018에 비해 제출된 논문 편수가 2.1배 늘었으며, CVPR 2020과 비교하였을 때 2년전보다 제출된 논문의 수가 비슷해졌음을 보여주고 있습니다.
+
+ ECCV 주요 프로그램 소개 및 Virtual 참석 후기 
+
+대부분의 학회는 크게 6가지 프로그램으로 분류할 수 있습니다.
+
+  Oral, Spotlight 논문들의 구두 발표가 진행되는 Main Conference
+  대부분의 논문들을 정해진 시간에 Poster와 함께 발표하고 실시간으로 질의 응답하는 Poster Session
+  특정한 주제를 정해 놓고 그 주제와 관련된 연구들을 소개하고 경우에 따라 Challenge도 개최하는 Workshop
+  Workshop과 비슷하게 특정한 주제를 정해두지만 교육의 목적이 크고, 종종 실습(Hands-on Training)도 같이 진행하는 Tutorial
+  본인들의 연구를 Live Demo로 보여주는 Demo Session
+  학회에 일정 금액의 돈을 내고 스폰서(등급이 나뉘어져 있음)로 참여하여 기업을 홍보하는 Exhibition
+
+
+이 모든 프로그램이 Virtual로 진행이 되었으며, 학회에 등록한 사람들은 별도의 페이지에 접속할 수 있게 됩니다.
+
+
+
+  
+
+ECCV2020 Lobby
+
+사이트에 접속을 하면 이런 화면에서 시작합니다. Lobby에서 원하는 프로그램을 클릭하여 듣는 방식입니다. 어떻게 보면 더운 여름 발표 들으러 이곳 저곳 걸어 다니지 않고 컴퓨터 앞에서 클릭 몇 번 해주면 된다는 점이 장점이라고 생각합니다. 다만 아쉬운 점도 있었습니다. 이제 각 프로그램마다 Virtual로 참석해보고 느낀 점들을 공유 드리겠습니다.
+
+Main Conference
+
+
+  
+
+ECCV2020 Oral Session
+
+Main Conference는 월요일부터 금요일까지 5일간 진행이 되었고, Oral Paper와 Spotlight Paper에 선정된 저자들은 정해진 시간에 실시간으로 1번 발표를 하는 방식으로 진행이 되었습니다. 오프라인 학회에서도 Main Conference Room에 자리가 없으면, 빈 Conference Room에서 화면을 띄워준 채로 실시간 송출을 해주는데, 이걸 집에서 보는 느낌이라고 생각하시면 좋을 것 같습니다.
+
+요일마다 주제가 바뀌었고, 중간 중간 Network Break 타임에는 Industry Session도 진행이 되었습니다. 각 요일마다 어떤 발표들이 진행되었는지 궁금하실 분들을 위해 링크를 첨부 드리겠습니다.
+
+   8/24 월요일 
+   8/25 화요일 
+   8/26 수요일 
+   8/27 목요일 
+   8/28 금요일 
+
+
+Poster Session
+저는 주로 오프라인 학회에 참석할 때, 아무래도 요즘 학회의 규모가 너무 커지다 보니 모든 논문을 다 살펴보기엔 무리가 커서, 주요 논문들을 미리 추려서 간단히 읽어보고 참석을 합니다. 그리고 Poster Session을 빠르게 돌아다니면서 재미있어 보이는 Poster를 찾으면 일단 사진을 찍고, 서있는 저자에게 설명을 해달라고 부탁드리고, 궁금한 점을 질문하면서 돌아다니는 재미가 있었는데요. 개인적으로 Virtual Conference로 바뀌면서 가장 아쉬웠던 프로그램이 바로 Poster Session이었습니다. 
+
+
+  
+
+ECCV2020 Submitted Papers
+
+우선 Lobby의 Papers and Presentations를 들어가면 모든 논문들의 제목과 논문(.pdf), 10분 분량의 전체 발표 Video, 1분 분량의 Short Video를 확인할 수 있고, 주요 연구 주제들끼리 모여 있는 점은 좋았습니다.
+
+
+
+  
+
+ECCV2020 Poster Session
+
+다만, 제가 원했던 Poster Session은 오프라인에서 넓은 공간에 포스터가 배치 되어있는 것처럼, 온라인으로도 빠르게 포스터 하나 하나씩 넘기며 볼 수 있는 것을 기대했는데 그렇진 않았습니다. 정해진 시간에 Poster Session에 들어가면 위와 같이 각 논문 마다 별도의 탭이 존재하였고, Launch 버튼을 누르면 zoom으로 연결되는 방식이었습니다. 들어가면 저자와 소통을 할 수 있긴 하지만 zoom 특성 상 접속하는데 딜레이가 있다 보니 빠르게 훑는 것은 불가능했습니다.
+
+Workshop
+Workshop과 Tutorial은 보통 같은 날 같은 시간에 동시 다발적으로 진행이 되다 보니 듣고 싶은 세션들을 미리 추려서 스케쥴 표를 만들어서 다녔습니다. Workshop은 하나의 주제가 하루에 2번씩 zoom을 통해 진행이 되었고, 학회의 첫날인 일요일과, 마지막 날인 금요일에 진행되었습니다.
+
+
+
+  
+
+ECCV2020 Workshop
+
+저는 이번 ECCV 2020에서  “Visual Inductive Priors for Data-Efficient Deep Learning”  의 Action Recognition 과 Semantic Segmentation Challenge에 참가를 하였고, 그 중  연세대학교 MVP Lab  박사과정분들, 저희 Cognex Deep Learning Lab 조동헌 연구원과 함께 참여한 Action Recognition에서 4위의 성적을 거두었습니다. 또한 Challenge에서 시도했던 방법들을 논문으로 제출하여 Oral Paper에 선정이 되었습니다. 좋은 팀원 분들을 만난 덕에 좋은 성과를 얻을 수 있었던 것 같습니다. 다시 한번 감사드립니다! 혹시나 궁금해하실 분들을 위해 저희 연구 성과를 담은 논문 링크를 남깁니다.
+
+  Paper:  Learning Temporally Invariant and Localizable Features via Data Augmentation for Video Recognition 
+
+
+저는 위의 “Visual Inductive Priors for Data-Efficient Deep Learning“ Workshop 외에도  “Imbalance Problems in Computer Vision (IPCV)” ,  “Robust Vision Challenge 2020”  도 재미있게 들었습니다.
+
+전체 Workshop의 리스트와 홈페이지들은  ECCV 2020 공식 홈페이지 에서 확인하실 수 있고, 일부 Workshop의 경우 학회를 등록하지 않은 사람들도 발표 자료와 발표 Video를 볼 수 있습니다.
+
+Tutorial
+Tutorial도 Workshop과 마찬가지로 하나의 주제가 하루에 2번씩 zoom을 통해 진행이 되었고, 실용적인 내용이 많아서 개인적으론 많은 도움이 되었습니다. 이번 학회에서 가장 만족스러웠던 프로그램을 꼽으라면 저는 바로 Tutorial을 꼽을 수 있을 것 같네요.
+
+
+
+  
+
+ECCV2020 Tutorial
+
+제가 들었던 Tutorial 중에 유익하면서도 누구나 발표 자료와 발표 Video를 확인할 수 있는 프로그램들을 소개 드리겠습니다.
+
+   “Accelerating Computer Vision with Mixed Precision” : TensorFlow와 PyTorch의 학습을 가속시키기 위한 Mixed Precision Training 기법을 다룬 Tutorial. 저는 개인적으로 Code Optimization Tricks 발표 “PyTorch Performance Tuning Guide” 가 가장 큰 도움이 되었습니다.
+   “From HPO to NAS: Automated Deep Learning” : AutoML을 이용한 Hyper Parameter Optimization부터 Neural Architecture Search 까지 최근 급성장한 연구들을 아주 자세히 다루고 있습니다.
+   “Weakly-Supervised Learning in Computer Vision” : Computer Vision에서 다뤄지는 Weakly Supervised Learning, 사람이 annotation pipeline에 개입하여 효율성을 높이는 Human-in-the-Loop에 대한 내용, Weakly Supervised Learning을 올바르게 평가하기 위한 방법 등을 굉장히 자세히 다루고 있습니다.
+
+
+Demo Session
+다음으로 데모는 월요일부터 목요일까지 진행되었고, 총 41가지 주제의 데모가 존재합니다. 하나의 주제 당 하루에 2번, 각각 2시간씩 진행이 되었고 lobby의 하단에 Networking Lounge를 눌러서 들어가면 모든 데모들의 설명이 담긴 워드 파일과 5분 내외의 Demo Video를 볼 수 있습니다.
+
+
+
+  
+
+ECCV2020 Demo
+
+다만 Poster와 마찬가지로 Demo도 실시간으로 동작하는 것을 보여주는 것이 의미가 있다고 생각하는데 단순히 문서와 Video로만 제공이 되니 아무래도 몰입도가 떨어졌고, 모든 컨텐츠가 Video 형태로 제공되다 보니 Demo만의 매력이 사라진 느낌을 받았습니다.
+
+Exhibition
+마지막은 기업들이 돈을 지불하고, 지불한 금액에 따라 다이아몬드, 플래티넘, 골드, 실버, 스타트업 등급으로 나뉘어서 본인들의 부스를 운영하는 Exhibition입니다. 각 등급별 가격과 혜택은  ECCV 2020 Partnership Package Overview 자료 에서 확인하실 수 있습니다.
+
+
+
+  
+
+ECCV2020 Exhibition
+
+Lobby에서 Exhibition에 들어가면 다음과 같이 등급에 따라 부스가 나뉘어져 있으며, 각 부스를 클릭하면 본인들의 연구와 제품들을 Video 형태로 보여주고, 채용 관련 탭도 별도로 운영하고 있습니다.
+
+
+
+  
+
+ECCV2020 Facebook Booth
+
+위의 그림은 다이아몬트 파트너 Facebook의 부스이며 저는  PyTorch의 주요 기능들을 다룬 자료 가 큰 도움이 되었습니다.
+
+
+
+  
+
+ECCV2020 Apple Booth
+
+다음은 골드 파트너 Apple의 부스이며 굉장히 심플하게 부스를 꾸몄으며, 주로 연구 내용 소개와 채용 관련 내용이 주를 이루고 있었습니다.
+
+오프라인에서는 스폰서의 등급에 따라 부스의 크기, 면적 등이 달랐던 것 같은데 온라인에서는 등급에 무관하게 동일한 형태로 운영이 되는 것 같았습니다. 그리고 무엇보다, 오프라인에서 부스를 돌아다니면 각종 스티커와 기념품, 간식을 얻을 수 있었는데 온라인은 그렇지 못한 점이 아쉬웠습니다. 껄껄껄
+
+ 결론 
+이번 포스팅에서는 COVID-19로 인해 Virtual Conference로 진행된 ECCV 2020의 주요 프로그램들을 소개 드리고, 각 프로그램마다 느낀 점들을 공유 드렸습니다. 가격이 낮아졌다는 점과 집에서 들을 수 있다는 점이 장점이 될 수도 있지만, 저에게는 단점이 더 크게 느껴졌던 것 같습니다. 아무래도 Poster Session과 Demo는 현장에서 생생하게 체험을 하고, 서로 마주보며 열띤 토론을 해야 재밌는데 모니터 화면 너머로 소통을 하다 보니 몰입도가 떨어졌습니다. 하지만 Workshop, Tutorials은 좋은 내용이 많이 다뤄졌고, 자료도 대부분 공개가 되어있어서 학회에 참석하지 않아도 양질의 자료들을 접할 수 있다는 점은 참 좋은 것 같습니다. 전세계적으로 안정을 찾아서 다시 오프라인 학회가 개최될 그 날을 기다리며 오늘의 글 마치겠습니다.
+
+ Reference 
+
+   ECCV 2020 통계치 자료 
+   주요 AI 학회 acceptance rate 자료 
+
+
+"/>
+  
+  
+  <meta property="article:published_time" content="2020-09-03T18:00:00+09:00">
+  <meta property="article:author" content="http://research.sualab.com/about/">
+  
+  <meta property="og:url" content="http://research.sualab.com/review/2020/09/03/ECCV-2020-review.html" />
+  
+  <meta itemprop="keywords" content="ECCV2020,conference" />
+  
+  <meta property="article:tag" content="ECCV2020">
+  
+  <meta property="article:tag" content="conference">
+  
+  
+  
+  <!-- end of Page metadata -->
+
+  <title>ECCV 2020 Virtual Conference 참석 후기 및 프로그램 소개</title>
+  <meta name="description" content="안녕하세요, 오늘은 지난 8월 23일(일) ~ 8월 28일(금) 6일간 진행된 European Conference on Computer Vision(이하 ECCV) 2020 학회를 Virtual로 참석하며 느낀 점들을 공유 드리고, 주요 프로그램들을 소개 드리겠습니다. ECCV는 ...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://research.sualab.com/review/2020/09/03/ECCV-2020-review.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <!-- Enabling line-breaking for MathJax equations -->
+  <!-- @reference: https://stackoverflow.com/questions/29893923/how-to-make-formula-with-mathjax-responsive/29904718 -->
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+       "HTML-CSS": { linebreaks: { automatic: true } },
+                SVG: { linebreaks: { automatic: true } }
+                });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110963421-1');
+</script>
+
+
+  
+</head>
+<body><header class="site-header" role="banner">
+
+<div class="wrapper">
+  
+  
+	<div class="cognex-logo-div">
+		<img class="cognex-logo-img" src="/assets/images/Cognex_logo.png" />
+	</div>
+	<div>
+  	<a class="site-title" href="/">Cognex Deep Learning Lab-KOR Research Blog</a>
+	</div>
+
+  
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+        </svg></span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+	<a class="page-link" href="/Introduction.html"> Introduction </a>
+	<a class="page-link" href="/Practice.html"> Practice </a>
+	<a class="page-link" href="/Development.html"> Development </a>
+	<a class="page-link" href="/Review.html"> Review </a>
+	<a class="page-link" href="/etc..html"> etc. </a>
+  <a class="page-link" href="https://jobs.cognex.com/" target="_blank"> Jobs </a>
+      </div>
+    </nav>
+  
+</div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <!-- Look the author details up from the site config. -->
+
+<!-- Post metadata -->
+<!-- Reference: http://jovandeginste.github.io/2016/05/18/add-metadata-tags-to-jekyll-blog-posts.html -->
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">ECCV 2020 Virtual Conference 참석 후기 및 프로그램 소개</h1>
+    <p class="post-meta">
+      <time datetime="2020-09-03T18:00:00+09:00" itemprop="datePublished">
+        
+        Sep 3, 2020
+      </time>
+       • 
+        
+          <span itemprop="category" itemscope itemtype="http://schema.org/Category"><a href="/Review.html">Review</a></span>
+        
+      
+      
+        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://hoya012.github.io" target="_blank">이호성</a></span></span>
+        <!-- Author metadata -->
+        <meta itemprop="email" content="Hoseong.Lee@cognex.com" />
+        <meta itemprop="web" content="https://hoya012.github.io" />
+        <!-- end of Author metadata -->
+      
+      
+         <br>Tags: ECCV2020, conference
+      
+    </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>안녕하세요, 오늘은 지난 8월 23일(일) ~ 8월 28일(금) 6일간 진행된 European Conference on Computer Vision(이하 ECCV) 2020 학회를 Virtual로 참석하며 느낀 점들을 공유 드리고, 주요 프로그램들을 소개 드리겠습니다.</p>
+
+<p>ECCV는 2년마다 열리며 짝수 년도에 열리는 Computer Vision 학회입니다. 비슷한 학회로 International Conference on Computer Vision(ICCV)가 있죠. ICCV도 2년마다 열리며 홀수 년도에 열립니다. 저는 원래 올해 영국 Glasgow에서 열리는 ECCV를 현장에서 참석하려고 8월달만 기다리고 있었는데 전세계적으로 퍼진 COVID-19로 인해 올해 모든 Machine Learning, Computer Vision 관련 학회들이 Virtual로 진행되었습니다.</p>
+
+<p>저는 Virtual로 학회에 참석한 적이 처음이라 집에서 듣는 학회가 과연 얼마나 효율적일지 궁금했는데요, 직접 일주일간 집(혹은 회사)에서 학회를 참석한 후기를 들려드리겠습니다.</p>
+
+<blockquote> ECCV 2020 주요 통계 </blockquote>
+<p>이번 <a href="https://eccv2020.eu/" target="_blank"><b> ECCV 2020</b></a>은 올해로 16번째 열렸고 학회가 개최된 첫날 Opening 행사에서 주요 통계치들을 공개하였습니다. 사진 자료는 <a href="https://twitter.com/CSProfKGD/status/1297892662687797255" target="_blank"><b> Kosta Derpanis 라는 분의 트위터의 게시물</b></a>에서 인용하였습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/stat1.jpg" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/stat1.jpg" alt="Submitted and accepted papers" />
+</a>
+<span class="caption">Submitted and accepted papers</span></p>
+
+<p>우선 총 5150편의 submission이 있었고, 그 중 1360편이 accept 되었으며 accepted rate는 약 26%를 보였습니다. 2014년이 28%, 2016년이 27%, 2018년이 32%였고 올해가 26%로 대체로 비슷한 비율을 유지하고 있습니다. 전체 Accepted paper 중 Oral paper는 7.5%, Spotlight paper는 11.8%의 비율을 보이고 있습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/stat2.jpg" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/stat2.jpg" alt="Area of submitted papers" />
+</a>
+<span class="caption">Area of submitted papers</span></p>
+
+<p>다음은 전체 제출된 논문들의 연구 분야를 분류한 자료입니다. Deep Learning의 응용, 방법론, 이론을 다룬 논문이 주를 이뤘고, 아무래도 Computer Vision 학회이다 보니 인식 쪽 논문도 많은 비율을 보이고 있습니다. Unsupervised Learning 논문이 352편이나 되는 점도 인상깊네요.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/stat3.jpg" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/stat3.jpg" alt="Institutions of submitted papers" />
+</a>
+<span class="caption">Institutions of submitted papers</span></p>
+
+<p>다음은 Accepted paper들의 저자들이 속한 기관이 대한 자료입니다. 구글이 1위를 차지하였고 페이스북이 5위를, 마이크로소프트가 7위를, 화웨이가 11위를 차지하였습니다. 대체로 학계에 계신 분들의 비중이 높았으며 Computer Vision은 역시 중국이 강세임을 보여주고 있습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/stat4.jpg" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/stat4.jpg" alt="Growth of ECCV" />
+</a>
+<span class="caption">Growth of ECCV</span></p>
+
+<p>마지막으로 2년전과 비교했을 때 학회에 제출된 논문의 편수가 얼마나 증가했는지를 보여주고 있습니다. 우선 ECCV 2018에 비해 제출된 논문 편수가 2.1배 늘었으며, CVPR 2020과 비교하였을 때 2년전보다 제출된 논문의 수가 비슷해졌음을 보여주고 있습니다.</p>
+
+<blockquote> ECCV 주요 프로그램 소개 및 Virtual 참석 후기 </blockquote>
+
+<p>대부분의 학회는 크게 6가지 프로그램으로 분류할 수 있습니다.</p>
+<ul>
+  <li>Oral, Spotlight 논문들의 구두 발표가 진행되는 <strong>Main Conference</strong></li>
+  <li>대부분의 논문들을 정해진 시간에 Poster와 함께 발표하고 실시간으로 질의 응답하는 <strong>Poster Session</strong></li>
+  <li>특정한 주제를 정해 놓고 그 주제와 관련된 연구들을 소개하고 경우에 따라 Challenge도 개최하는 <strong>Workshop</strong></li>
+  <li>Workshop과 비슷하게 특정한 주제를 정해두지만 교육의 목적이 크고, 종종 실습(Hands-on Training)도 같이 진행하는 <strong>Tutorial</strong></li>
+  <li>본인들의 연구를 Live Demo로 보여주는 <strong>Demo Session</strong></li>
+  <li>학회에 일정 금액의 돈을 내고 스폰서(등급이 나뉘어져 있음)로 참여하여 기업을 홍보하는 <strong>Exhibition</strong></li>
+</ul>
+
+<p>이 모든 프로그램이 Virtual로 진행이 되었으며, 학회에 등록한 사람들은 별도의 페이지에 접속할 수 있게 됩니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/lobby.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/lobby.PNG" alt="ECCV2020 Lobby" />
+</a>
+<span class="caption">ECCV2020 Lobby</span></p>
+
+<p>사이트에 접속을 하면 이런 화면에서 시작합니다. Lobby에서 원하는 프로그램을 클릭하여 듣는 방식입니다. 어떻게 보면 더운 여름 발표 들으러 이곳 저곳 걸어 다니지 않고 컴퓨터 앞에서 클릭 몇 번 해주면 된다는 점이 장점이라고 생각합니다. 다만 아쉬운 점도 있었습니다. 이제 각 프로그램마다 Virtual로 참석해보고 느낀 점들을 공유 드리겠습니다.</p>
+
+<h3 id="main-conference">Main Conference</h3>
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/oral_session.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/oral_session.PNG" alt="ECCV2020 Oral Session" />
+</a>
+<span class="caption">ECCV2020 Oral Session</span></p>
+
+<p>Main Conference는 월요일부터 금요일까지 5일간 진행이 되었고, Oral Paper와 Spotlight Paper에 선정된 저자들은 정해진 시간에 실시간으로 1번 발표를 하는 방식으로 진행이 되었습니다. 오프라인 학회에서도 Main Conference Room에 자리가 없으면, 빈 Conference Room에서 화면을 띄워준 채로 실시간 송출을 해주는데, 이걸 집에서 보는 느낌이라고 생각하시면 좋을 것 같습니다.</p>
+
+<p>요일마다 주제가 바뀌었고, 중간 중간 Network Break 타임에는 Industry Session도 진행이 되었습니다. 각 요일마다 어떤 발표들이 진행되었는지 궁금하실 분들을 위해 링크를 첨부 드리겠습니다.</p>
+<ul>
+  <li><a href="https://eccv2020.eu/wp-content/uploads/2020/08/ECCV-Programme-Monday.pdf" target="_blank"><b> 8/24 월요일 </b></a></li>
+  <li><a href="https://eccv2020.eu/wp-content/uploads/2020/08/ECCV-Programme-Tuesday.pdf" target="_blank"><b> 8/25 화요일 </b></a></li>
+  <li><a href="https://eccv2020.eu/wp-content/uploads/2020/08/ECCV-Programme-Wednesday.pdf" target="_blank"><b> 8/26 수요일 </b></a></li>
+  <li><a href="https://eccv2020.eu/wp-content/uploads/2020/08/ECCV-Programme-Thursday.pdf" target="_blank"><b> 8/27 목요일 </b></a></li>
+  <li><a href="https://eccv2020.eu/wp-content/uploads/2020/08/ECCV-Programme-Friday-2.pdf" target="_blank"><b> 8/28 금요일 </b></a></li>
+</ul>
+
+<h3 id="poster-session">Poster Session</h3>
+<p>저는 주로 오프라인 학회에 참석할 때, 아무래도 요즘 학회의 규모가 너무 커지다 보니 모든 논문을 다 살펴보기엔 무리가 커서, 주요 논문들을 미리 추려서 간단히 읽어보고 참석을 합니다. 그리고 Poster Session을 빠르게 돌아다니면서 재미있어 보이는 Poster를 찾으면 일단 사진을 찍고, 서있는 저자에게 설명을 해달라고 부탁드리고, 궁금한 점을 질문하면서 돌아다니는 재미가 있었는데요. 개인적으로 Virtual Conference로 바뀌면서 가장 아쉬웠던 프로그램이 바로 Poster Session이었습니다. 
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<a href="http://research.sualab.com/assets/images/ECCV-2020-review/papers.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/papers.PNG" alt="ECCV2020 Submitted Papers" />
+</a>
+<span class="caption">ECCV2020 Submitted Papers</span></p>
+
+<p>우선 Lobby의 Papers and Presentations를 들어가면 모든 논문들의 제목과 논문(.pdf), 10분 분량의 전체 발표 Video, 1분 분량의 Short Video를 확인할 수 있고, 주요 연구 주제들끼리 모여 있는 점은 좋았습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/poster_session.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/poster_session.PNG" alt="ECCV2020 Poster Session" />
+</a>
+<span class="caption">ECCV2020 Poster Session</span></p>
+
+<p>다만, 제가 원했던 Poster Session은 오프라인에서 넓은 공간에 포스터가 배치 되어있는 것처럼, 온라인으로도 빠르게 포스터 하나 하나씩 넘기며 볼 수 있는 것을 기대했는데 그렇진 않았습니다. 정해진 시간에 Poster Session에 들어가면 위와 같이 각 논문 마다 별도의 탭이 존재하였고, Launch 버튼을 누르면 zoom으로 연결되는 방식이었습니다. 들어가면 저자와 소통을 할 수 있긴 하지만 zoom 특성 상 접속하는데 딜레이가 있다 보니 빠르게 훑는 것은 불가능했습니다.</p>
+
+<h3 id="workshop">Workshop</h3>
+<p>Workshop과 Tutorial은 보통 같은 날 같은 시간에 동시 다발적으로 진행이 되다 보니 듣고 싶은 세션들을 미리 추려서 스케쥴 표를 만들어서 다녔습니다. Workshop은 하나의 주제가 하루에 2번씩 zoom을 통해 진행이 되었고, 학회의 첫날인 일요일과, 마지막 날인 금요일에 진행되었습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/sunday_workshop.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/sunday_workshop.PNG" alt="ECCV2020 Workshop" />
+</a>
+<span class="caption">ECCV2020 Workshop</span></p>
+
+<p>저는 이번 ECCV 2020에서 <a href="https://vipriors.github.io/" target="_blank"><b> “Visual Inductive Priors for Data-Efficient Deep Learning” </b></a> 의 Action Recognition 과 Semantic Segmentation Challenge에 참가를 하였고, 그 중 <a href="http://mvp.yonsei.ac.kr/" target="_blank"><b> 연세대학교 MVP Lab </b></a> 박사과정분들, 저희 Cognex Deep Learning Lab 조동헌 연구원과 함께 참여한 Action Recognition에서 4위의 성적을 거두었습니다. 또한 Challenge에서 시도했던 방법들을 논문으로 제출하여 Oral Paper에 선정이 되었습니다. 좋은 팀원 분들을 만난 덕에 좋은 성과를 얻을 수 있었던 것 같습니다. 다시 한번 감사드립니다! 혹시나 궁금해하실 분들을 위해 저희 연구 성과를 담은 논문 링크를 남깁니다.</p>
+<ul>
+  <li>Paper: <a href="https://arxiv.org/pdf/2008.05721.pdf" target="_blank"><b> Learning Temporally Invariant and Localizable Features via Data Augmentation for Video Recognition </b></a></li>
+</ul>
+
+<p>저는 위의 “Visual Inductive Priors for Data-Efficient Deep Learning“ Workshop 외에도 <a href="https://sites.google.com/view/ipcv2020/" target="_blank"><b> “Imbalance Problems in Computer Vision (IPCV)” </b></a>, <a href="http://www.robustvision.net/index.php" target="_blank"><b> “Robust Vision Challenge 2020” </b></a> 도 재미있게 들었습니다.</p>
+
+<p>전체 Workshop의 리스트와 홈페이지들은 <a href="https://eccv2020.eu/workshops/" target="_blank"><b> ECCV 2020 공식 홈페이지</b></a> 에서 확인하실 수 있고, 일부 Workshop의 경우 학회를 등록하지 않은 사람들도 발표 자료와 발표 Video를 볼 수 있습니다.</p>
+
+<h3 id="tutorial">Tutorial</h3>
+<p>Tutorial도 Workshop과 마찬가지로 하나의 주제가 하루에 2번씩 zoom을 통해 진행이 되었고, 실용적인 내용이 많아서 개인적으론 많은 도움이 되었습니다. 이번 학회에서 가장 만족스러웠던 프로그램을 꼽으라면 저는 바로 Tutorial을 꼽을 수 있을 것 같네요.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/sunday_tutorial.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/sunday_tutorial.PNG" alt="ECCV2020 Tutorial" />
+</a>
+<span class="caption">ECCV2020 Tutorial</span></p>
+
+<p>제가 들었던 Tutorial 중에 유익하면서도 누구나 발표 자료와 발표 Video를 확인할 수 있는 프로그램들을 소개 드리겠습니다.</p>
+<ul>
+  <li><a href="https://nvlabs.github.io/eccv2020-mixed-precision-tutorial/" target="_blank"><b> “Accelerating Computer Vision with Mixed Precision”</b></a> : TensorFlow와 PyTorch의 학습을 가속시키기 위한 Mixed Precision Training 기법을 다룬 Tutorial. 저는 개인적으로 Code Optimization Tricks 발표 “PyTorch Performance Tuning Guide” 가 가장 큰 도움이 되었습니다.</li>
+  <li><a href="https://hangzhang.org/ECCV2020/" target="_blank"><b> “From HPO to NAS: Automated Deep Learning”</b></a> : AutoML을 이용한 Hyper Parameter Optimization부터 Neural Architecture Search 까지 최근 급성장한 연구들을 아주 자세히 다루고 있습니다.</li>
+  <li><a href="https://hbilen.github.io/wsl-eccv20.github.io/" target="_blank"><b> “Weakly-Supervised Learning in Computer Vision”</b></a> : Computer Vision에서 다뤄지는 Weakly Supervised Learning, 사람이 annotation pipeline에 개입하여 효율성을 높이는 Human-in-the-Loop에 대한 내용, Weakly Supervised Learning을 올바르게 평가하기 위한 방법 등을 굉장히 자세히 다루고 있습니다.</li>
+</ul>
+
+<h3 id="demo-session">Demo Session</h3>
+<p>다음으로 데모는 월요일부터 목요일까지 진행되었고, 총 41가지 주제의 데모가 존재합니다. 하나의 주제 당 하루에 2번, 각각 2시간씩 진행이 되었고 lobby의 하단에 Networking Lounge를 눌러서 들어가면 모든 데모들의 설명이 담긴 워드 파일과 5분 내외의 Demo Video를 볼 수 있습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/demo.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/demo.PNG" alt="ECCV2020 Demo" />
+</a>
+<span class="caption">ECCV2020 Demo</span></p>
+
+<p>다만 Poster와 마찬가지로 Demo도 실시간으로 동작하는 것을 보여주는 것이 의미가 있다고 생각하는데 단순히 문서와 Video로만 제공이 되니 아무래도 몰입도가 떨어졌고, 모든 컨텐츠가 Video 형태로 제공되다 보니 Demo만의 매력이 사라진 느낌을 받았습니다.</p>
+
+<h3 id="exhibition">Exhibition</h3>
+<p>마지막은 기업들이 돈을 지불하고, 지불한 금액에 따라 다이아몬드, 플래티넘, 골드, 실버, 스타트업 등급으로 나뉘어서 본인들의 부스를 운영하는 Exhibition입니다. 각 등급별 가격과 혜택은 <a href="https://eccv2020.eu/wp-content/uploads/2020/05/ECCV20-Partnership-Package-Overview-dig.jpg" target="_blank"><b> ECCV 2020 Partnership Package Overview 자료 </b></a>에서 확인하실 수 있습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/exhibition.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/exhibition.PNG" alt="ECCV2020 Exhibition" />
+</a>
+<span class="caption">ECCV2020 Exhibition</span></p>
+
+<p>Lobby에서 Exhibition에 들어가면 다음과 같이 등급에 따라 부스가 나뉘어져 있으며, 각 부스를 클릭하면 본인들의 연구와 제품들을 Video 형태로 보여주고, 채용 관련 탭도 별도로 운영하고 있습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/facebook_booth.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/facebook_booth.PNG" alt="ECCV2020 Facebook Booth" />
+</a>
+<span class="caption">ECCV2020 Facebook Booth</span></p>
+
+<p>위의 그림은 다이아몬트 파트너 Facebook의 부스이며 저는 <a href="https://cdn-akamai.6connex.eu//53/75//PyTorch_Video_Resources_15980345972578817.pdf" target="_blank"><b> PyTorch의 주요 기능들을 다룬 자료</b></a> 가 큰 도움이 되었습니다.</p>
+
+<!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
+<p><a href="http://research.sualab.com/assets/images/ECCV-2020-review/apple_booth.PNG" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/ECCV-2020-review/apple_booth.PNG" alt="ECCV2020 Apple Booth" />
+</a>
+<span class="caption">ECCV2020 Apple Booth</span></p>
+
+<p>다음은 골드 파트너 Apple의 부스이며 굉장히 심플하게 부스를 꾸몄으며, 주로 연구 내용 소개와 채용 관련 내용이 주를 이루고 있었습니다.</p>
+
+<p>오프라인에서는 스폰서의 등급에 따라 부스의 크기, 면적 등이 달랐던 것 같은데 온라인에서는 등급에 무관하게 동일한 형태로 운영이 되는 것 같았습니다. 그리고 무엇보다, 오프라인에서 부스를 돌아다니면 각종 스티커와 기념품, 간식을 얻을 수 있었는데 온라인은 그렇지 못한 점이 아쉬웠습니다. 껄껄껄</p>
+
+<blockquote> 결론 </blockquote>
+<p>이번 포스팅에서는 COVID-19로 인해 Virtual Conference로 진행된 ECCV 2020의 주요 프로그램들을 소개 드리고, 각 프로그램마다 느낀 점들을 공유 드렸습니다. 가격이 낮아졌다는 점과 집에서 들을 수 있다는 점이 장점이 될 수도 있지만, 저에게는 단점이 더 크게 느껴졌던 것 같습니다. 아무래도 Poster Session과 Demo는 현장에서 생생하게 체험을 하고, 서로 마주보며 열띤 토론을 해야 재밌는데 모니터 화면 너머로 소통을 하다 보니 몰입도가 떨어졌습니다. 하지만 Workshop, Tutorials은 좋은 내용이 많이 다뤄졌고, 자료도 대부분 공개가 되어있어서 학회에 참석하지 않아도 양질의 자료들을 접할 수 있다는 점은 참 좋은 것 같습니다. 전세계적으로 안정을 찾아서 다시 오프라인 학회가 개최될 그 날을 기다리며 오늘의 글 마치겠습니다.</p>
+
+<blockquote> Reference </blockquote>
+<ul>
+  <li><a href="https://twitter.com/CSProfKGD/status/1297892662687797255" target="_blank"><b> ECCV 2020 통계치 자료 </b></a></li>
+  <li><a href="https://github.com/lixin4ever/Conference-Acceptance-Rate" target="_blank"><b> 주요 AI 학회 acceptance rate 자료 </b></a></li>
+</ul>
+
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Cognex Deep Learning Lab-KOR Research Blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              Cognex Deep Learning Lab-KOR Research Blog
+            
+            </li>
+            
+            <li><a href="https://www.cognex.co.kr/" target="_blank">https://www.cognex.co.kr/</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+          
+          <li>
+            <a href="https://facebook.com/cognexcorp" target="_blank"><i class="fa fa-facebook"></i> <span class="username">cognexcorp</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Cognex Deep Learning Lab-KOR research blog: covers subjects regarding machine learning, computer vision, high-performance computing, and so on.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

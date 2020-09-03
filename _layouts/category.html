@@ -31,7 +31,11 @@ category: machine-learning
             </h2>
 	    <div class='post_summary'>
               <h4 class='excerpt-text'>
-                {{ post.content | strip_html | truncatewords: 20 }}
+                  {% if post.description %}
+                    {{ post.description }}
+                  {% else %}
+                    {{ post.content | strip_html | truncatewords: 20 }}
+                  {% endif %}
 	      </h4>
 	    </div>
 	  </div>

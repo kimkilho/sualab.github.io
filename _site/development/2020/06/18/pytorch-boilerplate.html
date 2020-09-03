@@ -622,7 +622,7 @@ DCGAN을 이용한 이미지 생성
 		<span class="p">...</span>
 </code></pre></div></div>
 
-<p>Research 부분인 <code class="highlighter-rouge">LightningModule</code> 은 기존 pytorch의 <code class="highlighter-rouge">nn.Module</code> 에 데이터, 로스, 옵티마이저 설정을 추가한 모듈입니다.  <code class="highlighter-rouge">__init__</code> <code class="highlighter-rouge">forward</code> 에 네트워크 구조를 정의하고, 추가적으로 <code class="highlighter-rouge">training_step</code> <code class="highlighter-rouge">train_dataloader</code> <code class="highlighter-rouge">configure_optimizers</code>  등의 함수들을 오버 라이딩하여 학습 데이터 및 옵티마이저를 정의하여 줍니다.  <code class="highlighter-rouge">training_step</code> , <code class="highlighter-rouge">validation_step</code>, <code class="highlighter-rouge">validataion_epoch_end</code>에서 “log” key로 리턴하는 내용은 Logger에 batch step 기준으로 로깅되고, “progress_bar” key로 리턴하는 내용은 terminal에서 progress bar 프로그램인 <a href="https://github.com/tqdm/tqdm">tqdm</a>을 통해 출력됩니다.</p>
+<p>Research 부분인 <code class="language-plaintext highlighter-rouge">LightningModule</code> 은 기존 pytorch의 <code class="language-plaintext highlighter-rouge">nn.Module</code> 에 데이터, 로스, 옵티마이저 설정을 추가한 모듈입니다.  <code class="language-plaintext highlighter-rouge">__init__</code> <code class="language-plaintext highlighter-rouge">forward</code> 에 네트워크 구조를 정의하고, 추가적으로 <code class="language-plaintext highlighter-rouge">training_step</code> <code class="language-plaintext highlighter-rouge">train_dataloader</code> <code class="language-plaintext highlighter-rouge">configure_optimizers</code>  등의 함수들을 오버 라이딩하여 학습 데이터 및 옵티마이저를 정의하여 줍니다.  <code class="language-plaintext highlighter-rouge">training_step</code> , <code class="language-plaintext highlighter-rouge">validation_step</code>, <code class="language-plaintext highlighter-rouge">validataion_epoch_end</code>에서 “log” key로 리턴하는 내용은 Logger에 batch step 기준으로 로깅되고, “progress_bar” key로 리턴하는 내용은 terminal에서 progress bar 프로그램인 <a href="https://github.com/tqdm/tqdm">tqdm</a>을 통해 출력됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/tqdm.png" target="_blank">
@@ -652,9 +652,9 @@ DCGAN을 이용한 이미지 생성
 </span>
 </code></pre></div></div>
 
-<p>Engineering 관련 내용을 처리하는 <code class="highlighter-rouge">Trainer</code>는 다양한 option들이 있습니다만, 기본적으로 logger와 gpu, epoch을 설정하여 기존의 코드에서 사용되었던 gpu 설정 및 for 반복문, metric 로깅 과정을 일부 생략할 수 있습니다.</p>
+<p>Engineering 관련 내용을 처리하는 <code class="language-plaintext highlighter-rouge">Trainer</code>는 다양한 option들이 있습니다만, 기본적으로 logger와 gpu, epoch을 설정하여 기존의 코드에서 사용되었던 gpu 설정 및 for 반복문, metric 로깅 과정을 일부 생략할 수 있습니다.</p>
 
-<p>이후 <code class="highlighter-rouge">trainer.fit</code>을 통해 모델의 train/val 데이터를 이용한 학습 및 평가가 진행되고, <code class="highlighter-rouge">trainer.test</code>를 실행하여 test 데이터에 대한 최종 평가를 수행할 수 있습니다. 이 과정은 학습 중 tqdm을 통해 진행도가 출력되고 logger에 추가로 기록을 합니다. 위의 코드에서는 TensorBoardLogger를 사용하였으나 <a href="https://www.comet.ml/">Comet</a>, <a href="https://neptune.ai/">Neptune</a>, <a href="https://www.wandb.com/">WanDB</a> 같은 다양한 로거들을 지원하고 있습니다</p>
+<p>이후 <code class="language-plaintext highlighter-rouge">trainer.fit</code>을 통해 모델의 train/val 데이터를 이용한 학습 및 평가가 진행되고, <code class="language-plaintext highlighter-rouge">trainer.test</code>를 실행하여 test 데이터에 대한 최종 평가를 수행할 수 있습니다. 이 과정은 학습 중 tqdm을 통해 진행도가 출력되고 logger에 추가로 기록을 합니다. 위의 코드에서는 TensorBoardLogger를 사용하였으나 <a href="https://www.comet.ml/">Comet</a>, <a href="https://neptune.ai/">Neptune</a>, <a href="https://www.wandb.com/">WanDB</a> 같은 다양한 로거들을 지원하고 있습니다</p>
 
 <p>gpu 분산 학습인 distributed training, TPU 사용 옵션, Nvidia에서 개발한 뉴럴넷 최적화 툴 <a href="https://github.com/NVIDIA/apex">APEX</a>에 관련된 설정 등 여러 유용한 옵션들이 있으니 <a href="https://pytorch-lightning.readthedocs.io/en/0.7.6/trainer.html#amp-level">https://pytorch-lightning.readthedocs.io/en/0.7.6/trainer.html</a>를 참고하시길 바랍니다.</p>
 
@@ -662,7 +662,7 @@ DCGAN을 이용한 이미지 생성
   <li>
     <p>앗! 잠깐만!</p>
 
-    <p><code class="highlighter-rouge">pytorch_lightning.seed_everything(seed)</code> 를 코드 처음에 넣어두면 seed를 고정해 실험 reproducible를 확보할 수 있다는 사실~</p>
+    <p><code class="language-plaintext highlighter-rouge">pytorch_lightning.seed_everything(seed)</code> 를 코드 처음에 넣어두면 seed를 고정해 실험 reproducible를 확보할 수 있다는 사실~</p>
   </li>
 </ul>
 
@@ -684,7 +684,7 @@ DCGAN을 이용한 이미지 생성
 </a>
 <span class="caption">MS NNI를 코드에 적용하는 3가지 단계</span></p>
 
-<p>첫 번째 과정으로는 Tuning을 적용할 Search Space 정의입니다. 작게는 learning rate, batch size부터 크게는 네트워크 종류 선택까지 적용해볼 수 있겠네요. Auto Searcher (Grid, GP, PPO 등)의 종류에 따라 다르지만, search 범위는 범주형 <code class="highlighter-rouge">choice</code>,  <code class="highlighter-rouge">uniform</code> , <code class="highlighter-rouge">randint</code> 정도의 타입으로 나눌 수 있겠습니다. 해당 설정은 <code class="highlighter-rouge">.json</code>타입으로 작성하시면 됩니다.</p>
+<p>첫 번째 과정으로는 Tuning을 적용할 Search Space 정의입니다. 작게는 learning rate, batch size부터 크게는 네트워크 종류 선택까지 적용해볼 수 있겠네요. Auto Searcher (Grid, GP, PPO 등)의 종류에 따라 다르지만, search 범위는 범주형 <code class="language-plaintext highlighter-rouge">choice</code>,  <code class="language-plaintext highlighter-rouge">uniform</code> , <code class="language-plaintext highlighter-rouge">randint</code> 정도의 타입으로 나눌 수 있겠습니다. 해당 설정은 <code class="language-plaintext highlighter-rouge">.json</code>타입으로 작성하시면 됩니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
     <span class="s">"train.batch_size"</span><span class="p">:{</span><span class="s">"_type"</span><span class="p">:</span><span class="s">"choice"</span><span class="p">,</span><span class="s">"_value"</span><span class="p">:[</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">128</span><span class="p">]},</span>
@@ -692,7 +692,7 @@ DCGAN을 이용한 이미지 생성
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>그다음에 search parameter를 코드에 연결하고 최적화할 목표 metric을 설정해야 합니다. 필수적으로는 <code class="highlighter-rouge">report_final_result</code>와 <code class="highlighter-rouge">get_next_parameter</code>를 사용하여야 하고, 선택적으로 학습 과정 중 관찰하고 싶은 metric을 <code class="highlighter-rouge">report_intermediate_result</code>로 NNI 플랫폼에 기록해볼 수 있습니다.</p>
+<p>그다음에 search parameter를 코드에 연결하고 최적화할 목표 metric을 설정해야 합니다. 필수적으로는 <code class="language-plaintext highlighter-rouge">report_final_result</code>와 <code class="language-plaintext highlighter-rouge">get_next_parameter</code>를 사용하여야 하고, 선택적으로 학습 과정 중 관찰하고 싶은 metric을 <code class="language-plaintext highlighter-rouge">report_intermediate_result</code>로 NNI 플랫폼에 기록해볼 수 있습니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="n">cfg</span><span class="o">=</span><span class="n">dc</span><span class="p">.</span><span class="n">DefaultConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">nni</span><span class="p">.</span><span class="n">get_next_parameter</span><span class="p">()</span> <span class="c1"># 정의된 search space에서 next step의 config 호출
@@ -707,7 +707,7 @@ DCGAN을 이용한 이미지 생성
     <span class="n">nni</span><span class="p">.</span><span class="n">report_final_result</span><span class="p">(</span><span class="n">final_result</span><span class="p">)</span> <span class="c1"># nni에서 추적할 log 기록
 </span></code></pre></div></div>
 
-<p>마지막으로는 AutoML을 할 때 사용할 Tuner와 탐색 시간 및 자원 설정입니다. <code class="highlighter-rouge">.yml</code> 타입으로 작성하면 되고, 필수적으로는 <code class="highlighter-rouge">useAnnotation</code> 을 false로 지정하고 <code class="highlighter-rouge">searchSpacePath</code> 의 값으로 탐색할 값을 불러옵니다. 추가적인 옵션으로 <code class="highlighter-rouge">trialConcurrency</code> 로 동시에 수행할 실험, <code class="highlighter-rouge">maxExecDuration</code> <code class="highlighter-rouge">maxTrialNum</code> 으로 탐색 시간 및 횟수를 설정할 수 있습니다. 그리고 제일 중요한 <code class="highlighter-rouge">tuner:builtinTuerName</code> 을 통해 파라미터 탐색 시 사용할 Tuner를 고를 수 있습니다. Tuner는 기본적으로 모든 조합을 찾는 Grid Search, 강화학습 기반의 PPO Tuner, Random Search 등의 다양한 옵션들이 있습니다. 더욱 다양한 튜너에 대한 옵션과 사용법들은 <a href="https://nni.readthedocs.io/en/latest/hyperparameter_tune.html">https://nni.readthedocs.io/en/latest/hyperparameter_tune.html</a>에서 확인해주시면 됩니다!</p>
+<p>마지막으로는 AutoML을 할 때 사용할 Tuner와 탐색 시간 및 자원 설정입니다. <code class="language-plaintext highlighter-rouge">.yml</code> 타입으로 작성하면 되고, 필수적으로는 <code class="language-plaintext highlighter-rouge">useAnnotation</code> 을 false로 지정하고 <code class="language-plaintext highlighter-rouge">searchSpacePath</code> 의 값으로 탐색할 값을 불러옵니다. 추가적인 옵션으로 <code class="language-plaintext highlighter-rouge">trialConcurrency</code> 로 동시에 수행할 실험, <code class="language-plaintext highlighter-rouge">maxExecDuration</code> <code class="language-plaintext highlighter-rouge">maxTrialNum</code> 으로 탐색 시간 및 횟수를 설정할 수 있습니다. 그리고 제일 중요한 <code class="language-plaintext highlighter-rouge">tuner:builtinTuerName</code> 을 통해 파라미터 탐색 시 사용할 Tuner를 고를 수 있습니다. Tuner는 기본적으로 모든 조합을 찾는 Grid Search, 강화학습 기반의 PPO Tuner, Random Search 등의 다양한 옵션들이 있습니다. 더욱 다양한 튜너에 대한 옵션과 사용법들은 <a href="https://nni.readthedocs.io/en/latest/hyperparameter_tune.html">https://nni.readthedocs.io/en/latest/hyperparameter_tune.html</a>에서 확인해주시면 됩니다!</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">authorName</span><span class="p">:</span> <span class="n">davinnovation</span>
 <span class="n">experimentName</span><span class="p">:</span> <span class="n">example_mnist</span>
@@ -727,7 +727,7 @@ DCGAN을 이용한 이미지 생성
   <span class="n">gpuNum</span><span class="p">:</span> <span class="mi">1</span>
 </code></pre></div></div>
 
-<p>위의 단계를 마치고 NNI을 실행시킨다면 다음과 같은 결과를 <code class="highlighter-rouge">localhost:8080</code> 에 접속하시면 현재 탐색 실행 상황 및 최적 값 등을 확인하실 수 있습니다.</p>
+<p>위의 단계를 마치고 NNI을 실행시킨다면 다음과 같은 결과를 <code class="language-plaintext highlighter-rouge">localhost:8080</code> 에 접속하시면 현재 탐색 실행 상황 및 최적 값 등을 확인하실 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/nni2.png" target="_blank">
@@ -739,7 +739,7 @@ DCGAN을 이용한 이미지 생성
   <p>OmegaConf</p>
 </blockquote>
 
-<p>딥러닝 프로젝트를 진행하다 보면 초반에는 batch size, epoch 등의 적은 옵션들만 설정하여 하드 코딩으로 관리하기 괜찮지만, 설정의 종류가 시간이 지나며 늘어나거나 cli, config.json 등등 옵션들에 대한 entry point가 많아지면 관리하기도 힘든데요, 이를 <code class="highlighter-rouge">OmegaConf</code> 를 통해 관리하면 조금 더 편하게 사용할 수 있습니다.</p>
+<p>딥러닝 프로젝트를 진행하다 보면 초반에는 batch size, epoch 등의 적은 옵션들만 설정하여 하드 코딩으로 관리하기 괜찮지만, 설정의 종류가 시간이 지나며 늘어나거나 cli, config.json 등등 옵션들에 대한 entry point가 많아지면 관리하기도 힘든데요, 이를 <code class="language-plaintext highlighter-rouge">OmegaConf</code> 를 통해 관리하면 조금 더 편하게 사용할 수 있습니다.</p>
 
 <p>여러 사용법이 있습니다만, 필자는 데이터를 관리하는데 기본적인 매니징 기능이 추가된 <a href="https://docs.python.org/ko/3/library/dataclasses.html">dataclass</a> 를 기반으로 설정 관리하는 것을 선호합니다. 우선 config.py에 관리하고자 하는 설정을 입력합니다.</p>
 
@@ -769,7 +769,7 @@ DCGAN을 이용한 이미지 생성
     <span class="n">seed</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="mi">42</span>
 </code></pre></div></div>
 
-<p>그리고 위의 Config.py를 main에서 호출하여 기본 config로 사용하고, entry point를 다양화할 수 있도록 <code class="highlighter-rouge">merge_with_cli</code> 등을 통해 수정할 수 있도록 합니다.</p>
+<p>그리고 위의 Config.py를 main에서 호출하여 기본 config로 사용하고, entry point를 다양화할 수 있도록 <code class="language-plaintext highlighter-rouge">merge_with_cli</code> 등을 통해 수정할 수 있도록 합니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
 <span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="n">cfg</span><span class="o">=</span><span class="n">dc</span><span class="p">.</span><span class="n">DefaultConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
@@ -806,7 +806,7 @@ DCGAN을 이용한 이미지 생성
 
 <p><a href="https://www.anaconda.com/products/individual">Anaconda</a>는 데이터 과학을 위한 Python 패키지들과 라이브러리들을 모아두고 환경 관리 및 설치를 도와주는 소프트웨어입니다.</p>
 
-<p>Anaconda를 설치하시고 path를 설정해주시면 prompt 창에서 가장 왼쪽에 <code class="highlighter-rouge">(base)</code>로 표시가 됩니다. 이는 현재 base라는 기본 환경을 가지는 python을 실행하기 위해 준비되었다는 의미입니다.</p>
+<p>Anaconda를 설치하시고 path를 설정해주시면 prompt 창에서 가장 왼쪽에 <code class="language-plaintext highlighter-rouge">(base)</code>로 표시가 됩니다. 이는 현재 base라는 기본 환경을 가지는 python을 실행하기 위해 준비되었다는 의미입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/conda.png" target="_blank">
@@ -814,9 +814,9 @@ DCGAN을 이용한 이미지 생성
 </a>
 <span class="caption">conda가 준비되었을 때의 콘솔창</span></p>
 
-<p>한 개의 환경에 모든 라이브러리를 설치하지 않고 각 프로젝트를 위한 환경을 만들어서 관리하기 위해 <code class="highlighter-rouge">conda create -n torch_py37 python=3.7 anaconda</code> 명령어로 torch_py36이라는 새로운 환경을 만들어줍니다. 그 다음 <code class="highlighter-rouge">conda activate torch_py37</code> 를 통해 환경을 교체할 수 있습니다.</p>
+<p>한 개의 환경에 모든 라이브러리를 설치하지 않고 각 프로젝트를 위한 환경을 만들어서 관리하기 위해 <code class="language-plaintext highlighter-rouge">conda create -n torch_py37 python=3.7 anaconda</code> 명령어로 torch_py36이라는 새로운 환경을 만들어줍니다. 그 다음 <code class="language-plaintext highlighter-rouge">conda activate torch_py37</code> 를 통해 환경을 교체할 수 있습니다.</p>
 
-<p>그리고 <code class="highlighter-rouge">conda install</code>을 통해 여러 패키지를 설치하시고, <code class="highlighter-rouge">conda env export &gt; env.yaml</code> 로 환경을 공유할 수 있습니다. 그리고 다른 anaconda에서는 <code class="highlighter-rouge">conda create env -f env.yaml</code> 를 통해 재사용할 수 있게됩니다!</p>
+<p>그리고 <code class="language-plaintext highlighter-rouge">conda install</code>을 통해 여러 패키지를 설치하시고, <code class="language-plaintext highlighter-rouge">conda env export &gt; env.yaml</code> 로 환경을 공유할 수 있습니다. 그리고 다른 anaconda에서는 <code class="language-plaintext highlighter-rouge">conda create env -f env.yaml</code> 를 통해 재사용할 수 있게됩니다!</p>
 
 <blockquote>
   <p>Docker</p>

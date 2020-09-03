@@ -432,7 +432,7 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 
 <h3 id="datasetcifar10-모듈">dataset.cifar10 모듈</h3>
 
-<p><code class="highlighter-rouge">dataset.cifar10</code> 모듈은 데이터셋 요소에 해당하는 함수들과 클래스 정보를 담고 있습니다. 지난 포스팅(http://research.sualab.com/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html) 에서 사용했던 코드를 기반으로 작성을 하였기 때문에 모든 코드를 설명하기보다는 달라진 부분 위주로 설명을 드리겠습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">dataset.cifar10</code> 모듈은 데이터셋 요소에 해당하는 함수들과 클래스 정보를 담고 있습니다. 지난 포스팅(http://research.sualab.com/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html) 에서 사용했던 코드를 기반으로 작성을 하였기 때문에 모든 코드를 설명하기보다는 달라진 부분 위주로 설명을 드리겠습니다.</p>
 
 <h4 id="read_cifar10_subset-함수">read_CIFAR10_subset 함수</h4>
 
@@ -630,7 +630,7 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 
 <h3 id="modelslayers-모듈">models.layers 모듈</h3>
 
-<p><code class="highlighter-rouge">models.layers</code> 모듈에서는 batch normalization을 수행하는 batch_norm 함수가 추가가 되었고, 그 외에 convolution layer, fully-connected layer 등은 기존의 것들을 그대로 사용하였습니다. 다만 달라진 점은 batch normalization을 수행하기 때문에 bias는 사용하지 않습니다. 또한 가중치(weight) 초기화(initialize)는 이전 포스팅의 방식과는 다르게 Xavier initialization 기법을 사용하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">models.layers</code> 모듈에서는 batch normalization을 수행하는 batch_norm 함수가 추가가 되었고, 그 외에 convolution layer, fully-connected layer 등은 기존의 것들을 그대로 사용하였습니다. 다만 달라진 점은 batch normalization을 수행하기 때문에 bias는 사용하지 않습니다. 또한 가중치(weight) 초기화(initialize)는 이전 포스팅의 방식과는 다르게 Xavier initialization 기법을 사용하였습니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
 
@@ -728,11 +728,11 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 </code></pre></div></div>
 
 <h3 id="modelsnn-모듈">models.nn 모듈</h3>
-<p><code class="highlighter-rouge">models.nn</code> 모듈은, 컨볼루션 신경망을 표현하는 클래스를 담고 있습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">models.nn</code> 모듈은, 컨볼루션 신경망을 표현하는 클래스를 담고 있습니다.</p>
 
 <h4 id="convnet-클래스">ConvNet 클래스</h4>
 
-<p><code class="highlighter-rouge">models.nn</code> 모듈에서 <code class="highlighter-rouge">ConvNet</code> 클래스는 크게 달라진 부분이 없고 단지 위에서 서술한 것처럼 augmentation 여부에 따라 약간의 수정이 있었습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">models.nn</code> 모듈에서 <code class="language-plaintext highlighter-rouge">ConvNet</code> 클래스는 크게 달라진 부분이 없고 단지 위에서 서술한 것처럼 augmentation 여부에 따라 약간의 수정이 있었습니다.</p>
 
 <h4 id="shakenet-클래스">ShakeNet 클래스</h4>
 
@@ -818,7 +818,7 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
         <span class="k">return</span> <span class="n">softmax_loss</span> <span class="o">+</span> <span class="n">weight_decay</span><span class="o">*</span><span class="n">l2_reg_loss</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">ConvNet</code> 클래스를 상속받은 <code class="highlighter-rouge">ShakeNet</code> 클래스에서는 이전 포스팅과는 다르게 image_mean 값을 이미지에서 빼는 과정을 생략하였고, drop out도 사용하지 않았습니다. <code class="highlighter-rouge">_build_model</code> 함수에서는 앞서 설명 드렸던 ShakeNet의 구조를 코드로 구현한 내용이 담겨있습니다. ShakeNet을 구성하고 있는 구조들을 계층적 구조로 함수를 나눠서 구현을 하였습니다. 이렇게 구현한 이유는 예를 들어 shake block에서 구조를 일부 수정하고 싶은 경우 만약 계층적으로 코드를 구현하지 않았으면 shake block에 해당하는 부분마다 일일이 수정을 해야 하는 번거로움을 감수해야하기 때문입니다.</p>
+<p><code class="language-plaintext highlighter-rouge">ConvNet</code> 클래스를 상속받은 <code class="language-plaintext highlighter-rouge">ShakeNet</code> 클래스에서는 이전 포스팅과는 다르게 image_mean 값을 이미지에서 빼는 과정을 생략하였고, drop out도 사용하지 않았습니다. <code class="language-plaintext highlighter-rouge">_build_model</code> 함수에서는 앞서 설명 드렸던 ShakeNet의 구조를 코드로 구현한 내용이 담겨있습니다. ShakeNet을 구성하고 있는 구조들을 계층적 구조로 함수를 나눠서 구현을 하였습니다. 이렇게 구현한 이유는 예를 들어 shake block에서 구조를 일부 수정하고 싶은 경우 만약 계층적으로 코드를 구현하지 않았으면 shake block에 해당하는 부분마다 일일이 수정을 해야 하는 번거로움을 감수해야하기 때문입니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">shake_stage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">output_filters</span><span class="p">,</span> <span class="n">num_blocks</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
         <span class="s">"""
@@ -843,7 +843,7 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
         <span class="k">return</span> <span class="n">d</span><span class="p">[</span><span class="s">'shake_s{}_b{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">shake_stage_idx</span><span class="p">,</span> <span class="n">num_blocks</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
 </code></pre></div></div>
 
-<p>우선 계층적 구조에서 가장 큰 단위인 <code class="highlighter-rouge">shake_stage</code> 함수부터 설명을 드리면 입력 인자로 input tensor인 x와 shake stage를 거쳐 출력되는 feature map을 결정하는 filter 개수를 의미하는 output_filters, 하나의 shake stage에 몇 개의 shake block을 포함시킬지를 결정하는 num_blocks, 해당 shake stage의 stride값, 학습시에 사용한 batch_size, 결과들을 저장할 dictionary d 총 6개의 입력 인자를 필요로 합니다. Stage의 indexing을 위해 shake_stage_idx라는 변수를 선언하였는데 첫 residual block의 width 값으로 사용한 32에 맞게 값이 설정이 되어있습니다. 혹시 width 값을 바꾸는 경우에는 shake_stage_idx 식에서 분모 값인 16을 수정하시면 제대로 된 indexing을 할 수 있습니다. 그 뒤 for 문을 통해 block의 개수만큼 shake_block 함수를 call하는 구조로 되어있습니다.</p>
+<p>우선 계층적 구조에서 가장 큰 단위인 <code class="language-plaintext highlighter-rouge">shake_stage</code> 함수부터 설명을 드리면 입력 인자로 input tensor인 x와 shake stage를 거쳐 출력되는 feature map을 결정하는 filter 개수를 의미하는 output_filters, 하나의 shake stage에 몇 개의 shake block을 포함시킬지를 결정하는 num_blocks, 해당 shake stage의 stride값, 학습시에 사용한 batch_size, 결과들을 저장할 dictionary d 총 6개의 입력 인자를 필요로 합니다. Stage의 indexing을 위해 shake_stage_idx라는 변수를 선언하였는데 첫 residual block의 width 값으로 사용한 32에 맞게 값이 설정이 되어있습니다. 혹시 width 값을 바꾸는 경우에는 shake_stage_idx 식에서 분모 값인 16을 수정하시면 제대로 된 indexing을 할 수 있습니다. 그 뒤 for 문을 통해 block의 개수만큼 shake_block 함수를 call하는 구조로 되어있습니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">shake_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">shake_stage_idx</span><span class="p">,</span> <span class="n">block_idx</span><span class="p">,</span> <span class="n">output_filters</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
         <span class="s">"""
@@ -885,7 +885,7 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
         <span class="k">return</span> <span class="n">res</span> <span class="o">+</span> <span class="n">tf</span><span class="p">.</span><span class="n">add_n</span><span class="p">(</span><span class="n">branches</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>그 다음 단위인 <code class="highlighter-rouge">shake_block</code> 함수 또한 <code class="highlighter-rouge">shake_stage</code> 함수와 비슷한 입력 인자를 갖습니다. branch의 개수는 2개로 고정할 예정이어서 shale_block 함수 내에 num_branches=2 라고 고정을 해두었는데 혹시 계실지는 모르겠지만 branch의 개수를 늘리고 싶은 분이 계시면 num_branches 값을 수정하시면 됩니다.
+<p>그 다음 단위인 <code class="language-plaintext highlighter-rouge">shake_block</code> 함수 또한 <code class="language-plaintext highlighter-rouge">shake_stage</code> 함수와 비슷한 입력 인자를 갖습니다. branch의 개수는 2개로 고정할 예정이어서 shale_block 함수 내에 num_branches=2 라고 고정을 해두었는데 혹시 계실지는 모르겠지만 branch의 개수를 늘리고 싶은 분이 계시면 num_branches 값을 수정하시면 됩니다.
 또한 hyperparameter dictionary를 통해 값을 입력하면 더욱 편하게 수정이 가능합니다만 이번 포스팅에서는 2로 고정을 하였습니다. 그 다음 설명드릴 부분은 위에서 말씀드렸던 forward, backward pass, mini-batch 등의 옵션인데요, 이번 포스팅에서는 코드의 이해를 돕기 위해 성능이 가장 잘 나오는 “Shake”-“Shake”-“Image” 옵션만 구현을 하였습니다.
 Forward pass와 관련이 있는 α를 rand_forward라는 변수로 선언을 해주고 backward pass와 관련이 있는 β는 rand_backward라는 변수로 선언을 해줍니다. 그 뒤 branch의 개수(=2)에 따라 각 배치의 이미지에 들어가는 α, 1 - α , β, 1- β 값들을 넣어 준 뒤 shake_branch 함수를 call하는 구조로 되어있습니다. 혹시 S-S-I 모델 외에 다른 옵션으로 실험을 해보고 싶은 분이 계시다면, “Even” 옵션의 경우 random 스칼라 값을 넣어주는 부분을 단지 minval과 maxval을 0.5로 고정하면 쉽게 가능하고 “Keep” 옵션은 forward와 backward에 같은 스칼라 값을 넣어주도록 코드를 추가하면 가능합니다. “Batch” 옵션의 경우 [batch_size, 1, 1, 1] 모양의 random 스칼라 값 대신 [1, 1, 1, 1] 모양의 스칼라 값 한 개를 선언한 뒤, batch 방향으로 concatenation하면 구현이 가능합니다.</p>
 
@@ -917,7 +917,7 @@ Forward pass와 관련이 있는 α를 rand_forward라는 변수로 선언을 �
         <span class="k">return</span> <span class="n">x</span>
 </code></pre></div></div>
 
-<p>그 다음 설명드릴 부분은 <code class="highlighter-rouge">shake_branch</code> 함수입니다. 2개의 branch가 같은 구조를 공유하고 마지막에 곱해지는 스칼라 값만 다른 구조로 되어있습니다. shake_branch 함수는 비교적 간단하게 구현이 가능합니다. 다만 학습시에 forward pass인지 backward pass인지에 따라 α가 곱해질지 β가 곱해질지 차이가 있고, 테스트시에는 0.5를 곱해주는 등의 약간의 차이가 존재합니다. 학습시에 Forward pass에서는 위의 코드의 tf.stop_gradient 부분이 동작하지 않고 그냥 안의 있는 값을 그대로 반환하는 형태여서 x에 random_forward 값이 곱해지게 되고, backward pass에서는 tf.stop_gradient안의 있는 값이 무시가 되어서 x에 random_backward 값이 곱해지게 됩니다.</p>
+<p>그 다음 설명드릴 부분은 <code class="language-plaintext highlighter-rouge">shake_branch</code> 함수입니다. 2개의 branch가 같은 구조를 공유하고 마지막에 곱해지는 스칼라 값만 다른 구조로 되어있습니다. shake_branch 함수는 비교적 간단하게 구현이 가능합니다. 다만 학습시에 forward pass인지 backward pass인지에 따라 α가 곱해질지 β가 곱해질지 차이가 있고, 테스트시에는 0.5를 곱해주는 등의 약간의 차이가 존재합니다. 학습시에 Forward pass에서는 위의 코드의 tf.stop_gradient 부분이 동작하지 않고 그냥 안의 있는 값을 그대로 반환하는 형태여서 x에 random_forward 값이 곱해지게 되고, backward pass에서는 tf.stop_gradient안의 있는 값이 무시가 되어서 x에 random_backward 값이 곱해지게 됩니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">shake_skip_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">output_filters</span><span class="p">,</span> <span class="n">stride</span><span class="p">):</span>
         <span class="s">"""
@@ -955,8 +955,8 @@ Forward pass와 관련이 있는 α를 rand_forward라는 변수로 선언을 �
         <span class="k">return</span> <span class="n">bn_path</span>
 </code></pre></div></div>
 
-<p>마지막으로 설명드릴 부분은 <code class="highlighter-rouge">shake_skip_connection</code> 함수입니다. 위에서 설명 드린 것처럼 입력 feature map과 출력 feature map의 채널 수가 같은 경우와 그렇지 않은 경우에 다른 구조가 코드로 구현이 되어있습니다.
-구현된 모델을 기반으로 학습을 진행하는 부분인 <code class="highlighter-rouge">_build_loss</code> 함수에서는 소프트맥스 교차 엔트로피(softmax cross-entropy) 손실 함수를 통해 학습이 진행 되고, L2 정규화(L2 regularization) 또한 포함이 되어있습니다.</p>
+<p>마지막으로 설명드릴 부분은 <code class="language-plaintext highlighter-rouge">shake_skip_connection</code> 함수입니다. 위에서 설명 드린 것처럼 입력 feature map과 출력 feature map의 채널 수가 같은 경우와 그렇지 않은 경우에 다른 구조가 코드로 구현이 되어있습니다.
+구현된 모델을 기반으로 학습을 진행하는 부분인 <code class="language-plaintext highlighter-rouge">_build_loss</code> 함수에서는 소프트맥스 교차 엔트로피(softmax cross-entropy) 손실 함수를 통해 학습이 진행 되고, L2 정규화(L2 regularization) 또한 포함이 되어있습니다.</p>
 
 <h2 id="4-러닝-알고리즘-sgd--momentum--cosine-learning-rate-decay">(4)	러닝 알고리즘: SGD + Momentum + Cosine learning rate decay</h2>
 
@@ -964,11 +964,11 @@ Forward pass와 관련이 있는 α를 rand_forward라는 변수로 선언을 �
 
 <h3 id="learningoptimizers-모듈">learning.optimizers 모듈</h3>
 
-<p>이 모듈에서는 <code class="highlighter-rouge">optimizer</code> 클래스와, 이 클래스를 상속받는 <code class="highlighter-rouge">MomentumOptimizer</code> 클래스를 담고 있으며 이전 포스팅의 구조를 거의 그대로 사용하기 때문에 달라진 부분 위주로 설명을 드리겠습니다.</p>
+<p>이 모듈에서는 <code class="language-plaintext highlighter-rouge">optimizer</code> 클래스와, 이 클래스를 상속받는 <code class="language-plaintext highlighter-rouge">MomentumOptimizer</code> 클래스를 담고 있으며 이전 포스팅의 구조를 거의 그대로 사용하기 때문에 달라진 부분 위주로 설명을 드리겠습니다.</p>
 
 <h4 id="optimizer-클래스">Optimizer 클래스</h4>
 
-<p>이전 포스팅에서는 학습률(Learning rate)를 성능 향상 여부에 따라 update를 하였다면 이번 포스팅에서는 <code class="highlighter-rouge">update_learning_rate_cosine</code> 함수를 사용하여 다르게 update를 해주도록 구현이 되었고, 나머지 부분은 이전 포스팅의 코드를 그대로 사용하였습니다.</p>
+<p>이전 포스팅에서는 학습률(Learning rate)를 성능 향상 여부에 따라 update를 하였다면 이번 포스팅에서는 <code class="language-plaintext highlighter-rouge">update_learning_rate_cosine</code> 함수를 사용하여 다르게 update를 해주도록 구현이 되었고, 나머지 부분은 이전 포스팅의 코드를 그대로 사용하였습니다.</p>
 
 <h4 id="momentumoptimzer-클래스">MomentumOptimzer 클래스</h4>
 
@@ -1029,7 +1029,7 @@ Forward pass와 관련이 있는 α를 rand_forward라는 변수로 선언을 �
         <span class="bp">self</span><span class="p">.</span><span class="n">curr_learning_rate</span> <span class="o">=</span> <span class="n">new_learning_rate</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">MomentumOptimizer</code> 클래스는 <code class="highlighter-rouge">Optimizer</code> 클래스를 상속받아 SGD+Momentum 기반의 optimizer를 코드로 정의한 클래스입니다. Momentum 계수는 논문에서 사용한 값인 0.9를 사용하였고 Tensorflow에서 제공하는 <code class="highlighter-rouge">tf.train.MomentumOptimizer</code> 를 그대로 사용하여 구현하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">MomentumOptimizer</code> 클래스는 <code class="language-plaintext highlighter-rouge">Optimizer</code> 클래스를 상속받아 SGD+Momentum 기반의 optimizer를 코드로 정의한 클래스입니다. Momentum 계수는 논문에서 사용한 값인 0.9를 사용하였고 Tensorflow에서 제공하는 <code class="language-plaintext highlighter-rouge">tf.train.MomentumOptimizer</code> 를 그대로 사용하여 구현하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/shake-shake-regularization-review/Cosine_SGDR.png" target="_blank">
@@ -1043,7 +1043,7 @@ Forward pass와 관련이 있는 α를 rand_forward라는 변수로 선언을 �
 
 <h2 id="5-학습-수행-및-테스트">(5)	학습 수행 및 테스트</h2>
 
-<p><code class="highlighter-rouge">train.py</code> 에서는 실제 학습을 수행하는 과정이 구현되어 있으며 <code class="highlighter-rouge">test.py</code> 에서는 학습이 끝난 모델들을 이용하여 테스트를 수행하는 과정이 구현되어 있습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 에서는 실제 학습을 수행하는 과정이 구현되어 있으며 <code class="language-plaintext highlighter-rouge">test.py</code> 에서는 학습이 끝난 모델들을 이용하여 테스트를 수행하는 과정이 구현되어 있습니다.</p>
 
 <h3 id="trainpy-스크립트">train.py 스크립트</h3>
 
@@ -1093,7 +1093,7 @@ Forward pass와 관련이 있는 α를 rand_forward라는 변수로 선언을 �
 <span class="n">train_results</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">hp_d</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">train.py</code> 스크립트에서는 CIFAR 10 데이터셋을 불러오고, 학습 수행 및 성능 평가와 관련된 하이퍼파라미터를 설정한 뒤, 학습을 수행하고 성능을 평가하는 역할들을 수행합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 스크립트에서는 CIFAR 10 데이터셋을 불러오고, 학습 수행 및 성능 평가와 관련된 하이퍼파라미터를 설정한 뒤, 학습을 수행하고 성능을 평가하는 역할들을 수행합니다.</p>
 
 <ul>
   <li>러닝 알고리즘 관련 하이퍼 파라미터 설정</li>
@@ -1144,7 +1144,7 @@ Forward pass와 관련이 있는 α를 rand_forward라는 변수로 선언을 �
 <span class="k">print</span><span class="p">(</span><span class="s">'Test accuracy: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">test_score</span><span class="p">))</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">test.py</code> 스크립트도 <code class="highlighter-rouge">train.py</code> 와 거의 동일한 구조로 되어있습니다. 이전 포스팅을 보셨다면 충분히 이해하실 수 있습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">test.py</code> 스크립트도 <code class="language-plaintext highlighter-rouge">train.py</code> 와 거의 동일한 구조로 되어있습니다. 이전 포스팅을 보셨다면 충분히 이해하실 수 있습니다.</p>
 
 <h3 id="6-학습-결과-분석">(6)	학습 결과 분석</h3>
 

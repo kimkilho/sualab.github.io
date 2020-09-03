@@ -400,7 +400,7 @@
 
 <h4 id="예시2-3개월-내-채무-이행-여부-예측-기계-1">예시2: 3개월 내 채무 이행 여부 예측 기계</h4>
 
-<p>앞서 빨대론의 11명 고객 데이터를 표로 나타내었는데, 표는 한 눈에 들어오지 않으므로 이를 플롯으로 찍어보도록 하겠습니다. 표기의 편의 상 나이를 <script type="math/tex">x_1</script>, 연봉을 <script type="math/tex">x_2</script>로 하고, 고객이 채무를 이행한 경우 해당 고객의 <script type="math/tex">(x_1, x_2)</script> 좌표에 ‘O’, 그렇지 않으면 ‘X’로 표기하도록 하겠습니다. 그럼 아래와 같은 플롯을 얻게 됩니다.</p>
+<p>앞서 빨대론의 11명 고객 데이터를 표로 나타내었는데, 표는 한 눈에 들어오지 않으므로 이를 플롯으로 찍어보도록 하겠습니다. 표기의 편의 상 나이를 \(x_1\), 연봉을 \(x_2\)로 하고, 고객이 채무를 이행한 경우 해당 고객의 \((x_1, x_2)\) 좌표에 ‘O’, 그렇지 않으면 ‘X’로 표기하도록 하겠습니다. 그럼 아래와 같은 플롯을 얻게 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-plot.png" target="_blank">
@@ -408,7 +408,7 @@
 </a>
 <span class="caption">X1-X2 플롯</span></p>
 
-<p>데이터 내의 각 (예시, 레이블)을 플롯으로 나타내니, 보기에 좀 더 직관적으로 되었습니다. 빨대론의 목표는 현재 대출한 모 고객의 나이와 연봉만을 알고 있을 때, 이 고객이 3개월 내로 채무를 이행할지 여부를 맞추는 것입니다. 다시 말하면, 어느 새로운 예시가 들어왔고 이 예시의 <script type="math/tex">x_1</script>과 <script type="math/tex">x_2</script>의 값만을 알 때, 위 플롯 상에 떨어뜨린 점 <script type="math/tex">(x_1, x_2)</script>가 ‘O’가 될지, ‘X’가 될지 예측하는 것입니다. 한 번 더 생각하면, 플롯 상에서 원래 ‘O’가 모여있는 영역과 ‘X’가 모여있는 영역의 명확한 ‘경계’를 찾으면 될 것 같다는 생각이 듭니다.</p>
+<p>데이터 내의 각 (예시, 레이블)을 플롯으로 나타내니, 보기에 좀 더 직관적으로 되었습니다. 빨대론의 목표는 현재 대출한 모 고객의 나이와 연봉만을 알고 있을 때, 이 고객이 3개월 내로 채무를 이행할지 여부를 맞추는 것입니다. 다시 말하면, 어느 새로운 예시가 들어왔고 이 예시의 \(x_1\)과 \(x_2\)의 값만을 알 때, 위 플롯 상에 떨어뜨린 점 \((x_1, x_2)\)가 ‘O’가 될지, ‘X’가 될지 예측하는 것입니다. 한 번 더 생각하면, 플롯 상에서 원래 ‘O’가 모여있는 영역과 ‘X’가 모여있는 영역의 명확한 ‘경계’를 찾으면 될 것 같다는 생각이 듭니다.</p>
 
 <h4 id="선형-모델">선형 모델</h4>
 
@@ -418,15 +418,15 @@
 f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 \end{equation}</p>
 
-<p>위 함수는 입력 변수가 <script type="math/tex">x_1</script>, <script type="math/tex">x_2</script>이며, 그 계수가 각각 <script type="math/tex">w_1</script>, <script type="math/tex">w_2</script>, 상수항이 <script type="math/tex">w_0</script>인 함수입니다. 이게 직선과 무슨 관련이 있나 궁금하실 것인데, 우변을 0으로 놓으면 이를 만족하는 <script type="math/tex">(x_1, x_2)</script>는 곧 <script type="math/tex">x_1-x_2</script> 평면 상에서의 직선이 됩니다.</p>
+<p>위 함수는 입력 변수가 \(x_1\), \(x_2\)이며, 그 계수가 각각 \(w_1\), \(w_2\), 상수항이 \(w_0\)인 함수입니다. 이게 직선과 무슨 관련이 있나 궁금하실 것인데, 우변을 0으로 놓으면 이를 만족하는 \((x_1, x_2)\)는 곧 \(x_1-x_2\) 평면 상에서의 직선이 됩니다.</p>
 
 <p>\begin{equation}
 w_0 + w_1x_1 + w_2x_2 = 0
 \end{equation}</p>
 
-<p>이렇게 직선(또는 평면, 초평면 등)의 형태로 정의되는 러닝 모델을 특별히 <strong>선형 모델(linear model)</strong>이라고 부르며, 이는 가장 단순한 러닝 모델에 해당합니다. 선형 모델을 사용하기로 결정하였으므로, 이제 이 직선의 위치와 기울기를 잘 조정하여 그 윗쪽에는 ‘O’ 집단이, 아랫쪽에는 ‘X’ 집단이 위치할 수 있도록 분류할 수 있어야 합니다. 즉, 위 함수에서 <script type="math/tex">w_0</script>, <script type="math/tex">w_1</script>, <script type="math/tex">w_2</script>를 잘 찾아야 하는 것입니다.</p>
+<p>이렇게 직선(또는 평면, 초평면 등)의 형태로 정의되는 러닝 모델을 특별히 <strong>선형 모델(linear model)</strong>이라고 부르며, 이는 가장 단순한 러닝 모델에 해당합니다. 선형 모델을 사용하기로 결정하였으므로, 이제 이 직선의 위치와 기울기를 잘 조정하여 그 윗쪽에는 ‘O’ 집단이, 아랫쪽에는 ‘X’ 집단이 위치할 수 있도록 분류할 수 있어야 합니다. 즉, 위 함수에서 \(w_0\), \(w_1\), \(w_2\)를 잘 찾아야 하는 것입니다.</p>
 
-<p>이를 위해, 먼저 <script type="math/tex">w_0</script>, <script type="math/tex">w_1</script>, <script type="math/tex">w_2</script>의 초깃값을 (대충) <em>적절하게</em> 잡겠습니다. 예를 들어, <script type="math/tex">w_0=80</script>, <script type="math/tex">w_1=-3</script>, <script type="math/tex">w_2=1</script>로 잡았다고 하겠습니다. 이 직선을 플롯 상에 나타내면 아래와 같이 됩니다.</p>
+<p>이를 위해, 먼저 \(w_0\), \(w_1\), \(w_2\)의 초깃값을 (대충) <em>적절하게</em> 잡겠습니다. 예를 들어, \(w_0=80\), \(w_1=-3\), \(w_2=1\)로 잡았다고 하겠습니다. 이 직선을 플롯 상에 나타내면 아래와 같이 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-with-initialized-model-plot.png" target="_blank">
@@ -434,7 +434,7 @@ w_0 + w_1x_1 + w_2x_2 = 0
 </a>
 <span class="caption">X1-X2 플롯과 초기 선형 모델</span></p>
 
-<p>그런 다음 각 점들을 돌아가면서 관찰하여, 해당 점이 직선에 의해 제대로 분류되었는지 살펴보겠습니다. 위 플롯에 표시된 바와 같이, ‘O’인데도 직선 아랫쪽으로, ‘X’인데도 직선 윗쪽으로 잘못 위치한 점들이 4개 있습니다. 이들 점에 해당하는 예시들을 제대로 분류하려면, 현재 직선의 기울기를 낮춰야 할 것 같습니다. 러닝 모델은, 이에 결부되어 있는 모종의 <strong>러닝 알고리즘(learning algorithm)</strong>에 의거하여 <script type="math/tex">w_0</script>, <script type="math/tex">w_1</script>, <script type="math/tex">w_2</script>의 값을 적절하게 조정, 잘못 분류된 점이 제대로 분류되도록 합니다.</p>
+<p>그런 다음 각 점들을 돌아가면서 관찰하여, 해당 점이 직선에 의해 제대로 분류되었는지 살펴보겠습니다. 위 플롯에 표시된 바와 같이, ‘O’인데도 직선 아랫쪽으로, ‘X’인데도 직선 윗쪽으로 잘못 위치한 점들이 4개 있습니다. 이들 점에 해당하는 예시들을 제대로 분류하려면, 현재 직선의 기울기를 낮춰야 할 것 같습니다. 러닝 모델은, 이에 결부되어 있는 모종의 <strong>러닝 알고리즘(learning algorithm)</strong>에 의거하여 \(w_0\), \(w_1\), \(w_2\)의 값을 적절하게 조정, 잘못 분류된 점이 제대로 분류되도록 합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-with-improved-model-plot.png" target="_blank">
@@ -442,7 +442,7 @@ w_0 + w_1x_1 + w_2x_2 = 0
 </a>
 <span class="caption">X1-X2 플롯과 1차 학습된 선형 모델</span></p>
 
-<p><script type="math/tex">w_0=40</script>, <script type="math/tex">w_1=-3</script>, <script type="math/tex">w_2=2</script>로 조정하였더니, 방금 전보다 잘못 분류된 점의 수가 감소하였습니다. 그런데, 여전히 잘못 분류된 점이 있습니다. 러닝 모델은 러닝 알고리즘에 의해 <script type="math/tex">w_0</script>, <script type="math/tex">w_1</script>, <script type="math/tex">w_2</script>의 값을 다시 한 번 조정합니다.</p>
+<p>\(w_0=40\), \(w_1=-3\), \(w_2=2\)로 조정하였더니, 방금 전보다 잘못 분류된 점의 수가 감소하였습니다. 그런데, 여전히 잘못 분류된 점이 있습니다. 러닝 모델은 러닝 알고리즘에 의해 \(w_0\), \(w_1\), \(w_2\)의 값을 다시 한 번 조정합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-with-learned-model-plot.png" target="_blank">
@@ -482,7 +482,7 @@ f(40, 40) = -50 -40 + 2\cdot40 &lt; 0
 
 <p>나무 여부 구별 기계의 경우에는 채무 이행 여부 예측 기계와 조금 다른 점이 있는 것이, 먼저 데이터를 기계가 이해할 수 있는 형태로 수치화시켜야 한다는 점입니다. 채무 이행 여부 예측 기계의 경우, 애초부터 ‘나이’나 ‘연봉’처럼 이미 수치화된 정보를 사용했기 때문에 러닝 모델에 바로 입력하는 데 전혀 무리가 없었습니다. 하지만 이미지의 경우, 사람은 눈을 통해 받아들인 빛의 파장을 감각 기관에서 적절히 받아들여 변환하고, 이를 뇌 속에서 이리저리 정리하여 ‘어느 지점의 색상이 무엇인지’ 등의 정보를 빠른 시간 내에 직관적으로 받아들이고 이해할 수 있지만, 기계는 그렇지 못합니다.</p>
 
-<p>그래서 이미지의 경우, 다음과 같은 방법으로 먼저 데이터를 ‘수치화’시키는 과정을 거쳐야 합니다. 먼저, 주어진 이미지를 <a href="https://ko.wikipedia.org/wiki/%ED%99%94%EC%86%8C" target="_blank">픽셀(pixel, 이미지 상에서의 하나의 점)</a> 단위로 잘게 자릅니다. 그런 다음, 각 픽셀이 어떤 색상을 나타내는지를 <a href="https://ko.wikipedia.org/wiki/RGB_%EA%B0%80%EC%82%B0%ED%98%BC%ED%95%A9" target="_blank">RGB 가산혼합</a> 방식으로 나타냅니다(픽셀과 RGB 가산혼합에 대한 내용은, 각 단어에 연결된 링크를 참조하시길 바랍니다). 이미지의 특정 픽셀 위치를 ‘이미지 맨 위에서부터 <script type="math/tex">Y</script>번째, 맨 왼쪽에서부터 <script type="math/tex">X</script>번째’ 식으로 생각하면 <script type="math/tex">(X, Y)</script>와 같이 좌표 형태로 나타낼 수 있을 것인데, 예를 들면 <script type="math/tex">(53, 121)</script>에 위치한 픽셀의 RGB 값은 <script type="math/tex">[77, 140, 86]</script>이 되는 식입니다.</p>
+<p>그래서 이미지의 경우, 다음과 같은 방법으로 먼저 데이터를 ‘수치화’시키는 과정을 거쳐야 합니다. 먼저, 주어진 이미지를 <a href="https://ko.wikipedia.org/wiki/%ED%99%94%EC%86%8C" target="_blank">픽셀(pixel, 이미지 상에서의 하나의 점)</a> 단위로 잘게 자릅니다. 그런 다음, 각 픽셀이 어떤 색상을 나타내는지를 <a href="https://ko.wikipedia.org/wiki/RGB_%EA%B0%80%EC%82%B0%ED%98%BC%ED%95%A9" target="_blank">RGB 가산혼합</a> 방식으로 나타냅니다(픽셀과 RGB 가산혼합에 대한 내용은, 각 단어에 연결된 링크를 참조하시길 바랍니다). 이미지의 특정 픽셀 위치를 ‘이미지 맨 위에서부터 \(Y\)번째, 맨 왼쪽에서부터 \(X\)번째’ 식으로 생각하면 \((X, Y)\)와 같이 좌표 형태로 나타낼 수 있을 것인데, 예를 들면 \((53, 121)\)에 위치한 픽셀의 RGB 값은 \([77, 140, 86]\)이 되는 식입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/isTree-classifier-pixels.png" target="_blank">
@@ -490,7 +490,7 @@ f(40, 40) = -50 -40 + 2\cdot40 &lt; 0
 </a>
 <span class="caption">나무 이미지의 (53, 121)에 위치한 픽셀의 RGB 값*<br /><small>(*주의: 격자 안의 하나의 정사각형의 크기는 실제 1픽셀보다는 크며, 설명을 돕기 위해 과장하였습니다.)</small></span></p>
 
-<p>위 이미지 하나에 포함된 픽셀은 총 몇 개일까요? 이미지 해상도가 (세로x가로)100x150이었다고 하면, <script type="math/tex">100 \times 150 = 15,000</script>개 정도 됩니다. 이 15,000개 픽셀 각각의 RGB 값을, 위치에 따라 아래와 같이 일렬로 정리해 놓은 것을 데이터로 활용한다고 생각하시면 됩니다.</p>
+<p>위 이미지 하나에 포함된 픽셀은 총 몇 개일까요? 이미지 해상도가 (세로x가로)100x150이었다고 하면, \(100 \times 150 = 15,000\)개 정도 됩니다. 이 15,000개 픽셀 각각의 RGB 값을, 위치에 따라 아래와 같이 일렬로 정리해 놓은 것을 데이터로 활용한다고 생각하시면 됩니다.</p>
 
 <table class="full-table">
   <thead>
@@ -560,7 +560,7 @@ f(40, 40) = -50 -40 + 2\cdot40 &lt; 0
 </table>
 <p><span class="caption">나무 이미지 예시 하나의 수치화된 데이터</span></p>
 
-<p>나무 여부 구별 기계를 위해 러닝 모델은 무엇을 사용해야 할까요? 지금으로서 우리가 아는 것은 선형 모델밖에 없으니 그걸 써 봅시다. 입력 변수는 총 몇 개일까요? 명심할 것은, (아까 빨대론의 사례와는 다르게) 위 표에 나타낸 것이 <em>한 장의</em> 예시 이미지 데이터라는 것입니다! 예시 하나에 [R, G, B] 값의 조합이 총 15,000개 있으므로, 단순 계산으로 <script type="math/tex">15,000\times3=45,000</script> 개의 입력 변수가 필요합니다.</p>
+<p>나무 여부 구별 기계를 위해 러닝 모델은 무엇을 사용해야 할까요? 지금으로서 우리가 아는 것은 선형 모델밖에 없으니 그걸 써 봅시다. 입력 변수는 총 몇 개일까요? 명심할 것은, (아까 빨대론의 사례와는 다르게) 위 표에 나타낸 것이 <em>한 장의</em> 예시 이미지 데이터라는 것입니다! 예시 하나에 [R, G, B] 값의 조합이 총 15,000개 있으므로, 단순 계산으로 \(15,000\times3=45,000\) 개의 입력 변수가 필요합니다.</p>
 
 <p>\begin{equation}
 f(x_1, x_2, …, x_{45000}) = w_0 + w_1x_1 + w_2x_2 + … + w_{45000}x_{45000}

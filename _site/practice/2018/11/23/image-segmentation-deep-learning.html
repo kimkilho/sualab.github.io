@@ -253,7 +253,7 @@
 
 <h3 id="datasetsdata-모듈">datasets.data 모듈</h3>
 
-<p><code class="highlighter-rouge">datasets.data</code> 모듈은 데이터셋에 관련된 함수와 클래스를 가지고 있습니다. Classification 문제때와 마찬가지로, 이 모듈은 데이터셋을 메모리에 로드하고 학습 및 예측평가 과정에서 미니배치(minibatch) 단위로 제공해주는 역할을 합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">datasets.data</code> 모듈은 데이터셋에 관련된 함수와 클래스를 가지고 있습니다. Classification 문제때와 마찬가지로, 이 모듈은 데이터셋을 메모리에 로드하고 학습 및 예측평가 과정에서 미니배치(minibatch) 단위로 제공해주는 역할을 합니다.</p>
 
 <h4 id="read_data-함수">read_data 함수</h4>
 
@@ -308,7 +308,7 @@
     <span class="k">return</span> <span class="n">X_set</span><span class="p">,</span> <span class="n">y_set</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">load_data</code> 함수는 위의 형식으로 저장된 데이터셋을 불러와 각 이미지를 Crop 혹은 Padding을 통해 원하는 크기로 맞춘 뒤, <code class="highlighter-rouge">np.ndarray</code> 형태로 반환합니다. 마찬가지로 mask 이미지를 불러와 각 픽셀에 대해 one-hot encoding된 label을 <code class="highlighter-rouge">np.ndarray</code> 형태로 반환합니다. 만약 이미지 사이즈가 <script type="math/tex">512 \times 512</script>이라면 <code class="highlighter-rouge">y_set</code>의 형태는 <code class="highlighter-rouge">(N, 512, 512, class 개수 (background 포함))</code>로 표현됩니다.</p>
+<p><code class="language-plaintext highlighter-rouge">load_data</code> 함수는 위의 형식으로 저장된 데이터셋을 불러와 각 이미지를 Crop 혹은 Padding을 통해 원하는 크기로 맞춘 뒤, <code class="language-plaintext highlighter-rouge">np.ndarray</code> 형태로 반환합니다. 마찬가지로 mask 이미지를 불러와 각 픽셀에 대해 one-hot encoding된 label을 <code class="language-plaintext highlighter-rouge">np.ndarray</code> 형태로 반환합니다. 만약 이미지 사이즈가 \(512 \times 512\)이라면 <code class="language-plaintext highlighter-rouge">y_set</code>의 형태는 <code class="language-plaintext highlighter-rouge">(N, 512, 512, class 개수 (background 포함))</code>로 표현됩니다.</p>
 
 <h4 id="dataset-클래스">DataSet 클래스</h4>
 
@@ -424,7 +424,7 @@
         <span class="k">return</span> <span class="n">batch_images</span><span class="p">,</span> <span class="n">batch_labels</span>
 </code></pre></div></div>
 
-<p>Classification 문제때와 마찬가지로 <code class="highlighter-rouge">DataSet</code> 클래스를 이용하여 메모리에 로드된 <code class="highlighter-rouge">X_set</code>과 <code class="highlighter-rouge">y_set</code>을 미니배치(minibatch) 단위로 반환해 줍니다.</p>
+<p>Classification 문제때와 마찬가지로 <code class="language-plaintext highlighter-rouge">DataSet</code> 클래스를 이용하여 메모리에 로드된 <code class="language-plaintext highlighter-rouge">X_set</code>과 <code class="language-plaintext highlighter-rouge">y_set</code>을 미니배치(minibatch) 단위로 반환해 줍니다.</p>
 
 <h3 id="2-성능-평가-pixel-accuracy">(2) 성능 평가: Pixel Accuracy</h3>
 
@@ -436,7 +436,7 @@
 
 <h3 id="learningevaluators-모듈">learning.evaluators 모듈</h3>
 
-<p>Classification 문제와 마찬가지로, 성능 평가를 위한 <code class="highlighter-rouge">evaluator</code> 클래스를 담고 있습니다.</p>
+<p>Classification 문제와 마찬가지로, 성능 평가를 위한 <code class="language-plaintext highlighter-rouge">evaluator</code> 클래스를 담고 있습니다.</p>
 
 <h4 id="evaluator-클래스">Evaluator 클래스</h4>
 
@@ -523,15 +523,15 @@
         <span class="k">return</span> <span class="n">curr</span> <span class="o">&gt;</span> <span class="n">best</span> <span class="o">*</span> <span class="n">relative_eps</span>
 </code></pre></div></div>
 
-<p>Pixel Accuracy를 성능 평가 척도로 사용하기 위해 상속받아 <code class="highlighter-rouge">AccuracyEvaluator</code> 클래스를 구현하였습니다. 앞서 설명했듯이, 다루는 데이터셋의 경우 Unknown region이 있기 때문에 Pixel accuracy를 계산할 때 Unknown region은 계산에 포함되지 않도록 정의하고 계산하였습니다. Accuracy는 0.0부터 1.0까지 나타날 수 있으며, 높을 수록 좋은 성능 척도이기 때문에, <code class="highlighter-rouge">mode</code>를 ‘max’로, <code class="highlighter-rouge">score_threshold</code> 값을 1e-4로 설정하였습니다.</p>
+<p>Pixel Accuracy를 성능 평가 척도로 사용하기 위해 상속받아 <code class="language-plaintext highlighter-rouge">AccuracyEvaluator</code> 클래스를 구현하였습니다. 앞서 설명했듯이, 다루는 데이터셋의 경우 Unknown region이 있기 때문에 Pixel accuracy를 계산할 때 Unknown region은 계산에 포함되지 않도록 정의하고 계산하였습니다. Accuracy는 0.0부터 1.0까지 나타날 수 있으며, 높을 수록 좋은 성능 척도이기 때문에, <code class="language-plaintext highlighter-rouge">mode</code>를 ‘max’로, <code class="language-plaintext highlighter-rouge">score_threshold</code> 값을 1e-4로 설정하였습니다.</p>
 
 <h2 id="러닝-모델-gcnglobal-convolutional-network">러닝 모델: GCN(Global Convolutional Network)</h2>
 
-<p>러닝 모델로는 앞서 말씀드린 GCN을 사용합니다. Detection때와 마찬가지로 주로 사용하는 층(layers)들을 생성하는 함수를 <code class="highlighter-rouge">models.layers</code> 모듈에서 정의하고, <code class="highlighter-rouge">models.nn</code> 모듈에서 일반적인 Segmentation용 컨볼루션 신경망 모델을 정의하고 GCN 클래스가 상속받는 형식으로 구현하였습니다.</p>
+<p>러닝 모델로는 앞서 말씀드린 GCN을 사용합니다. Detection때와 마찬가지로 주로 사용하는 층(layers)들을 생성하는 함수를 <code class="language-plaintext highlighter-rouge">models.layers</code> 모듈에서 정의하고, <code class="language-plaintext highlighter-rouge">models.nn</code> 모듈에서 일반적인 Segmentation용 컨볼루션 신경망 모델을 정의하고 GCN 클래스가 상속받는 형식으로 구현하였습니다.</p>
 
 <h3 id="modelslayers-모듈">models.layers 모듈</h3>
 
-<p><code class="highlighter-rouge">models.layers</code> 모듈은 classification 문제때와 다르게, <code class="highlighter-rouge">tf.layers</code> 모듈을 사용하여 간편하게 convolution layer를 재정의했으며, 이외에 GCN을 구현할 때 필요한 layer인 boundary refine layer와, global convolutional layer 그리고 upscale layer를 추가하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">models.layers</code> 모듈은 classification 문제때와 다르게, <code class="language-plaintext highlighter-rouge">tf.layers</code> 모듈을 사용하여 간편하게 convolution layer를 재정의했으며, 이외에 GCN을 구현할 때 필요한 layer인 boundary refine layer와, global convolutional layer 그리고 upscale layer를 추가하였습니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">conv_layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">'SAME'</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="n">use_bias</span><span class="p">)</span>
@@ -568,7 +568,7 @@
 
 <h3 id="modelsnn-모듈">models.nn 모듈</h3>
 
-<p><code class="highlighter-rouge">models.nn</code> 모듈은 마찬가지로 신경망을 표현하는 클래스를 가지고 있습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">models.nn</code> 모듈은 마찬가지로 신경망을 표현하는 클래스를 가지고 있습니다.</p>
 
 <h4 id="segnet-클래스">SegNet 클래스</h4>
 
@@ -654,7 +654,7 @@
         <span class="k">return</span> <span class="n">_y_pred</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">SegNet</code> 클래스는 , 기본 추상 베이스 클래스로, 확장성을 위해 전반적인 Segmentation Network를 포괄하도록 구현하였습니다. <code class="highlighter-rouge">_build_model</code> 과 <code class="highlighter-rouge">_build_loss</code> 함수는 <code class="highlighter-rouge">SegNet</code>의 자식 클래스에서 구현하도록 하였고, <code class="highlighter-rouge">predict</code> 함수는 모델의 예측 결과를 반환합니다. 보통 Segmentation의 경우 Detection과 다르게 architecture를 구축하는 부분을 제외하고 loss 등은 크게 변하지 않습니다. 추상 클래스를 잘 정의해두면 지금 구현하는 GCN뿐만 아니라 다양한 Segmentation architecuture를 큰 시간 소비없이 손쉽게 구현할 수 있을 것이라 생각합니다!</p>
+<p><code class="language-plaintext highlighter-rouge">SegNet</code> 클래스는 , 기본 추상 베이스 클래스로, 확장성을 위해 전반적인 Segmentation Network를 포괄하도록 구현하였습니다. <code class="language-plaintext highlighter-rouge">_build_model</code> 과 <code class="language-plaintext highlighter-rouge">_build_loss</code> 함수는 <code class="language-plaintext highlighter-rouge">SegNet</code>의 자식 클래스에서 구현하도록 하였고, <code class="language-plaintext highlighter-rouge">predict</code> 함수는 모델의 예측 결과를 반환합니다. 보통 Segmentation의 경우 Detection과 다르게 architecture를 구축하는 부분을 제외하고 loss 등은 크게 변하지 않습니다. 추상 클래스를 잘 정의해두면 지금 구현하는 GCN뿐만 아니라 다양한 Segmentation architecuture를 큰 시간 소비없이 손쉽게 구현할 수 있을 것이라 생각합니다!</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/image-segmentation-deep-learning/overview_gcn.png" target="_blank">
@@ -758,7 +758,7 @@
 
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">GCN</code> 모델은 pretrained model에서 encoding된 압축된 feature map을 원래 이미지 크기로 decoding하면서 segmentation map을 생성하고 각 pixel마다 클래스를 분류하여 이미지를 분할합니다. GCN(Global convolutional Network)은 이름 그대로 pixel을 예측할 때 global하게 보기 위하여 kernel 사이즈를 이미지 전체만큼 가져가며 (<script type="math/tex">512 \times 512</script>의 경우 <script type="math/tex">15 \times 15</script>) 이를 정제하는 방식으로 decoding 합니다. 첨부한 모식도를 보시면 보다 더 쉽게 이해하실 수 있을 것 같습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">GCN</code> 모델은 pretrained model에서 encoding된 압축된 feature map을 원래 이미지 크기로 decoding하면서 segmentation map을 생성하고 각 pixel마다 클래스를 분류하여 이미지를 분할합니다. GCN(Global convolutional Network)은 이름 그대로 pixel을 예측할 때 global하게 보기 위하여 kernel 사이즈를 이미지 전체만큼 가져가며 (\(512 \times 512\)의 경우 \(15 \times 15\)) 이를 정제하는 방식으로 decoding 합니다. 첨부한 모식도를 보시면 보다 더 쉽게 이해하실 수 있을 것 같습니다.</p>
 
 <p>손실 함수의 경우 classification때와 마찬가지로 cross entropy loss를 사용합니다. Classification에서 image 단위로 cross entropy를 계산했다면, Segmentation에서는 pixel 단위로 cross entropy를 계산하여 사용합니다. 사용하는 데이터셋의 경우 Unknown region이 있기 때문에, Unknown pixel은 loss 계산에서 제외하는 방식으로 손실 함수를 정의하였습니다.</p>
 
@@ -990,7 +990,7 @@
 
 <h2 id="학습-수행-및-테스트-결과">학습 수행 및 테스트 결과</h2>
 
-<p><code class="highlighter-rouge">train.py</code> 스크립트에서 실제 학습을 수행하는 과정을 구현하며, <code class="highlighter-rouge">test.py</code> 스크립트에서 테스트 데이터셋에 대해 학습이 완료된 모델을 테스트하여 성능 수치를 보여주고 실제로 Segmentation 마스크도 그려줍니다. 혹, 레이블이 없는 데이터셋에 대해서 그려보고 싶은 분들을 위해 <code class="highlighter-rouge">draw.py</code> 스크립트도 추가 구현하였으니 저장소에서 참고하시길 바랍니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 스크립트에서 실제 학습을 수행하는 과정을 구현하며, <code class="language-plaintext highlighter-rouge">test.py</code> 스크립트에서 테스트 데이터셋에 대해 학습이 완료된 모델을 테스트하여 성능 수치를 보여주고 실제로 Segmentation 마스크도 그려줍니다. 혹, 레이블이 없는 데이터셋에 대해서 그려보고 싶은 분들을 위해 <code class="language-plaintext highlighter-rouge">draw.py</code> 스크립트도 추가 구현하였으니 저장소에서 참고하시길 바랍니다.</p>
 
 <h3 id="trainpy-스크립트">train.py 스크립트</h3>
 
@@ -1039,16 +1039,16 @@
 <span class="n">train_results</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">hp_d</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">train.py</code> 스크립트에서는 마찬가지로 3단계로 진행됩니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 스크립트에서는 마찬가지로 3단계로 진행됩니다.</p>
 
 <ol>
   <li>원본 학습 데이터셋을 메모리에 로드하고, 이를 학습 데이터셋(90%)과 검증 데이터셋(10%)으로 나눠 객체 생성.</li>
   <li>학습 관련 하이퍼파라미터 설정.</li>
-  <li><code class="highlighter-rouge">ConvNet</code> 객체, <code class="highlighter-rouge">Evaluator</code> 객체 및 <code class="highlighter-rouge">Optimizer</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="highlighter-rouge">Optimizer.train</code> 함수를 호출하여 모델 학습을 수행함</li>
+  <li><code class="language-plaintext highlighter-rouge">ConvNet</code> 객체, <code class="language-plaintext highlighter-rouge">Evaluator</code> 객체 및 <code class="language-plaintext highlighter-rouge">Optimizer</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="language-plaintext highlighter-rouge">Optimizer.train</code> 함수를 호출하여 모델 학습을 수행함</li>
 </ol>
 
 <ul>
-  <li>원본 데이터셋 저장 경로, 하이퍼파라미터 등 <code class="highlighter-rouge">FIXME</code>로 표시된 부분은 여러분의 상황에 맞게 수정하시면 됩니다.</li>
+  <li>원본 데이터셋 저장 경로, 하이퍼파라미터 등 <code class="language-plaintext highlighter-rouge">FIXME</code>로 표시된 부분은 여러분의 상황에 맞게 수정하시면 됩니다.</li>
 </ul>
 
 <h3 id="testpy-스크립트">test.py 스크립트</h3>
@@ -1103,7 +1103,7 @@
     <span class="n">cv2</span><span class="p">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">draw_path</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
 
 </code></pre></div></div>
-<p><code class="highlighter-rouge">test.py</code> 스크립트도 비슷하게 4단계 과정을 거쳐 성능을 측정하고 이미지에 예측된 마스크를 덧입혀 시각화하여 저장하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">test.py</code> 스크립트도 비슷하게 4단계 과정을 거쳐 성능을 측정하고 이미지에 예측된 마스크를 덧입혀 시각화하여 저장하였습니다.</p>
 
 <h2 id="학습-결과-분석">학습 결과 분석</h2>
 

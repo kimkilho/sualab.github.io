@@ -256,19 +256,19 @@
 <p>Taskonomy 방법에 대한 본격적인 설명에 앞서, 본문에서 사용하는 주요한 notation들을 아래와 같이 일괄 정리하였습니다.</p>
 
 <ul>
-  <li><script type="math/tex">\mathcal{T} = \{t_1, ..., t_n\}</script> : Target task set; Taskonomy 적용 대상 target task들의 모음
+  <li>\(\mathcal{T} = \{t_1, ..., t_n\}\) : Target task set; Taskonomy 적용 대상 target task들의 모음
     <ul>
-      <li><script type="math/tex">t_j</script> : Taskonomy 상에서의 <script type="math/tex">j</script>번째 target task</li>
+      <li>\(t_j\) : Taskonomy 상에서의 \(j\)번째 target task</li>
     </ul>
   </li>
-  <li><script type="math/tex">\mathcal{S} = \{s_1, ..., s_n\}</script> : Source task set; Target task들에 대하여 활용 가능한 source task들의 모음
+  <li>\(\mathcal{S} = \{s_1, ..., s_n\}\) : Source task set; Target task들에 대하여 활용 가능한 source task들의 모음
     <ul>
-      <li><script type="math/tex">s_j</script> : Taskonomy 상에서의 <script type="math/tex">i</script>번째 source task</li>
+      <li>\(s_j\) : Taskonomy 상에서의 \(i\)번째 source task</li>
     </ul>
   </li>
-  <li><script type="math/tex">k</script> : Transfer order; 어느 하나의 target task에 대하여 활용 가능한 source task의 갯수</li>
-  <li><script type="math/tex">\gamma</script> : Supervision budget; Transfer에 앞서 미리 학습해 놓을 수 있는 source task들의 총 갯수(~레이블링 비용)</li>
-  <li><script type="math/tex">f_t(I)</script> : Target task <script type="math/tex">t</script>의 이미지-레이블 간의 미지의 true function, 모델 학습을 통해 추정하고자 하는 대상</li>
+  <li>\(k\) : Transfer order; 어느 하나의 target task에 대하여 활용 가능한 source task의 갯수</li>
+  <li>\(\gamma\) : Supervision budget; Transfer에 앞서 미리 학습해 놓을 수 있는 source task들의 총 갯수(~레이블링 비용)</li>
+  <li>\(f_t(I)\) : Target task \(t\)의 이미지-레이블 간의 미지의 true function, 모델 학습을 통해 추정하고자 하는 대상</li>
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
@@ -277,7 +277,7 @@
 </a>
 <span class="caption">Taskonomy 방법 overview: Transferability 모델링 및 taxonomy 생성 과정</span></p>
 
-<p>Taskonomy 방법은 총 4개의 단계를 거칩니다. 1단계에서는 <script type="math/tex">\mathcal{S}</script> 내의 각 task에 대해 특화된 모델인 task-specific network를 각각 독립적으로 학습합니다. 2단계에서는 지정된 transfer order <script type="math/tex">k</script> 하에서, 서로 간의 조합 연산을 통해 만들어지는 source task(s) -&gt; target task 의 각 조합 별 transferability가 수치화된 형태로 계산됩니다. 3단계에서는 앞서 계산된 transferability에 대한 normalization(정규화)를 통해 affinity matrix를 얻으며, 이를 기반으로 마지막 4단계에서는 각 target task에 대하여 최적의 성능을 발휘하는 transfer policy를 탐색합니다.</p>
+<p>Taskonomy 방법은 총 4개의 단계를 거칩니다. 1단계에서는 \(\mathcal{S}\) 내의 각 task에 대해 특화된 모델인 task-specific network를 각각 독립적으로 학습합니다. 2단계에서는 지정된 transfer order \(k\) 하에서, 서로 간의 조합 연산을 통해 만들어지는 source task(s) -&gt; target task 의 각 조합 별 transferability가 수치화된 형태로 계산됩니다. 3단계에서는 앞서 계산된 transferability에 대한 normalization(정규화)를 통해 affinity matrix를 얻으며, 이를 기반으로 마지막 4단계에서는 각 target task에 대하여 최적의 성능을 발휘하는 transfer policy를 탐색합니다.</p>
 
 <p>실험 수행 시 task dictionary 상에 명시한 task들은 총 26가지이며, 이는 computer vision 분야에서 일반적으로 다루는 문제들을 담고 있습니다. 각 task의 해결 난이도는 서로 차이가 있으며, 이에 따라 각 task 해결을 위해 사용되는 최적의 방법에 있어서도 약간의 차이가 존재합니다.</p>
 
@@ -346,7 +346,7 @@
 
 <h3 id="31-step-i-task-specific-modeling">3.1. Step I: Task-Specific Modeling</h3>
 
-<p>맨 먼저 <script type="math/tex">\mathcal{S}</script> 내의 각 task <script type="math/tex">s_i</script>에 대하여 task-specific networks를 독립적으로 학습합니다. 각 task-specific network는 공통적으로 아래와 같은 encoder-decoder 구조를 지닙니다. 이 때, decoder의 경우 task의 목적에 따라 출력값을 생성하는 부분의 구조에 약간의 차이가 있습니다.</p>
+<p>맨 먼저 \(\mathcal{S}\) 내의 각 task \(s_i\)에 대하여 task-specific networks를 독립적으로 학습합니다. 각 task-specific network는 공통적으로 아래와 같은 encoder-decoder 구조를 지닙니다. 이 때, decoder의 경우 task의 목적에 따라 출력값을 생성하는 부분의 구조에 약간의 차이가 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-specific-network-architecture.png" target="_blank">
@@ -356,7 +356,7 @@
 
 <h3 id="32-step-ii-transfer-modeling">3.2. Step II: Transfer Modeling</h3>
 
-<p><script type="math/tex">s \in \mathcal{S}</script>와 <script type="math/tex">t \in \mathcal{T}</script>인 어느 source task <script type="math/tex">s</script>와 target task <script type="math/tex">t</script>에 대하여, <script type="math/tex">s</script>의 task-specific network의 encoder <script type="math/tex">E_s(\cdot)</script>와, parameters <script type="math/tex">\theta</script>로 표현되는 새로운 decoder <script type="math/tex">D_{\theta}(\cdot)</script>이 합쳐져 구성된 transfer network를 생성합니다. 그러면, 어느 입력 이미지 <script type="math/tex">I</script>에 대한 transfer network의 예측 레이블은 <script type="math/tex">D_{\theta}(E_s(I))</script>로 표현할 수 있습니다.</p>
+<p>\(s \in \mathcal{S}\)와 \(t \in \mathcal{T}\)인 어느 source task \(s\)와 target task \(t\)에 대하여, \(s\)의 task-specific network의 encoder \(E_s(\cdot)\)와, parameters \(\theta\)로 표현되는 새로운 decoder \(D_{\theta}(\cdot)\)이 합쳐져 구성된 transfer network를 생성합니다. 그러면, 어느 입력 이미지 \(I\)에 대한 transfer network의 예측 레이블은 \(D_{\theta}(E_s(I))\)로 표현할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/transfer-network-architecture.png" target="_blank">
@@ -364,17 +364,17 @@
 </a>
 <span class="caption">Transfer network의 구조</span></p>
 
-<p>입력 이미지 <script type="math/tex">I</script>에 대한 target task <script type="math/tex">t</script>의 ground truth 레이블을 <script type="math/tex">f_t(I)</script>로 표현하고, 해당 task의 loss function(손실 함수)을 <script type="math/tex">L_t</script>로 표현한다면, 전체 training set <script type="math/tex">\mathcal{D}</script>에 대한 loss를 최소화하는 <script type="math/tex">\theta</script>는 아래의 minimization 수식으로 표현할 수 있습니다.</p>
+<p>입력 이미지 \(I\)에 대한 target task \(t\)의 ground truth 레이블을 \(f_t(I)\)로 표현하고, 해당 task의 loss function(손실 함수)을 \(L_t\)로 표현한다면, 전체 training set \(\mathcal{D}\)에 대한 loss를 최소화하는 \(\theta\)는 아래의 minimization 수식으로 표현할 수 있습니다.</p>
 
 <p>\begin{equation}
 D_{s \to t} := \arg\min_{\theta} \mathbb{E}_{I \in \mathcal{D}} \big[ L_t \big( D_{\theta} ( E_s(I)), f_t(I) \big) \big]
 \end{equation}</p>
 
-<p>위 수식의 계산 결과 얻어진 최적의 transfer function <script type="math/tex">D_{s \to t}</script>를 <em>readout function</em>이라고도 하며, <script type="math/tex">D_{s \to t}</script>의 성능이 우수할수록 두 task <script type="math/tex">s</script>, <script type="math/tex">t</script> 간의 transferability가 높다고 해석할 수 있습니다. 모든 <script type="math/tex">(s, t)</script> 조합에 대한 readout function들을 모두 구합니다.</p>
+<p>위 수식의 계산 결과 얻어진 최적의 transfer function \(D_{s \to t}\)를 <em>readout function</em>이라고도 하며, \(D_{s \to t}\)의 성능이 우수할수록 두 task \(s\), \(t\) 간의 transferability가 높다고 해석할 수 있습니다. 모든 \((s, t)\) 조합에 대한 readout function들을 모두 구합니다.</p>
 
-<p>한편 위에서 서술한 transfer modeling의 과정은, 엄밀하게는 transfer order <script type="math/tex">k=1</script>인 경우에 해당하였습니다. <script type="math/tex">k</script>가 1보다 큰 경우, 즉 source task들이 2개 이상 사용될 수 있는 경우에는, 모든 target task 경우에 대하여 전체 조합 경우의 수가 총 <script type="math/tex">\vert \mathcal{T} \vert \times { {\vert \mathcal{S} \vert }\choose{k}}</script>개가 됩니다. <script type="math/tex">k=2</script>인 경우만을 생각하더라도, <script type="math/tex">\vert \mathcal{T} \vert=22</script>, <script type="math/tex">\vert \mathcal{S} \vert=25</script>일 때 총 <script type="math/tex">(22 \times { {25}\choose{2}})=6,600</script>개가 됩니다.</p>
+<p>한편 위에서 서술한 transfer modeling의 과정은, 엄밀하게는 transfer order \(k=1\)인 경우에 해당하였습니다. \(k\)가 1보다 큰 경우, 즉 source task들이 2개 이상 사용될 수 있는 경우에는, 모든 target task 경우에 대하여 전체 조합 경우의 수가 총 \(\vert \mathcal{T} \vert \times { {\vert \mathcal{S} \vert }\choose{k}}\)개가 됩니다. \(k=2\)인 경우만을 생각하더라도, \(\vert \mathcal{T} \vert=22\), \(\vert \mathcal{S} \vert=25\)일 때 총 \((22 \times { {25}\choose{2}})=6,600\)개가 됩니다.</p>
 
-<p>지나치게 많은 계산을 방지하고자, Taskonomy 방법에서는 먼저 <script type="math/tex">k=1</script>로 하여 계산한 모든 <script type="math/tex">D_{s \to t}</script>의 성능을 기준으로 hypergraph를 그리고, 여기에 <a href="https://en.wikipedia.org/wiki/Beam_search" target="_blank">beam search</a>를 적용하여 <script type="math/tex">D_{s \to t}</script> 성능 기준으로 상위에 속하는 5개(<script type="math/tex">k \leq 5</script>인 경우) 또는 <script type="math/tex">k</script>개(<script type="math/tex">k \geq 5</script>인 경우)의 source task들을 취사 선택하고, 이들 간의 <script type="math/tex">k</script>차 조합만을 고려하는 방식을 채택합니다. 이렇게 하여, 모든 <script type="math/tex">({s_1, ..., s_k}, t)</script> 조합에 대한 readout function들을 모두 구합니다.</p>
+<p>지나치게 많은 계산을 방지하고자, Taskonomy 방법에서는 먼저 \(k=1\)로 하여 계산한 모든 \(D_{s \to t}\)의 성능을 기준으로 hypergraph를 그리고, 여기에 <a href="https://en.wikipedia.org/wiki/Beam_search" target="_blank">beam search</a>를 적용하여 \(D_{s \to t}\) 성능 기준으로 상위에 속하는 5개(\(k \leq 5\)인 경우) 또는 \(k\)개(\(k \geq 5\)인 경우)의 source task들을 취사 선택하고, 이들 간의 \(k\)차 조합만을 고려하는 방식을 채택합니다. 이렇게 하여, 모든 \(({s_1, ..., s_k}, t)\) 조합에 대한 readout function들을 모두 구합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/beam-search-keq2-examples.png" target="_blank">
@@ -384,23 +384,23 @@ D_{s \to t} := \arg\min_{\theta} \mathbb{E}_{I \in \mathcal{D}} \big[ L_t \big( 
 
 <h3 id="33-step-iii-ordinal-normalization-using-analytic-hierarchy-process-ahp">3.3. Step III: Ordinal Normalization using Analytic Hierarchy Process (AHP)</h3>
 
-<p>이제 각 task들 간의 readout function들을 사용, 이들 간의 transferability를 기반으로 affinity matrix를 계산해야 하는데, 이 때 문제가 하나 있습니다. 실제로 transferability를 정량화하여 affinity matrix를 계산해내기 위한 지표를 설정해야 하는데, 가장 쉽게 생각할 수 있는 것이 readout function의 loss <script type="math/tex">L_{s \to t}</script>일 것입니다. 그런데, 실제 target task <script type="math/tex">t</script>에 따라 <script type="math/tex">L_{s \to t}</script> 값의 범위가 천차만별이고, <script type="math/tex">L_{s \to t}</script> 값의 감소에 따른 실제 체감되는 예측 결과 품질의 증가 속도도 task 별로 차이가 존재합니다. 이로 인해 <script type="math/tex">L_{s \to t}</script>를 단순히 normalize하는 것만으로는 모든 target task들을 동일 선상에서 커버하기에 충분하지 않으므로, Taskonomy 방법에서는 대신 <strong>ordinal(서수)</strong>에 기반한 normalization을 수행합니다.</p>
+<p>이제 각 task들 간의 readout function들을 사용, 이들 간의 transferability를 기반으로 affinity matrix를 계산해야 하는데, 이 때 문제가 하나 있습니다. 실제로 transferability를 정량화하여 affinity matrix를 계산해내기 위한 지표를 설정해야 하는데, 가장 쉽게 생각할 수 있는 것이 readout function의 loss \(L_{s \to t}\)일 것입니다. 그런데, 실제 target task \(t\)에 따라 \(L_{s \to t}\) 값의 범위가 천차만별이고, \(L_{s \to t}\) 값의 감소에 따른 실제 체감되는 예측 결과 품질의 증가 속도도 task 별로 차이가 존재합니다. 이로 인해 \(L_{s \to t}\)를 단순히 normalize하는 것만으로는 모든 target task들을 동일 선상에서 커버하기에 충분하지 않으므로, Taskonomy 방법에서는 대신 <strong>ordinal(서수)</strong>에 기반한 normalization을 수행합니다.</p>
 
-<p>이해를 돕기 위해 transfer order <script type="math/tex">k=1</script>인 경우를 기준으로 진행하겠습니다. 어느 target task <script type="math/tex">t</script>에 대하여, <script type="math/tex">i</script>번째 source task <script type="math/tex">s_i</script>과 <script type="math/tex">j</script>번째 source task <script type="math/tex">s_j</script>를 각각 적용하여 얻어진 readout function들을 별도의 test set <script type="math/tex">\mathcal{D}_{test}</script>을 사용하여 테스트한 결과, <script type="math/tex">s_i</script>로부터의 예측 성능이 <script type="math/tex">s_j</script>로부터의 예측 성능보다 우수하였던(즉, <script type="math/tex">\mathcal{D}_{s_i \to t}(I) > \mathcal{D}_{s_j \to t}(I)</script>) <em>테스트 이미지(<script type="math/tex">I</script>)의 수</em>를 카운팅하고, test set 내에서의 그 비율을 계산할 수 있습니다. <script type="math/tex">i</script>와 <script type="math/tex">j</script>를 변경해 가면서 해당 비율을 계산하여 이를 pairwise matrix <script type="math/tex">W_t</script>로 나타낸다고 하면, <script type="math/tex">W_t</script>의 <script type="math/tex">(i,j)</script>번째 성분 <script type="math/tex">w_{i,j}</script>는 아래와 같이 표현됩니다:</p>
+<p>이해를 돕기 위해 transfer order \(k=1\)인 경우를 기준으로 진행하겠습니다. 어느 target task \(t\)에 대하여, \(i\)번째 source task \(s_i\)과 \(j\)번째 source task \(s_j\)를 각각 적용하여 얻어진 readout function들을 별도의 test set \(\mathcal{D}_{test}\)을 사용하여 테스트한 결과, \(s_i\)로부터의 예측 성능이 \(s_j\)로부터의 예측 성능보다 우수하였던(즉, \(\mathcal{D}_{s_i \to t}(I) &gt; \mathcal{D}_{s_j \to t}(I)\)) <em>테스트 이미지(\(I\))의 수</em>를 카운팅하고, test set 내에서의 그 비율을 계산할 수 있습니다. \(i\)와 \(j\)를 변경해 가면서 해당 비율을 계산하여 이를 pairwise matrix \(W_t\)로 나타낸다고 하면, \(W_t\)의 \((i,j)\)번째 성분 \(w_{i,j}\)는 아래와 같이 표현됩니다:</p>
 
 <p>\begin{equation}
 w_{i,j} = \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to t}(I) &gt; \mathcal{D}_{s_j \to t}(I)]
 \end{equation}</p>
 
-<p>그런 뒤 <script type="math/tex">W_t</script>를 <script type="math/tex">[0.001, 0.999]</script> 범위 안으로 clipping하고, 새로운 matrix <script type="math/tex">W_t' = W_t / W_t^T</script> (element-wise division)를 계산합니다. 이를 통해 <script type="math/tex">s_i</script>가 <script type="math/tex">s_j</script>에 비해 ‘평균적으로 성능이 몇 회나 더 우수하였는지’를 <script type="math/tex">W_t'</script>이 포함하고 있도록 합니다. 즉, <script type="math/tex">W_t'</script>의 <script type="math/tex">(i,j)</script>번째 성분 <script type="math/tex">w_{i,j}'</script>는 아래와 같이 표현됩니다:</p>
+<p>그런 뒤 \(W_t\)를 \([0.001, 0.999]\) 범위 안으로 clipping하고, 새로운 matrix \(W_t' = W_t / W_t^T\) (element-wise division)를 계산합니다. 이를 통해 \(s_i\)가 \(s_j\)에 비해 ‘평균적으로 성능이 몇 회나 더 우수하였는지’를 \(W_t'\)이 포함하고 있도록 합니다. 즉, \(W_t'\)의 \((i,j)\)번째 성분 \(w_{i,j}'\)는 아래와 같이 표현됩니다:</p>
 
 <p>\begin{equation}
 w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to t}(I) &gt; \mathcal{D}_{s_j \to t}(I)] } { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to t}(I) &lt; \mathcal{D}_{s_j \to t}(I)] }
 \end{equation}</p>
 
-<p>이렇게 얻어진 <script type="math/tex">W_t'</script>의 principal eigenvector(eigenvalue가 가장 큰 eigenvector)를 계산합니다. 그러면 해당 principal eigenvector의 <script type="math/tex">i</script>번째 성분은, 곧 이에 대응되는 <script type="math/tex">i</script>번째 source task <script type="math/tex">s_i</script>의, source task들로 구성한 undirected graph 상에서의 <a href="https://en.wikipedia.org/wiki/Eigenvector_centrality" target="_blank">centrality(중심성, 구심성)</a>를 나타내게 됩니다. 이는 다른 source task들 대비, 해당 source task의 target task에 대한 일종의 ‘영향력’이라고 봐도 크게 무리가 없겠습니다. 저자들은 이러한 normalization 방법을, operations research(경영과학) 등의 분야에서 흔히 사용되는 <a href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process" target="_blank">Analytic Hierarchy Process(AHP)</a>로부터 채택하였다고 언급하고 있습니다.</p>
+<p>이렇게 얻어진 \(W_t'\)의 principal eigenvector(eigenvalue가 가장 큰 eigenvector)를 계산합니다. 그러면 해당 principal eigenvector의 \(i\)번째 성분은, 곧 이에 대응되는 \(i\)번째 source task \(s_i\)의, source task들로 구성한 undirected graph 상에서의 <a href="https://en.wikipedia.org/wiki/Eigenvector_centrality" target="_blank">centrality(중심성, 구심성)</a>를 나타내게 됩니다. 이는 다른 source task들 대비, 해당 source task의 target task에 대한 일종의 ‘영향력’이라고 봐도 크게 무리가 없겠습니다. 저자들은 이러한 normalization 방법을, operations research(경영과학) 등의 분야에서 흔히 사용되는 <a href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process" target="_blank">Analytic Hierarchy Process(AHP)</a>로부터 채택하였다고 언급하고 있습니다.</p>
 
-<p>모든 <script type="math/tex">t \in \mathcal{T}</script>에 대하여 <script type="math/tex">W_t'</script>의 principal eigenvector들을 계산하여 이들을 row-wise로 쌓아올리면, 아래 그림과 같은 task affinity matrix <script type="math/tex">P</script>가 얻어집니다.</p>
+<p>모든 \(t \in \mathcal{T}\)에 대하여 \(W_t'\)의 principal eigenvector들을 계산하여 이들을 row-wise로 쌓아올리면, 아래 그림과 같은 task affinity matrix \(P\)가 얻어집니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-affinity-matrix-1st-order-example.png" target="_blank">
@@ -408,7 +408,7 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 </a>
 <span class="caption">k=1일 때의 task affinity matrix 예시<br /><small>(여기에서는 값이 작을수록, source-&gt;target transferability가 높음)</small></span></p>
 
-<p>논문 본문에서는 <script type="math/tex">k=1</script>인 경우만을 가지고 설명하였는데, <script type="math/tex">k</script>가 <script type="math/tex">1</script>보다 큰 경우에는 task affinity matrix를 계산하는 과정에서의 성능 비교 대상이, 엄밀히 말하면 source task들이 기준이 되는 것이 아니라, <script type="math/tex">k</script>차 조합으로 구성한 <script type="math/tex">(s_1, ..., s_k, t)</script> 조합들이 기준이 됩니다. (<script type="math/tex">k=1</script>인 경우 <script type="math/tex">(s_k, t)</script> 조합 안에 하나의 source task만이 포함되기 때문에 이를 source task 자체로 대표하여 표현할 수 있었던 것이라고 볼 수 있습니다.) 즉 다시 말해, task affinity matrix <script type="math/tex">P</script> 상의 하나의 열은, 곧 하나의 <script type="math/tex">(s_1, ..., s_k, t)</script> 조합을 대표한다고 이해하시면 되겠습니다. 이해를 돕기 위해, <script type="math/tex">k=1</script>과 <script type="math/tex">k=2</script>인 경우 <script type="math/tex">P</script>의 각 열을 설명하는 그림을 아래에 추가하였습니다.</p>
+<p>논문 본문에서는 \(k=1\)인 경우만을 가지고 설명하였는데, \(k\)가 \(1\)보다 큰 경우에는 task affinity matrix를 계산하는 과정에서의 성능 비교 대상이, 엄밀히 말하면 source task들이 기준이 되는 것이 아니라, \(k\)차 조합으로 구성한 \((s_1, ..., s_k, t)\) 조합들이 기준이 됩니다. (\(k=1\)인 경우 \((s_k, t)\) 조합 안에 하나의 source task만이 포함되기 때문에 이를 source task 자체로 대표하여 표현할 수 있었던 것이라고 볼 수 있습니다.) 즉 다시 말해, task affinity matrix \(P\) 상의 하나의 열은, 곧 하나의 \((s_1, ..., s_k, t)\) 조합을 대표한다고 이해하시면 되겠습니다. 이해를 돕기 위해, \(k=1\)과 \(k=2\)인 경우 \(P\)의 각 열을 설명하는 그림을 아래에 추가하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-affinity-matrix-higher-order-example.png" target="_blank">
@@ -418,11 +418,11 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 
 <h3 id="34-step-iv-computing-the-global-taxonomy">3.4. Step IV: Computing the Global Taxonomy</h3>
 
-<p>Task affinity matrix <script type="math/tex">P</script>가 완성되면, 이를 사용하여 특정한 target task의 성능을 극대화하는 최적의 transfer policy를 탐색하는 작업을 마지막으로 진행합니다. 즉, target task의 성능을 극대화하도록 하는 <script type="math/tex">(s_1, ..., s_k, t)</script> 조합을 선택하는데, 이 과정에서 선택된 source task들의 갯수가 처음에 상정했던 supervision budget <script type="math/tex">\gamma</script>를 초과하지 않도록 제약을 걸어야 합니다.</p>
+<p>Task affinity matrix \(P\)가 완성되면, 이를 사용하여 특정한 target task의 성능을 극대화하는 최적의 transfer policy를 탐색하는 작업을 마지막으로 진행합니다. 즉, target task의 성능을 극대화하도록 하는 \((s_1, ..., s_k, t)\) 조합을 선택하는데, 이 과정에서 선택된 source task들의 갯수가 처음에 상정했던 supervision budget \(\gamma\)를 초과하지 않도록 제약을 걸어야 합니다.</p>
 
-<p>논문 본문에서는 이 지점부터 notation이 약간 바뀌어서 혼동될 수 있는데, 항상 기준은 <script type="math/tex">(s_1, ..., s_k, t)</script> 조합으로 보면 됩니다. <script type="math/tex">(s_1, ..., s_k)</script>와 <script type="math/tex">t</script>를 연결하는 transfer(edge)를 기본 단위로 하여 최적의 transfer를 탐색합니다. <script type="math/tex">i</script>는 transfer, <script type="math/tex">j</script>는 target task의 index를 나타냅니다. 또한, <script type="math/tex">sources(i)</script>는 <script type="math/tex">i</script>번째 transfer의 source task들의 set을 지칭하고, <script type="math/tex">target(i)</script>는 <script type="math/tex">i</script>번째 transfer의 target task 하나를 지칭합니다.</p>
+<p>논문 본문에서는 이 지점부터 notation이 약간 바뀌어서 혼동될 수 있는데, 항상 기준은 \((s_1, ..., s_k, t)\) 조합으로 보면 됩니다. \((s_1, ..., s_k)\)와 \(t\)를 연결하는 transfer(edge)를 기본 단위로 하여 최적의 transfer를 탐색합니다. \(i\)는 transfer, \(j\)는 target task의 index를 나타냅니다. 또한, \(sources(i)\)는 \(i\)번째 transfer의 source task들의 set을 지칭하고, \(target(i)\)는 \(i\)번째 transfer의 target task 하나를 지칭합니다.</p>
 
-<p>앞서 찾은 <script type="math/tex">P</script>와, transfer 규칙 및 supervision budget과 관련된 제약 조건을 적용하여, <a href="https://en.wikipedia.org/wiki/Integer_programming" target="_blank">Boolean Integer Programming(이하 BIP)</a> 문제의 objective function(목적 함수) 및 constraints(제약식)를 설정합니다. 이 때 boolean variables <script type="math/tex">x = (x_1, x_2, ..., x_{\vert E \vert+ \vert \mathcal{V} \vert})</script>은, 전체 <script type="math/tex">E</script>개의 transfer(edge)들과 <script type="math/tex">\mathcal{V}</script>개의 source task들 중에서 어느 것들을 선택할지를 <script type="math/tex">\{0,1\}</script> 중 하나로 표시합니다. 결과적으로, 아래와 같은 BIP 문제를 풀면 됩니다:</p>
+<p>앞서 찾은 \(P\)와, transfer 규칙 및 supervision budget과 관련된 제약 조건을 적용하여, <a href="https://en.wikipedia.org/wiki/Integer_programming" target="_blank">Boolean Integer Programming(이하 BIP)</a> 문제의 objective function(목적 함수) 및 constraints(제약식)를 설정합니다. 이 때 boolean variables \(x = (x_1, x_2, ..., x_{\vert E \vert+ \vert \mathcal{V} \vert})\)은, 전체 \(E\)개의 transfer(edge)들과 \(\mathcal{V}\)개의 source task들 중에서 어느 것들을 선택할지를 \(\{0,1\}\) 중 하나로 표시합니다. 결과적으로, 아래와 같은 BIP 문제를 풀면 됩니다:</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/bip-objective-and-constraints.png" target="_blank">
@@ -432,7 +432,7 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 
 <p>사실 이 대목에서 BIP를 이해하고자 너무 머리 싸매고(?) 노력하실 필요는 없을 것 같습니다. 중요한 것은 실제 Taskonomy hypergraph에서 고려하고자 하는 조건에 맞게 objective function의 weights와 더불어 constraints를 적절하게 입력하는 것이고, 일단 이것에 성공하면 실제 BIP 문제는 <a href="http://www.gurobi.com" target="_blank">Gurobi Optimizer</a> 등의 최적화 문제 풀이용 프로그램이 알아서 풀어줍니다. 단, 논문 본문에 나와 있는 weights 및 constraints에 대한 설명이 다소 혼동의 여지가 있어, 결과적으로 각각을 어떻게 입력하면 되는지 위주로 좀 더 자세히 서술해 보았습니다.</p>
 
-<p>먼저 objective function weights의 경우, 전체 <script type="math/tex">\vert E \vert+\vert \mathcal{V} \vert</script>개의 원소 중 앞쪽 <script type="math/tex">\vert E \vert</script>개의 transfer(edge)들에 대응되는 것만 <script type="math/tex">c_i := r_{target(i)} \cdot p_i</script>를 넣어주고, 나머지 원소에는 <script type="math/tex">0</script>을 넣어주면 됩니다. 이 때, <script type="math/tex">p_i</script>는 <script type="math/tex">i</script>번째 transfer가 가리키는 target task에 대한 transferability 수준을 나타내며, 이는 앞서 계산하여 얻은 task affinity matrix <script type="math/tex">P</script> 상에서 찾을 수 있습니다. 다음으로 <script type="math/tex">r_{target(i)}</script>는 <script type="math/tex">i</script>번째 transfer가 가리키는 target task의 상대적 중요성을 나타내며, 이는 필요에 따라 사용자가 적절하게 정하여 입력할 수 있습니다.</p>
+<p>먼저 objective function weights의 경우, 전체 \(\vert E \vert+\vert \mathcal{V} \vert\)개의 원소 중 앞쪽 \(\vert E \vert\)개의 transfer(edge)들에 대응되는 것만 \(c_i := r_{target(i)} \cdot p_i\)를 넣어주고, 나머지 원소에는 \(0\)을 넣어주면 됩니다. 이 때, \(p_i\)는 \(i\)번째 transfer가 가리키는 target task에 대한 transferability 수준을 나타내며, 이는 앞서 계산하여 얻은 task affinity matrix \(P\) 상에서 찾을 수 있습니다. 다음으로 \(r_{target(i)}\)는 \(i\)번째 transfer가 가리키는 target task의 상대적 중요성을 나타내며, 이는 필요에 따라 사용자가 적절하게 정하여 입력할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/bip-weights-description.png" target="_blank">
@@ -445,10 +445,10 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <ol>
   <li>만약 어느 subgraph 상에 특정 transfer가 포함되어 있다면, 해당 transfer의 source task(node)들 또한 반드시 포함되어야 한다.</li>
   <li>각 target task로 반드시 딱 하나의 transfer가 들어간다.</li>
-  <li>전체 supervision budget <script type="math/tex">\gamma</script>를 초과하지 않도록, source task들을 선정해야 한다.</li>
+  <li>전체 supervision budget \(\gamma\)를 초과하지 않도록, source task들을 선정해야 한다.</li>
 </ol>
 
-<p>위 3가지 조건을 모두 반영하면 <script type="math/tex">A \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1) \times (\vert E \vert + \vert \mathcal{V} \vert)}</script>, <script type="math/tex">b \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1)}</script>를 얻을 수 있으며, 좀 더 구체적으로는 <script type="math/tex">A</script>와 <script type="math/tex">b</script> 내 각 구역 별 원소의 값들을 아래 그림에 표시한 조건에 따라 결정하면 됩니다. 이 때, <script type="math/tex">l_i</script>는 <script type="math/tex">i</script>번째 transfer와 결부된 source task들을 레이블링할 시의 상대적인 cost를 가리킵니다.</p>
+<p>위 3가지 조건을 모두 반영하면 \(A \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1) \times (\vert E \vert + \vert \mathcal{V} \vert)}\), \(b \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1)}\)를 얻을 수 있으며, 좀 더 구체적으로는 \(A\)와 \(b\) 내 각 구역 별 원소의 값들을 아래 그림에 표시한 조건에 따라 결정하면 됩니다. 이 때, \(l_i\)는 \(i\)번째 transfer와 결부된 source task들을 레이블링할 시의 상대적인 cost를 가리킵니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/bip-constraints-description.png" target="_blank">
@@ -458,7 +458,7 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 
 <h2 id="4-experiments">4. Experiments</h2>
 
-<p>논문에서는 총 26개 task들 중 4개의 task들(e.g. colorization, jigsaw puzzle, in-painting, random projection)을 source-only task로 정의하고, 이들을 제외한 나머지 22개 task들 중 하나로 target task로 선정하고, transfer order <script type="math/tex">k</script>를 1부터 25까지 증가시켜 나가면서 Taskonomy 방법에 대한 실험을 반복했습니다. 전체 경우의 수로부터 발생하는 transfer function들의 수는 약 3,000개에 육박하였으며, 총 47,886 GPU hours가 소요되었다고 하였습니다.</p>
+<p>논문에서는 총 26개 task들 중 4개의 task들(e.g. colorization, jigsaw puzzle, in-painting, random projection)을 source-only task로 정의하고, 이들을 제외한 나머지 22개 task들 중 하나로 target task로 선정하고, transfer order \(k\)를 1부터 25까지 증가시켜 나가면서 Taskonomy 방법에 대한 실험을 반복했습니다. 전체 경우의 수로부터 발생하는 transfer function들의 수는 약 3,000개에 육박하였으며, 총 47,886 GPU hours가 소요되었다고 하였습니다.</p>
 
 <p>모든 실험에서 task-specific network의 encoder는 ResNet-50(pooling layer 제외) 구조를 채택하였고, transfer network의 decoder는 target task의 종류에 따라 그 구조를 조금씩 다르게 설계했습니다. 실험에 사용한 데이터셋은 400만 장의 원본 이미지 중 일부를 랜덤 샘플링하여 training set(12만), validation set(1.6만), test set(1.7만)으로 분할하고, task-specific network는 training set으로, transfer network는 validation set으로 학습하였습니다.</p>
 
@@ -474,7 +474,7 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 
 <h3 id="41-evaluation-of-computed-taxonomies">4.1. Evaluation of Computed Taxonomies</h3>
 
-<p>Supervision budget <script type="math/tex">\gamma</script> 및 Transfer Order <script type="math/tex">k</script>를 변경해 가면서 학습한 결과 얻어진 몇 가지 예시 Taskonomy들을 아래 그림과 같이 나타냈습니다.</p>
+<p>Supervision budget \(\gamma\) 및 Transfer Order \(k\)를 변경해 가면서 학습한 결과 얻어진 몇 가지 예시 Taskonomy들을 아래 그림과 같이 나타냈습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/computed-taxonomies.png" target="_blank">
@@ -482,7 +482,7 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 </a>
 <span class="caption">학습을 통해 얻어진 예시 Taskonomy<br /><small>(BIP 문제를 해결하여 얻어진 transfer들을 화살표로 표현함; 흐릿하게 표시된 node들은 source-only task에 해당함)</small><br /><small>(클릭하면 확대하여 보실 수 있습니다)</small></span></p>
 
-<p>그림의 우측에 확대하여 나타낸 <script type="math/tex">\gamma=8</script>, <script type="math/tex">k=4</script>인 경우를 예로 들어 좀 더 자세히 살펴봅시다. 이미지 상의 물체들의 (각 방향으로의) 표면들을 검출하는 Surface Normal Estimation(<em>‘Normals’</em>) task가, source task들 중 하나로써 다른 다양한 target task에 대하여 transfer되고 있는 것을 확인할 수 있습니다. 이는 이미지 상에 보여진 공간에 대한 이해를 수행하는 데 있어, 물체들의 표면을 검출하는 작업이 중대한 영향을 미칠 수 있다는 사실의 간접적인 증거로써 확인할 수 있었습니다. 한편 컴퓨터 비전 분야에서 전통적으로 연구되어 오던, 이미지 상의 특징적인 부분을 검출하는 Keypoint Detection(‘<em>2D Keypoints</em>‘)의 경우, Denoising, Colorization, In-painting 등의 Unsupervised Learning task들로부터의 transfer를 통해 도움을 얻을 수 있다는 흥미로운 결론도 확인할 수 있었습니다.</p>
+<p>그림의 우측에 확대하여 나타낸 \(\gamma=8\), \(k=4\)인 경우를 예로 들어 좀 더 자세히 살펴봅시다. 이미지 상의 물체들의 (각 방향으로의) 표면들을 검출하는 Surface Normal Estimation(<em>‘Normals’</em>) task가, source task들 중 하나로써 다른 다양한 target task에 대하여 transfer되고 있는 것을 확인할 수 있습니다. 이는 이미지 상에 보여진 공간에 대한 이해를 수행하는 데 있어, 물체들의 표면을 검출하는 작업이 중대한 영향을 미칠 수 있다는 사실의 간접적인 증거로써 확인할 수 있었습니다. 한편 컴퓨터 비전 분야에서 전통적으로 연구되어 오던, 이미지 상의 특징적인 부분을 검출하는 Keypoint Detection(‘<em>2D Keypoints</em>‘)의 경우, Denoising, Colorization, In-painting 등의 Unsupervised Learning task들로부터의 transfer를 통해 도움을 얻을 수 있다는 흥미로운 결론도 확인할 수 있었습니다.</p>
 
 <p>다음으로 좀 더 정량적인 결과 확인을 위해, 완성된 taskonomy에 기반하여 얻어진 transfer 규칙들을 각 target task에 적용하여 transfer learning을 수행했을 시의 성능 결과를 조사하였습니다. 이 때, ‘Gain’과 ‘Quality’라는 두 가지 지표를 사용하였습니다.</p>
 
@@ -497,9 +497,9 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 </a>
 <span class="caption">완성된 taskonomy에 기반한 transfer 규칙을 각 target task에 적용하였을 시의 테스트 결과<br /><small>(클릭하면 확대하여 보실 수 있습니다)</small></span></p>
 
-<p>일단 Maximum transfer order <script type="math/tex">k</script>를 증가시킬수록, 그리고 supervision budget <script type="math/tex">\gamma</script>를 증가시킬수록, Gain과 Quality가 점차적으로 증가하는 경향을 보였습니다. 이는 ‘더 많은 source task로부터 얻은 지식을 transfer할 수록 성능이 높아질 것이다’라는 우리의 상식적인 예상대로 전개된 결과라고 할 수 있습니다.</p>
+<p>일단 Maximum transfer order \(k\)를 증가시킬수록, 그리고 supervision budget \(\gamma\)를 증가시킬수록, Gain과 Quality가 점차적으로 증가하는 경향을 보였습니다. 이는 ‘더 많은 source task로부터 얻은 지식을 transfer할 수록 성능이 높아질 것이다’라는 우리의 상식적인 예상대로 전개된 결과라고 할 수 있습니다.</p>
 
-<p>한편 <em>Quality</em> 지표에서 상정한 baseline의 경우 약 10배 더 많은 양의 학습 데이터를 사용했기 때문에, Quality의 절대적인 수치가 상대적으로 저조하게 나오는 것은 어느 정도 당연한 결과라고 할 수 있습니다. 그럼에도 불구하고, maximum <script type="math/tex">k</script> 또는 <script type="math/tex">\gamma</script>가 증가했을 때 대부분의 task에서의 Quality 값이 0.5에 도달했다는 것은, baseline 방법에 비해 학습 데이터의 엄청난 양적 열세가 있었음에도 불구하고 그 성능이 baseline 방법의 그것과 거의 비등하였다는 사실을 보여주며, 이는 taskonomy 방법을 통해 찾은 ‘효과적인’ transfer policy를 적용했을 시의 위력(?)을 아주 잘 보여주는 대목이라고 할 수 있겠습니다.</p>
+<p>한편 <em>Quality</em> 지표에서 상정한 baseline의 경우 약 10배 더 많은 양의 학습 데이터를 사용했기 때문에, Quality의 절대적인 수치가 상대적으로 저조하게 나오는 것은 어느 정도 당연한 결과라고 할 수 있습니다. 그럼에도 불구하고, maximum \(k\) 또는 \(\gamma\)가 증가했을 때 대부분의 task에서의 Quality 값이 0.5에 도달했다는 것은, baseline 방법에 비해 학습 데이터의 엄청난 양적 열세가 있었음에도 불구하고 그 성능이 baseline 방법의 그것과 거의 비등하였다는 사실을 보여주며, 이는 taskonomy 방법을 통해 찾은 ‘효과적인’ transfer policy를 적용했을 시의 위력(?)을 아주 잘 보여주는 대목이라고 할 수 있겠습니다.</p>
 
 <h3 id="42-generalization-to-novel-tasks">4.2. Generalization to Novel Tasks</h3>
 
@@ -525,7 +525,7 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 </a>
 <span class="caption">랜덤한 transfer policy 대비 Taskonomy 방법으로 찾은 최적의 transfer policy 적용 성능 비교 결과<br /><small>(녹색: Taskonomy; 회색: 랜덤 transfer policy)</small></span></p>
 
-<p>Taskonomy 방법을 통해 찾은 최적의 transfer policy가, 랜덤하게 정의된 transfer policy에 비해 얼마나 더 효과가 있는지 확인하기 위해, 간단한 유의성(significance) 검증 실험을 수행하였습니다. 모든 supervision budget <script type="math/tex">\gamma</script>에서 Taskonomy 방법을 통해 찾은 transfer policy의 성능이 Quality와 Gain 두 가지 지표에서 월등하게 우수한 것으로 확인되었습니다. 이는 곧 서로 다른 task들 간에 모종의 structure가 존재한다는 것을 방증하며, 이를 Taskonomy 방법이 잘 모델링하였다는 것을 보여줍니다.</p>
+<p>Taskonomy 방법을 통해 찾은 최적의 transfer policy가, 랜덤하게 정의된 transfer policy에 비해 얼마나 더 효과가 있는지 확인하기 위해, 간단한 유의성(significance) 검증 실험을 수행하였습니다. 모든 supervision budget \(\gamma\)에서 Taskonomy 방법을 통해 찾은 transfer policy의 성능이 Quality와 Gain 두 가지 지표에서 월등하게 우수한 것으로 확인되었습니다. 이는 곧 서로 다른 task들 간에 모종의 structure가 존재한다는 것을 방증하며, 이를 Taskonomy 방법이 잘 모델링하였다는 것을 보여줍니다.</p>
 
 <h3 id="51-evaluation-on-mit-places--imagenet">5.1. Evaluation on MIT Places &amp; ImageNet</h3>
 
@@ -537,7 +537,7 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 </a>
 <span class="caption">ImageNet, MIT Places 데이터셋으로의 transferability 결과와의 상관성 조사 결과<br /><small>(클릭하면 확대하여 보실 수 있습니다)</small></span></p>
 
-<p><a href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient" target="_blank">Spearman’s rho</a>를 기준으로, MIT Places와 <script type="math/tex">0.857</script>, ImageNet과 <script type="math/tex">0.823</script>을 나타낸 것으로 볼 때, 유의미한 수준의 상관성이 존재함을 확인하였습니다.</p>
+<p><a href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient" target="_blank">Spearman’s rho</a>를 기준으로, MIT Places와 \(0.857\), ImageNet과 \(0.823\)을 나타낸 것으로 볼 때, 유의미한 수준의 상관성이 존재함을 확인하였습니다.</p>
 
 <h3 id="52-universality-of-the-structure">5.2. Universality of the Structure</h3>
 
@@ -556,7 +556,7 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 
 <h3 id="53-task-similarity-tree">5.3. Task Similarity Tree</h3>
 
-<p>각 task들 간의 structure를 좀 더 명시적으로 조사하기 위해, 위에서 구한 task affinity matrix <script type="math/tex">P</script>를 사용한 <a href="https://en.wikipedia.org/wiki/Hierarchical_clustering" target="_blank">병합 군집(agglomerative clustering)</a>을 통해 서로 다른 task 간의 유사도를 조사하였습니다.</p>
+<p>각 task들 간의 structure를 좀 더 명시적으로 조사하기 위해, 위에서 구한 task affinity matrix \(P\)를 사용한 <a href="https://en.wikipedia.org/wiki/Hierarchical_clustering" target="_blank">병합 군집(agglomerative clustering)</a>을 통해 서로 다른 task 간의 유사도를 조사하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-similarity-tree.png" target="_blank">

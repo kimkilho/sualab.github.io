@@ -239,7 +239,7 @@
 
 <h3 id="generative-model">Generative Model</h3>
 
-<p>기존에 다루었던 image classification, object detection, image segmentation 문제들은 입력 이미지(<script type="math/tex">x</script>)가 있을때 그에 따른 정답(<script type="math/tex">y</script>)을 찾는 문제들입니다. image classification에서 주어진 이미지가 있을때, 그 이미지가 개의 이미지인지 고양이의 이미지인지 구별하는 문제등을 생각하면 됩니다. 이러한 모델은 <strong>discriminative model</strong>이라고 합니다. 즉 <script type="math/tex">p(y \mid x)</script>의 분포를 학습하여 이미지를 구별하는데 초점을 맞춘 모델이라고 생각하시면 됩니다. 일반적인 discriminative model의 경우 주어진 이미지를 구분하기 위한 특징점들을 찾아 분류하는 것을 목표로 하고 있습니다. 모델을 사람에 비유한다면 주어진 사진에서 보여지는 동물의 눈, 수염, 귀, 꼬리와 같은 요소를 보고 사진속의 동물이 개인지 고양이인지 구별하는 형태입니다.</p>
+<p>기존에 다루었던 image classification, object detection, image segmentation 문제들은 입력 이미지(\(x\))가 있을때 그에 따른 정답(\(y\))을 찾는 문제들입니다. image classification에서 주어진 이미지가 있을때, 그 이미지가 개의 이미지인지 고양이의 이미지인지 구별하는 문제등을 생각하면 됩니다. 이러한 모델은 <strong>discriminative model</strong>이라고 합니다. 즉 \(p(y \mid x)\)의 분포를 학습하여 이미지를 구별하는데 초점을 맞춘 모델이라고 생각하시면 됩니다. 일반적인 discriminative model의 경우 주어진 이미지를 구분하기 위한 특징점들을 찾아 분류하는 것을 목표로 하고 있습니다. 모델을 사람에 비유한다면 주어진 사진에서 보여지는 동물의 눈, 수염, 귀, 꼬리와 같은 요소를 보고 사진속의 동물이 개인지 고양이인지 구별하는 형태입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/generative-adversarial-network/random-dogs-cats-predictions.png" target="_blank">
@@ -247,7 +247,7 @@
 </a>
 <span class="caption">개와 고양이를 구분하는 문제</span></p>
 
-<p>Dicriminative model을 사용하면서 한번쯤은 생각해봤을 상상이 있습니다. 만약 개의 눈, 수염, 귀, 꼬리 등의 요소가 어떻게 생겼는지를 알고 있으면 이를 이용해 개의 모습을 그릴 수 있지 않을까요? 긴 허리, 짧은 다리, 검은색과 갈색 털, 접힌 귀, 검은 눈동자를 위치에 맞게 그리면 닥스훈트 한마리를 그릴 수 있는 것입니다. 이 생각에서 착안한 것이 바로 <strong>generative model</strong>입니다. 즉, generative model은 데이터의 분포 <script type="math/tex">p(x)</script>를 학습하는 것을 목표로 하는 model을 의미합니다.</p>
+<p>Dicriminative model을 사용하면서 한번쯤은 생각해봤을 상상이 있습니다. 만약 개의 눈, 수염, 귀, 꼬리 등의 요소가 어떻게 생겼는지를 알고 있으면 이를 이용해 개의 모습을 그릴 수 있지 않을까요? 긴 허리, 짧은 다리, 검은색과 갈색 털, 접힌 귀, 검은 눈동자를 위치에 맞게 그리면 닥스훈트 한마리를 그릴 수 있는 것입니다. 이 생각에서 착안한 것이 바로 <strong>generative model</strong>입니다. 즉, generative model은 데이터의 분포 \(p(x)\)를 학습하는 것을 목표로 하는 model을 의미합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/generative-adversarial-network/MiniDachshund1_wb.jpg" target="_blank">
@@ -283,14 +283,14 @@
 
 <p>GAN은 이미지를 생성하기 위하여 2가지 모델을 동시에 사용합니다. <strong>Generator model</strong>과 <strong>discriminator model</strong>이 그것으로 두 모델은 서로에 대해 적대적인 관계를 가집니다. 자주 인용되는 비유로 <strong>화폐 위조범과 경찰</strong>이 있습니다. 화폐 위조범은 경찰의 눈을 속여 <strong>가짜 화폐를 만들고</strong> 경찰은 시중에 돌아다니는 <strong>진짜 화폐와 가짜 화폐를 구분</strong>합니다. 화폐 위조범은 적발을 피하기 위해 최대한 진짜 지폐와 유사하게 위폐를 만들 것이고, 경찰은 최대한 위폐와 진짜 화폐를 구별하기 위해 화폐의 여러 주요 포인트를 살펴볼 것입니다. 이러한 과정을 끝없이 반복하게 되면 <strong>진짜 화폐와 똑같이 생긴 가짜 화폐를 만들게 되는 것</strong>입니다.</p>
 
-<p>GAN은 이러한 두 모델간의 경쟁을 discriminator <script type="math/tex">D</script>와 generator <script type="math/tex">G</script> 사이의 <strong>minimax game</strong>으로 정의합니다. 둘 사이의 점수를 두고 한쪽(<script type="math/tex">G</script>)은 점수를 최소로, 다른 한쪽(<script type="math/tex">D</script>)은 점수를 최대로 하는 게임입니다. 일반적으로 경쟁을 하는 점수는 다음과 같이 표현합니다.</p>
+<p>GAN은 이러한 두 모델간의 경쟁을 discriminator \(D\)와 generator \(G\) 사이의 <strong>minimax game</strong>으로 정의합니다. 둘 사이의 점수를 두고 한쪽(\(G\))은 점수를 최소로, 다른 한쪽(\(D\))은 점수를 최대로 하는 게임입니다. 일반적으로 경쟁을 하는 점수는 다음과 같이 표현합니다.</p>
 
 <p>\begin{equation}
 \DeclareMathOperator{\E}{\mathbb{E}}
 \min_G \max_D V(D, G) = \E_{x \sim {p_{data}(x)}}[ \,\log(D(x))] \, +  \E_{z \sim {p_{z}(z)}}[ \, 1 - \log(D(G(z)))]\, 
 \end{equation}</p>
 
-<p>실제로 D, G를 각각 maximize, minimize하기보다 <script type="math/tex">1 - \log(D(G(z)))</script> 대신 <script type="math/tex">\log(D(G(z)))</script> 를 사용하여 해당 값을 maximize하는 방식으로 GAN을 학습하게 됩니다.</p>
+<p>실제로 D, G를 각각 maximize, minimize하기보다 \(1 - \log(D(G(z)))\) 대신 \(\log(D(G(z)))\) 를 사용하여 해당 값을 maximize하는 방식으로 GAN을 학습하게 됩니다.</p>
 
 <p>이 포스팅은 GAN을 직접 구현하는 것에 초점을 두고 있으므로 GAN의 수렴 여부 증명등 복잡한 수식을 설명하기 보다는 바로 코드를 통해 GAN에 대하여 설명하겠습니다. 처음에 등장한 GAN을 구현하는 것 보다는 조금 더 자주 쓰이는 DCGAN을 구현할 예정입니다. DCGAN은 GAN을 좀 더 개량한 논문으로 이후 등장하는 많은 GAN 논문들의 generator와 discriminator의 architecture를 구성하는데 많은 영감을 준 논문입니다.</p>
 
@@ -308,7 +308,7 @@
 
 <h3 id="datasetsdata-모듈">datasets.data 모듈</h3>
 
-<p><code class="highlighter-rouge">datasets.data</code>모듈은 데이터셋에 관련된 함수와 클래스를 가지고 있습니다. Classification 문제나 Detection, Segmentation 문제와 마찬가지로 이 모듈은 데이터셋을 메모리에 로드하고 학습 과정에서 이들을 미니 배치(minibatch) 단위로 제공합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">datasets.data</code>모듈은 데이터셋에 관련된 함수와 클래스를 가지고 있습니다. Classification 문제나 Detection, Segmentation 문제와 마찬가지로 이 모듈은 데이터셋을 메모리에 로드하고 학습 과정에서 이들을 미니 배치(minibatch) 단위로 제공합니다.</p>
 
 <h4 id="read_data-함수">read_data 함수</h4>
 
@@ -340,7 +340,7 @@
     <span class="k">return</span> <span class="n">X_set</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">read_data</code>함수는 데이터셋을 불러와 각 이미지를 crop하거나 resize하여 <code class="highlighter-rouge">numpy.ndarray</code> 형태로 변환합니다. crop을 하는 이유는 만약 생성하고 싶은 부분이 전체 이미지보다 작은 부분일 경우 해당 영역만을 잘라 generate를 도와주기 위함입니다. 또 generator에서 생성될 이미지 사이즈를 고려하여 resize 작업 역시 진행합니다. Generator의 작업을 원할하게 하기 위하여 학습 이미지를 <strong>-1에서 1사이의 값으로 normalize</strong>합니다. 또, GAN의 성능을 평가하기 위해 이미지의 채널 순서를 맞춰 주는 것이 중요합니다. 이 부분은 Evaluator를 설명하면서 같이 설명하겠습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">read_data</code>함수는 데이터셋을 불러와 각 이미지를 crop하거나 resize하여 <code class="language-plaintext highlighter-rouge">numpy.ndarray</code> 형태로 변환합니다. crop을 하는 이유는 만약 생성하고 싶은 부분이 전체 이미지보다 작은 부분일 경우 해당 영역만을 잘라 generate를 도와주기 위함입니다. 또 generator에서 생성될 이미지 사이즈를 고려하여 resize 작업 역시 진행합니다. Generator의 작업을 원할하게 하기 위하여 학습 이미지를 <strong>-1에서 1사이의 값으로 normalize</strong>합니다. 또, GAN의 성능을 평가하기 위해 이미지의 채널 순서를 맞춰 주는 것이 중요합니다. 이 부분은 Evaluator를 설명하면서 같이 설명하겠습니다.</p>
 
 <h4 id="dataset-클래스">DataSet 클래스</h4>
 
@@ -409,13 +409,13 @@
         <span class="k">return</span> <span class="n">batch_images</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">Dataset</code> 클래스를 이용하여 메모리에 로드된 <code class="highlighter-rouge">X_set</code>을 미니배치(minibatch) 단위로 반환합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">Dataset</code> 클래스를 이용하여 메모리에 로드된 <code class="language-plaintext highlighter-rouge">X_set</code>을 미니배치(minibatch) 단위로 반환합니다.</p>
 
 <h2 id="2-성능-평가--fréchet-inception-distance">(2) 성능 평가 : Fréchet Inception Distance</h2>
 
 <p>GAN의 성능을 평가하는 것은 완벽하지 않습니다. 초창기에는 생성된 이미지를 정성적으로 평가하는 방식으로 진행하였고 그 후에 <strong><a href="https://arxiv.org/pdf/1606.03498.pdf" target="_blank">Inception Score(IS)</a></strong> 가 등장하면서 별도의 네트워크를 이용하여 생성된 이미지의 성능을 평가하기 시작하였습니다. 이 포스팅에서 사용할 성능 평가지표는 <strong><a href="https://arxiv.org/pdf/1706.08500.pdf" target="_blank">Fréchet Inception Distance(FID)</a></strong> 입니다. 두 지표의 이름에서 눈치채셨을 지도 모르겠지만 두 지표 모두 Inception network를 사용하여 성능을 측정합니다.</p>
 
-<p>FID는 간단하게 요약하면 <strong>real data와 fake data의 feature space상에서의 거리</strong>입니다. <strong>Inception network</strong>(Inception V3을 주로 사용합니다.) 를 이용하여 real data와 fake data의 feature를 추출한 뒤, 두 집합의 feature의 <strong>mean과 covariance <script type="math/tex">(m_r,C_r), (m_f,C_f)</script></strong> 를 구한뒤 각 값을 이용하여 거리를 계산합니다. 계산식은 다음과 같습니다.</p>
+<p>FID는 간단하게 요약하면 <strong>real data와 fake data의 feature space상에서의 거리</strong>입니다. <strong>Inception network</strong>(Inception V3을 주로 사용합니다.) 를 이용하여 real data와 fake data의 feature를 추출한 뒤, 두 집합의 feature의 <strong>mean과 covariance \((m_r,C_r), (m_f,C_f)\)</strong> 를 구한뒤 각 값을 이용하여 거리를 계산합니다. 계산식은 다음과 같습니다.</p>
 
 <p>\begin{equation}
 \DeclareMathOperator{\Tr}{Tr}
@@ -424,7 +424,7 @@ FID^2 = ||m_f - m_r||^2_2 + \Tr(C_f + C_r - 2(C_f C_r)^{1/2})
 
 <h3 id="learningfid-모듈">learning.fid 모듈</h3>
 
-<p>FID Evaluator를 구현하기 위해 먼저 <code class="highlighter-rouge">FID</code> 클래스를 구현합니다. 이는 <code class="highlighter-rouge">learning.fid</code> 모듈에 구현하였습니다.</p>
+<p>FID Evaluator를 구현하기 위해 먼저 <code class="language-plaintext highlighter-rouge">FID</code> 클래스를 구현합니다. 이는 <code class="language-plaintext highlighter-rouge">learning.fid</code> 모듈에 구현하였습니다.</p>
 
 <h4 id="fid-클래스">FID 클래스</h4>
 
@@ -522,11 +522,11 @@ FID^2 = ||m_f - m_r||^2_2 + \Tr(C_f + C_r - 2(C_f C_r)^{1/2})
                        <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="n">cov_mean</span><span class="p">))</span>
 </code></pre></div></div>
 
-<p>Pretrain된 Inception V3 network는 직접 구하셔도 되지만 편의를 위해 <a href="https://drive.google.com/file/d/1thIXF4jvG0KluzSEpsg1TCNiKEzh8VFV/view?usp=sharing" target="_blank">여기</a>에서 받는 것을 추천드립니다. 또 FFHQ data의 feature mean, feature covariance는 미리 계산하여 <a href="https://drive.google.com/file/d/14f5cQOCbiAoDODRmVmZvlNsg7wX0U92G/view?usp=sharing" target="_blank">여기</a>에 링크해 놓았으니 직접 계산하셔도 되고 받아서 사용하셔도 됩니다. <code class="highlighter-rouge">extract_inception_features</code>에서 -1에서 1사이의 값을 0부터 255사이의 값으로 바꾸어 Inception network에서 feature를 추출하였고 제공하는 Inception Network가 <strong>rgb의 channel순서</strong>로 입력 이미지가 구성되어있으므로 <strong>채널의 순서를 유의하여 주시기 바랍니다</strong>. Fake data의 mean을 구하기 위해서는 충분한 수의 sample이 있어야 하므로 학습시의 메모리를 고려하여 batch단위로 feature를 뽑도록 하였습니다. 이는 이후 <code class="highlighter-rouge">Evaluator</code> 클래스를 구현하는데 있어 <code class="highlighter-rouge">FID</code> 클래스를 별도로 구현한 이유이기도 합니다.</p>
+<p>Pretrain된 Inception V3 network는 직접 구하셔도 되지만 편의를 위해 <a href="https://drive.google.com/file/d/1thIXF4jvG0KluzSEpsg1TCNiKEzh8VFV/view?usp=sharing" target="_blank">여기</a>에서 받는 것을 추천드립니다. 또 FFHQ data의 feature mean, feature covariance는 미리 계산하여 <a href="https://drive.google.com/file/d/14f5cQOCbiAoDODRmVmZvlNsg7wX0U92G/view?usp=sharing" target="_blank">여기</a>에 링크해 놓았으니 직접 계산하셔도 되고 받아서 사용하셔도 됩니다. <code class="language-plaintext highlighter-rouge">extract_inception_features</code>에서 -1에서 1사이의 값을 0부터 255사이의 값으로 바꾸어 Inception network에서 feature를 추출하였고 제공하는 Inception Network가 <strong>rgb의 channel순서</strong>로 입력 이미지가 구성되어있으므로 <strong>채널의 순서를 유의하여 주시기 바랍니다</strong>. Fake data의 mean을 구하기 위해서는 충분한 수의 sample이 있어야 하므로 학습시의 메모리를 고려하여 batch단위로 feature를 뽑도록 하였습니다. 이는 이후 <code class="language-plaintext highlighter-rouge">Evaluator</code> 클래스를 구현하는데 있어 <code class="language-plaintext highlighter-rouge">FID</code> 클래스를 별도로 구현한 이유이기도 합니다.</p>
 
 <h3 id="learningevaluator-모듈">learning.evaluator 모듈</h3>
 
-<p><code class="highlighter-rouge">learning.evaluator</code> 모듈은 현재까지 학습된 모델의 성능 평가를 위한 ‘evaluator’의 클래스를 담고 있습니다. <code class="highlighter-rouge">Evaluator</code> 클래스는 <a href="http://research.sualab.com/practice/2018/01/17/image-classification-deep-learning.html" target="_blank">image classification 포스팅</a>등에서 이미 구현한 바 있으므로 생략하겠습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">learning.evaluator</code> 모듈은 현재까지 학습된 모델의 성능 평가를 위한 ‘evaluator’의 클래스를 담고 있습니다. <code class="language-plaintext highlighter-rouge">Evaluator</code> 클래스는 <a href="http://research.sualab.com/practice/2018/01/17/image-classification-deep-learning.html" target="_blank">image classification 포스팅</a>등에서 이미 구현한 바 있으므로 생략하겠습니다.</p>
 
 <h4 id="fidevaluator-클래스">FIDEvaluator 클래스</h4>
 
@@ -570,12 +570,12 @@ FID^2 = ||m_f - m_r||^2_2 + \Tr(C_f + C_r - 2(C_f C_r)^{1/2})
         <span class="k">return</span> <span class="n">curr</span> <span class="o">&lt;</span> <span class="n">best</span> <span class="o">*</span> <span class="n">relative_eps</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">Evaluator</code> 클래스를 상속받아 <code class="highlighter-rouge">FIDEvlauator</code> 클래스를 구현하였습니다. 학습된 model의 generate 함수를 통해 fake image를 생성하고 이를 <code class="highlighter-rouge">FID</code> 클래스의 <code class="highlighter-rouge">extract_inception_features</code>함수를 통해 feature를 추출합니다. evaluate를 위한 sample의 사이즈가 커 한번에 feature를 뽑을 수 없기에 minibatch로 나누어 진행합니다. 이후 <code class="highlighter-rouge">calculate_FID</code> 함수를 통해 FID값을 계산합니다.
-낮을 수록 좋은 성능 척도이므로 <code class="highlighter-rouge">mode</code>를 ‘min’으로 <code class="highlighter-rouge">score_threshold</code> 값을 1e-4로 설정하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">Evaluator</code> 클래스를 상속받아 <code class="language-plaintext highlighter-rouge">FIDEvlauator</code> 클래스를 구현하였습니다. 학습된 model의 generate 함수를 통해 fake image를 생성하고 이를 <code class="language-plaintext highlighter-rouge">FID</code> 클래스의 <code class="language-plaintext highlighter-rouge">extract_inception_features</code>함수를 통해 feature를 추출합니다. evaluate를 위한 sample의 사이즈가 커 한번에 feature를 뽑을 수 없기에 minibatch로 나누어 진행합니다. 이후 <code class="language-plaintext highlighter-rouge">calculate_FID</code> 함수를 통해 FID값을 계산합니다.
+낮을 수록 좋은 성능 척도이므로 <code class="language-plaintext highlighter-rouge">mode</code>를 ‘min’으로 <code class="language-plaintext highlighter-rouge">score_threshold</code> 값을 1e-4로 설정하였습니다.</p>
 
 <h2 id="3-러닝-모델-dcgan-deep-convolution-generative-adversarial-network">(3) 러닝 모델: DCGAN (Deep Convolution Generative Adversarial Network)</h2>
 
-<p>러닝 모델로는 앞서 언급한대로 DCGAN을 사용합니다. 다른 포스팅과 마찬가지로 주로 사용하는 층(layer)들을 생성하는 함수를 <code class="highlighter-rouge">models.layers</code>에서 먼저 정의하고 <code class="highlighter-rouge">models.nn</code>모듈에서 일반적인 GAN 모델을 정의하고 이를 DCGAN이 상속 받도록 구현하였습니다.</p>
+<p>러닝 모델로는 앞서 언급한대로 DCGAN을 사용합니다. 다른 포스팅과 마찬가지로 주로 사용하는 층(layer)들을 생성하는 함수를 <code class="language-plaintext highlighter-rouge">models.layers</code>에서 먼저 정의하고 <code class="language-plaintext highlighter-rouge">models.nn</code>모듈에서 일반적인 GAN 모델을 정의하고 이를 DCGAN이 상속 받도록 구현하였습니다.</p>
 
 <h3 id="modelslayers-모듈">models.layers 모듈</h3>
 
@@ -654,12 +654,12 @@ FID^2 = ||m_f - m_r||^2_2 + \Tr(C_f + C_r - 2(C_f C_r)^{1/2})
     <span class="k">return</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">leaky_relu</span><span class="p">(</span><span class="n">bn</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">models.layers</code> 모듈은 신경망을 구성하는데 필요한 layer들에 대해 정의한 모듈입니다. tf.layer 모듈을 이용하여 간편하게 정의하였으며 기존에 사용하던 ReLU이외에 LeakyReLU를 사용한 layer도 구현하였습니다.
+<p><code class="language-plaintext highlighter-rouge">models.layers</code> 모듈은 신경망을 구성하는데 필요한 layer들에 대해 정의한 모듈입니다. tf.layer 모듈을 이용하여 간편하게 정의하였으며 기존에 사용하던 ReLU이외에 LeakyReLU를 사용한 layer도 구현하였습니다.
 LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는 것이 아니라 일정 비율을 입력에 곱한 값을 출력으로 내보내는 함수입니다. DCGAN에서는 discriminator를 구성하는데 사용됩니다. fc_layer는 image classification에서 사용한 함수를 그대로 사용하였습니다.</p>
 
 <h3 id="modelsnn-모듈">models.nn 모듈</h3>
 
-<p><code class="highlighter-rouge">models.nn</code> 모듈은 신경망을 표현하는 클래스를 가지고 있습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">models.nn</code> 모듈은 신경망을 표현하는 클래스를 가지고 있습니다.</p>
 
 <h4 id="gan-클래스">GAN 클래스</h4>
 
@@ -768,7 +768,7 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
         <span class="k">return</span> <span class="n">_image_gen</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">GAN</code> 클래스는 기본 추상 베이스 클래스로, 확장성을 위해 전반적인 GAN을 포괄하도록 구현하였습니다. <code class="highlighter-rouge">_build_generator</code>, <code class="highlighter-rouge">_build_discriminator</code>, <code class="highlighter-rouge">_build_sampler</code>, <code class="highlighter-rouge">_build_loss</code> 함수는 <code class="highlighter-rouge">GAN</code>의 자식 클래스에서 구현하도록 하였고, <code class="highlighter-rouge">generate</code> 함수는 학습한 generator에서 이미지를 생성합니다. <code class="highlighter-rouge">_build_sampler</code> 함수는 기본적으로 <code class="highlighter-rouge">_build_generator</code> 함수와 같지만 학습에 직접적으로 사용하는 것이 아니라 evaluation이나 test 단계에서 사용할 수 있도록 별도의 함수로 구성하였습니다. 또한 <strong><script type="math/tex">z</script></strong> 라고 하는 placeholder를 정의한 것을 확인 할 수 있습니다. 이는 GAN에서 이미지를 생성하는데 중요한 입력으로 <strong>학습이후에 이미지를 생성할때 이미지의 속성을 결정할 vector</strong>가 됩니다.</p>
+<p><code class="language-plaintext highlighter-rouge">GAN</code> 클래스는 기본 추상 베이스 클래스로, 확장성을 위해 전반적인 GAN을 포괄하도록 구현하였습니다. <code class="language-plaintext highlighter-rouge">_build_generator</code>, <code class="language-plaintext highlighter-rouge">_build_discriminator</code>, <code class="language-plaintext highlighter-rouge">_build_sampler</code>, <code class="language-plaintext highlighter-rouge">_build_loss</code> 함수는 <code class="language-plaintext highlighter-rouge">GAN</code>의 자식 클래스에서 구현하도록 하였고, <code class="language-plaintext highlighter-rouge">generate</code> 함수는 학습한 generator에서 이미지를 생성합니다. <code class="language-plaintext highlighter-rouge">_build_sampler</code> 함수는 기본적으로 <code class="language-plaintext highlighter-rouge">_build_generator</code> 함수와 같지만 학습에 직접적으로 사용하는 것이 아니라 evaluation이나 test 단계에서 사용할 수 있도록 별도의 함수로 구성하였습니다. 또한 <strong>\(z\)</strong> 라고 하는 placeholder를 정의한 것을 확인 할 수 있습니다. 이는 GAN에서 이미지를 생성하는데 중요한 입력으로 <strong>학습이후에 이미지를 생성할때 이미지의 속성을 결정할 vector</strong>가 됩니다.</p>
 
 <h4 id="dcgan-클래스">DCGAN 클래스</h4>
 
@@ -871,7 +871,7 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
         <span class="k">return</span> <span class="n">g_loss</span><span class="p">,</span> <span class="n">d_loss</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">_build_generator</code> 함수는 임의의 random vector <script type="math/tex">z</script>로부터 이미지를 생성하는 네트워크를 구성합니다. DCGAN 논문이 많은 영향을 준 부분이 이 부분입니다. 초창기 GAN에서는 generator를 구성할때 주로 Fully-connected layer를 사용하였지만 DCGAN이라는 이름에서 알 수 있듯이 이 논문에서 <strong>Convolution layer</strong> 를 사용하게 됩니다. Generator에서 사용하는 conv layer는 편의상 deconv로 표기 했지만 정식 명칭은 <strong>fractionally-strided convolution</strong>으로 strided convolution이 일반적으로 이미지의 크기를 줄여주는 것과 반대 역할을 하게 됩니다.</p>
+<p><code class="language-plaintext highlighter-rouge">_build_generator</code> 함수는 임의의 random vector \(z\)로부터 이미지를 생성하는 네트워크를 구성합니다. DCGAN 논문이 많은 영향을 준 부분이 이 부분입니다. 초창기 GAN에서는 generator를 구성할때 주로 Fully-connected layer를 사용하였지만 DCGAN이라는 이름에서 알 수 있듯이 이 논문에서 <strong>Convolution layer</strong> 를 사용하게 됩니다. Generator에서 사용하는 conv layer는 편의상 deconv로 표기 했지만 정식 명칭은 <strong>fractionally-strided convolution</strong>으로 strided convolution이 일반적으로 이미지의 크기를 줄여주는 것과 반대 역할을 하게 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/generative-adversarial-network/DCGAN_gen.JPG" target="_blank">
@@ -879,13 +879,13 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
 </a>
 <span class="caption">DCGAN에서 사용한 Generator 구조. 사용한 Dataset이 FFHQ와는 다르므로 일부 값이 변경됨</span></p>
 
-<p><code class="highlighter-rouge">_build_sampler</code>함수는 기본적으로 generator와 같은 network를 사용하는 것을 목적으로 생성합니다. variable을 reuse하여 별도의 망을 만드는 것이 아닌 <code class="highlighter-rouge">_build_generator</code>로 생성된 망을 사용하게 합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">_build_sampler</code>함수는 기본적으로 generator와 같은 network를 사용하는 것을 목적으로 생성합니다. variable을 reuse하여 별도의 망을 만드는 것이 아닌 <code class="language-plaintext highlighter-rouge">_build_generator</code>로 생성된 망을 사용하게 합니다.</p>
 
-<p><code class="highlighter-rouge">_build_discriminator</code> 함수는 <code class="highlighter-rouge">_build_generator</code>에서 생성된 이미지나 학습에 사용된 real 이미지를 입력으로 받아 이 이미지가 real인지 fake인지 1-bit의 logit으로 출력하도록 하는 망을 생성합니다. real이면 1, fake면 0이 나오는 망입니다. fake image와 real image에서의 logit이 다르게 나와야 하므로 <code class="highlighter-rouge">GAN</code> 클래스에서 <code class="highlighter-rouge">self.D_</code>이나 <code class="highlighter-rouge">self.D_logits_</code>라는 별도의 변수를 통해 fake image에 대한 network을 구성합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">_build_discriminator</code> 함수는 <code class="language-plaintext highlighter-rouge">_build_generator</code>에서 생성된 이미지나 학습에 사용된 real 이미지를 입력으로 받아 이 이미지가 real인지 fake인지 1-bit의 logit으로 출력하도록 하는 망을 생성합니다. real이면 1, fake면 0이 나오는 망입니다. fake image와 real image에서의 logit이 다르게 나와야 하므로 <code class="language-plaintext highlighter-rouge">GAN</code> 클래스에서 <code class="language-plaintext highlighter-rouge">self.D_</code>이나 <code class="language-plaintext highlighter-rouge">self.D_logits_</code>라는 별도의 변수를 통해 fake image에 대한 network을 구성합니다.</p>
 
-<p>DCGAN 논문에서 제안하는 바는 사용하는 batch normalization과 activation layer에도 있습니다. <code class="highlighter-rouge">_build_generator</code>의 마지막 layer와 <code class="highlighter-rouge">_build_discriminator</code>의 첫 layer에는 batch normalization을 사용하지 않았습니다. 또, activation layer의 경우 <code class="highlighter-rouge">_build_generator</code>에서는 마지막 layer에 tanh를 적용한 것 이외에 전부 ReLU를 사용하였고, <code class="highlighter-rouge">_build_discriminator</code>에서는 LeakyReLU를 사용하였습니다.</p>
+<p>DCGAN 논문에서 제안하는 바는 사용하는 batch normalization과 activation layer에도 있습니다. <code class="language-plaintext highlighter-rouge">_build_generator</code>의 마지막 layer와 <code class="language-plaintext highlighter-rouge">_build_discriminator</code>의 첫 layer에는 batch normalization을 사용하지 않았습니다. 또, activation layer의 경우 <code class="language-plaintext highlighter-rouge">_build_generator</code>에서는 마지막 layer에 tanh를 적용한 것 이외에 전부 ReLU를 사용하였고, <code class="language-plaintext highlighter-rouge">_build_discriminator</code>에서는 LeakyReLU를 사용하였습니다.</p>
 
-<p><code class="highlighter-rouge">_build_loss</code>함수는 손실함수를 구현하였습니다. 기본적인 손실 함수 자체는 GAN에서 제안한 식을 그대로 사용하였습니다. 먼저 discriminator loss는 real image에서 1이 나와야 하고 fake image에서 0이 나와야 합니다. 따라서 <code class="highlighter-rouge">d_loss_real</code>은 1 bit logit이 1이 나오도록 sigmoid cross-entropy loss를 구성하였고, <code class="highlighter-rouge">d_loss_fake</code>는 1 bit logit이 0이 나오도록 sigmoid cross-entropy loss를 구성하였습니다. 그리고 discriminator loss는 두 loss의 합이 됩니다. 한편 <code class="highlighter-rouge">g_loss</code>는 오직 fake image를 discriminator에 넣었을때 1 bit logit이 1이 나와야 하므로 <code class="highlighter-rouge">d_loss_fake</code>와는 반대로 sigmoid cross-entropy loss를 구성하였습니다. Discriminator, generator는 따로 학습을 해야 하므로 두 loss를 합하지 않고 별도로 저장합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">_build_loss</code>함수는 손실함수를 구현하였습니다. 기본적인 손실 함수 자체는 GAN에서 제안한 식을 그대로 사용하였습니다. 먼저 discriminator loss는 real image에서 1이 나와야 하고 fake image에서 0이 나와야 합니다. 따라서 <code class="language-plaintext highlighter-rouge">d_loss_real</code>은 1 bit logit이 1이 나오도록 sigmoid cross-entropy loss를 구성하였고, <code class="language-plaintext highlighter-rouge">d_loss_fake</code>는 1 bit logit이 0이 나오도록 sigmoid cross-entropy loss를 구성하였습니다. 그리고 discriminator loss는 두 loss의 합이 됩니다. 한편 <code class="language-plaintext highlighter-rouge">g_loss</code>는 오직 fake image를 discriminator에 넣었을때 1 bit logit이 1이 나와야 하므로 <code class="language-plaintext highlighter-rouge">d_loss_fake</code>와는 반대로 sigmoid cross-entropy loss를 구성하였습니다. Discriminator, generator는 따로 학습을 해야 하므로 두 loss를 합하지 않고 별도로 저장합니다.</p>
 
 <h2 id="4-러닝-알고리즘--sgdmomentum">(4) 러닝 알고리즘 : SGD+Momentum</h2>
 
@@ -1100,7 +1100,7 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
             <span class="k">return</span> <span class="n">train_results</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">Optimizer</code> 클래스에서 주목해야 할 부분은 <code class="highlighter-rouge">_step</code> 함수입니다. 일반적으로 discriminator와 generator의 학습을 동등하게 진행되면 좋지만 일반적으로 discriminator가 먼저 학습되는 경우가 많아 <strong>generator를 한번에 두번씩 학습</strong>하게 됩니다. 이 부분은 논문과 다른 부분이며 필요에 따라 generator의 학습을 한번 더 진행하는 등의 시도를 해보실 수 있습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">Optimizer</code> 클래스에서 주목해야 할 부분은 <code class="language-plaintext highlighter-rouge">_step</code> 함수입니다. 일반적으로 discriminator와 generator의 학습을 동등하게 진행되면 좋지만 일반적으로 discriminator가 먼저 학습되는 경우가 많아 <strong>generator를 한번에 두번씩 학습</strong>하게 됩니다. 이 부분은 논문과 다른 부분이며 필요에 따라 generator의 학습을 한번 더 진행하는 등의 시도를 해보실 수 있습니다.</p>
 
 <p>또, 중간중간 이미지가 어떻게 생성되었는지를 확인하기 위해 정해진 sample_z를 이용하여 생성되는 이미지를 저장하여 비교 할 수 있도록 구현합니다. 해당 부분을 구현하게 되면 생성되는 이미지들을 가지고 다음처럼 변화 여부를 확인 할 수도 있습니다.</p>
 
@@ -1162,7 +1162,7 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
 
 <h2 id="학습-수행-및-테스트-결과">학습 수행 및 테스트 결과</h2>
 
-<p><code class="highlighter-rouge">train.py</code> 스크립트에서 실제 학습을 수행하는 과정을 구현하며, <code class="highlighter-rouge">test.py</code> 스크립트에서 테스트 데이터셋에 대해 학습이 완료된 모델을 테스트하여 성능 수치를 보여주고 실제로 생성된 이미지를 그려줍니다. 또, DCGAN이 단순히 이미지를 외워서 그리는 것이 아니라 실제로 생성하는 것을 확인 하기 위해 두 이미지 사이의 interpolation 결과도 확인합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 스크립트에서 실제 학습을 수행하는 과정을 구현하며, <code class="language-plaintext highlighter-rouge">test.py</code> 스크립트에서 테스트 데이터셋에 대해 학습이 완료된 모델을 테스트하여 성능 수치를 보여주고 실제로 생성된 이미지를 그려줍니다. 또, DCGAN이 단순히 이미지를 외워서 그리는 것이 아니라 실제로 생성하는 것을 확인 하기 위해 두 이미지 사이의 interpolation 결과도 확인합니다.</p>
 
 <h3 id="trainpy-스크립트">train.py 스크립트</h3>
 
@@ -1230,16 +1230,16 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
                                 <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">hp_d</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">train.py</code> 스크립트에서는 마찬가지로 3단계로 진행됩니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 스크립트에서는 마찬가지로 3단계로 진행됩니다.</p>
 
 <ol>
   <li>원본 학습 데이터셋을 메모리에 로드하고 이를 이용하여 객체 생성.</li>
   <li>학습 관련 하이퍼파라미터 설정.</li>
-  <li><code class="highlighter-rouge">ConvNet</code> 객체, <code class="highlighter-rouge">Evaluator</code> 객체 및 <code class="highlighter-rouge">Optimizer</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="highlighter-rouge">Optimizer.train</code> 함수를 호출하여 모델 학습을 수행함</li>
+  <li><code class="language-plaintext highlighter-rouge">ConvNet</code> 객체, <code class="language-plaintext highlighter-rouge">Evaluator</code> 객체 및 <code class="language-plaintext highlighter-rouge">Optimizer</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="language-plaintext highlighter-rouge">Optimizer.train</code> 함수를 호출하여 모델 학습을 수행함</li>
 </ol>
 
 <ul>
-  <li>원본 데이터셋 저장 경로, 하이퍼파라미터 등 <code class="highlighter-rouge">FIXME</code>로 표시된 부분은 여러분의 상황에 맞게 수정하시면 됩니다.</li>
+  <li>원본 데이터셋 저장 경로, 하이퍼파라미터 등 <code class="language-plaintext highlighter-rouge">FIXME</code>로 표시된 부분은 여러분의 상황에 맞게 수정하시면 됩니다.</li>
 </ul>
 
 <h3 id="testpy-스크립트">test.py 스크립트</h3>
@@ -1300,7 +1300,7 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
 <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">test.py</code> 스크립트는 모델을 불러와서 여러 실험을 합니다. Random으로 이미지를 생성하기도 하고 interpolated 된 이미지를 생성하기도 하고 FID score를 계산하기도 합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">test.py</code> 스크립트는 모델을 불러와서 여러 실험을 합니다. Random으로 이미지를 생성하기도 하고 interpolated 된 이미지를 생성하기도 하고 FID score를 계산하기도 합니다.</p>
 
 <h2 id="학습-결과-분석">학습 결과 분석</h2>
 

@@ -255,7 +255,7 @@
 
 <h3 id="datasetsdata-모듈">datasets.data 모듈</h3>
 
-<p><code class="highlighter-rouge">datasets.data</code> 모듈은 데이터셋에 관련된 함수와 클래스를 가지고 있습니다. Classification 문제때와 마찬가지로, 이 모듈은 데이터셋을 메모리에 로드하고 학습 및 예측평가 과정에서 미니배치(minibatch) 단위로 제공해주는 역할을 합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">datasets.data</code> 모듈은 데이터셋에 관련된 함수와 클래스를 가지고 있습니다. Classification 문제때와 마찬가지로, 이 모듈은 데이터셋을 메모리에 로드하고 학습 및 예측평가 과정에서 미니배치(minibatch) 단위로 제공해주는 역할을 합니다.</p>
 
 <h4 id="read_data-및-get_best_anchor-함수">read_data 및 get_best_anchor 함수</h4>
 
@@ -345,7 +345,7 @@
     <span class="k">return</span> <span class="n">best_anchor</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">load_data</code> 함수는 위의 형식으로 저장된 데이터셋을 불러와 각 이미지를 원하는 크기로 변환한뒤, ndarray 형태로 반환합니다. 마찬가지로 바운딩 박스가 저장된 annotation 파일을 불러와 get_best_anchor 함수를 이용하여 최적의 anchor에 노말라이즈(normalize)된 바운딩 박스 좌표를 지정하여 ndarray 형태로 반환합니다. 만약 이미지 사이즈가 (416, 416)이고, 앵커가 5개라면 Feature extractor인 DarkNet이 이미지 사이즈를 32배 줄여주기 때문에 그리드맵은 (13, 13)이 되며, 검출할 객체의 센터가 위치한 그리드 중 가장 IOU가 높은 앵커가 물체를 검출할 책임을 갖게 됩니다. 즉, y_set의 형태는 (N, 13, 13, 5, 좌표(4) + confidence(1) + class 개수)로 표현됩니다.</p>
+<p><code class="language-plaintext highlighter-rouge">load_data</code> 함수는 위의 형식으로 저장된 데이터셋을 불러와 각 이미지를 원하는 크기로 변환한뒤, ndarray 형태로 반환합니다. 마찬가지로 바운딩 박스가 저장된 annotation 파일을 불러와 get_best_anchor 함수를 이용하여 최적의 anchor에 노말라이즈(normalize)된 바운딩 박스 좌표를 지정하여 ndarray 형태로 반환합니다. 만약 이미지 사이즈가 (416, 416)이고, 앵커가 5개라면 Feature extractor인 DarkNet이 이미지 사이즈를 32배 줄여주기 때문에 그리드맵은 (13, 13)이 되며, 검출할 객체의 센터가 위치한 그리드 중 가장 IOU가 높은 앵커가 물체를 검출할 책임을 갖게 됩니다. 즉, y_set의 형태는 (N, 13, 13, 5, 좌표(4) + confidence(1) + class 개수)로 표현됩니다.</p>
 
 <h4 id="dataset-클래스">DataSet 클래스</h4>
 
@@ -565,7 +565,7 @@
         <span class="k">return</span> <span class="n">curr</span> <span class="o">&gt;</span> <span class="n">best</span> <span class="o">*</span> <span class="n">relative_eps</span>
 </code></pre></div></div>
 
-<p>재현율을 성능 평가 척도로 사용하기 위해 상속받아 RecallEvaluator 클래스를 구현하였습니다. <code class="highlighter-rouge">score</code> 함수에서 재현율을 계산하기 위해, learning.utils 모듈에 cal_recall 함수를 구현해두었습니다. 재현율은 높을 수록 좋기에 <code class="highlighter-rouge">mode</code> 함수는 max로 <code class="highlighter-rouge">is_better</code> 함수는 특정 임계값을 넘었을 때 최고 성능이 바뀌도록 구현하였습니다.</p>
+<p>재현율을 성능 평가 척도로 사용하기 위해 상속받아 RecallEvaluator 클래스를 구현하였습니다. <code class="language-plaintext highlighter-rouge">score</code> 함수에서 재현율을 계산하기 위해, learning.utils 모듈에 cal_recall 함수를 구현해두었습니다. 재현율은 높을 수록 좋기에 <code class="language-plaintext highlighter-rouge">mode</code> 함수는 max로 <code class="language-plaintext highlighter-rouge">is_better</code> 함수는 특정 임계값을 넘었을 때 최고 성능이 바뀌도록 구현하였습니다.</p>
 
 <h2 id="러닝-모델-yolov2">러닝 모델: YOLOv2</h2>
 
@@ -573,7 +573,7 @@
 
 <h3 id="modelslayers-모듈">models.layers 모듈</h3>
 
-<p><code class="highlighter-rouge">models.layers</code> 모듈은 classification 문제때와 거의 같으며, 추가로 batchNormalization layer를 함수로 정의하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">models.layers</code> 모듈은 classification 문제때와 거의 같으며, 추가로 batchNormalization layer를 함수로 정의하였습니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">weight_variable</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
     <span class="s">"""
@@ -685,7 +685,7 @@
 
 <h3 id="modelsnn-모듈">models.nn 모듈</h3>
 
-<p><code class="highlighter-rouge">models.nn</code> 모듈은 마찬가지로 신경망을 표현하는 클래스를 가지고 있습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">models.nn</code> 모듈은 마찬가지로 신경망을 표현하는 클래스를 가지고 있습니다.</p>
 
 <h4 id="detectnet-클래스">DetectNet 클래스</h4>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DetectNet</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
@@ -765,7 +765,7 @@
         <span class="k">return</span> <span class="n">_y_pred</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">DetectNet</code> 클래스는 , 기본 추상 베이스 클래스로, 확장성을 위해 전반적인 Detection Network를 포괄하도록 구현하였습니다. <code class="highlighter-rouge">_build_model</code> 과 <code class="highlighter-rouge">_build_loss</code> 함수는 <code class="highlighter-rouge">DetectNet</code>의 자식 클래스에서 구현하도록 하였고, <code class="highlighter-rouge">predict</code> 함수는 모델의 예측 결과를 반환합니다. 보통 Detection의 예측 결과는 nms(Non Maximum Suppression)을 거치지 않았을 때 총 바운딩 박스마다 좌표와 클래스 확률을 나타내는데, <strong>YOLO</strong>의 경우 background class의 확률이 없는 대신, 바운딩 박스의 신뢰도(confidence) 점수를 가지고 있습니다. 하지만 전반적인 모양은 거의 같기 때문에 베이스 클래스에서 구현하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">DetectNet</code> 클래스는 , 기본 추상 베이스 클래스로, 확장성을 위해 전반적인 Detection Network를 포괄하도록 구현하였습니다. <code class="language-plaintext highlighter-rouge">_build_model</code> 과 <code class="language-plaintext highlighter-rouge">_build_loss</code> 함수는 <code class="language-plaintext highlighter-rouge">DetectNet</code>의 자식 클래스에서 구현하도록 하였고, <code class="language-plaintext highlighter-rouge">predict</code> 함수는 모델의 예측 결과를 반환합니다. 보통 Detection의 예측 결과는 nms(Non Maximum Suppression)을 거치지 않았을 때 총 바운딩 박스마다 좌표와 클래스 확률을 나타내는데, <strong>YOLO</strong>의 경우 background class의 확률이 없는 대신, 바운딩 박스의 신뢰도(confidence) 점수를 가지고 있습니다. 하지만 전반적인 모양은 거의 같기 때문에 베이스 클래스에서 구현하였습니다.</p>
 
 <h4 id="yolo-클래스">YOLO 클래스</h4>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">YOLO</span><span class="p">(</span><span class="n">DetectNet</span><span class="p">):</span>
@@ -1098,11 +1098,11 @@
 
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">YOLO</code> 클래스는 우선 YOLO에서 추가로 사용되는 변수를 생성합니다. Classification과 다르게 Detection에서 학습에서 사용되는 라벨(y)은 각 신경망마다 다른 경우가 많기 때문에 자식 클래스에서 구현하였습니다. 또 그리드의 크기와 앵커 개수 등을 추가로 생성하여 이후 손실 함수에 사용되게 하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">YOLO</code> 클래스는 우선 YOLO에서 추가로 사용되는 변수를 생성합니다. Classification과 다르게 Detection에서 학습에서 사용되는 라벨(y)은 각 신경망마다 다른 경우가 많기 때문에 자식 클래스에서 구현하였습니다. 또 그리드의 크기와 앵커 개수 등을 추가로 생성하여 이후 손실 함수에 사용되게 하였습니다.</p>
 
 <p>아키텍쳐 부분에서는 원 논문의 Darknet(layer1 ~ layer19) 및 YOLO Detector(layer20 ~ layer22)부분을 최대한 같게 구현하였습니다. 원 논문에서는 Darknet을 ImageNet Challenge 데이터셋으로 학습시켜 Feature extractor 성능을 끌어올렸으나, 이번 포스팅에선 그 부분을 생략하였습니다.</p>
 
-<p>손실 함수의 경우 Classification 때보다 다소 복잡합니다. dataset.data 모듈에서 설명한 것과 같이 책임을 갖는 앵커의 경우 검출할 객체의 좌표, 그 박스의 신뢰도(confidence), 클래스의 확률(class_probs)의 차이의 제곱을 총 손실로 가지며, 책임이 없는 앵커는 신뢰도가 0이 되게끔 손실을 줘 학습을 진행합니다. 제 부족한 설명으로 이해가 잘 안될 것 같은데요, 앞서 정의한 <code class="highlighter-rouge">_build_loss</code> 함수 부분과 밑의 손실 함수 수식을 차근차근 따라가면 이해에 큰 도움이 될 것 같습니다!</p>
+<p>손실 함수의 경우 Classification 때보다 다소 복잡합니다. dataset.data 모듈에서 설명한 것과 같이 책임을 갖는 앵커의 경우 검출할 객체의 좌표, 그 박스의 신뢰도(confidence), 클래스의 확률(class_probs)의 차이의 제곱을 총 손실로 가지며, 책임이 없는 앵커는 신뢰도가 0이 되게끔 손실을 줘 학습을 진행합니다. 제 부족한 설명으로 이해가 잘 안될 것 같은데요, 앞서 정의한 <code class="language-plaintext highlighter-rouge">_build_loss</code> 함수 부분과 밑의 손실 함수 수식을 차근차근 따라가면 이해에 큰 도움이 될 것 같습니다!</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/image-detection-deep-learning/yolo_loss_function.jpg" target="_blank">
@@ -1330,11 +1330,11 @@
             <span class="bp">self</span><span class="p">.</span><span class="n">num_bad_epochs</span> <span class="o">=</span> <span class="mi">0</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">Optimizer</code> 클래스에서 하는 일은 이전 Classification 문제와 거의 같기 때문에 추가로 설명은 하지 않겠습니다. 이전 포스팅의 자세한 설명을 참고해주세요! <code class="highlighter-rouge">MomentumOptimizer</code> 클래스 역시 거의 같지만 BatchNormalization 층을 학습하기 위하여 extra_update_ops를 추가로 정의하고 tf.control_dependecies를 이용하여 학습을 시켜줍니다. 이를 정의하지 않으면 BatchNormalization 층이 학습이 되지 않아 전체 신경망이 제대로 작동하지 않을 가능성이 큽니다. 이외에는 모두 같습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">Optimizer</code> 클래스에서 하는 일은 이전 Classification 문제와 거의 같기 때문에 추가로 설명은 하지 않겠습니다. 이전 포스팅의 자세한 설명을 참고해주세요! <code class="language-plaintext highlighter-rouge">MomentumOptimizer</code> 클래스 역시 거의 같지만 BatchNormalization 층을 학습하기 위하여 extra_update_ops를 추가로 정의하고 tf.control_dependecies를 이용하여 학습을 시켜줍니다. 이를 정의하지 않으면 BatchNormalization 층이 학습이 되지 않아 전체 신경망이 제대로 작동하지 않을 가능성이 큽니다. 이외에는 모두 같습니다.</p>
 
 <h2 id="학습-수행-및-테스트-결과">학습 수행 및 테스트 결과</h2>
 
-<p><code class="highlighter-rouge">train.py</code> 스크립트에서 실제 학습을 수행하는 과정을 구현하며, <code class="highlighter-rouge">test.py</code> 스크립트에서 테스트 데이터셋에 대해 학습이 완료된 모델을 테스트하여 성능 수치를 보여주고 실제로 바운딩 박스도 그려줍니다. 혹, 레이블이 없는 데이터셋에 대해서 그려보고 싶은 분들을 위해 <code class="highlighter-rouge">draw.py</code> 스크립트도 추가 구현하였으니 저장소에서 참고하시길 바랍니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 스크립트에서 실제 학습을 수행하는 과정을 구현하며, <code class="language-plaintext highlighter-rouge">test.py</code> 스크립트에서 테스트 데이터셋에 대해 학습이 완료된 모델을 테스트하여 성능 수치를 보여주고 실제로 바운딩 박스도 그려줍니다. 혹, 레이블이 없는 데이터셋에 대해서 그려보고 싶은 분들을 위해 <code class="language-plaintext highlighter-rouge">draw.py</code> 스크립트도 추가 구현하였으니 저장소에서 참고하시길 바랍니다.</p>
 
 <h3 id="trainpy-스크립트">train.py 스크립트</h3>
 
@@ -1384,16 +1384,16 @@
 <span class="n">train_results</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">hp_d</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">train.py</code> 스크립트에서는 마찬가지로 3단계로 진행됩니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 스크립트에서는 마찬가지로 3단계로 진행됩니다.</p>
 
 <ol>
   <li>원본 학습 데이터셋을 메모리에 로드하고, 이를 학습 데이터셋(90%)과 검증 데이터셋(10%)으로 나눠 객체 생성.</li>
   <li>학습 관련 하이퍼파라미터 설정.</li>
-  <li><code class="highlighter-rouge">ConvNet</code> 객체, <code class="highlighter-rouge">Evaluator</code> 객체 및 <code class="highlighter-rouge">Optimizer</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="highlighter-rouge">Optimizer.train</code> 함수를 호출하여 모델 학습을 수행함</li>
+  <li><code class="language-plaintext highlighter-rouge">ConvNet</code> 객체, <code class="language-plaintext highlighter-rouge">Evaluator</code> 객체 및 <code class="language-plaintext highlighter-rouge">Optimizer</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="language-plaintext highlighter-rouge">Optimizer.train</code> 함수를 호출하여 모델 학습을 수행함</li>
 </ol>
 
 <ul>
-  <li>원본 데이터셋 저장 경로, 하이퍼파라미터 등 <code class="highlighter-rouge">FIXME</code>로 표시된 부분은 여러분의 상황에 맞게 수정하시면 됩니다.</li>
+  <li>원본 데이터셋 저장 경로, 하이퍼파라미터 등 <code class="language-plaintext highlighter-rouge">FIXME</code>로 표시된 부분은 여러분의 상황에 맞게 수정하시면 됩니다.</li>
 </ul>
 
 <h3 id="testpy-스크립트">test.py 스크립트</h3>
@@ -1451,7 +1451,7 @@
     <span class="n">boxed_img</span> <span class="o">=</span> <span class="n">draw_pred_boxes</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">bboxes</span><span class="p">,</span> <span class="n">class_map</span><span class="p">)</span>
     <span class="n">cv2</span><span class="p">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">draw_path</span><span class="p">,</span> <span class="n">boxed_img</span><span class="p">)</span>
 </code></pre></div></div>
-<p><code class="highlighter-rouge">test.py</code> 스크립트도 비슷하게 4단계 과정을 거쳐 성능을 측정하고 이미지에 예측된 오브젝트 바운딩 박스를 그려줍니다.</p>
+<p><code class="language-plaintext highlighter-rouge">test.py</code> 스크립트도 비슷하게 4단계 과정을 거쳐 성능을 측정하고 이미지에 예측된 오브젝트 바운딩 박스를 그려줍니다.</p>
 
 <h2 id="학습-결과-분석">학습 결과 분석</h2>
 

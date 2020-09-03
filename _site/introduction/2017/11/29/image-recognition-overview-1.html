@@ -287,7 +287,7 @@
 </a>
 <span class="caption">PASCAL VOC Challenge에서 다루는 20가지 클래스<br /><small>(좌측 절반 10개: ‘aeroplane’, ‘bicycle’, ‘bird’, ‘boat’, ‘bottle’, ‘bus’, ‘car’, ‘cat’, ‘chair’, ‘cow’,<br /> 우측 절반 10개: ‘dining table’, ‘dog’, ‘horse’, ‘motorbike’, ‘person’, ‘potted plant’, ‘sheep’, ‘sofa’, ‘train’, ‘TV/monitor’)</small></span></p>
 
-<p>PASCAL VOC Challenge를 비롯한 대부분의 이미지 인식 대회의 Classification 문제에서는, 주어진 이미지 안에 특정 클래스의 사물이 존재할 ‘가능성’ 내지는 ‘믿음’을 나타내는 <strong>신뢰도 점수(confidence score)</strong>를 제출하도록 요구합니다. 즉, ‘주어진 이미지 안에 클래스 X의 사물이 있다’는 식의 단정적인 결론 대신, ‘주어진 이미지 안에 클래스 X의 사물이 존재할 가능성이 <script type="math/tex">s_X</script>, 클래스 Y의 사물이 존재할 가능성이 <script type="math/tex">s_Y</script>, 클래스 Z의 사물이 존재할 가능성이 <script type="math/tex">s_Z</script>, …’ 식의 결과물을 제출하도록 요구하고, 이를 통해 추후 정답 여부 확인 시 해당 결과물에 대한 사후적인 해석의 여지를 두게 되는 것입니다.</p>
+<p>PASCAL VOC Challenge를 비롯한 대부분의 이미지 인식 대회의 Classification 문제에서는, 주어진 이미지 안에 특정 클래스의 사물이 존재할 ‘가능성’ 내지는 ‘믿음’을 나타내는 <strong>신뢰도 점수(confidence score)</strong>를 제출하도록 요구합니다. 즉, ‘주어진 이미지 안에 클래스 X의 사물이 있다’는 식의 단정적인 결론 대신, ‘주어진 이미지 안에 클래스 X의 사물이 존재할 가능성이 \(s_X\), 클래스 Y의 사물이 존재할 가능성이 \(s_Y\), 클래스 Z의 사물이 존재할 가능성이 \(s_Z\), …’ 식의 결과물을 제출하도록 요구하고, 이를 통해 추후 정답 여부 확인 시 해당 결과물에 대한 사후적인 해석의 여지를 두게 되는 것입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/image-recognition-overview-1/classification-model.svg" target="_blank">
@@ -335,7 +335,7 @@
 \text{정확도} = \frac{\text{올바르게 분류한 이미지 수}} {\text{전체 이미지 수}}
 \end{equation}</p>
 
-<p>단일 사물 분류 문제에서는,  위에서 정의된 정확도를 평가 척도로 즉각 사용하여도 크게 문제가 없습니다. 예를 들어, 아래와 같이 전체 테스트용 이미지가 10개 있었다고 할 때, 분류 모델이 이들 중 7개를 올바르게 예측했다면, 정확도는 <script type="math/tex">7 / 10 = 0.7</script>(<script type="math/tex">70\%</script>)이 됩니다.</p>
+<p>단일 사물 분류 문제에서는,  위에서 정의된 정확도를 평가 척도로 즉각 사용하여도 크게 문제가 없습니다. 예를 들어, 아래와 같이 전체 테스트용 이미지가 10개 있었다고 할 때, 분류 모델이 이들 중 7개를 올바르게 예측했다면, 정확도는 \(7 / 10 = 0.7\)(\(70\%\))이 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/image-recognition-overview-1/accuracy-example.svg" target="_blank">
@@ -347,7 +347,7 @@
 
 <p>그러나, 복수 사물 분류 문제에서는, 위의 정확도를 그대로 사용하기 곤란해지는 상황이 발생합니다. 이 때문에, 정확도 대신 <strong>정밀도(precision)</strong> 및 <strong>재현율(recall)</strong> 등의 평가 척도를 사용합니다. 정밀도와 재현율은 하나의 클래스에 대하여 (다른 클래스와는 독립적으로) 매겨지는 평가 척도입니다.</p>
 
-<p>Classification 문제에서의 어느 특정 클래스 <script type="math/tex">c</script>의 정밀도는, <em>분류 모델이 <script type="math/tex">c</script>일 것으로 예측한 이미지 수 대비, 분류 모델이 올바르게 분류한 클래스 <script type="math/tex">c</script> 이미지 수</em>로 정의합니다. 한편, 클래스 <script type="math/tex">c</script>의 재현율은, <em>전체 클래스 <script type="math/tex">c</script> 이미지 수 대비, 분류 모델이 올바르게 분류한 클래스 <script type="math/tex">c</script> 이미지 수</em>로 정의합니다.</p>
+<p>Classification 문제에서의 어느 특정 클래스 \(c\)의 정밀도는, <em>분류 모델이 \(c\)일 것으로 예측한 이미지 수 대비, 분류 모델이 올바르게 분류한 클래스 \(c\) 이미지 수</em>로 정의합니다. 한편, 클래스 \(c\)의 재현율은, <em>전체 클래스 \(c\) 이미지 수 대비, 분류 모델이 올바르게 분류한 클래스 \(c\) 이미지 수</em>로 정의합니다.</p>
 
 <p>\begin{equation}
 \text{클래스 c의 정밀도} = \frac{\text{올바르게 분류한 클래스 c 이미지 수}} {\text{클래스 c일 것으로 예측한 이미지 수}}
@@ -357,7 +357,7 @@
 \text{클래스 c의 재현율} = \frac{\text{올바르게 분류한 클래스 c 이미지 수}} {\text{전체 클래스 c 이미지 수}}
 \end{equation}</p>
 
-<p>각 클래스에 대한 정밀도 및 재현율을 계산한 뒤, 이들 전체의 대표값(representative value)을 취하고, 이를 최종적인 평가 척도로 삼을 수 있습니다. 구체적으로, 전체 <script type="math/tex">C</script>개 클래스에 대한 평균 정밀도 및 평균 재현율을 계산하고자 한다면, 아래와 같은 공식을 사용할 수 있습니다(이 때, ‘클래스 <script type="math/tex">c</script> 이미지’란 클래스 <script type="math/tex">c</script>에 해당하는 사물을 포함하고 있는 이미지를 지칭합니다).</p>
+<p>각 클래스에 대한 정밀도 및 재현율을 계산한 뒤, 이들 전체의 대표값(representative value)을 취하고, 이를 최종적인 평가 척도로 삼을 수 있습니다. 구체적으로, 전체 \(C\)개 클래스에 대한 평균 정밀도 및 평균 재현율을 계산하고자 한다면, 아래와 같은 공식을 사용할 수 있습니다(이 때, ‘클래스 \(c\) 이미지’란 클래스 \(c\)에 해당하는 사물을 포함하고 있는 이미지를 지칭합니다).</p>
 
 <p>\begin{equation}
 \text{평균 정밀도} = \frac{1}{C} \sum_{c=1}^{C} \text{(클래스 c의 정밀도)}
@@ -377,7 +377,7 @@
 <p><a href="http://research.sualab.com/assets/images/image-recognition-overview-1/precision-per-class-example.svg" target="_blank">
   <img class="large-image" src="http://research.sualab.com/assets/images/image-recognition-overview-1/precision-per-class-example.svg" alt="복수 사물 분류 문제에서의 클래스 별 정밀도 계산 예시&lt;br&gt;&lt;small&gt;(그림에 제시된 3개의 클래스에 대한 전체 평균 정밀도는 $$(0.4+0.6+0.4)/3 = 0.47(47\%)$$)&lt;/small&gt;" />
 </a>
-<span class="caption">복수 사물 분류 문제에서의 클래스 별 정밀도 계산 예시<br /><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 정밀도는 <script type="math/tex">(0.4+0.6+0.4)/3 = 0.47(47\%)</script>)</small></span></p>
+<span class="caption">복수 사물 분류 문제에서의 클래스 별 정밀도 계산 예시<br /><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 정밀도는 \((0.4+0.6+0.4)/3 = 0.47(47\%)\))</small></span></p>
 
 <p>다음으로 평균 재현율을 계산하는 구체적인 과정을 보면, 아래 그림과 같이 원본 테스트 이미지들을 실제 클래스를 기준으로 나눈 후, 각 클래스에 대하여 재현율을 따로 계산한 뒤, 이렇게 얻어진 클래스 별 재현율의 평균을 계산합니다.</p>
 
@@ -385,7 +385,7 @@
 <p><a href="http://research.sualab.com/assets/images/image-recognition-overview-1/recall-per-class-example.svg" target="_blank">
   <img class="large-image" src="http://research.sualab.com/assets/images/image-recognition-overview-1/recall-per-class-example.svg" alt="복수 사물 분류 문제에서의 클래스 별 재현율 계산 예시&lt;br&gt;&lt;small&gt;(그림에 제시된 3개의 클래스에 대한 전체 평균 재현율은 $$(0.6+1.0+0.8)/3 = 0.8(80\%)$$)&lt;/small&gt;" />
 </a>
-<span class="caption">복수 사물 분류 문제에서의 클래스 별 재현율 계산 예시<br /><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 재현율은 <script type="math/tex">(0.6+1.0+0.8)/3 = 0.8(80\%)</script>)</small></span></p>
+<span class="caption">복수 사물 분류 문제에서의 클래스 별 재현율 계산 예시<br /><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 재현율은 \((0.6+1.0+0.8)/3 = 0.8(80\%)\))</small></span></p>
 
 <h4 id="신뢰도-점수의-문턱값에-따른-평가-척도-수치의-변화-가능성">신뢰도 점수의 문턱값에 따른 평가 척도 수치의 변화 가능성</h4>
 
@@ -401,9 +401,9 @@
 <p><a href="http://research.sualab.com/assets/images/image-recognition-overview-1/threshold-to-classification-results.svg" target="_blank">
   <img class="full-image" src="http://research.sualab.com/assets/images/image-recognition-overview-1/threshold-to-classification-results.svg" alt="'car' 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 표&lt;br&gt;&lt;small&gt;(정밀도 n/a의 경우, 클래스 $$c$$로 예측한 이미지 수가 0개이므로 계산이 불가함을 나타냄)&lt;/small&gt;" />
 </a>
-<span class="caption">‘car’ 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 표<br /><small>(정밀도 n/a의 경우, 클래스 <script type="math/tex">c</script>로 예측한 이미지 수가 0개이므로 계산이 불가함을 나타냄)</small></span></p>
+<span class="caption">‘car’ 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 표<br /><small>(정밀도 n/a의 경우, 클래스 \(c\)로 예측한 이미지 수가 0개이므로 계산이 불가함을 나타냄)</small></span></p>
 
-<p>위 그림에서는 편의 상 문턱값을 <script type="math/tex">1.0</script> 간격으로 조정하면서 정밀도 및 재현율을 측정한 것인데, 문턱값의 조정 간격을 더 짧게 하고 정밀도와 재현율을 측정하면 아래와 같은 형태의 플롯을 얻을 수 있습니다.</p>
+<p>위 그림에서는 편의 상 문턱값을 \(1.0\) 간격으로 조정하면서 정밀도 및 재현율을 측정한 것인데, 문턱값의 조정 간격을 더 짧게 하고 정밀도와 재현율을 측정하면 아래와 같은 형태의 플롯을 얻을 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/image-recognition-overview-1/precision-recall-to-threshold-plot.svg" target="_blank">
@@ -411,7 +411,7 @@
 </a>
 <span class="caption">‘car’ 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 플롯</span></p>
 
-<p>위 플롯에서, 정밀도 혹은 재현율이 변화하는 지점만을 포착하여, 이들 지점에서의 <script type="math/tex">(재현율, 정밀도)</script>를 아래 그림과 같이 2차원 평면 상에 나타내는 것이 더 일반적인 표현 방법에 해당합니다. 이를 <strong>정밀도-재현율 곡선(precision-recall curve)</strong>이라고 부릅니다.</p>
+<p>위 플롯에서, 정밀도 혹은 재현율이 변화하는 지점만을 포착하여, 이들 지점에서의 \((재현율, 정밀도)\)를 아래 그림과 같이 2차원 평면 상에 나타내는 것이 더 일반적인 표현 방법에 해당합니다. 이를 <strong>정밀도-재현율 곡선(precision-recall curve)</strong>이라고 부릅니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/image-recognition-overview-1/precision-recall-curve-plot.svg" target="_blank">
@@ -419,7 +419,7 @@
 </a>
 <span class="caption">‘car’ 클래스의 문턱값에 따른, 정밀도-재현율 곡선 플롯</span></p>
 
-<p>위의 사례에서는, ‘car’ 클래스의 문턱값을 약 <script type="math/tex">2.3</script> 정도로 설정했을 때, 정밀도 및 재현율 모두 <script type="math/tex">0.8</script>로 적당히 높은 수치를 기록했습니다. 아마도 여러분들께서는 위와 같이 문턱값을 조정하면서 테스트 이미지들에 대한 채점 결과를 관찰하여, 높은 수치의 정밀도 혹은 재현율을 발휘하는 문턱값을 결정하면 될 것 같다는 충동이 들 것입니다.</p>
+<p>위의 사례에서는, ‘car’ 클래스의 문턱값을 약 \(2.3\) 정도로 설정했을 때, 정밀도 및 재현율 모두 \(0.8\)로 적당히 높은 수치를 기록했습니다. 아마도 여러분들께서는 위와 같이 문턱값을 조정하면서 테스트 이미지들에 대한 채점 결과를 관찰하여, 높은 수치의 정밀도 혹은 재현율을 발휘하는 문턱값을 결정하면 될 것 같다는 충동이 들 것입니다.</p>
 
 <p>그런데, 사실 이런 방식으로 최적의 문턱값을 결정하여 최종 성능을 뽑아내면, 그 결과는 현재 가지고 있는 테스트 이미지들에 한해서만 지나치게 ‘낙관적인(optimistic)’ 결과가 되어 버립니다. 즉, 새로운 테스트 이미지가 들어오는 상황에서 발휘할 수 있는 ‘일반적인 성능’이라고 담보하기 어려워지는 것입니다.</p>
 
