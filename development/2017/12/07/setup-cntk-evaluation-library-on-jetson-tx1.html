@@ -238,7 +238,7 @@
   </li>
 </ol>
 
-<p>TX1에서 개발을 진행할 때는 <code class="highlighter-rouge">jetson_clocks.sh</code> 스크립트를 실행하는 것이 좋습니다. 이 스크립트는 TX1의 CPU, GPU 및 EMC(메모리 컨트롤러) 클럭을 최대로 설정해줍니다. 이 스크립트는 JetPack을 설치하면 홈 디렉토리에 복사되어 있습니다.</p>
+<p>TX1에서 개발을 진행할 때는 <code class="language-plaintext highlighter-rouge">jetson_clocks.sh</code> 스크립트를 실행하는 것이 좋습니다. 이 스크립트는 TX1의 CPU, GPU 및 EMC(메모리 컨트롤러) 클럭을 최대로 설정해줍니다. 이 스크립트는 JetPack을 설치하면 홈 디렉토리에 복사되어 있습니다.</p>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo</span> ~/jetson_clocks.sh
 </code></pre></div></div>
 
@@ -254,7 +254,7 @@
   <li>Protobuf 3.1.0</li>
 </ul>
 
-<p>그리고 CNTK <code class="highlighter-rouge">configure</code> 스크립트가 위 라이브러리를 잘 찾을 수 있도록 시스템 폴더에 살짝 손을 대는 과정을 거치도록 하겠습니다.</p>
+<p>그리고 CNTK <code class="language-plaintext highlighter-rouge">configure</code> 스크립트가 위 라이브러리를 잘 찾을 수 있도록 시스템 폴더에 살짝 손을 대는 과정을 거치도록 하겠습니다.</p>
 
 <p>여기까지 끝나면 CNTK를 빌드할 수 있습니다. GPU 기능이 활성화된 2.1 버전을 빌드하도록 하겠습니다.</p>
 
@@ -277,7 +277,7 @@
 
 <p>빌드가 완료되면 다음과 같이 LAPACK 및 LAPACKE 라이브러리까지 빌드되었다고 나와야 합니다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> OpenBLAS build complete. (BLAS CBLAS LAPACK LAPACKE)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> OpenBLAS build complete. (BLAS CBLAS LAPACK LAPACKE)
 
   OS               ... Linux             
   Architecture     ... arm64               
@@ -331,7 +331,7 @@
 
 <h2 id="추가-설정">추가 설정</h2>
 
-<p>CNTK <code class="highlighter-rouge">configure</code> 스크립트가 우리가 설치한 라이브러리들을 알아볼 수 있도록 심볼릭 링크(symbolic link)를 생성하도록 하겠습니다.</p>
+<p>CNTK <code class="language-plaintext highlighter-rouge">configure</code> 스크립트가 우리가 설치한 라이브러리들을 알아볼 수 있도록 심볼릭 링크(symbolic link)를 생성하도록 하겠습니다.</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># make symbolic links for CUDNN</span>
 <span class="nv">$ </span><span class="nb">sudo mkdir</span> /usr/local/cudnn-6.0/cuda/include <span class="nt">-p</span>
@@ -381,7 +381,7 @@
                                                <span class="nv">$PWD</span>/bin/CNTKLibraryCPPEvalExamples
 </code></pre></div></div>
 
-<p>빌드 도중 <code class="highlighter-rouge">g++: internal compiler error: Killed (program cc1plus)</code> 에러가 발생한다면 메모리 부족 문제일 가능성이 큽니다. <code class="highlighter-rouge">make</code>시에 <code class="highlighter-rouge">-j</code> 옵션은 되도록 주지 않는 것이 좋고, 웹브라우저같은 다른 어플리케이션은 종료시킨 상태로 컴파일을 하는 것이 좋습니다.</p>
+<p>빌드 도중 <code class="language-plaintext highlighter-rouge">g++: internal compiler error: Killed (program cc1plus)</code> 에러가 발생한다면 메모리 부족 문제일 가능성이 큽니다. <code class="language-plaintext highlighter-rouge">make</code>시에 <code class="language-plaintext highlighter-rouge">-j</code> 옵션은 되도록 주지 않는 것이 좋고, 웹브라우저같은 다른 어플리케이션은 종료시킨 상태로 컴파일을 하는 것이 좋습니다.</p>
 
 <p>빌드가 끝나면 하기 경로에 다음과 같이 3개의 라이브러리가 빌드되었음을 확인할 수 있습니다.</p>
 
@@ -397,7 +397,7 @@
 
 <h1 id="테스트">테스트</h1>
 
-<p>테스트를 위해서 <code class="highlighter-rouge">01_OneHidden.model</code> 파일이 필요합니다. 이 파일은 <a href="https://github.com/nglee/CNTK/tree/master/Examples/Image/GettingStarted">여기</a>에 있는 설명을 따라 <code class="highlighter-rouge">01_OneHidden.cntk</code>를 학습시키면 얻을 수 있습니다. 저는 윈도우 머신에서 이 모델을 학습시켰고 그것을 TX1으로 복사해서 돌려보았습니다. <code class="highlighter-rouge">01_OneHidden.model</code>은 <code class="highlighter-rouge">CNTKLibraryCPPEvalExamples</code>와 같은 디렉토리에 위치해야 합니다.</p>
+<p>테스트를 위해서 <code class="language-plaintext highlighter-rouge">01_OneHidden.model</code> 파일이 필요합니다. 이 파일은 <a href="https://github.com/nglee/CNTK/tree/master/Examples/Image/GettingStarted">여기</a>에 있는 설명을 따라 <code class="language-plaintext highlighter-rouge">01_OneHidden.cntk</code>를 학습시키면 얻을 수 있습니다. 저는 윈도우 머신에서 이 모델을 학습시켰고 그것을 TX1으로 복사해서 돌려보았습니다. <code class="language-plaintext highlighter-rouge">01_OneHidden.model</code>은 <code class="language-plaintext highlighter-rouge">CNTKLibraryCPPEvalExamples</code>와 같은 디렉토리에 위치해야 합니다.</p>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">nvidia@tegra-ubuntu:~/CNTK/build/release$</span><span class="w"> </span><span class="nb">cd </span>bin
 <span class="gp">nvidia@tegra-ubuntu:~/CNTK/build/release/bin$</span><span class="w"> </span><span class="nb">sudo ln</span> <span class="nt">-s</span> /usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs/libnvidia-ml.so /usr/local/cuda-8.0/targets/aarch64-linux/lib/stubs/libnvidia-ml.so.1

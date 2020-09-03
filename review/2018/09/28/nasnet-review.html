@@ -274,7 +274,7 @@ Architecture Search 분야에서는 본 논문의 저자가 포함되어 있는 
 
 Architecture Search 뿐만 아니라 비슷한 아이디어를 다양한 곳에 접목시킨 연구들도 나오고 있습니다. 
 최적의 Optimizer, Activation function 등을 AutoML을 이용하여 찾는 연구도 진행이 되었습니다.
- Optimizer를 다룬 논문과 Activation function을 다룬 논문도 전반적인 흐름은 기존 NAS 계열 연구와 유사하며 타겟만 architecture에서 optimizer, activation function 으로 바꾼 것으로, 쉽게 이해가 가능하실 것으로 생각됩니다. Activation function은 한 줄로 설명을 드리면 기존에 자주 사용하던 ReLU와 그 변형된 function 대신 Swish라는 이름을 가진  함수를 AutoML을 통해 발견하였고, 이 함수를 사용하면 더 성능이 좋다고 설명을 하고 있습니다.
+ Optimizer를 다룬 논문과 Activation function을 다룬 논문도 전반적인 흐름은 기존 NAS 계열 연구와 유사하며 타겟만 architecture에서 optimizer, activation function 으로 바꾼 것으로, 쉽게 이해가 가능하실 것으로 생각됩니다. Activation function은 한 줄로 설명을 드리면 기존에 자주 사용하던 ReLU와 그 변형된 function 대신 Swish라는 이름을 가진 \(f(x)=x\cdot Sigmoid(\beta x)\) 함수를 AutoML을 통해 발견하였고, 이 함수를 사용하면 더 성능이 좋다고 설명을 하고 있습니다.
 
 이 외에도 최근에는 augmentation에도 AutoML을 적용한 AutoAugment 논문, Mobile device를 타겟으로 NAS를 적용한 MNASNet 논문
 등 굉장히 다양한 연구들이 쏟아지고 있습니다. 이 논문들도 흥미로우니 관심이 있으신 분들은 확인하시면 좋을 것 같습니다.
@@ -745,7 +745,7 @@ Architecture Search 분야에서는 본 논문의 저자가 포함되어 있는 
 
 <p>Architecture Search 뿐만 아니라 비슷한 아이디어를 다양한 곳에 접목시킨 연구들도 나오고 있습니다. 
 최적의 Optimizer, Activation function 등을 AutoML을 이용하여 찾는 연구도 진행이 되었습니다.
-<a href="https://arxiv.org/abs/1709.07417" target="_blank"> Optimizer를 다룬 논문</a>과 <a href="https://arxiv.org/abs/1710.05941" target="_blank">Activation function을 다룬 논문</a>도 전반적인 흐름은 기존 NAS 계열 연구와 유사하며 타겟만 architecture에서 optimizer, activation function 으로 바꾼 것으로, 쉽게 이해가 가능하실 것으로 생각됩니다. Activation function은 한 줄로 설명을 드리면 기존에 자주 사용하던 ReLU와 그 변형된 function 대신 <strong>Swish</strong>라는 이름을 가진 <script type="math/tex">f(x)=x\cdot Sigmoid(\beta x)</script> 함수를 AutoML을 통해 발견하였고, 이 함수를 사용하면 더 성능이 좋다고 설명을 하고 있습니다.</p>
+<a href="https://arxiv.org/abs/1709.07417" target="_blank"> Optimizer를 다룬 논문</a>과 <a href="https://arxiv.org/abs/1710.05941" target="_blank">Activation function을 다룬 논문</a>도 전반적인 흐름은 기존 NAS 계열 연구와 유사하며 타겟만 architecture에서 optimizer, activation function 으로 바꾼 것으로, 쉽게 이해가 가능하실 것으로 생각됩니다. Activation function은 한 줄로 설명을 드리면 기존에 자주 사용하던 ReLU와 그 변형된 function 대신 <strong>Swish</strong>라는 이름을 가진 \(f(x)=x\cdot Sigmoid(\beta x)\) 함수를 AutoML을 통해 발견하였고, 이 함수를 사용하면 더 성능이 좋다고 설명을 하고 있습니다.</p>
 
 <p>이 외에도 최근에는 augmentation에도 AutoML을 적용한 <a href="https://arxiv.org/abs/1805.09501" target="_blank">AutoAugment 논문</a>, Mobile device를 타겟으로 NAS를 적용한 <a href="https://arxiv.org/abs/1805.09501" target="_blank">MNASNet 논문</a>
 등 굉장히 다양한 연구들이 쏟아지고 있습니다. 이 논문들도 흥미로우니 관심이 있으신 분들은 확인하시면 좋을 것 같습니다.</p>

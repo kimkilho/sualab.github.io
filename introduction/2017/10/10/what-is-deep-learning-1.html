@@ -235,13 +235,13 @@
 
 <h3 id="퍼셉트론---선형-모델의-일반화">퍼셉트론 - 선형 모델의 일반화</h3>
 
-<p>이전에 러닝 모델의 예시로 든, 가장 단순한 러닝 모델인 <strong>선형 모델(linear model)</strong>을 기억하시나요? 2개의 입력 변숫값으로 구성된 2차원 데이터 예시 <script type="math/tex">(x_1, x_2)</script>를 받아들여 하나의 출력 변숫값 <script type="math/tex">f(x_1, x_2)</script>을 출력하는 다음과 같은 함수를 예로 들었습니다:</p>
+<p>이전에 러닝 모델의 예시로 든, 가장 단순한 러닝 모델인 <strong>선형 모델(linear model)</strong>을 기억하시나요? 2개의 입력 변숫값으로 구성된 2차원 데이터 예시 \((x_1, x_2)\)를 받아들여 하나의 출력 변숫값 \(f(x_1, x_2)\)을 출력하는 다음과 같은 함수를 예로 들었습니다:</p>
 
 <p>\begin{equation}
 f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 \end{equation}</p>
 
-<p>저번 글에서의 ‘3개월 내 채무 이행 여부 예측 기계’ 예시에서는, 어느 특정한 예시 <script type="math/tex">(x_1, x_2)</script>에 대하여, 학습된 러닝 모델의 출력값 <script type="math/tex">f(x_1, x_2)</script>가 0보다 크면 ‘O’로, 작으면 ‘X’로 분류했던 바 있습니다.</p>
+<p>저번 글에서의 ‘3개월 내 채무 이행 여부 예측 기계’ 예시에서는, 어느 특정한 예시 \((x_1, x_2)\)에 대하여, 학습된 러닝 모델의 출력값 \(f(x_1, x_2)\)가 0보다 크면 ‘O’로, 작으면 ‘X’로 분류했던 바 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-machine-learning/age-to-salary-classify-sample-plot.png" target="_blank">
@@ -257,7 +257,7 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 </a>
 <span class="caption">선형 모델의 도식화 예시</span></p>
 
-<p>위 그림을 보시면, 기본 뼈대에 <script type="math/tex">w_0</script>, <script type="math/tex">w_1</script>, <script type="math/tex">w_2</script>가 있고, 여기에 <script type="math/tex">1</script>, <script type="math/tex">x_1</script>, <script type="math/tex">x_2</script>가 각각 곱해진 후, 이들을 모두 합산한(<script type="math/tex">\sum</script>) 결과를 그대로 출력하고 있습니다. 여기까지가 위에서 사용한 선형 모델인데, 일반적으로는 합산 결과에 <strong>활성함수(activation function)</strong>라는 모종의 함수 <script type="math/tex">\sigma(\cdot)</script>를 적용한 결과를 최종 출력값으로 대신 출력하는 경우가 많습니다. 여기에, d개의 입력 변숫값으로 구성된 <em><script type="math/tex">d</script>차원</em> 데이터 예시 <script type="math/tex">(x_1, x_2, ..., x_d)</script>를 받아들이는 상황을 가정하면 아래와 같은 일반화된 그림을 표현할 수 있습니다.</p>
+<p>위 그림을 보시면, 기본 뼈대에 \(w_0\), \(w_1\), \(w_2\)가 있고, 여기에 \(1\), \(x_1\), \(x_2\)가 각각 곱해진 후, 이들을 모두 합산한(\(\sum\)) 결과를 그대로 출력하고 있습니다. 여기까지가 위에서 사용한 선형 모델인데, 일반적으로는 합산 결과에 <strong>활성함수(activation function)</strong>라는 모종의 함수 \(\sigma(\cdot)\)를 적용한 결과를 최종 출력값으로 대신 출력하는 경우가 많습니다. 여기에, d개의 입력 변숫값으로 구성된 <em>\(d\)차원</em> 데이터 예시 \((x_1, x_2, ..., x_d)\)를 받아들이는 상황을 가정하면 아래와 같은 일반화된 그림을 표현할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-deep-learning-1/perceptron-diagram.svg" target="_blank">
@@ -265,7 +265,7 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 </a>
 <span class="caption">퍼셉트론</span></p>
 
-<p>일관성을 위해, 기존에 <script type="math/tex">w_0</script>이 등장하는 항에 <script type="math/tex">x_0=1</script>이 곱해진다고 가정하면, 입력 벡터 <script type="math/tex">\boldsymbol{x}=(x_1, x_2, ..., x_d)</script>를 받아들인 뒤 각 성분에 가중치를 곱하고, 그 결과를 모두 합산한 후, 활성함수 <script type="math/tex">\sigma(\cdot)</script>을 적용한다고 할 수 있습니다. 전체 과정을 수행하는 이 선형 모델을 하나의 함수 <script type="math/tex">h(\cdot)</script>로 나타낼 수 있으며, 이를 <strong>퍼셉트론(perceptron)</strong>이라고 부릅니다. 이 때, <script type="math/tex">x_0=1</script>까지 포함된 <script type="math/tex">(d+1)</script>차원 벡터를 받아들이므로 이를 편의 상 ‘<script type="math/tex">(d+1)</script>차원 퍼셉트론’으로 부르겠습니다. 당연히, 활성함수로 항등함수 <script type="math/tex">\sigma(s)=s</script>를 사용할 경우 이것은 위에서 살펴본 선형 모델이 될 것입니다.</p>
+<p>일관성을 위해, 기존에 \(w_0\)이 등장하는 항에 \(x_0=1\)이 곱해진다고 가정하면, 입력 벡터 \(\boldsymbol{x}=(x_1, x_2, ..., x_d)\)를 받아들인 뒤 각 성분에 가중치를 곱하고, 그 결과를 모두 합산한 후, 활성함수 \(\sigma(\cdot)\)을 적용한다고 할 수 있습니다. 전체 과정을 수행하는 이 선형 모델을 하나의 함수 \(h(\cdot)\)로 나타낼 수 있으며, 이를 <strong>퍼셉트론(perceptron)</strong>이라고 부릅니다. 이 때, \(x_0=1\)까지 포함된 \((d+1)\)차원 벡터를 받아들이므로 이를 편의 상 ‘\((d+1)\)차원 퍼셉트론’으로 부르겠습니다. 당연히, 활성함수로 항등함수 \(\sigma(s)=s\)를 사용할 경우 이것은 위에서 살펴본 선형 모델이 될 것입니다.</p>
 
 <blockquote>
   <p>선형 모델은, 사실 퍼셉트론의 특수한 형태로 해석할 수 있습니다.</p>
@@ -289,9 +289,9 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 </a>
 <span class="caption">4개의 퍼셉트론 간의 2차원적 연결 예시</span></p>
 
-<p>위 그림에서 입력 벡터 <script type="math/tex">\boldsymbol{x}=(x_1, x_2, ..., x_d)</script>가 각각 상단, 중단, 하단에 위치한, 서로 다른 <script type="math/tex">(d+1)</script>차원 퍼셉트론의 입력값으로 들어갑니다(이를 각각 초록색, 붉은색, 보라색으로 표현했습니다). 각각의 퍼셉트론에서 가중합 및 합성함수를 거친 3개의 출력값이 <script type="math/tex">x_0=1</script>과 함께 4차원 퍼셉트론으로 입력됩니다. 4차원 퍼셉트론에서도 최종적으로 가중합 및 합성함수를 거치고, 최종적으로 1개의 값을 출력합니다.</p>
+<p>위 그림에서 입력 벡터 \(\boldsymbol{x}=(x_1, x_2, ..., x_d)\)가 각각 상단, 중단, 하단에 위치한, 서로 다른 \((d+1)\)차원 퍼셉트론의 입력값으로 들어갑니다(이를 각각 초록색, 붉은색, 보라색으로 표현했습니다). 각각의 퍼셉트론에서 가중합 및 합성함수를 거친 3개의 출력값이 \(x_0=1\)과 함께 4차원 퍼셉트론으로 입력됩니다. 4차원 퍼셉트론에서도 최종적으로 가중합 및 합성함수를 거치고, 최종적으로 1개의 값을 출력합니다.</p>
 
-<p>위와 같이 연결한 구조에서, 세 개의 <strong>층(layer)</strong>을 확인하실 수 있나요? 입력 벡터가 위치한 층을 첫 번째 층, 3개의 <script type="math/tex">(d+1)</script>차원 퍼셉트론이 나란히 붙어 출력한 값들이 위치하는 두 번째 층, 1개의 4차원 퍼셉트론이 출력한 값이 위치하는 세 번째 층으로 보시면 됩니다. 층 사이의 퍼셉트론들은 <em>낮은(앞쪽) 층</em>의 벡터를 각각 입력으로 받아 출력값을 내뱉고, 이는 <em>높은(뒷쪽) 층</em>의 벡터로 위치하는 구조를 확인할 수 있습니다.</p>
+<p>위와 같이 연결한 구조에서, 세 개의 <strong>층(layer)</strong>을 확인하실 수 있나요? 입력 벡터가 위치한 층을 첫 번째 층, 3개의 \((d+1)\)차원 퍼셉트론이 나란히 붙어 출력한 값들이 위치하는 두 번째 층, 1개의 4차원 퍼셉트론이 출력한 값이 위치하는 세 번째 층으로 보시면 됩니다. 층 사이의 퍼셉트론들은 <em>낮은(앞쪽) 층</em>의 벡터를 각각 입력으로 받아 출력값을 내뱉고, 이는 <em>높은(뒷쪽) 층</em>의 벡터로 위치하는 구조를 확인할 수 있습니다.</p>
 
 <p>더 거대한 인공신경망 구조를 표현하기 위해, 지금부터는 하나의 퍼셉트론을 아래와 같이 좀 더 단순화시켜 표현해 보겠습니다. 그리고, 그림 상에서 입력값 또는 출력값을 나타내는 원형 부분을 <strong>노드(node)</strong>라고 표현할 것입니다.</p>
 
@@ -301,7 +301,7 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 </a>
 <span class="caption">단순화된 퍼셉트론 구조</span></p>
 
-<p>그러면 총 3개의 층으로 구성되어 있으며, 첫 번째 층과 두 번째 층 사이에는 <script type="math/tex">(d+1)</script>차원 퍼셉트론이 <script type="math/tex">H</script>개, 두 번째 층과 세 번째 층 사이에는 <script type="math/tex">(H+1)</script>차원 퍼셉트론이 <script type="math/tex">K</script>개 있는 인공신경망을 아래와 같이 표현할 수 있습니다. <em>이 때, <script type="math/tex">+1</script>로 표시된 부분은 퍼셉트론이 위치하지 않으므로 주의하시길 바랍니다!</em></p>
+<p>그러면 총 3개의 층으로 구성되어 있으며, 첫 번째 층과 두 번째 층 사이에는 \((d+1)\)차원 퍼셉트론이 \(H\)개, 두 번째 층과 세 번째 층 사이에는 \((H+1)\)차원 퍼셉트론이 \(K\)개 있는 인공신경망을 아래와 같이 표현할 수 있습니다. <em>이 때, \(+1\)로 표시된 부분은 퍼셉트론이 위치하지 않으므로 주의하시길 바랍니다!</em></p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-deep-learning-1/multilayer-perceptron.svg" target="_blank">
@@ -335,15 +335,15 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 
 <h3 id="컨볼루션-신경망">컨볼루션 신경망</h3>
 
-<p>완전 연결 신경망에서 하나의 층 내부만을 보면, 그 안에 위치한 노드들은 1차원적으로 세로 방향으로만 배치되어 있습니다. 만약 완전 연결 신경망의 하나의 층에 위치한 노드들이 2차원적으로 가로/세로 방향으로 동시에 배치되어 있다면 어떤 모습일까요? 각 층에 가로 <script type="math/tex">w</script>개, 세로 <script type="math/tex">h</script>개의 노드가 배치되어 있는 2층짜리 완전 연결 신경망을 생각해 봅시다.</p>
+<p>완전 연결 신경망에서 하나의 층 내부만을 보면, 그 안에 위치한 노드들은 1차원적으로 세로 방향으로만 배치되어 있습니다. 만약 완전 연결 신경망의 하나의 층에 위치한 노드들이 2차원적으로 가로/세로 방향으로 동시에 배치되어 있다면 어떤 모습일까요? 각 층에 가로 \(w\)개, 세로 \(h\)개의 노드가 배치되어 있는 2층짜리 완전 연결 신경망을 생각해 봅시다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-deep-learning-1/2d-deep-neural-network.svg" target="_blank">
   <img class="full-image" src="http://research.sualab.com/assets/images/what-is-deep-learning-1/2d-deep-neural-network.svg" alt="2차원적 완전 연결 신경망*&lt;br&gt;&lt;small&gt;(*주의: 지면 관계상, 노드 간의 연결 관계에 대한 표현 및 $$+1$$ 노드는 생략하였습니다.)&lt;/small&gt;" />
 </a>
-<span class="caption">2차원적 완전 연결 신경망*<br /><small>(*주의: 지면 관계상, 노드 간의 연결 관계에 대한 표현 및 <script type="math/tex">+1</script> 노드는 생략하였습니다.)</small></span></p>
+<span class="caption">2차원적 완전 연결 신경망*<br /><small>(*주의: 지면 관계상, 노드 간의 연결 관계에 대한 표현 및 \(+1\) 노드는 생략하였습니다.)</small></span></p>
 
-<p>위 그림과 같이 노드를 배치할 경우, 노드 간의 연결 개수가 막대하게 증가한다는 문제가 있습니다. 예를 들어, 아래 그림과 같이 입력층의 <script type="math/tex">x_{11}</script> 노드에서 은닉층으로 이어지는 연결만 보더라도, 연결 하나 당 한 개의 가중치 값이 붙으므로 총 <script type="math/tex">h \times w</script>개의 가중치를 고려해야 합니다. 입력층에는 총 <script type="math/tex">h \times w</script>개의 노드가 존재하므로, 인접한 두 층 사이에만 총 <script type="math/tex">h^2w^2</script>개의 가중치가 필요합니다.</p>
+<p>위 그림과 같이 노드를 배치할 경우, 노드 간의 연결 개수가 막대하게 증가한다는 문제가 있습니다. 예를 들어, 아래 그림과 같이 입력층의 \(x_{11}\) 노드에서 은닉층으로 이어지는 연결만 보더라도, 연결 하나 당 한 개의 가중치 값이 붙으므로 총 \(h \times w\)개의 가중치를 고려해야 합니다. 입력층에는 총 \(h \times w\)개의 노드가 존재하므로, 인접한 두 층 사이에만 총 \(h^2w^2\)개의 가중치가 필요합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-deep-learning-1/2d-deep-neural-network-connection-example.svg" target="_blank">
@@ -359,7 +359,7 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 </a>
 <span class="caption">컨볼루션 신경망에서의 필터에 대한 연산</span></p>
 
-<p>하나의 필터는 그 크기만큼의 개수에 해당하는 가중치를 가지고 있으며, 이미지 상의 어느 특정한 특징을 요인으로 추출하여 출력할 수 있도록 가중치의 학습이 이루어집니다. 위 그림에서는 <script type="math/tex">3 \times 3</script> 크기의 필터가 입력층의 가장 좌측 상단 <script type="math/tex">3 \times 3</script> 영역에 적용되어, 이들 노드에 대한 가중합 및 활성함수 연산을 수행하고 그 출력값을 <script type="math/tex">z_{22}</script>에 저장하고 있습니다. 이렇게 필터는 원본 입력층 상에서 일정 간격만큼 횡적/종적으로 이동하면서 가중합 및 활성함수 연산을 수행하고, 그 출력값을 현재 필터의 위치에 놓습니다. 이러한 연산 방식은 컴퓨터 비전(computer vision) 분야에서 이미지에 대한 <a href="https://ko.wikipedia.org/wiki/%ED%95%A9%EC%84%B1%EA%B3%B1" target="_blank">컨볼루션(convolution)</a> 연산과 유사하여, 이러한 구조를 채택하는 심층 신경망을 특별히 <strong>컨볼루션 신경망(CNN: convolutional neural network)</strong>이라고 부르게 되었습니다. 컨볼루션 연산 결과 생성되는 은닉층을 특별히 <em>컨볼루션 층(convolutional layer)</em>이라고 부르며, 복수 개의 컨볼루션 층이 존재하는 신경망을 <strong>심층 컨볼루션 신경망(DCNN: Deep convolutional neural network)</strong>이라고 부릅니다.</p>
+<p>하나의 필터는 그 크기만큼의 개수에 해당하는 가중치를 가지고 있으며, 이미지 상의 어느 특정한 특징을 요인으로 추출하여 출력할 수 있도록 가중치의 학습이 이루어집니다. 위 그림에서는 \(3 \times 3\) 크기의 필터가 입력층의 가장 좌측 상단 \(3 \times 3\) 영역에 적용되어, 이들 노드에 대한 가중합 및 활성함수 연산을 수행하고 그 출력값을 \(z_{22}\)에 저장하고 있습니다. 이렇게 필터는 원본 입력층 상에서 일정 간격만큼 횡적/종적으로 이동하면서 가중합 및 활성함수 연산을 수행하고, 그 출력값을 현재 필터의 위치에 놓습니다. 이러한 연산 방식은 컴퓨터 비전(computer vision) 분야에서 이미지에 대한 <a href="https://ko.wikipedia.org/wiki/%ED%95%A9%EC%84%B1%EA%B3%B1" target="_blank">컨볼루션(convolution)</a> 연산과 유사하여, 이러한 구조를 채택하는 심층 신경망을 특별히 <strong>컨볼루션 신경망(CNN: convolutional neural network)</strong>이라고 부르게 되었습니다. 컨볼루션 연산 결과 생성되는 은닉층을 특별히 <em>컨볼루션 층(convolutional layer)</em>이라고 부르며, 복수 개의 컨볼루션 층이 존재하는 신경망을 <strong>심층 컨볼루션 신경망(DCNN: Deep convolutional neural network)</strong>이라고 부릅니다.</p>
 
 <p>이렇게 컨볼루션 층에서는 현재 필터가 위치한 노드에서, 그 필터가 커버하고 있는, <em>물리적으로 가까운</em> 곳에 위치한 노드만을 포괄하여 가중합을 계산하는데, 이는 가중치의 개수를 줄여주는 것 외의 또 다른 장점을 제공합니다. 하나의 필터로 하여금 <em>국부(local) 영역에 대한 특징에 집중</em>할 수 있도록 한다는 점이 그것입니다. 이러한 특성 때문에, 컨볼루션 필터는 2차원 영역 상의 물리적 거리가 중요한 판단 기준이 되는 이미지 등의 데이터에 대하여 효과적으로 적용될 수 있습니다.</p>
 
@@ -369,7 +369,7 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 </a>
 <span class="caption">이미지에 대한 컨볼루션 필터의 국부 영역 특징에 대한 집중</span></p>
 
-<p>예를 들어, ‘이미지 상의 특정 영역 상에서의 수직 방향 경계 존재 가능성’이라는 요인을 추출하는 <script type="math/tex">5 \times 5</script> 크기의 필터가 있다고 합시다. 이 필터가 현재 이미지 상의 <script type="math/tex">(23,35)</script> 위치에 있을 경우, <script type="math/tex">(21,33)</script>에서 <script type="math/tex">(25,37)</script> 사이에 있는 정사각형 영역 상에 위치한 픽셀(pixel)들의 값만을 참조합니다. 뜬금없이(?) 현재 위치에서 물리적으로 멀리 떨어져 있는, 이를테면, <script type="math/tex">(86,79)</script>에 위치한 픽셀의 값을 조사하지 않는다는 것이죠.</p>
+<p>예를 들어, ‘이미지 상의 특정 영역 상에서의 수직 방향 경계 존재 가능성’이라는 요인을 추출하는 \(5 \times 5\) 크기의 필터가 있다고 합시다. 이 필터가 현재 이미지 상의 \((23,35)\) 위치에 있을 경우, \((21,33)\)에서 \((25,37)\) 사이에 있는 정사각형 영역 상에 위치한 픽셀(pixel)들의 값만을 참조합니다. 뜬금없이(?) 현재 위치에서 물리적으로 멀리 떨어져 있는, 이를테면, \((86,79)\)에 위치한 픽셀의 값을 조사하지 않는다는 것이죠.</p>
 
 <p>지금까지 서술한 내용에서는, 설명의 편의를 위해 하나의 필터만이 작동하는 것을 표현하였으나, 실제로는 컨볼루션 층 직전에 복수 개의 필터를 설치하고 각 필터의 컨볼루션 연산을 통해 복수 개의 출력 결과물이 생성되도록 합니다.</p>
 
@@ -406,15 +406,15 @@ f(x_1, x_2) = w_0 + w_1x_1 + w_2x_2
 </a>
 <span class="caption">순환 루프가 존재하는 완전 연결 신경망 구조</span></p>
 
-<p>데이터 시퀀스 상의 어느 시점 <script type="math/tex">t</script>의 원소 <script type="math/tex">(x_1^{(t)}, x_2^{(t)}, ..., x_d^{(t)})</script>를 완전 연결 신경망에 입력하는 과정에서, 바로 이전 시점 <script type="math/tex">t-1</script>의 은닉 벡터 <script type="math/tex">(z_1^{(t-1)}, z_2^{(t-1)}, ..., z_H^{(t-1)})</script>을 함께 입력하여 가중합 및 활성함수를 적용하는 구조입니다. 이렇게 은닉 벡터를 그 다음 시점으로 전달하는 이유는, 앞선 시점들에서의 입력 벡터 속 정보들이 현재 시점의 은닉 벡터에 누적되어 있다고 간주하기 때문입니다. 이러한 구조의 신경망을 <strong>순환 신경망(RNN: recurrent neural network)</strong>이라고 합니다. 순환 신경망은 실제 데이터 시퀀스에 대하여, 아래 그림과 같이 시점 순서대로 작동하게 됩니다.</p>
+<p>데이터 시퀀스 상의 어느 시점 \(t\)의 원소 \((x_1^{(t)}, x_2^{(t)}, ..., x_d^{(t)})\)를 완전 연결 신경망에 입력하는 과정에서, 바로 이전 시점 \(t-1\)의 은닉 벡터 \((z_1^{(t-1)}, z_2^{(t-1)}, ..., z_H^{(t-1)})\)을 함께 입력하여 가중합 및 활성함수를 적용하는 구조입니다. 이렇게 은닉 벡터를 그 다음 시점으로 전달하는 이유는, 앞선 시점들에서의 입력 벡터 속 정보들이 현재 시점의 은닉 벡터에 누적되어 있다고 간주하기 때문입니다. 이러한 구조의 신경망을 <strong>순환 신경망(RNN: recurrent neural network)</strong>이라고 합니다. 순환 신경망은 실제 데이터 시퀀스에 대하여, 아래 그림과 같이 시점 순서대로 작동하게 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
 <p><a href="http://research.sualab.com/assets/images/what-is-deep-learning-1/recurrent-neural-network-example.svg" target="_blank">
   <img class="full-image" src="http://research.sualab.com/assets/images/what-is-deep-learning-1/recurrent-neural-network-example.svg" alt="$$d$$차원 입력 벡터 시퀀스에 대한 순환 신경망의 작동 방식" />
 </a>
-<span class="caption"><script type="math/tex">d</script>차원 입력 벡터 시퀀스에 대한 순환 신경망의 작동 방식</span></p>
+<span class="caption">\(d\)차원 입력 벡터 시퀀스에 대한 순환 신경망의 작동 방식</span></p>
 
-<p>위 그림을 보면, 시점 <script type="math/tex">1</script>에서의 입력 벡터 <script type="math/tex">(x_1^{(1)}, x_2^{(1)}, ..., x_d^{(1)})</script>가 순환 신경망에 입력되었을 때의 은닉 벡터 <script type="math/tex">(z_1^{(1)}, z_2^{(1)}, ..., z_H^{(1)})</script>가 시점 <script type="math/tex">2</script>의 입력 벡터 <script type="math/tex">(x_1^{(2)}, x_2^{(2)}, ..., x_d^{(2)})</script>와 함께 입력되어 가중합 및 활성 함수를 통해 은닉층의 벡터 <script type="math/tex">(z_1^{(2)}, z_2^{(2)}, ..., z_H^{(2)})</script>를 결정합니다. 이러한 과정은 시점 <script type="math/tex">2</script>, 시점 <script type="math/tex">3</script>에서도 이어지며, 시점 <script type="math/tex">T</script>를 마지막으로 종료됩니다.</p>
+<p>위 그림을 보면, 시점 \(1\)에서의 입력 벡터 \((x_1^{(1)}, x_2^{(1)}, ..., x_d^{(1)})\)가 순환 신경망에 입력되었을 때의 은닉 벡터 \((z_1^{(1)}, z_2^{(1)}, ..., z_H^{(1)})\)가 시점 \(2\)의 입력 벡터 \((x_1^{(2)}, x_2^{(2)}, ..., x_d^{(2)})\)와 함께 입력되어 가중합 및 활성 함수를 통해 은닉층의 벡터 \((z_1^{(2)}, z_2^{(2)}, ..., z_H^{(2)})\)를 결정합니다. 이러한 과정은 시점 \(2\), 시점 \(3\)에서도 이어지며, 시점 \(T\)를 마지막으로 종료됩니다.</p>
 
 <p>그리고 당연하게도, 순환 신경망 내에 복수 개의 은닉층을 배치할 경우, 이를 <strong>심층 순환 신경망(DRNN: Deep recurrent neural network)</strong>이라고 부릅니다.</p>
 

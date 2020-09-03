@@ -1,7 +1,187 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://research.sualab.com/feed.xml" rel="self" type="application/atom+xml" /><link href="http://research.sualab.com/" rel="alternate" type="text/html" /><updated>2020-08-06T20:01:03+09:00</updated><id>http://research.sualab.com/feed.xml</id><title type="html">Cognex Deep Learning Lab-KOR Research Blog</title><subtitle>Cognex Deep Learning Lab-KOR research blog: covers subjects regarding machine learning, computer vision, high-performance computing, and so on.
-</subtitle><entry><title type="html">안전한 C++ 코드 만들기</title><link href="http://research.sualab.com/development/2020/08/06/secure-coding.html" rel="alternate" type="text/html" title="안전한 C++ 코드 만들기" /><published>2020-08-06T20:00:00+09:00</published><updated>2020-08-06T20:00:00+09:00</updated><id>http://research.sualab.com/development/2020/08/06/secure-coding</id><content type="html" xml:base="http://research.sualab.com/development/2020/08/06/secure-coding.html">&lt;p&gt;C++만큼 개발자에게 다양한 선택지를 주는 언어는 거의 없습니다. C++의 언어적 특징은 제품의 형태에 최적화된 형태로 코드를 만드는 데 많은 도움을 주지만, 개발자가 신경 써야 할 영역이 많기 때문에 개발자의 역량에 따라 제품의 완성도 편차가 심하며 안전하지 않은 코드를 작성하기 쉬운 환경에 노출된다는 단점이 있습니다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://research.sualab.com/feed.xml" rel="self" type="application/atom+xml" /><link href="http://research.sualab.com/" rel="alternate" type="text/html" /><updated>2020-09-03T17:33:59+09:00</updated><id>http://research.sualab.com/feed.xml</id><title type="html">Cognex Deep Learning Lab-KOR Research Blog</title><subtitle>Cognex Deep Learning Lab-KOR research blog: covers subjects regarding machine learning, computer vision, high-performance computing, and so on.
+</subtitle><entry><title type="html">ECCV 2020 Virtual Conference 참석 후기 및 프로그램 소개</title><link href="http://research.sualab.com/review/2020/09/03/ECCV-2020-review.html" rel="alternate" type="text/html" title="ECCV 2020 Virtual Conference 참석 후기 및 프로그램 소개" /><published>2020-09-03T18:00:00+09:00</published><updated>2020-09-03T18:00:00+09:00</updated><id>http://research.sualab.com/review/2020/09/03/ECCV-2020-review</id><content type="html" xml:base="http://research.sualab.com/review/2020/09/03/ECCV-2020-review.html">&lt;p&gt;안녕하세요, 오늘은 지난 8월 23일(일) ~ 8월 28일(금) 6일간 진행된 European Conference on Computer Vision(이하 ECCV) 2020 학회를 Virtual로 참석하며 느낀 점들을 공유 드리고, 주요 프로그램들을 소개 드리겠습니다.&lt;/p&gt;
 
-&lt;p&gt;안전한 코딩은 단순히 잘 동작한다는 것 이상을 뜻합니다. 가독성이 좋아 유지보수가 쉽고, 잘 사용하기는 쉽지만 잘못 쓰기는 어려운 코드를 만드는 것이 &lt;code class=&quot;highlighter-rouge&quot;&gt;안전한 코딩(Secure coding)&lt;/code&gt;의 본질이라 생각합니다.&lt;/p&gt;
+&lt;p&gt;ECCV는 2년마다 열리며 짝수 년도에 열리는 Computer Vision 학회입니다. 비슷한 학회로 International Conference on Computer Vision(ICCV)가 있죠. ICCV도 2년마다 열리며 홀수 년도에 열립니다. 저는 원래 올해 영국 Glasgow에서 열리는 ECCV를 현장에서 참석하려고 8월달만 기다리고 있었는데 전세계적으로 퍼진 COVID-19로 인해 올해 모든 Machine Learning, Computer Vision 관련 학회들이 Virtual로 진행되었습니다.&lt;/p&gt;
+
+&lt;p&gt;저는 Virtual로 학회에 참석한 적이 처음이라 집에서 듣는 학회가 과연 얼마나 효율적일지 궁금했는데요, 직접 일주일간 집(혹은 회사)에서 학회를 참석한 후기를 들려드리겠습니다.&lt;/p&gt;
+
+&lt;blockquote&gt; ECCV 2020 주요 통계 &lt;/blockquote&gt;
+&lt;p&gt;이번 &lt;a href=&quot;https://eccv2020.eu/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; ECCV 2020&lt;/b&gt;&lt;/a&gt;은 올해로 16번째 열렸고 학회가 개최된 첫날 Opening 행사에서 주요 통계치들을 공개하였습니다. 사진 자료는 &lt;a href=&quot;https://twitter.com/CSProfKGD/status/1297892662687797255&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; Kosta Derpanis 라는 분의 트위터의 게시물&lt;/b&gt;&lt;/a&gt;에서 인용하였습니다.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/stat1.jpg&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/stat1.jpg&quot; alt=&quot;Submitted and accepted papers&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;Submitted and accepted papers&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;우선 총 5150편의 submission이 있었고, 그 중 1360편이 accept 되었으며 accepted rate는 약 26%를 보였습니다. 2014년이 28%, 2016년이 27%, 2018년이 32%였고 올해가 26%로 대체로 비슷한 비율을 유지하고 있습니다. 전체 Accepted paper 중 Oral paper는 7.5%, Spotlight paper는 11.8%의 비율을 보이고 있습니다.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/stat2.jpg&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/stat2.jpg&quot; alt=&quot;Area of submitted papers&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;Area of submitted papers&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;다음은 전체 제출된 논문들의 연구 분야를 분류한 자료입니다. Deep Learning의 응용, 방법론, 이론을 다룬 논문이 주를 이뤘고, 아무래도 Computer Vision 학회이다 보니 인식 쪽 논문도 많은 비율을 보이고 있습니다. Unsupervised Learning 논문이 352편이나 되는 점도 인상깊네요.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/stat3.jpg&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/stat3.jpg&quot; alt=&quot;Institutions of submitted papers&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;Institutions of submitted papers&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;다음은 Accepted paper들의 저자들이 속한 기관이 대한 자료입니다. 구글이 1위를 차지하였고 페이스북이 5위를, 마이크로소프트가 7위를, 화웨이가 11위를 차지하였습니다. 대체로 학계에 계신 분들의 비중이 높았으며 Computer Vision은 역시 중국이 강세임을 보여주고 있습니다.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/stat4.jpg&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/stat4.jpg&quot; alt=&quot;Growth of ECCV&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;Growth of ECCV&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;마지막으로 2년전과 비교했을 때 학회에 제출된 논문의 편수가 얼마나 증가했는지를 보여주고 있습니다. 우선 ECCV 2018에 비해 제출된 논문 편수가 2.1배 늘었으며, CVPR 2020과 비교하였을 때 2년전보다 제출된 논문의 수가 비슷해졌음을 보여주고 있습니다.&lt;/p&gt;
+
+&lt;blockquote&gt; ECCV 주요 프로그램 소개 및 Virtual 참석 후기 &lt;/blockquote&gt;
+
+&lt;p&gt;대부분의 학회는 크게 6가지 프로그램으로 분류할 수 있습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Oral, Spotlight 논문들의 구두 발표가 진행되는 &lt;strong&gt;Main Conference&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;대부분의 논문들을 정해진 시간에 Poster와 함께 발표하고 실시간으로 질의 응답하는 &lt;strong&gt;Poster Session&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;특정한 주제를 정해 놓고 그 주제와 관련된 연구들을 소개하고 경우에 따라 Challenge도 개최하는 &lt;strong&gt;Workshop&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Workshop과 비슷하게 특정한 주제를 정해두지만 교육의 목적이 크고, 종종 실습(Hands-on Training)도 같이 진행하는 &lt;strong&gt;Tutorial&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;본인들의 연구를 Live Demo로 보여주는 &lt;strong&gt;Demo Session&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;학회에 일정 금액의 돈을 내고 스폰서(등급이 나뉘어져 있음)로 참여하여 기업을 홍보하는 &lt;strong&gt;Exhibition&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이 모든 프로그램이 Virtual로 진행이 되었으며, 학회에 등록한 사람들은 별도의 페이지에 접속할 수 있게 됩니다.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/lobby.PNG&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/lobby.PNG&quot; alt=&quot;ECCV2020 Lobby&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;ECCV2020 Lobby&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;사이트에 접속을 하면 이런 화면에서 시작합니다. Lobby에서 원하는 프로그램을 클릭하여 듣는 방식입니다. 어떻게 보면 더운 여름 발표 들으러 이곳 저곳 걸어 다니지 않고 컴퓨터 앞에서 클릭 몇 번 해주면 된다는 점이 장점이라고 생각합니다. 다만 아쉬운 점도 있었습니다. 이제 각 프로그램마다 Virtual로 참석해보고 느낀 점들을 공유 드리겠습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;main-conference&quot;&gt;Main Conference&lt;/h3&gt;
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/oral_session.PNG&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/oral_session.PNG&quot; alt=&quot;ECCV2020 Oral Session&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;ECCV2020 Oral Session&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Main Conference는 월요일부터 금요일까지 5일간 진행이 되었고, Oral Paper와 Spotlight Paper에 선정된 저자들은 정해진 시간에 실시간으로 1번 발표를 하는 방식으로 진행이 되었습니다. 오프라인 학회에서도 Main Conference Room에 자리가 없으면, 빈 Conference Room에서 화면을 띄워준 채로 실시간 송출을 해주는데, 이걸 집에서 보는 느낌이라고 생각하시면 좋을 것 같습니다.&lt;/p&gt;
+
+&lt;p&gt;요일마다 주제가 바뀌었고, 중간 중간 Network Break 타임에는 Industry Session도 진행이 되었습니다. 각 요일마다 어떤 발표들이 진행되었는지 궁금하실 분들을 위해 링크를 첨부 드리겠습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://eccv2020.eu/wp-content/uploads/2020/08/ECCV-Programme-Monday.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; 8/24 월요일 &lt;/b&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://eccv2020.eu/wp-content/uploads/2020/08/ECCV-Programme-Tuesday.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; 8/25 화요일 &lt;/b&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://eccv2020.eu/wp-content/uploads/2020/08/ECCV-Programme-Wednesday.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; 8/26 수요일 &lt;/b&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://eccv2020.eu/wp-content/uploads/2020/08/ECCV-Programme-Thursday.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; 8/27 목요일 &lt;/b&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://eccv2020.eu/wp-content/uploads/2020/08/ECCV-Programme-Friday-2.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; 8/28 금요일 &lt;/b&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;poster-session&quot;&gt;Poster Session&lt;/h3&gt;
+&lt;p&gt;저는 주로 오프라인 학회에 참석할 때, 아무래도 요즘 학회의 규모가 너무 커지다 보니 모든 논문을 다 살펴보기엔 무리가 커서, 주요 논문들을 미리 추려서 간단히 읽어보고 참석을 합니다. 그리고 Poster Session을 빠르게 돌아다니면서 재미있어 보이는 Poster를 찾으면 일단 사진을 찍고, 서있는 저자에게 설명을 해달라고 부탁드리고, 궁금한 점을 질문하면서 돌아다니는 재미가 있었는데요. 개인적으로 Virtual Conference로 바뀌면서 가장 아쉬웠던 프로그램이 바로 Poster Session이었습니다. 
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/papers.PNG&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/papers.PNG&quot; alt=&quot;ECCV2020 Submitted Papers&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;ECCV2020 Submitted Papers&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;우선 Lobby의 Papers and Presentations를 들어가면 모든 논문들의 제목과 논문(.pdf), 10분 분량의 전체 발표 Video, 1분 분량의 Short Video를 확인할 수 있고, 주요 연구 주제들끼리 모여 있는 점은 좋았습니다.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/poster_session.PNG&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/poster_session.PNG&quot; alt=&quot;ECCV2020 Poster Session&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;ECCV2020 Poster Session&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;다만, 제가 원했던 Poster Session은 오프라인에서 넓은 공간에 포스터가 배치 되어있는 것처럼, 온라인으로도 빠르게 포스터 하나 하나씩 넘기며 볼 수 있는 것을 기대했는데 그렇진 않았습니다. 정해진 시간에 Poster Session에 들어가면 위와 같이 각 논문 마다 별도의 탭이 존재하였고, Launch 버튼을 누르면 zoom으로 연결되는 방식이었습니다. 들어가면 저자와 소통을 할 수 있긴 하지만 zoom 특성 상 접속하는데 딜레이가 있다 보니 빠르게 훑는 것은 불가능했습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;workshop&quot;&gt;Workshop&lt;/h3&gt;
+&lt;p&gt;Workshop과 Tutorial은 보통 같은 날 같은 시간에 동시 다발적으로 진행이 되다 보니 듣고 싶은 세션들을 미리 추려서 스케쥴 표를 만들어서 다녔습니다. Workshop은 하나의 주제가 하루에 2번씩 zoom을 통해 진행이 되었고, 학회의 첫날인 일요일과, 마지막 날인 금요일에 진행되었습니다.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/sunday_workshop.PNG&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/sunday_workshop.PNG&quot; alt=&quot;ECCV2020 Workshop&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;ECCV2020 Workshop&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;저는 이번 ECCV 2020에서 &lt;a href=&quot;https://vipriors.github.io/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; “Visual Inductive Priors for Data-Efficient Deep Learning” &lt;/b&gt;&lt;/a&gt; 의 Action Recognition 과 Semantic Segmentation Challenge에 참가를 하였고, 그 중 &lt;a href=&quot;http://mvp.yonsei.ac.kr/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; 연세대학교 MVP Lab &lt;/b&gt;&lt;/a&gt; 박사과정분들, 저희 Cognex Deep Learning Lab 조동헌 연구원과 함께 참여한 Action Recognition에서 4위의 성적을 거두었습니다. 또한 Challenge에서 시도했던 방법들을 논문으로 제출하여 Oral Paper에 선정이 되었습니다. 좋은 팀원 분들을 만난 덕에 좋은 성과를 얻을 수 있었던 것 같습니다. 다시 한번 감사드립니다! 혹시나 궁금해하실 분들을 위해 저희 연구 성과를 담은 논문 링크를 남깁니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Paper: &lt;a href=&quot;https://arxiv.org/pdf/2008.05721.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; Learning Temporally Invariant and Localizable Features via Data Augmentation for Video Recognition &lt;/b&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;저는 위의 “Visual Inductive Priors for Data-Efficient Deep Learning“ Workshop 외에도 &lt;a href=&quot;https://sites.google.com/view/ipcv2020/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; “Imbalance Problems in Computer Vision (IPCV)” &lt;/b&gt;&lt;/a&gt;, &lt;a href=&quot;http://www.robustvision.net/index.php&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; “Robust Vision Challenge 2020” &lt;/b&gt;&lt;/a&gt; 도 재미있게 들었습니다.&lt;/p&gt;
+
+&lt;p&gt;전체 Workshop의 리스트와 홈페이지들은 &lt;a href=&quot;https://eccv2020.eu/workshops/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; ECCV 2020 공식 홈페이지&lt;/b&gt;&lt;/a&gt; 에서 확인하실 수 있고, 일부 Workshop의 경우 학회를 등록하지 않은 사람들도 발표 자료와 발표 Video를 볼 수 있습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;tutorial&quot;&gt;Tutorial&lt;/h3&gt;
+&lt;p&gt;Tutorial도 Workshop과 마찬가지로 하나의 주제가 하루에 2번씩 zoom을 통해 진행이 되었고, 실용적인 내용이 많아서 개인적으론 많은 도움이 되었습니다. 이번 학회에서 가장 만족스러웠던 프로그램을 꼽으라면 저는 바로 Tutorial을 꼽을 수 있을 것 같네요.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/sunday_tutorial.PNG&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/sunday_tutorial.PNG&quot; alt=&quot;ECCV2020 Tutorial&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;ECCV2020 Tutorial&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;제가 들었던 Tutorial 중에 유익하면서도 누구나 발표 자료와 발표 Video를 확인할 수 있는 프로그램들을 소개 드리겠습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://nvlabs.github.io/eccv2020-mixed-precision-tutorial/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; “Accelerating Computer Vision with Mixed Precision”&lt;/b&gt;&lt;/a&gt; : TensorFlow와 PyTorch의 학습을 가속시키기 위한 Mixed Precision Training 기법을 다룬 Tutorial. 저는 개인적으로 Code Optimization Tricks 발표 “PyTorch Performance Tuning Guide” 가 가장 큰 도움이 되었습니다.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://hangzhang.org/ECCV2020/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; “From HPO to NAS: Automated Deep Learning”&lt;/b&gt;&lt;/a&gt; : AutoML을 이용한 Hyper Parameter Optimization부터 Neural Architecture Search 까지 최근 급성장한 연구들을 아주 자세히 다루고 있습니다.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://hbilen.github.io/wsl-eccv20.github.io/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; “Weakly-Supervised Learning in Computer Vision”&lt;/b&gt;&lt;/a&gt; : Computer Vision에서 다뤄지는 Weakly Supervised Learning, 사람이 annotation pipeline에 개입하여 효율성을 높이는 Human-in-the-Loop에 대한 내용, Weakly Supervised Learning을 올바르게 평가하기 위한 방법 등을 굉장히 자세히 다루고 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;demo-session&quot;&gt;Demo Session&lt;/h3&gt;
+&lt;p&gt;다음으로 데모는 월요일부터 목요일까지 진행되었고, 총 41가지 주제의 데모가 존재합니다. 하나의 주제 당 하루에 2번, 각각 2시간씩 진행이 되었고 lobby의 하단에 Networking Lounge를 눌러서 들어가면 모든 데모들의 설명이 담긴 워드 파일과 5분 내외의 Demo Video를 볼 수 있습니다.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/demo.PNG&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/demo.PNG&quot; alt=&quot;ECCV2020 Demo&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;ECCV2020 Demo&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;다만 Poster와 마찬가지로 Demo도 실시간으로 동작하는 것을 보여주는 것이 의미가 있다고 생각하는데 단순히 문서와 Video로만 제공이 되니 아무래도 몰입도가 떨어졌고, 모든 컨텐츠가 Video 형태로 제공되다 보니 Demo만의 매력이 사라진 느낌을 받았습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;exhibition&quot;&gt;Exhibition&lt;/h3&gt;
+&lt;p&gt;마지막은 기업들이 돈을 지불하고, 지불한 금액에 따라 다이아몬드, 플래티넘, 골드, 실버, 스타트업 등급으로 나뉘어서 본인들의 부스를 운영하는 Exhibition입니다. 각 등급별 가격과 혜택은 &lt;a href=&quot;https://eccv2020.eu/wp-content/uploads/2020/05/ECCV20-Partnership-Package-Overview-dig.jpg&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; ECCV 2020 Partnership Package Overview 자료 &lt;/b&gt;&lt;/a&gt;에서 확인하실 수 있습니다.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/exhibition.PNG&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/exhibition.PNG&quot; alt=&quot;ECCV2020 Exhibition&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;ECCV2020 Exhibition&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Lobby에서 Exhibition에 들어가면 다음과 같이 등급에 따라 부스가 나뉘어져 있으며, 각 부스를 클릭하면 본인들의 연구와 제품들을 Video 형태로 보여주고, 채용 관련 탭도 별도로 운영하고 있습니다.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/facebook_booth.PNG&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/facebook_booth.PNG&quot; alt=&quot;ECCV2020 Facebook Booth&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;ECCV2020 Facebook Booth&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;위의 그림은 다이아몬트 파트너 Facebook의 부스이며 저는 &lt;a href=&quot;https://cdn-akamai.6connex.eu//53/75//PyTorch_Video_Resources_15980345972578817.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; PyTorch의 주요 기능들을 다룬 자료&lt;/b&gt;&lt;/a&gt; 가 큰 도움이 되었습니다.&lt;/p&gt;
+
+&lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
+&lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/apple_booth.PNG&quot; target=&quot;_blank&quot;&gt;
+  &lt;img class=&quot;full-image&quot; src=&quot;http://research.sualab.com/assets/images/ECCV-2020-review/apple_booth.PNG&quot; alt=&quot;ECCV2020 Apple Booth&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption&quot;&gt;ECCV2020 Apple Booth&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;다음은 골드 파트너 Apple의 부스이며 굉장히 심플하게 부스를 꾸몄으며, 주로 연구 내용 소개와 채용 관련 내용이 주를 이루고 있었습니다.&lt;/p&gt;
+
+&lt;p&gt;오프라인에서는 스폰서의 등급에 따라 부스의 크기, 면적 등이 달랐던 것 같은데 온라인에서는 등급에 무관하게 동일한 형태로 운영이 되는 것 같았습니다. 그리고 무엇보다, 오프라인에서 부스를 돌아다니면 각종 스티커와 기념품, 간식을 얻을 수 있었는데 온라인은 그렇지 못한 점이 아쉬웠습니다. 껄껄껄&lt;/p&gt;
+
+&lt;blockquote&gt; 결론 &lt;/blockquote&gt;
+&lt;p&gt;이번 포스팅에서는 COVID-19로 인해 Virtual Conference로 진행된 ECCV 2020의 주요 프로그램들을 소개 드리고, 각 프로그램마다 느낀 점들을 공유 드렸습니다. 가격이 낮아졌다는 점과 집에서 들을 수 있다는 점이 장점이 될 수도 있지만, 저에게는 단점이 더 크게 느껴졌던 것 같습니다. 아무래도 Poster Session과 Demo는 현장에서 생생하게 체험을 하고, 서로 마주보며 열띤 토론을 해야 재밌는데 모니터 화면 너머로 소통을 하다 보니 몰입도가 떨어졌습니다. 하지만 Workshop, Tutorials은 좋은 내용이 많이 다뤄졌고, 자료도 대부분 공개가 되어있어서 학회에 참석하지 않아도 양질의 자료들을 접할 수 있다는 점은 참 좋은 것 같습니다. 전세계적으로 안정을 찾아서 다시 오프라인 학회가 개최될 그 날을 기다리며 오늘의 글 마치겠습니다.&lt;/p&gt;
+
+&lt;blockquote&gt; Reference &lt;/blockquote&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://twitter.com/CSProfKGD/status/1297892662687797255&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; ECCV 2020 통계치 자료 &lt;/b&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/lixin4ever/Conference-Acceptance-Rate&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; 주요 AI 학회 acceptance rate 자료 &lt;/b&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>이호성</name><email>Hoseong.Lee@cognex.com</email></author><category term="ECCV2020" /><category term="conference" /><summary type="html">안녕하세요, 오늘은 지난 8월 23일(일) ~ 8월 28일(금) 6일간 진행된 European Conference on Computer Vision(이하 ECCV) 2020 학회를 Virtual로 참석하며 느낀 점들을 공유 드리고, 주요 프로그램들을 소개 드리겠습니다. ECCV는 2년마다 열리며 짝수 년도에 열리는 Computer Vision 학회입니다. 비슷한 학회로 International Conference on Computer Vision(ICCV)가 있죠. ICCV도 2년마다 열리며 홀수 년도에 열립니다. 저는 원래 올해 영국 Glasgow에서 열리는 ECCV를 현장에서 참석하려고 8월달만 기다리고 있었는데 전세계적으로 퍼진 COVID-19로 인해 올해 모든 Machine Learning, Computer Vision 관련 학회들이 Virtual로 진행되었습니다. 저는 Virtual로 학회에 참석한 적이 처음이라 집에서 듣는 학회가 과연 얼마나 효율적일지 궁금했는데요, 직접 일주일간 집(혹은 회사)에서 학회를 참석한 후기를 들려드리겠습니다. ECCV 2020 주요 통계 이번 ECCV 2020은 올해로 16번째 열렸고 학회가 개최된 첫날 Opening 행사에서 주요 통계치들을 공개하였습니다. 사진 자료는 Kosta Derpanis 라는 분의 트위터의 게시물에서 인용하였습니다. Submitted and accepted papers 우선 총 5150편의 submission이 있었고, 그 중 1360편이 accept 되었으며 accepted rate는 약 26%를 보였습니다. 2014년이 28%, 2016년이 27%, 2018년이 32%였고 올해가 26%로 대체로 비슷한 비율을 유지하고 있습니다. 전체 Accepted paper 중 Oral paper는 7.5%, Spotlight paper는 11.8%의 비율을 보이고 있습니다. Area of submitted papers 다음은 전체 제출된 논문들의 연구 분야를 분류한 자료입니다. Deep Learning의 응용, 방법론, 이론을 다룬 논문이 주를 이뤘고, 아무래도 Computer Vision 학회이다 보니 인식 쪽 논문도 많은 비율을 보이고 있습니다. Unsupervised Learning 논문이 352편이나 되는 점도 인상깊네요. Institutions of submitted papers 다음은 Accepted paper들의 저자들이 속한 기관이 대한 자료입니다. 구글이 1위를 차지하였고 페이스북이 5위를, 마이크로소프트가 7위를, 화웨이가 11위를 차지하였습니다. 대체로 학계에 계신 분들의 비중이 높았으며 Computer Vision은 역시 중국이 강세임을 보여주고 있습니다. Growth of ECCV 마지막으로 2년전과 비교했을 때 학회에 제출된 논문의 편수가 얼마나 증가했는지를 보여주고 있습니다. 우선 ECCV 2018에 비해 제출된 논문 편수가 2.1배 늘었으며, CVPR 2020과 비교하였을 때 2년전보다 제출된 논문의 수가 비슷해졌음을 보여주고 있습니다. ECCV 주요 프로그램 소개 및 Virtual 참석 후기 대부분의 학회는 크게 6가지 프로그램으로 분류할 수 있습니다. Oral, Spotlight 논문들의 구두 발표가 진행되는 Main Conference 대부분의 논문들을 정해진 시간에 Poster와 함께 발표하고 실시간으로 질의 응답하는 Poster Session 특정한 주제를 정해 놓고 그 주제와 관련된 연구들을 소개하고 경우에 따라 Challenge도 개최하는 Workshop Workshop과 비슷하게 특정한 주제를 정해두지만 교육의 목적이 크고, 종종 실습(Hands-on Training)도 같이 진행하는 Tutorial 본인들의 연구를 Live Demo로 보여주는 Demo Session 학회에 일정 금액의 돈을 내고 스폰서(등급이 나뉘어져 있음)로 참여하여 기업을 홍보하는 Exhibition 이 모든 프로그램이 Virtual로 진행이 되었으며, 학회에 등록한 사람들은 별도의 페이지에 접속할 수 있게 됩니다. ECCV2020 Lobby 사이트에 접속을 하면 이런 화면에서 시작합니다. Lobby에서 원하는 프로그램을 클릭하여 듣는 방식입니다. 어떻게 보면 더운 여름 발표 들으러 이곳 저곳 걸어 다니지 않고 컴퓨터 앞에서 클릭 몇 번 해주면 된다는 점이 장점이라고 생각합니다. 다만 아쉬운 점도 있었습니다. 이제 각 프로그램마다 Virtual로 참석해보고 느낀 점들을 공유 드리겠습니다. Main Conference ECCV2020 Oral Session Main Conference는 월요일부터 금요일까지 5일간 진행이 되었고, Oral Paper와 Spotlight Paper에 선정된 저자들은 정해진 시간에 실시간으로 1번 발표를 하는 방식으로 진행이 되었습니다. 오프라인 학회에서도 Main Conference Room에 자리가 없으면, 빈 Conference Room에서 화면을 띄워준 채로 실시간 송출을 해주는데, 이걸 집에서 보는 느낌이라고 생각하시면 좋을 것 같습니다. 요일마다 주제가 바뀌었고, 중간 중간 Network Break 타임에는 Industry Session도 진행이 되었습니다. 각 요일마다 어떤 발표들이 진행되었는지 궁금하실 분들을 위해 링크를 첨부 드리겠습니다. 8/24 월요일 8/25 화요일 8/26 수요일 8/27 목요일 8/28 금요일 Poster Session 저는 주로 오프라인 학회에 참석할 때, 아무래도 요즘 학회의 규모가 너무 커지다 보니 모든 논문을 다 살펴보기엔 무리가 커서, 주요 논문들을 미리 추려서 간단히 읽어보고 참석을 합니다. 그리고 Poster Session을 빠르게 돌아다니면서 재미있어 보이는 Poster를 찾으면 일단 사진을 찍고, 서있는 저자에게 설명을 해달라고 부탁드리고, 궁금한 점을 질문하면서 돌아다니는 재미가 있었는데요. 개인적으로 Virtual Conference로 바뀌면서 가장 아쉬웠던 프로그램이 바로 Poster Session이었습니다. ECCV2020 Submitted Papers 우선 Lobby의 Papers and Presentations를 들어가면 모든 논문들의 제목과 논문(.pdf), 10분 분량의 전체 발표 Video, 1분 분량의 Short Video를 확인할 수 있고, 주요 연구 주제들끼리 모여 있는 점은 좋았습니다. ECCV2020 Poster Session 다만, 제가 원했던 Poster Session은 오프라인에서 넓은 공간에 포스터가 배치 되어있는 것처럼, 온라인으로도 빠르게 포스터 하나 하나씩 넘기며 볼 수 있는 것을 기대했는데 그렇진 않았습니다. 정해진 시간에 Poster Session에 들어가면 위와 같이 각 논문 마다 별도의 탭이 존재하였고, Launch 버튼을 누르면 zoom으로 연결되는 방식이었습니다. 들어가면 저자와 소통을 할 수 있긴 하지만 zoom 특성 상 접속하는데 딜레이가 있다 보니 빠르게 훑는 것은 불가능했습니다. Workshop Workshop과 Tutorial은 보통 같은 날 같은 시간에 동시 다발적으로 진행이 되다 보니 듣고 싶은 세션들을 미리 추려서 스케쥴 표를 만들어서 다녔습니다. Workshop은 하나의 주제가 하루에 2번씩 zoom을 통해 진행이 되었고, 학회의 첫날인 일요일과, 마지막 날인 금요일에 진행되었습니다. ECCV2020 Workshop 저는 이번 ECCV 2020에서 “Visual Inductive Priors for Data-Efficient Deep Learning” 의 Action Recognition 과 Semantic Segmentation Challenge에 참가를 하였고, 그 중 연세대학교 MVP Lab 박사과정분들, 저희 Cognex Deep Learning Lab 조동헌 연구원과 함께 참여한 Action Recognition에서 4위의 성적을 거두었습니다. 또한 Challenge에서 시도했던 방법들을 논문으로 제출하여 Oral Paper에 선정이 되었습니다. 좋은 팀원 분들을 만난 덕에 좋은 성과를 얻을 수 있었던 것 같습니다. 다시 한번 감사드립니다! 혹시나 궁금해하실 분들을 위해 저희 연구 성과를 담은 논문 링크를 남깁니다. Paper: Learning Temporally Invariant and Localizable Features via Data Augmentation for Video Recognition 저는 위의 “Visual Inductive Priors for Data-Efficient Deep Learning“ Workshop 외에도 “Imbalance Problems in Computer Vision (IPCV)” , “Robust Vision Challenge 2020” 도 재미있게 들었습니다. 전체 Workshop의 리스트와 홈페이지들은 ECCV 2020 공식 홈페이지 에서 확인하실 수 있고, 일부 Workshop의 경우 학회를 등록하지 않은 사람들도 발표 자료와 발표 Video를 볼 수 있습니다. Tutorial Tutorial도 Workshop과 마찬가지로 하나의 주제가 하루에 2번씩 zoom을 통해 진행이 되었고, 실용적인 내용이 많아서 개인적으론 많은 도움이 되었습니다. 이번 학회에서 가장 만족스러웠던 프로그램을 꼽으라면 저는 바로 Tutorial을 꼽을 수 있을 것 같네요. ECCV2020 Tutorial 제가 들었던 Tutorial 중에 유익하면서도 누구나 발표 자료와 발표 Video를 확인할 수 있는 프로그램들을 소개 드리겠습니다. “Accelerating Computer Vision with Mixed Precision” : TensorFlow와 PyTorch의 학습을 가속시키기 위한 Mixed Precision Training 기법을 다룬 Tutorial. 저는 개인적으로 Code Optimization Tricks 발표 “PyTorch Performance Tuning Guide” 가 가장 큰 도움이 되었습니다. “From HPO to NAS: Automated Deep Learning” : AutoML을 이용한 Hyper Parameter Optimization부터 Neural Architecture Search 까지 최근 급성장한 연구들을 아주 자세히 다루고 있습니다. “Weakly-Supervised Learning in Computer Vision” : Computer Vision에서 다뤄지는 Weakly Supervised Learning, 사람이 annotation pipeline에 개입하여 효율성을 높이는 Human-in-the-Loop에 대한 내용, Weakly Supervised Learning을 올바르게 평가하기 위한 방법 등을 굉장히 자세히 다루고 있습니다. Demo Session 다음으로 데모는 월요일부터 목요일까지 진행되었고, 총 41가지 주제의 데모가 존재합니다. 하나의 주제 당 하루에 2번, 각각 2시간씩 진행이 되었고 lobby의 하단에 Networking Lounge를 눌러서 들어가면 모든 데모들의 설명이 담긴 워드 파일과 5분 내외의 Demo Video를 볼 수 있습니다. ECCV2020 Demo 다만 Poster와 마찬가지로 Demo도 실시간으로 동작하는 것을 보여주는 것이 의미가 있다고 생각하는데 단순히 문서와 Video로만 제공이 되니 아무래도 몰입도가 떨어졌고, 모든 컨텐츠가 Video 형태로 제공되다 보니 Demo만의 매력이 사라진 느낌을 받았습니다. Exhibition 마지막은 기업들이 돈을 지불하고, 지불한 금액에 따라 다이아몬드, 플래티넘, 골드, 실버, 스타트업 등급으로 나뉘어서 본인들의 부스를 운영하는 Exhibition입니다. 각 등급별 가격과 혜택은 ECCV 2020 Partnership Package Overview 자료 에서 확인하실 수 있습니다. ECCV2020 Exhibition Lobby에서 Exhibition에 들어가면 다음과 같이 등급에 따라 부스가 나뉘어져 있으며, 각 부스를 클릭하면 본인들의 연구와 제품들을 Video 형태로 보여주고, 채용 관련 탭도 별도로 운영하고 있습니다. ECCV2020 Facebook Booth 위의 그림은 다이아몬트 파트너 Facebook의 부스이며 저는 PyTorch의 주요 기능들을 다룬 자료 가 큰 도움이 되었습니다. ECCV2020 Apple Booth 다음은 골드 파트너 Apple의 부스이며 굉장히 심플하게 부스를 꾸몄으며, 주로 연구 내용 소개와 채용 관련 내용이 주를 이루고 있었습니다. 오프라인에서는 스폰서의 등급에 따라 부스의 크기, 면적 등이 달랐던 것 같은데 온라인에서는 등급에 무관하게 동일한 형태로 운영이 되는 것 같았습니다. 그리고 무엇보다, 오프라인에서 부스를 돌아다니면 각종 스티커와 기념품, 간식을 얻을 수 있었는데 온라인은 그렇지 못한 점이 아쉬웠습니다. 껄껄껄 결론 이번 포스팅에서는 COVID-19로 인해 Virtual Conference로 진행된 ECCV 2020의 주요 프로그램들을 소개 드리고, 각 프로그램마다 느낀 점들을 공유 드렸습니다. 가격이 낮아졌다는 점과 집에서 들을 수 있다는 점이 장점이 될 수도 있지만, 저에게는 단점이 더 크게 느껴졌던 것 같습니다. 아무래도 Poster Session과 Demo는 현장에서 생생하게 체험을 하고, 서로 마주보며 열띤 토론을 해야 재밌는데 모니터 화면 너머로 소통을 하다 보니 몰입도가 떨어졌습니다. 하지만 Workshop, Tutorials은 좋은 내용이 많이 다뤄졌고, 자료도 대부분 공개가 되어있어서 학회에 참석하지 않아도 양질의 자료들을 접할 수 있다는 점은 참 좋은 것 같습니다. 전세계적으로 안정을 찾아서 다시 오프라인 학회가 개최될 그 날을 기다리며 오늘의 글 마치겠습니다. Reference ECCV 2020 통계치 자료 주요 AI 학회 acceptance rate 자료</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://research.sualab.com/eccv2020_thumbnail.png" /><media:content medium="image" url="http://research.sualab.com/eccv2020_thumbnail.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">안전한 C++ 코드 만들기</title><link href="http://research.sualab.com/development/2020/08/06/secure-coding.html" rel="alternate" type="text/html" title="안전한 C++ 코드 만들기" /><published>2020-08-06T20:00:00+09:00</published><updated>2020-08-06T20:00:00+09:00</updated><id>http://research.sualab.com/development/2020/08/06/secure-coding</id><content type="html" xml:base="http://research.sualab.com/development/2020/08/06/secure-coding.html">&lt;p&gt;C++만큼 개발자에게 다양한 선택지를 주는 언어는 거의 없습니다. C++의 언어적 특징은 제품의 형태에 최적화된 형태로 코드를 만드는 데 많은 도움을 주지만, 개발자가 신경 써야 할 영역이 많기 때문에 개발자의 역량에 따라 제품의 완성도 편차가 심하며 안전하지 않은 코드를 작성하기 쉬운 환경에 노출된다는 단점이 있습니다.&lt;/p&gt;
+
+&lt;p&gt;안전한 코딩은 단순히 잘 동작한다는 것 이상을 뜻합니다. 가독성이 좋아 유지보수가 쉽고, 잘 사용하기는 쉽지만 잘못 쓰기는 어려운 코드를 만드는 것이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;안전한 코딩(Secure coding)&lt;/code&gt;의 본질이라 생각합니다.&lt;/p&gt;
 
 &lt;p&gt;그럼 코그넥스 개발팀에서 사용 중인 C++ 문법과 디자인 패턴에는 어떤 것들이 있고, 이러한 것들이 어떻게 안전한 코드를 만드는지 살펴보겠습니다.&lt;/p&gt;
 
@@ -9,7 +189,7 @@
 
 &lt;p&gt;저희 제품에서는 특정 핵심 로직을 제외한 모든 곳에서 new 할당자 대신 스마트 포인터를 사용합니다.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::shared_ptr&amp;lt;T&amp;gt;&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;std::unique_ptr&amp;lt;T&amp;gt;&lt;/code&gt;는 객체가 해제되는 시점에서 자동으로 할당된 객체를 파괴하는 기능을 제공하며 객체 복사가 가능한 std::shared_ptr와 복사가 불가능하고 이동만 가능한 std::unique_ptr 모두 사용하고 있습니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;std::shared_ptr&amp;lt;T&amp;gt;&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;std::unique_ptr&amp;lt;T&amp;gt;&lt;/code&gt;는 객체가 해제되는 시점에서 자동으로 할당된 객체를 파괴하는 기능을 제공하며 객체 복사가 가능한 std::shared_ptr와 복사가 불가능하고 이동만 가능한 std::unique_ptr 모두 사용하고 있습니다.&lt;/p&gt;
 
 &lt;p&gt;두 객체 모두 함수 안에서 임시로 사용되는 객체나 변수가 아닌, 여러 메서드나 클래스에서 오랫동안 유지해야 하는 객체나 변수에 사용하는 것이 좋습니다.&lt;/p&gt;
 
@@ -19,7 +199,7 @@
   &lt;p&gt;반대로 깊은 복사(deep-copy)가 잦을 때는 포인터 자체를 사용하지 않는 것도 좋은 방법입니다.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;스마트 포인터를 사용할 때는 반드시 &lt;code class=&quot;highlighter-rouge&quot;&gt;make_shared / make_unique&lt;/code&gt; 템플릿을 이용하는 것이 좋은데, 그 이유는 크게 두 가지가 있으며 &lt;a href=&quot;https://herbsutter.com/2013/05/29/gotw-89-solution-smart-pointers/&quot;&gt;허브 서터의 이야기&lt;/a&gt;를 인용하면 다음과 같습니다.&lt;/p&gt;
+&lt;p&gt;스마트 포인터를 사용할 때는 반드시 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;make_shared / make_unique&lt;/code&gt; 템플릿을 이용하는 것이 좋은데, 그 이유는 크게 두 가지가 있으며 &lt;a href=&quot;https://herbsutter.com/2013/05/29/gotw-89-solution-smart-pointers/&quot;&gt;허브 서터의 이야기&lt;/a&gt;를 인용하면 다음과 같습니다.&lt;/p&gt;
 
 &lt;p&gt;먼저 new 할당자를 사용할 때 어떤 일이 벌어지는지 살펴봅시다.&lt;/p&gt;
 
@@ -51,7 +231,7 @@
 
 &lt;p&gt;make_shared 템플릿을 사용하면, Widget을 클래스 인자로 받는 shared_ptr 생성 1회로 끝납니다. new 할당자와 다르게 총 1번의 객체 할당만 발생하게 됩니다.&lt;/p&gt;
 
-&lt;p&gt;그러나 make_shared를 사용해야만 하는 더 큰 이유는, new 할당자를 사용할 때 &lt;code class=&quot;highlighter-rouge&quot;&gt;메모리 누수(memory leak)&lt;/code&gt;가 발생할 수 있기 때문입니다.&lt;/p&gt;
+&lt;p&gt;그러나 make_shared를 사용해야만 하는 더 큰 이유는, new 할당자를 사용할 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;메모리 누수(memory leak)&lt;/code&gt;가 발생할 수 있기 때문입니다.&lt;/p&gt;
 
 &lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sink&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unique_ptr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;widget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unique_ptr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gadget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
@@ -59,7 +239,7 @@
         &lt;span class=&quot;n&quot;&gt;unique_ptr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gadget&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gadget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{}}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;위 코드에서 new gadget{} 안에서 예외가 발생할 경우 new widget{}은 해제되지 않아 메모리 누수가 발생할 수 있습니다. 또한 함수를 호출할 때 인자의 평가(Evaluation)는 &lt;code class=&quot;highlighter-rouge&quot;&gt;명시되지 않은 행동(Unspecified Behavior)&lt;/code&gt;으로 컴파일러마다 정의되는 행동이 다르기 때문에, new widget{} 안에서 예외가 발생할 때 new gadget{}으로 생성된 객체가 해제되지 않는 반대의 상황 또한 발생할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;위 코드에서 new gadget{} 안에서 예외가 발생할 경우 new widget{}은 해제되지 않아 메모리 누수가 발생할 수 있습니다. 또한 함수를 호출할 때 인자의 평가(Evaluation)는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;명시되지 않은 행동(Unspecified Behavior)&lt;/code&gt;으로 컴파일러마다 정의되는 행동이 다르기 때문에, new widget{} 안에서 예외가 발생할 때 new gadget{}으로 생성된 객체가 해제되지 않는 반대의 상황 또한 발생할 수 있습니다.&lt;/p&gt;
 
 &lt;p&gt;이러한 이유로 항상 make_shared 또는 make_unique를 사용하는 것이 안전합니다.&lt;/p&gt;
 
@@ -130,9 +310,9 @@
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;const reference는 일반적인 reference (&amp;amp;)와는 조금 다른 특징을 가지고 있습니다. 첫 번째는 const 키워드로 인해 변경이 불가능하다는 것이고, 두 번째는 reference임에도 객체의 &lt;code class=&quot;highlighter-rouge&quot;&gt;생명 주기(lifetime)&lt;/code&gt;가 더 길다는 것입니다.&lt;/p&gt;
+&lt;p&gt;const reference는 일반적인 reference (&amp;amp;)와는 조금 다른 특징을 가지고 있습니다. 첫 번째는 const 키워드로 인해 변경이 불가능하다는 것이고, 두 번째는 reference임에도 객체의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;생명 주기(lifetime)&lt;/code&gt;가 더 길다는 것입니다.&lt;/p&gt;
 
-&lt;p&gt;위 예제의 &lt;code class=&quot;highlighter-rouge&quot;&gt;사용 예 2&lt;/code&gt;를 보면 마치 GetStringValue() 가 반환하는 std::string 객체를 복사하지 않고 참조만 하는 것처럼 보이지만, 실제로는 const reference에 의해 생명 주기가 연장되어 name 변수가 사라질 때까지 유지됩니다(복사되는 것이 아니며 RVO와도 아무런 관계가 없다는 점에 주의하세요).&lt;/p&gt;
+&lt;p&gt;위 예제의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;사용 예 2&lt;/code&gt;를 보면 마치 GetStringValue() 가 반환하는 std::string 객체를 복사하지 않고 참조만 하는 것처럼 보이지만, 실제로는 const reference에 의해 생명 주기가 연장되어 name 변수가 사라질 때까지 유지됩니다(복사되는 것이 아니며 RVO와도 아무런 관계가 없다는 점에 주의하세요).&lt;/p&gt;
 
 &lt;p&gt;const reference는 불필요한 복사를 막아주고 실수로 변수를 수정하는 일을 쉽게 제한할 수 있다는 점에서 안전한 코드를 만드는 데 큰 도움을 줄 수 있습니다.&lt;/p&gt;
 
@@ -222,7 +402,7 @@
 		&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Research 부분인 &lt;code class=&quot;highlighter-rouge&quot;&gt;LightningModule&lt;/code&gt; 은 기존 pytorch의 &lt;code class=&quot;highlighter-rouge&quot;&gt;nn.Module&lt;/code&gt; 에 데이터, 로스, 옵티마이저 설정을 추가한 모듈입니다.  &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;forward&lt;/code&gt; 에 네트워크 구조를 정의하고, 추가적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;training_step&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;train_dataloader&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;configure_optimizers&lt;/code&gt;  등의 함수들을 오버 라이딩하여 학습 데이터 및 옵티마이저를 정의하여 줍니다.  &lt;code class=&quot;highlighter-rouge&quot;&gt;training_step&lt;/code&gt; , &lt;code class=&quot;highlighter-rouge&quot;&gt;validation_step&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;validataion_epoch_end&lt;/code&gt;에서 “log” key로 리턴하는 내용은 Logger에 batch step 기준으로 로깅되고, “progress_bar” key로 리턴하는 내용은 terminal에서 progress bar 프로그램인 &lt;a href=&quot;https://github.com/tqdm/tqdm&quot;&gt;tqdm&lt;/a&gt;을 통해 출력됩니다.&lt;/p&gt;
+&lt;p&gt;Research 부분인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LightningModule&lt;/code&gt; 은 기존 pytorch의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nn.Module&lt;/code&gt; 에 데이터, 로스, 옵티마이저 설정을 추가한 모듈입니다.  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;forward&lt;/code&gt; 에 네트워크 구조를 정의하고, 추가적으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;training_step&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;train_dataloader&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;configure_optimizers&lt;/code&gt;  등의 함수들을 오버 라이딩하여 학습 데이터 및 옵티마이저를 정의하여 줍니다.  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;training_step&lt;/code&gt; , &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;validation_step&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;validataion_epoch_end&lt;/code&gt;에서 “log” key로 리턴하는 내용은 Logger에 batch step 기준으로 로깅되고, “progress_bar” key로 리턴하는 내용은 terminal에서 progress bar 프로그램인 &lt;a href=&quot;https://github.com/tqdm/tqdm&quot;&gt;tqdm&lt;/a&gt;을 통해 출력됩니다.&lt;/p&gt;
 
 &lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
 &lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/pytorch-boilerplate/tqdm.png&quot; target=&quot;_blank&quot;&gt;
@@ -252,9 +432,9 @@
 &lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Engineering 관련 내용을 처리하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Trainer&lt;/code&gt;는 다양한 option들이 있습니다만, 기본적으로 logger와 gpu, epoch을 설정하여 기존의 코드에서 사용되었던 gpu 설정 및 for 반복문, metric 로깅 과정을 일부 생략할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;Engineering 관련 내용을 처리하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Trainer&lt;/code&gt;는 다양한 option들이 있습니다만, 기본적으로 logger와 gpu, epoch을 설정하여 기존의 코드에서 사용되었던 gpu 설정 및 for 반복문, metric 로깅 과정을 일부 생략할 수 있습니다.&lt;/p&gt;
 
-&lt;p&gt;이후 &lt;code class=&quot;highlighter-rouge&quot;&gt;trainer.fit&lt;/code&gt;을 통해 모델의 train/val 데이터를 이용한 학습 및 평가가 진행되고, &lt;code class=&quot;highlighter-rouge&quot;&gt;trainer.test&lt;/code&gt;를 실행하여 test 데이터에 대한 최종 평가를 수행할 수 있습니다. 이 과정은 학습 중 tqdm을 통해 진행도가 출력되고 logger에 추가로 기록을 합니다. 위의 코드에서는 TensorBoardLogger를 사용하였으나 &lt;a href=&quot;https://www.comet.ml/&quot;&gt;Comet&lt;/a&gt;, &lt;a href=&quot;https://neptune.ai/&quot;&gt;Neptune&lt;/a&gt;, &lt;a href=&quot;https://www.wandb.com/&quot;&gt;WanDB&lt;/a&gt; 같은 다양한 로거들을 지원하고 있습니다&lt;/p&gt;
+&lt;p&gt;이후 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;trainer.fit&lt;/code&gt;을 통해 모델의 train/val 데이터를 이용한 학습 및 평가가 진행되고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;trainer.test&lt;/code&gt;를 실행하여 test 데이터에 대한 최종 평가를 수행할 수 있습니다. 이 과정은 학습 중 tqdm을 통해 진행도가 출력되고 logger에 추가로 기록을 합니다. 위의 코드에서는 TensorBoardLogger를 사용하였으나 &lt;a href=&quot;https://www.comet.ml/&quot;&gt;Comet&lt;/a&gt;, &lt;a href=&quot;https://neptune.ai/&quot;&gt;Neptune&lt;/a&gt;, &lt;a href=&quot;https://www.wandb.com/&quot;&gt;WanDB&lt;/a&gt; 같은 다양한 로거들을 지원하고 있습니다&lt;/p&gt;
 
 &lt;p&gt;gpu 분산 학습인 distributed training, TPU 사용 옵션, Nvidia에서 개발한 뉴럴넷 최적화 툴 &lt;a href=&quot;https://github.com/NVIDIA/apex&quot;&gt;APEX&lt;/a&gt;에 관련된 설정 등 여러 유용한 옵션들이 있으니 &lt;a href=&quot;https://pytorch-lightning.readthedocs.io/en/0.7.6/trainer.html#amp-level&quot;&gt;https://pytorch-lightning.readthedocs.io/en/0.7.6/trainer.html&lt;/a&gt;를 참고하시길 바랍니다.&lt;/p&gt;
 
@@ -262,7 +442,7 @@
   &lt;li&gt;
     &lt;p&gt;앗! 잠깐만!&lt;/p&gt;
 
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pytorch_lightning.seed_everything(seed)&lt;/code&gt; 를 코드 처음에 넣어두면 seed를 고정해 실험 reproducible를 확보할 수 있다는 사실~&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pytorch_lightning.seed_everything(seed)&lt;/code&gt; 를 코드 처음에 넣어두면 seed를 고정해 실험 reproducible를 확보할 수 있다는 사실~&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -284,7 +464,7 @@
 &lt;/a&gt;
 &lt;span class=&quot;caption&quot;&gt;MS NNI를 코드에 적용하는 3가지 단계&lt;/span&gt;&lt;/p&gt;
 
-&lt;p&gt;첫 번째 과정으로는 Tuning을 적용할 Search Space 정의입니다. 작게는 learning rate, batch size부터 크게는 네트워크 종류 선택까지 적용해볼 수 있겠네요. Auto Searcher (Grid, GP, PPO 등)의 종류에 따라 다르지만, search 범위는 범주형 &lt;code class=&quot;highlighter-rouge&quot;&gt;choice&lt;/code&gt;,  &lt;code class=&quot;highlighter-rouge&quot;&gt;uniform&lt;/code&gt; , &lt;code class=&quot;highlighter-rouge&quot;&gt;randint&lt;/code&gt; 정도의 타입으로 나눌 수 있겠습니다. 해당 설정은 &lt;code class=&quot;highlighter-rouge&quot;&gt;.json&lt;/code&gt;타입으로 작성하시면 됩니다.&lt;/p&gt;
+&lt;p&gt;첫 번째 과정으로는 Tuning을 적용할 Search Space 정의입니다. 작게는 learning rate, batch size부터 크게는 네트워크 종류 선택까지 적용해볼 수 있겠네요. Auto Searcher (Grid, GP, PPO 등)의 종류에 따라 다르지만, search 범위는 범주형 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;choice&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uniform&lt;/code&gt; , &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;randint&lt;/code&gt; 정도의 타입으로 나눌 수 있겠습니다. 해당 설정은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.json&lt;/code&gt;타입으로 작성하시면 됩니다.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;s&quot;&gt;&quot;train.batch_size&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;_type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;choice&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;_value&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]},&lt;/span&gt;
@@ -292,7 +472,7 @@
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;그다음에 search parameter를 코드에 연결하고 최적화할 목표 metric을 설정해야 합니다. 필수적으로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;report_final_result&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;get_next_parameter&lt;/code&gt;를 사용하여야 하고, 선택적으로 학습 과정 중 관찰하고 싶은 metric을 &lt;code class=&quot;highlighter-rouge&quot;&gt;report_intermediate_result&lt;/code&gt;로 NNI 플랫폼에 기록해볼 수 있습니다.&lt;/p&gt;
+&lt;p&gt;그다음에 search parameter를 코드에 연결하고 최적화할 목표 metric을 설정해야 합니다. 필수적으로는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;report_final_result&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get_next_parameter&lt;/code&gt;를 사용하여야 하고, 선택적으로 학습 과정 중 관찰하고 싶은 metric을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;report_intermediate_result&lt;/code&gt;로 NNI 플랫폼에 기록해볼 수 있습니다.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;_main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cfg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DefaultConfig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nni&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_next_parameter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 정의된 search space에서 next step의 config 호출
@@ -307,7 +487,7 @@
     &lt;span class=&quot;n&quot;&gt;nni&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;report_final_result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;final_result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# nni에서 추적할 log 기록
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;마지막으로는 AutoML을 할 때 사용할 Tuner와 탐색 시간 및 자원 설정입니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;.yml&lt;/code&gt; 타입으로 작성하면 되고, 필수적으로는 &lt;code class=&quot;highlighter-rouge&quot;&gt;useAnnotation&lt;/code&gt; 을 false로 지정하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;searchSpacePath&lt;/code&gt; 의 값으로 탐색할 값을 불러옵니다. 추가적인 옵션으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;trialConcurrency&lt;/code&gt; 로 동시에 수행할 실험, &lt;code class=&quot;highlighter-rouge&quot;&gt;maxExecDuration&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;maxTrialNum&lt;/code&gt; 으로 탐색 시간 및 횟수를 설정할 수 있습니다. 그리고 제일 중요한 &lt;code class=&quot;highlighter-rouge&quot;&gt;tuner:builtinTuerName&lt;/code&gt; 을 통해 파라미터 탐색 시 사용할 Tuner를 고를 수 있습니다. Tuner는 기본적으로 모든 조합을 찾는 Grid Search, 강화학습 기반의 PPO Tuner, Random Search 등의 다양한 옵션들이 있습니다. 더욱 다양한 튜너에 대한 옵션과 사용법들은 &lt;a href=&quot;https://nni.readthedocs.io/en/latest/hyperparameter_tune.html&quot;&gt;https://nni.readthedocs.io/en/latest/hyperparameter_tune.html&lt;/a&gt;에서 확인해주시면 됩니다!&lt;/p&gt;
+&lt;p&gt;마지막으로는 AutoML을 할 때 사용할 Tuner와 탐색 시간 및 자원 설정입니다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.yml&lt;/code&gt; 타입으로 작성하면 되고, 필수적으로는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;useAnnotation&lt;/code&gt; 을 false로 지정하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;searchSpacePath&lt;/code&gt; 의 값으로 탐색할 값을 불러옵니다. 추가적인 옵션으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;trialConcurrency&lt;/code&gt; 로 동시에 수행할 실험, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;maxExecDuration&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;maxTrialNum&lt;/code&gt; 으로 탐색 시간 및 횟수를 설정할 수 있습니다. 그리고 제일 중요한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tuner:builtinTuerName&lt;/code&gt; 을 통해 파라미터 탐색 시 사용할 Tuner를 고를 수 있습니다. Tuner는 기본적으로 모든 조합을 찾는 Grid Search, 강화학습 기반의 PPO Tuner, Random Search 등의 다양한 옵션들이 있습니다. 더욱 다양한 튜너에 대한 옵션과 사용법들은 &lt;a href=&quot;https://nni.readthedocs.io/en/latest/hyperparameter_tune.html&quot;&gt;https://nni.readthedocs.io/en/latest/hyperparameter_tune.html&lt;/a&gt;에서 확인해주시면 됩니다!&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;authorName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;davinnovation&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;experimentName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;example_mnist&lt;/span&gt;
@@ -327,7 +507,7 @@
   &lt;span class=&quot;n&quot;&gt;gpuNum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;위의 단계를 마치고 NNI을 실행시킨다면 다음과 같은 결과를 &lt;code class=&quot;highlighter-rouge&quot;&gt;localhost:8080&lt;/code&gt; 에 접속하시면 현재 탐색 실행 상황 및 최적 값 등을 확인하실 수 있습니다.&lt;/p&gt;
+&lt;p&gt;위의 단계를 마치고 NNI을 실행시킨다면 다음과 같은 결과를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localhost:8080&lt;/code&gt; 에 접속하시면 현재 탐색 실행 상황 및 최적 값 등을 확인하실 수 있습니다.&lt;/p&gt;
 
 &lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
 &lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/pytorch-boilerplate/nni2.png&quot; target=&quot;_blank&quot;&gt;
@@ -339,7 +519,7 @@
   &lt;p&gt;OmegaConf&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;딥러닝 프로젝트를 진행하다 보면 초반에는 batch size, epoch 등의 적은 옵션들만 설정하여 하드 코딩으로 관리하기 괜찮지만, 설정의 종류가 시간이 지나며 늘어나거나 cli, config.json 등등 옵션들에 대한 entry point가 많아지면 관리하기도 힘든데요, 이를 &lt;code class=&quot;highlighter-rouge&quot;&gt;OmegaConf&lt;/code&gt; 를 통해 관리하면 조금 더 편하게 사용할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;딥러닝 프로젝트를 진행하다 보면 초반에는 batch size, epoch 등의 적은 옵션들만 설정하여 하드 코딩으로 관리하기 괜찮지만, 설정의 종류가 시간이 지나며 늘어나거나 cli, config.json 등등 옵션들에 대한 entry point가 많아지면 관리하기도 힘든데요, 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OmegaConf&lt;/code&gt; 를 통해 관리하면 조금 더 편하게 사용할 수 있습니다.&lt;/p&gt;
 
 &lt;p&gt;여러 사용법이 있습니다만, 필자는 데이터를 관리하는데 기본적인 매니징 기능이 추가된 &lt;a href=&quot;https://docs.python.org/ko/3/library/dataclasses.html&quot;&gt;dataclass&lt;/a&gt; 를 기반으로 설정 관리하는 것을 선호합니다. 우선 config.py에 관리하고자 하는 설정을 입력합니다.&lt;/p&gt;
 
@@ -369,7 +549,7 @@
     &lt;span class=&quot;n&quot;&gt;seed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;그리고 위의 Config.py를 main에서 호출하여 기본 config로 사용하고, entry point를 다양화할 수 있도록 &lt;code class=&quot;highlighter-rouge&quot;&gt;merge_with_cli&lt;/code&gt; 등을 통해 수정할 수 있도록 합니다.&lt;/p&gt;
+&lt;p&gt;그리고 위의 Config.py를 main에서 호출하여 기본 config로 사용하고, entry point를 다양화할 수 있도록 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;merge_with_cli&lt;/code&gt; 등을 통해 수정할 수 있도록 합니다.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;_main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cfg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DefaultConfig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
@@ -406,7 +586,7 @@
 
 &lt;p&gt;&lt;a href=&quot;https://www.anaconda.com/products/individual&quot;&gt;Anaconda&lt;/a&gt;는 데이터 과학을 위한 Python 패키지들과 라이브러리들을 모아두고 환경 관리 및 설치를 도와주는 소프트웨어입니다.&lt;/p&gt;
 
-&lt;p&gt;Anaconda를 설치하시고 path를 설정해주시면 prompt 창에서 가장 왼쪽에 &lt;code class=&quot;highlighter-rouge&quot;&gt;(base)&lt;/code&gt;로 표시가 됩니다. 이는 현재 base라는 기본 환경을 가지는 python을 실행하기 위해 준비되었다는 의미입니다.&lt;/p&gt;
+&lt;p&gt;Anaconda를 설치하시고 path를 설정해주시면 prompt 창에서 가장 왼쪽에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(base)&lt;/code&gt;로 표시가 됩니다. 이는 현재 base라는 기본 환경을 가지는 python을 실행하기 위해 준비되었다는 의미입니다.&lt;/p&gt;
 
 &lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
 &lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/pytorch-boilerplate/conda.png&quot; target=&quot;_blank&quot;&gt;
@@ -414,9 +594,9 @@
 &lt;/a&gt;
 &lt;span class=&quot;caption&quot;&gt;conda가 준비되었을 때의 콘솔창&lt;/span&gt;&lt;/p&gt;
 
-&lt;p&gt;한 개의 환경에 모든 라이브러리를 설치하지 않고 각 프로젝트를 위한 환경을 만들어서 관리하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda create -n torch_py37 python=3.7 anaconda&lt;/code&gt; 명령어로 torch_py36이라는 새로운 환경을 만들어줍니다. 그 다음 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda activate torch_py37&lt;/code&gt; 를 통해 환경을 교체할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;한 개의 환경에 모든 라이브러리를 설치하지 않고 각 프로젝트를 위한 환경을 만들어서 관리하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;conda create -n torch_py37 python=3.7 anaconda&lt;/code&gt; 명령어로 torch_py36이라는 새로운 환경을 만들어줍니다. 그 다음 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;conda activate torch_py37&lt;/code&gt; 를 통해 환경을 교체할 수 있습니다.&lt;/p&gt;
 
-&lt;p&gt;그리고 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda install&lt;/code&gt;을 통해 여러 패키지를 설치하시고, &lt;code class=&quot;highlighter-rouge&quot;&gt;conda env export &amp;gt; env.yaml&lt;/code&gt; 로 환경을 공유할 수 있습니다. 그리고 다른 anaconda에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda create env -f env.yaml&lt;/code&gt; 를 통해 재사용할 수 있게됩니다!&lt;/p&gt;
+&lt;p&gt;그리고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;conda install&lt;/code&gt;을 통해 여러 패키지를 설치하시고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;conda env export &amp;gt; env.yaml&lt;/code&gt; 로 환경을 공유할 수 있습니다. 그리고 다른 anaconda에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;conda create env -f env.yaml&lt;/code&gt; 를 통해 재사용할 수 있게됩니다!&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Docker&lt;/p&gt;
@@ -623,11 +803,11 @@
 
 &lt;h2 id=&quot;서론-boost-interprocess-사용시-의문점&quot;&gt;서론: Boost Interprocess 사용시 의문점&lt;/h2&gt;
 
-&lt;p&gt;C++ 프로그램에서 프로세스 간 통신(IPC, Inter-Process Communication)을 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;boost::interprocess&lt;/code&gt;에서 제공하는 객체(Object)들을 사용하게 되었습니다. 프로세스 간 공유 메모리(Inter-Process shared memory)나 프로세스 간 뮤텍스(Inter-Process Mutex)를 사용하려고 하다보니, 자연스럽게 다음과 같은 의문점이 생겼습니다.&lt;/p&gt;
+&lt;p&gt;C++ 프로그램에서 프로세스 간 통신(IPC, Inter-Process Communication)을 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;boost::interprocess&lt;/code&gt;에서 제공하는 객체(Object)들을 사용하게 되었습니다. 프로세스 간 공유 메모리(Inter-Process shared memory)나 프로세스 간 뮤텍스(Inter-Process Mutex)를 사용하려고 하다보니, 자연스럽게 다음과 같은 의문점이 생겼습니다.&lt;/p&gt;
 
 &lt;p&gt;“어떤 프로세스가 내부적으로 할당하여 그 프로세스만 사용하게 될 자원들은 그 프로세스가 종료되는 순간 자동으로 반환된다. 명시적으로 자원을 반환하는 코드가 없더라도 운영체제 수준에서 이것을 처리한다. 그렇다면, 프로세스 간 통신을 위해 공유 메모리에 할당된 자원은 언제 반환되는가? 다시 말해서, 공유 메모리에 생성된 객체의 인스턴스는 언제 해제되는가(destructed)?”&lt;/p&gt;
 
-&lt;p&gt;자원을 명시적으로 해제할 경우 당연히 그 자원은 반환될 것입니다. 그러나 자원을 명시적으로 해제하지 않는다면 어떻게 될까요? 시스템을 재부팅해야 자원이 해제가 될까요? 아니면 재부팅하지 않더라도 그 자원을 사용했던 프로세스들이 종료되면 자동으로 해제가 될까요? &lt;code class=&quot;highlighter-rouge&quot;&gt;boost::interprocess&lt;/code&gt; 관련 문서를 뒤적인 결과 다음과 같은 &lt;a href=&quot;https://www.boost.org/doc/libs/1_71_0/doc/html/interprocess/some_basic_explanations.html#interprocess.some_basic_explanations.persistence&quot; target=&quot;_blank&quot;&gt;항목&lt;/a&gt;을 발견할 수 있었습니다. 원문은 영어로 되어있고 의역하면 다음과 같습니다.&lt;/p&gt;
+&lt;p&gt;자원을 명시적으로 해제할 경우 당연히 그 자원은 반환될 것입니다. 그러나 자원을 명시적으로 해제하지 않는다면 어떻게 될까요? 시스템을 재부팅해야 자원이 해제가 될까요? 아니면 재부팅하지 않더라도 그 자원을 사용했던 프로세스들이 종료되면 자동으로 해제가 될까요? &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;boost::interprocess&lt;/code&gt; 관련 문서를 뒤적인 결과 다음과 같은 &lt;a href=&quot;https://www.boost.org/doc/libs/1_71_0/doc/html/interprocess/some_basic_explanations.html#interprocess.some_basic_explanations.persistence&quot; target=&quot;_blank&quot;&gt;항목&lt;/a&gt;을 발견할 수 있었습니다. 원문은 영어로 되어있고 의역하면 다음과 같습니다.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;프로세스 간 통신에 사용되는 자원들은 언제까지 지속되는가&lt;/strong&gt;&lt;/p&gt;
@@ -640,19 +820,19 @@
   &lt;/ul&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;각각의 수준에 대해 매우 잘 정리되어 있음을 알 수 있습니다. 위의 내용을 토대로 제게 필요했던 기능은 &lt;strong&gt;프로세스 수준 지속&lt;/strong&gt;을 지원하는 자원이라는 것도 명확하게 판단할 수 있었습니다. 하지만 문제는, &lt;code class=&quot;highlighter-rouge&quot;&gt;boost::interprocess&lt;/code&gt;가 제공하는 자원들이 위 세가지 중 어디에 속하는지가 명확히 정리되어 있지 않았다는 점입니다. 그래서 테스트 코드를 직접 짜 보면서 실험을 해보기로 했습니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;boost::interprocess&lt;/code&gt;에서 제공하는 모든 종류의 자원을 테스트해보지는 못했고, 제가 확인이 필요했던 4가지 자원들에대해 테스트해보았습니다. 이 포스트에서 테스트해보지 못한 다른 종류의 자원들도 이 포스트에서 소개하는 방식과 동일하게 테스트해볼 수 있을 것입니다.&lt;/p&gt;
+&lt;p&gt;각각의 수준에 대해 매우 잘 정리되어 있음을 알 수 있습니다. 위의 내용을 토대로 제게 필요했던 기능은 &lt;strong&gt;프로세스 수준 지속&lt;/strong&gt;을 지원하는 자원이라는 것도 명확하게 판단할 수 있었습니다. 하지만 문제는, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;boost::interprocess&lt;/code&gt;가 제공하는 자원들이 위 세가지 중 어디에 속하는지가 명확히 정리되어 있지 않았다는 점입니다. 그래서 테스트 코드를 직접 짜 보면서 실험을 해보기로 했습니다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;boost::interprocess&lt;/code&gt;에서 제공하는 모든 종류의 자원을 테스트해보지는 못했고, 제가 확인이 필요했던 4가지 자원들에대해 테스트해보았습니다. 이 포스트에서 테스트해보지 못한 다른 종류의 자원들도 이 포스트에서 소개하는 방식과 동일하게 테스트해볼 수 있을 것입니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;boost-interprocess-자원별-지속시간-테스트-및-결과&quot;&gt;Boost Interprocess 자원별 지속시간 테스트 및 결과&lt;/h2&gt;
 
 &lt;h3 id=&quot;managed_xsi_shared_memory--커널-수준-지속&quot;&gt;managed_xsi_shared_memory : 커널 수준 지속&lt;/h3&gt;
 
-&lt;p&gt;이 공유 메모리는 리눅스에서만 사용할 수 있습니다. 리눅스에서 진행되었던 모든 테스트는 Ubuntu 18.04(g++ 7.5.0), x86_64 환경에서 진행되었습니다. Boost 버전은 1.71.0 을 사용하였고, &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/local/boost-1.71.0&lt;/code&gt;에 설치되었다고 가정하였습니다.&lt;/p&gt;
+&lt;p&gt;이 공유 메모리는 리눅스에서만 사용할 수 있습니다. 리눅스에서 진행되었던 모든 테스트는 Ubuntu 18.04(g++ 7.5.0), x86_64 환경에서 진행되었습니다. Boost 버전은 1.71.0 을 사용하였고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/local/boost-1.71.0&lt;/code&gt;에 설치되었다고 가정하였습니다.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/nglee/5892c346d26f9282160581e7fde4d3cf.js&quot;&gt;&lt;/script&gt;
 
 &lt;p&gt;위 테스트코드에서는 공유 자원을 해제하는 과정을 고의적으로 생략하였습니다. 자원을 명시적으로 해제하지 않고 프로세스를 종료시켰을 때 자원이 자동으로 해제되는지(즉, &lt;strong&gt;프로세스 수준 지속&lt;/strong&gt;인지) 확인해보고 싶은 것입니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest1.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest1
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest1.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest1
 $ ./bitest1
 shared memory created
 $ ./bitest1
@@ -663,16 +843,16 @@ $
 
 &lt;p&gt;위와 같이 프로세스가 종료되었음에도 자원이 해제되지 않는 것을 보니 일단 프로세스 수준 지속은 아님을 알 수 있습니다. 그런데 이 상태로 재부팅하고 나면 다음과 같음을 볼 수 있습니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./bitest1
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./bitest1
 shared memory created
 $
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;따라서 &lt;code class=&quot;highlighter-rouge&quot;&gt;managed_xsi_shared_memory&lt;/code&gt; 인스턴스의 경우 커널이 재시작 하고 나서 자원이 해재된 것을 보니 &lt;strong&gt;커널 수준 지속&lt;/strong&gt;임을 알 수 있습니다.&lt;/p&gt;
+&lt;p&gt;따라서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;managed_xsi_shared_memory&lt;/code&gt; 인스턴스의 경우 커널이 재시작 하고 나서 자원이 해재된 것을 보니 &lt;strong&gt;커널 수준 지속&lt;/strong&gt;임을 알 수 있습니다.&lt;/p&gt;
 
 &lt;h3 id=&quot;managed_windows_shared_memory--프로세스-수준-지속&quot;&gt;managed_windows_shared_memory : 프로세스 수준 지속&lt;/h3&gt;
 
-&lt;p&gt;이 공유 메모리는 윈도우에서만 사용할 수 있습니다. 다음과 같은 코드로 컴파일 후 연속적으로 실행하면 항상 &lt;code class=&quot;highlighter-rouge&quot;&gt;shared memory created&lt;/code&gt;가 출력됩니다. 따라서 &lt;strong&gt;프로세스 수준 지속&lt;/strong&gt;임을 알 수 있습니다. (테스트 환경: Windows 10, Visual Studio 2019, NuGet 패키지 인스톨러 이용하여 boost 1.71.0 버전 설치)&lt;/p&gt;
+&lt;p&gt;이 공유 메모리는 윈도우에서만 사용할 수 있습니다. 다음과 같은 코드로 컴파일 후 연속적으로 실행하면 항상 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;shared memory created&lt;/code&gt;가 출력됩니다. 따라서 &lt;strong&gt;프로세스 수준 지속&lt;/strong&gt;임을 알 수 있습니다. (테스트 환경: Windows 10, Visual Studio 2019, NuGet 패키지 인스톨러 이용하여 boost 1.71.0 버전 설치)&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/nglee/f89b6448a05edcb9ed382a94e8aa13d5.js&quot;&gt;&lt;/script&gt;
 
@@ -680,7 +860,7 @@ $
 
 &lt;script src=&quot;https://gist.github.com/nglee/a03ed8c2de387608f6d9d98ce53beb51.js&quot;&gt;&lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest2.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest2
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest2.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest2
 $ ./bitest2
 interprocess_mutex create success
 $ ./bitest2
@@ -689,13 +869,13 @@ interprocess_mutex create fail
 $
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;위와 같이 프로세스가 종료되어도 공유 메모리에 할당된 &lt;code class=&quot;highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;가 자동으로 해제되지 않는 것을 보니 프로세스 수준 지속은 아님을 알 수 있습니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;가 할당된 &lt;code class=&quot;highlighter-rouge&quot;&gt;managed_xsi_shared_memory&lt;/code&gt;가 &lt;strong&gt;커널 수준 지속&lt;/strong&gt;이므로 이 경우 &lt;code class=&quot;highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;도 &lt;strong&gt;커널 수준 지속&lt;/strong&gt;임을 알 수 있습니다. (재부팅시에 &lt;code class=&quot;highlighter-rouge&quot;&gt;managed_xsi_shared_memory&lt;/code&gt;가 사라지므로 그 안에 할당된 &lt;code class=&quot;highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;도 사라지게 됨)&lt;/p&gt;
+&lt;p&gt;위와 같이 프로세스가 종료되어도 공유 메모리에 할당된 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;가 자동으로 해제되지 않는 것을 보니 프로세스 수준 지속은 아님을 알 수 있습니다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;가 할당된 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;managed_xsi_shared_memory&lt;/code&gt;가 &lt;strong&gt;커널 수준 지속&lt;/strong&gt;이므로 이 경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;도 &lt;strong&gt;커널 수준 지속&lt;/strong&gt;임을 알 수 있습니다. (재부팅시에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;managed_xsi_shared_memory&lt;/code&gt;가 사라지므로 그 안에 할당된 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;도 사라지게 됨)&lt;/p&gt;
 
-&lt;p&gt;뮤텍스의 경우 한 가지 더 궁금한 점이 생깁니다. 비록 자원은 해제되지 않더라도, 혹시 &lt;code class=&quot;highlighter-rouge&quot;&gt;unlock&lt;/code&gt;은 자동으로 해줄까요? 다시 말해, 어떤 프로세스가 &lt;code class=&quot;highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;lock&lt;/code&gt;하고 나서 &lt;code class=&quot;highlighter-rouge&quot;&gt;unlock&lt;/code&gt;하지 않고 프로세스가 종료된다면, 다른 프로세스가 그 &lt;code class=&quot;highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;lock&lt;/code&gt;할 수 있을까요?&lt;/p&gt;
+&lt;p&gt;뮤텍스의 경우 한 가지 더 궁금한 점이 생깁니다. 비록 자원은 해제되지 않더라도, 혹시 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unlock&lt;/code&gt;은 자동으로 해줄까요? 다시 말해, 어떤 프로세스가 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lock&lt;/code&gt;하고 나서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unlock&lt;/code&gt;하지 않고 프로세스가 종료된다면, 다른 프로세스가 그 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lock&lt;/code&gt;할 수 있을까요?&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/nglee/b9dd4d8f55010d47a48f30f4967b86d1.js&quot;&gt;&lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest3.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest3
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest3.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest3
 $ ./bitest3
 This is the first process.
 The first process locked an interprocess_mutex
@@ -707,11 +887,11 @@ and if it succeeds, then a message will be shown.
 If it fails, it will run indefinitely.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;위의 예제에서 볼 수 있듯이 &lt;code class=&quot;highlighter-rouge&quot;&gt;unlock&lt;/code&gt;이 자동으로 되지 않음을 알 수 있습니다. 이런 상황을 막기 위해서는 다음과 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;scoped_lock&lt;/code&gt;을 사용해야 합니다.&lt;/p&gt;
+&lt;p&gt;위의 예제에서 볼 수 있듯이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unlock&lt;/code&gt;이 자동으로 되지 않음을 알 수 있습니다. 이런 상황을 막기 위해서는 다음과 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scoped_lock&lt;/code&gt;을 사용해야 합니다.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/nglee/a6eb842a92f1b44ca3d3880b255aac80.js&quot;&gt;&lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest4.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest4
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest4.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest4
 $ ./bitest4
 This is the first process.
 The first process locked an interprocess_mutex
@@ -725,9 +905,9 @@ The second process locked the mutex!
 $
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;하지만 &lt;code class=&quot;highlighter-rouge&quot;&gt;scoped_lock&lt;/code&gt;도 완벽한 해답이 되지는 못합니다. 만약 &lt;code class=&quot;highlighter-rouge&quot;&gt;scoped_lock&lt;/code&gt;의 인스턴스가 해제되기 전에 프로세스가 종료된다면, 결국 &lt;code class=&quot;highlighter-rouge&quot;&gt;unlock&lt;/code&gt;이 되지 않는 것이나 마찬가지입니다. 다음은 &lt;code class=&quot;highlighter-rouge&quot;&gt;gdb&lt;/code&gt;를 이용해서 인위적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;scoped_lock&lt;/code&gt;이 해제되기 전에 프로세스를 종료시킨 후에 다른 프로세스에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;lock&lt;/code&gt;을 시도하는 예제입니다.&lt;/p&gt;
+&lt;p&gt;하지만 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scoped_lock&lt;/code&gt;도 완벽한 해답이 되지는 못합니다. 만약 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scoped_lock&lt;/code&gt;의 인스턴스가 해제되기 전에 프로세스가 종료된다면, 결국 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unlock&lt;/code&gt;이 되지 않는 것이나 마찬가지입니다. 다음은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gdb&lt;/code&gt;를 이용해서 인위적으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scoped_lock&lt;/code&gt;이 해제되기 전에 프로세스를 종료시킨 후에 다른 프로세스에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lock&lt;/code&gt;을 시도하는 예제입니다.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest4.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest4d -g
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest4.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest4d -g
 $ gdb ./bitest4d
 (gdb) break 30
 (gdb) run
@@ -751,15 +931,15 @@ __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
 (gdb)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;위에서 볼 수 있듯이 &lt;code class=&quot;highlighter-rouge&quot;&gt;unlock&lt;/code&gt;이 자동으로 되지 않음을 알 수 있습니다. 이는 디버깅 과정에서 문제가 될 수 있습니다. 이럴 때 사용할 수 있는 것이 &lt;code class=&quot;highlighter-rouge&quot;&gt;file_lock&lt;/code&gt;입니다.&lt;/p&gt;
+&lt;p&gt;위에서 볼 수 있듯이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unlock&lt;/code&gt;이 자동으로 되지 않음을 알 수 있습니다. 이는 디버깅 과정에서 문제가 될 수 있습니다. 이럴 때 사용할 수 있는 것이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file_lock&lt;/code&gt;입니다.&lt;/p&gt;
 
 &lt;h3 id=&quot;file_lock--프로세스-수준-지속&quot;&gt;file_lock : 프로세스 수준 지속&lt;/h3&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;file_lock&lt;/code&gt;은 &lt;a href=&quot;https://www.boost.org/doc/libs/1_71_0/doc/html/interprocess/synchronization_mechanisms.html#interprocess.synchronization_mechanisms.file_lock&quot; target=&quot;_blank&quot;&gt;문서&lt;/a&gt;에도 명시되어 있듯이 &lt;strong&gt;프로세스 수준 지속&lt;/strong&gt;입니다. 따라서 &lt;code class=&quot;highlighter-rouge&quot;&gt;file_lock&lt;/code&gt;의 장점은 무엇보다 &lt;code class=&quot;highlighter-rouge&quot;&gt;lock&lt;/code&gt;을 한 프로세스가 명시적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;unlock&lt;/code&gt;을 하지 않은 상태로 종료되더라도(정상종료이든, 비정상종료이든 관계 없이) 자동으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;unlock&lt;/code&gt;이 된다는 점입니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file_lock&lt;/code&gt;은 &lt;a href=&quot;https://www.boost.org/doc/libs/1_71_0/doc/html/interprocess/synchronization_mechanisms.html#interprocess.synchronization_mechanisms.file_lock&quot; target=&quot;_blank&quot;&gt;문서&lt;/a&gt;에도 명시되어 있듯이 &lt;strong&gt;프로세스 수준 지속&lt;/strong&gt;입니다. 따라서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file_lock&lt;/code&gt;의 장점은 무엇보다 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lock&lt;/code&gt;을 한 프로세스가 명시적으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unlock&lt;/code&gt;을 하지 않은 상태로 종료되더라도(정상종료이든, 비정상종료이든 관계 없이) 자동으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unlock&lt;/code&gt;이 된다는 점입니다.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/nglee/164bde324c6c03a50047648c222d0b28.js&quot;&gt;&lt;/script&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest5.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest5
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ g++ bitest5.cpp -I/usr/local/boost-1.71.0/include -std=c++14 -pthread -o bitest5
 $ ./bitest5
 The process locked an file_lock,
 and is going to exit without unlocking the lock.
@@ -785,7 +965,7 @@ and is going to exit without unlocking the lock.
 
 &lt;h2 id=&quot;결론&quot;&gt;결론&lt;/h2&gt;
 
-&lt;p&gt;여기까지 C++ 프로세스 통신간 사용하는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Boost::interprocess&lt;/code&gt;에서 제공하는 자원 중 &lt;code class=&quot;highlighter-rouge&quot;&gt;managed_xsi_shared_memory&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;managed_windows_shared_memory&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;file_lock&lt;/code&gt; 에 대해 지속 시간을 테스트 해보았습니다. 각 자원에 대해 조금씩 다른 테스트 방법을 사용하여 각각 커널 수준, 프로세스 수준, 커널 수준, 프로세스 수준 지속임을 확인하였습니다. 앞서도 말씀드렸지만 본 글에서 테스트 해본 것들 이외의 자원에 대해서도 테스트를 해보고 싶다면, 이를 참고하여 비슷한 방식으로 테스트 할 수 있을 것이라 생각합니다.&lt;/p&gt;</content><author><name>이남구</name><email>Namgoo.Lee@cognex.com</email></author><category term="boost" /><category term="c++" /><category term="gdb" /><summary type="html">이번 포스트에서는 Boost의 Interproces에 포함된 자원들의 지속시간(Lifetime)을 테스트해본 경험을 공유하려합니다. 이런 테스트를 해 본 계기는 개발 과정에서 프로그램이 비정상종료는 경우, 혹은 디버거를 이용한 디버깅 도중 자원을 해제하는 부분에 도달하기 전에 프로세스가 종료되는 경우 자원이 해제되지 않아(혹은, shared lock 같은 경우 unlock이 되지 않아) 문제가 발생하는 상황을 없애고 싶다는 요구에서였습니다. 이것을 위해선 프로세스가 종료될 경우 자동으로 해제되는 자원이 필요했습니다. Boost의 Interprocess 라이브러리에서 제공하는 자원들 중에서 이런 요구사항에 부합하는 자원을 찾기 위해 진행한 테스트들을 정리해보았습니다.</summary></entry><entry><title type="html">Anomaly Detection 개요： (2) Out-of-distribution(OOD) Detection 문제 소개 및 핵심 논문 리뷰</title><link href="http://research.sualab.com/introduction/review/2020/02/20/anomaly-detection-overview-2.html" rel="alternate" type="text/html" title="Anomaly Detection 개요： (2) Out-of-distribution(OOD) Detection 문제 소개 및 핵심 논문 리뷰" /><published>2020-02-20T12:00:00+09:00</published><updated>2020-02-20T12:00:00+09:00</updated><id>http://research.sualab.com/introduction/review/2020/02/20/anomaly-detection-overview-2</id><content type="html" xml:base="http://research.sualab.com/introduction/review/2020/02/20/anomaly-detection-overview-2.html">&lt;p&gt;안녕하세요, 이번 포스팅에서는 지난 포스팅에 이어 Anomaly Detection(이상 탐지)에 대한 내용을 다룰 예정이며 Anomaly Detection 연구 분야 중 Out-of-distribution(OOD) Detection 문제에 대해 여러 논문을 토대로 깊이 있게 소개를 드릴 예정입니다.&lt;/p&gt;
+&lt;p&gt;여기까지 C++ 프로세스 통신간 사용하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Boost::interprocess&lt;/code&gt;에서 제공하는 자원 중 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;managed_xsi_shared_memory&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;managed_windows_shared_memory&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interprocess_mutex&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file_lock&lt;/code&gt; 에 대해 지속 시간을 테스트 해보았습니다. 각 자원에 대해 조금씩 다른 테스트 방법을 사용하여 각각 커널 수준, 프로세스 수준, 커널 수준, 프로세스 수준 지속임을 확인하였습니다. 앞서도 말씀드렸지만 본 글에서 테스트 해본 것들 이외의 자원에 대해서도 테스트를 해보고 싶다면, 이를 참고하여 비슷한 방식으로 테스트 할 수 있을 것이라 생각합니다.&lt;/p&gt;</content><author><name>이남구</name><email>Namgoo.Lee@cognex.com</email></author><category term="boost" /><category term="c++" /><category term="gdb" /><summary type="html">이번 포스트에서는 Boost의 Interproces에 포함된 자원들의 지속시간(Lifetime)을 테스트해본 경험을 공유하려합니다. 이런 테스트를 해 본 계기는 개발 과정에서 프로그램이 비정상종료는 경우, 혹은 디버거를 이용한 디버깅 도중 자원을 해제하는 부분에 도달하기 전에 프로세스가 종료되는 경우 자원이 해제되지 않아(혹은, shared lock 같은 경우 unlock이 되지 않아) 문제가 발생하는 상황을 없애고 싶다는 요구에서였습니다. 이것을 위해선 프로세스가 종료될 경우 자동으로 해제되는 자원이 필요했습니다. Boost의 Interprocess 라이브러리에서 제공하는 자원들 중에서 이런 요구사항에 부합하는 자원을 찾기 위해 진행한 테스트들을 정리해보았습니다.</summary></entry><entry><title type="html">Anomaly Detection 개요： (2) Out-of-distribution(OOD) Detection 문제 소개 및 핵심 논문 리뷰</title><link href="http://research.sualab.com/introduction/review/2020/02/20/anomaly-detection-overview-2.html" rel="alternate" type="text/html" title="Anomaly Detection 개요： (2) Out-of-distribution(OOD) Detection 문제 소개 및 핵심 논문 리뷰" /><published>2020-02-20T12:00:00+09:00</published><updated>2020-02-20T12:00:00+09:00</updated><id>http://research.sualab.com/introduction/review/2020/02/20/anomaly-detection-overview-2</id><content type="html" xml:base="http://research.sualab.com/introduction/review/2020/02/20/anomaly-detection-overview-2.html">&lt;p&gt;안녕하세요, 이번 포스팅에서는 지난 포스팅에 이어 Anomaly Detection(이상 탐지)에 대한 내용을 다룰 예정이며 Anomaly Detection 연구 분야 중 Out-of-distribution(OOD) Detection 문제에 대해 여러 논문을 토대로 깊이 있게 소개를 드릴 예정입니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;out-of-distributionood-detection-이란&quot;&gt;Out-of-distribution(OOD) Detection 이란?&lt;/h2&gt;
 &lt;p&gt;이전 포스팅인 &lt;a href=&quot;http://research.sualab.com/introduction/review/2020/01/30/anomaly-detection-overview-1.html&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; ” Anomaly Detection 개요: (1) 이상치 탐지 분야에 대한 소개 및 주요 문제와 핵심 용어, 산업 현장 적용 사례 정리” &lt;/b&gt;&lt;/a&gt; 에서 잠시 언급했던 Out-of-distribution(OOD) Detection은 현재 보유하고 있는 In-distribution 데이터 셋을 이용하여 multi-class classification network를 학습시킨 뒤, test 단계에서 In-distribution test set은 정확하게 예측하고 Out-of-distribution 데이터 셋은 걸러내는 것을 목표로 하고 있다고 말씀드렸습니다.&lt;/p&gt;
@@ -837,13 +1017,13 @@ and is going to exit without unlocking the lock.
 &lt;/a&gt;
 &lt;span class=&quot;caption&quot;&gt;ODIN 핵심 방법론&lt;/span&gt;&lt;/p&gt;
 
-&lt;p&gt;우선 Temperature Scaling은 &lt;a href=&quot;https://arxiv.org/pdf/1503.02531.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; Hinton 교수의 Knowledge Distillation &lt;/b&gt;&lt;/a&gt;에서 제안된 방법이며 &lt;a href=&quot;https://arxiv.org/pdf/1706.04599.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; classification task에서 prediction confidence를 calibration&lt;/b&gt;&lt;/a&gt; 하는데 사용이 되기도 합니다. 학습 중에는 temperature scaling parameter &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt; 를 1로 두고 학습을 진행한 뒤, test 단계에서 주어진 input의 예측 확률을 구하기 위해 softmax score를 구하게 되는데 이때 각 logit들을 &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt; 로 나눠주는 방식으로 구현이 가능합니다. 이를 Out-of-distribution Detection 문제에 적용하면 in-distribution sample과 out-of-distribution sample의 softmax score를 서로 더 멀어지게 하여 out-of-distribution sample을 구별하기 쉽게 도와주는 역할을 합니다. 여기서 temperature scaling parameter &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt; 가 hyper-parameter이며 적절한 값을 선택하는 것이 중요합니다.&lt;/p&gt;
+&lt;p&gt;우선 Temperature Scaling은 &lt;a href=&quot;https://arxiv.org/pdf/1503.02531.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; Hinton 교수의 Knowledge Distillation &lt;/b&gt;&lt;/a&gt;에서 제안된 방법이며 &lt;a href=&quot;https://arxiv.org/pdf/1706.04599.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; classification task에서 prediction confidence를 calibration&lt;/b&gt;&lt;/a&gt; 하는데 사용이 되기도 합니다. 학습 중에는 temperature scaling parameter \(T\) 를 1로 두고 학습을 진행한 뒤, test 단계에서 주어진 input의 예측 확률을 구하기 위해 softmax score를 구하게 되는데 이때 각 logit들을 \(T\) 로 나눠주는 방식으로 구현이 가능합니다. 이를 Out-of-distribution Detection 문제에 적용하면 in-distribution sample과 out-of-distribution sample의 softmax score를 서로 더 멀어지게 하여 out-of-distribution sample을 구별하기 쉽게 도와주는 역할을 합니다. 여기서 temperature scaling parameter \(T\) 가 hyper-parameter이며 적절한 값을 선택하는 것이 중요합니다.&lt;/p&gt;
 
-&lt;p&gt;Input Preprocessing은 adversarial attack의 시초가 된 논문에서 제안한 &lt;a href=&quot; https://arxiv.org/pdf/1412.6572.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; Fast Gradient Sign Method(FGSM) &lt;/b&gt;&lt;/a&gt; 방식에서 아이디어를 얻었으며, Back Propagation을 통해 loss를 최소화하도록 학습하는 것을 반대로 이용하여, loss를 증가시키는 방향의 gradient를 계산하여 얻은 극소량의 perturbation을 input에 더해 줌으로써 true label에 대한 softmax score를 낮춰주는 역할을 하는 것이 증명이 된 바 있습니다. 본 논문에서는 이를 역으로 이용하여 극소량의 perturbation을 input에서 빼 줌으로써 주어진 input에 대한 softmax score를 높여주는 것을 목표로 하고, 이를 통해 in-distribution sample에 대한 예측을 강화하여 out-of-distribution sample과 더 잘 분리될 수 있도록 도와주는 역할을 합니다. 여기서 perturbation magnitude parameter &lt;script type=&quot;math/tex&quot;&gt;\epsilon&lt;/script&gt; 이 hyper-parameter이며 적절한 값을 선택하는 것이 중요합니다.&lt;/p&gt;
+&lt;p&gt;Input Preprocessing은 adversarial attack의 시초가 된 논문에서 제안한 &lt;a href=&quot; https://arxiv.org/pdf/1412.6572.pdf&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; Fast Gradient Sign Method(FGSM) &lt;/b&gt;&lt;/a&gt; 방식에서 아이디어를 얻었으며, Back Propagation을 통해 loss를 최소화하도록 학습하는 것을 반대로 이용하여, loss를 증가시키는 방향의 gradient를 계산하여 얻은 극소량의 perturbation을 input에 더해 줌으로써 true label에 대한 softmax score를 낮춰주는 역할을 하는 것이 증명이 된 바 있습니다. 본 논문에서는 이를 역으로 이용하여 극소량의 perturbation을 input에서 빼 줌으로써 주어진 input에 대한 softmax score를 높여주는 것을 목표로 하고, 이를 통해 in-distribution sample에 대한 예측을 강화하여 out-of-distribution sample과 더 잘 분리될 수 있도록 도와주는 역할을 합니다. 여기서 perturbation magnitude parameter \(\epsilon\) 이 hyper-parameter이며 적절한 값을 선택하는 것이 중요합니다.&lt;/p&gt;
 
 &lt;p&gt;위의 2가지 과정을 거쳐서 얻어진 maximum softmax score를 기반으로 단순히 thresholding을 거쳐 in-distribution sample 인지 out-of-distribution sample 인지를 판단하게 되며, 이때 사용하는 threshold 값 또한 hyper-parameter입니다. 즉 총 3개의 hyper-parameter가 전반적인 성능에 관여하게 됩니다.&lt;/p&gt;
 
-&lt;p&gt;본 논문에선 in-distribution sample의 TPR(True Positive Rate)가 95%가 되는 시점에서의 hyper-parameter를 선택하였고, 실험을 통해 최적 값으로 발견해낸 &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt; =1000, &lt;script type=&quot;math/tex&quot;&gt;\epsilon&lt;/script&gt; =0.0012 값으로 고정하여 성능을 측정하였습니다. 각 hyper-parameter의 변화에 따른 성능 변화 양상은 논문에서 자세히 확인하실 수 있습니다.&lt;/p&gt;
+&lt;p&gt;본 논문에선 in-distribution sample의 TPR(True Positive Rate)가 95%가 되는 시점에서의 hyper-parameter를 선택하였고, 실험을 통해 최적 값으로 발견해낸 \(T\) =1000, \(\epsilon\) =0.0012 값으로 고정하여 성능을 측정하였습니다. 각 hyper-parameter의 변화에 따른 성능 변화 양상은 논문에서 자세히 확인하실 수 있습니다.&lt;/p&gt;
 
 &lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
 &lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/anomaly-detection-overview-2/odin_result.PNG&quot; target=&quot;_blank&quot;&gt;
@@ -1478,9 +1658,9 @@ and is going to exit without unlocking the lock.
 &lt;/a&gt;
 &lt;span class=&quot;caption&quot;&gt;Maximization by Optimization 예시&lt;br /&gt;&lt;small&gt;(‘argmax’: ‘TARGET’을 최대로 활성화하는 ‘INPUT’을 생성)&lt;/small&gt;&lt;/span&gt;&lt;/p&gt;
 
-&lt;p&gt;예를 들어, 랜덤 노이즈(random noise) 형태의 이미지 &lt;script type=&quot;math/tex&quot;&gt;X_0&lt;/script&gt;에서 출발하여, 위 그림과 같이 특정한 하나의 feature map &lt;script type=&quot;math/tex&quot;&gt;f_k&lt;/script&gt;를 타겟 출력값으로 지정했다고 가정하겠습니다. 현재 이미지 &lt;script type=&quot;math/tex&quot;&gt;X_0&lt;/script&gt;를 기준으로 feature map &lt;script type=&quot;math/tex&quot;&gt;f_k&lt;/script&gt;의 이미지 &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;에 대한 gradient &lt;script type=&quot;math/tex&quot;&gt;\partial f_{\cdot,\cdot,k} / \partial X&lt;/script&gt;를 계산하여 이를 현재 이미지에 더해주면, 기존보다 해당 feature map을 더 강하게 활성화시키는 새로운 이미지 &lt;script type=&quot;math/tex&quot;&gt;X_1&lt;/script&gt;을 얻을 수 있습니다. 매 반복 회차 &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt;마다 아래의 수식에 따라 이러한 과정을 반복하면서, 전체 반복 횟수 &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt;를 충분히 많이 가져가면, 해당 feature map을 ‘최대로 활성화시키는 이미지’를 얻을 수 있습니다.&lt;/p&gt;
+&lt;p&gt;예를 들어, 랜덤 노이즈(random noise) 형태의 이미지 \(X_0\)에서 출발하여, 위 그림과 같이 특정한 하나의 feature map \(f_k\)를 타겟 출력값으로 지정했다고 가정하겠습니다. 현재 이미지 \(X_0\)를 기준으로 feature map \(f_k\)의 이미지 \(X\)에 대한 gradient \(\partial f_{\cdot,\cdot,k} / \partial X\)를 계산하여 이를 현재 이미지에 더해주면, 기존보다 해당 feature map을 더 강하게 활성화시키는 새로운 이미지 \(X_1\)을 얻을 수 있습니다. 매 반복 회차 \(t\)마다 아래의 수식에 따라 이러한 과정을 반복하면서, 전체 반복 횟수 \(T\)를 충분히 많이 가져가면, 해당 feature map을 ‘최대로 활성화시키는 이미지’를 얻을 수 있습니다.&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;X_{t+1} = X_t + \alpha \cdot \frac{\partial f_{\cdot,\cdot,k}}{\partial X} \quad (t=0,1,...,T-1)&lt;/script&gt;
+\[X_{t+1} = X_t + \alpha \cdot \frac{\partial f_{\cdot,\cdot,k}}{\partial X} \quad (t=0,1,...,T-1)\]
 
 &lt;p&gt;아래의 예시 그림들은 타겟 출력값을 서로 다른 feature map으로 설정했을 시 Maximization by Optimization 결과가 달라지는 것을 잘 보여주고 있습니다. 대체로 앞쪽 layer에 위치한 feature map들의 경우 단순하고 반복적인 패턴(edges, textures)을 커버하는 경향을 보이며, 뒷쪽 layer에 위치한 feature map들의 경우 그보다는 좀 더 복잡한 무늬, 모종의 사물의 일부분 또는 전체를 커버하는 경향을 보임을 확인할 수 있습니다.&lt;/p&gt;
 
@@ -1524,7 +1704,7 @@ and is going to exit without unlocking the lock.
 
 &lt;p&gt;컨볼루션 신경망의 Attribution을 보여주기 위한 대표적인 수단이 ‘&lt;strong&gt;Saliency Map&lt;/strong&gt;(현저성 맵)’입니다. 보통 Saliency Map은 이미지 상의 두드러진 부분을 지칭하나, 컨볼루션 신경망의 예측 결과에 대한 설명의 맥락에서는, 예측 결과를 이끌어낸 이미지 상의 주요한 부분을 표현하기 위한 목적으로 생성됩니다.&lt;/p&gt;
 
-&lt;p&gt;컨볼루션 신경망의 예측 결과로부터 Saliency Map을 도출하기 위한 가장 간단한 방법은, 예측 클래스 logit &lt;script type=&quot;math/tex&quot;&gt;y_c&lt;/script&gt;의 입력 이미지 &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;에 대한 gradient &lt;script type=&quot;math/tex&quot;&gt;\partial y_c / \partial X&lt;/script&gt;를 계산하는 것입니다. 마치 앞서 소개했던 Maximization by Optimization과 유사해 보일 것인데, Maximization by Optimization이 랜덤한 이미지에서 출발하여 feature map의 gradient를 반복적으로 더해주는 gradient ascent를 통해 가상의 이미지를 생성하였다면, Saliency Map의 경우 실제 입력 이미지에 대한 예측 클래스 logit의 gradient를 한 번만 계산하여 이를 그대로 활용한다는 점이 차이라고 할 수 있겠습니다.&lt;/p&gt;
+&lt;p&gt;컨볼루션 신경망의 예측 결과로부터 Saliency Map을 도출하기 위한 가장 간단한 방법은, 예측 클래스 logit \(y_c\)의 입력 이미지 \(X\)에 대한 gradient \(\partial y_c / \partial X\)를 계산하는 것입니다. 마치 앞서 소개했던 Maximization by Optimization과 유사해 보일 것인데, Maximization by Optimization이 랜덤한 이미지에서 출발하여 feature map의 gradient를 반복적으로 더해주는 gradient ascent를 통해 가상의 이미지를 생성하였다면, Saliency Map의 경우 실제 입력 이미지에 대한 예측 클래스 logit의 gradient를 한 번만 계산하여 이를 그대로 활용한다는 점이 차이라고 할 수 있겠습니다.&lt;/p&gt;
 
 &lt;!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ --&gt;
 &lt;p&gt;&lt;a href=&quot;http://research.sualab.com/assets/images/interpretable-machine-learning-overview-2/saliency-map-with-gradient-concept.png&quot; target=&quot;_blank&quot;&gt;
@@ -1967,195 +2147,4 @@ and is going to exit without unlocking the lock.
       &lt;li&gt;&lt;a href=&quot;https://arxiv.org/pdf/1706.07269&quot; target=&quot;_blank&quot;&gt;Miller, Tim. “Explanation in artificial intelligence: Insights from the social sciences.” Artificial Intelligence (2018).&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>김길호</name><email>Kyle.Kim@cognex.com</email></author><category term="interpretable machine learning" /><category term="interpretability" /><category term="explainable artificial intelligence" /><summary type="html">지금까지의 포스팅을 통해, 수아랩 블로그에서는 다양한 문제 상황에 대하여 동작하는 딥러닝 모델을 직접 제작하고 학습해 왔습니다. 다만 대부분 맨 마지막 과정에서 학습이 완료된 모델을 테스트하는데, 일정 크기의 테스트 데이터셋에 대한 모델의 예측 결과를 바탕으로 정확도(accuracy)와 같이 하나의 숫자로 표현되는 정량적 지표의 값을 계산하고, 그 크기를 보아 ‘딥러닝 모델이 예측을 얼마나 잘 했는지’를 판단하였습니다. 여기에 덧붙여 보완적으로, 올바르게 예측하였거나 잘못 예측한 예시 결과들을 몇 개 샘플링하여 관찰하고, 모델의 예측 결과에 대한 근거를 ‘추측’한 바 있습니다.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://research.sualab.com/post-hoc-methods.png" /><media:content medium="image" url="http://research.sualab.com/post-hoc-methods.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Jetson AGX Xavier에 CNTK 2.7 C++ 라이브러리 설치하기</title><link href="http://research.sualab.com/development/2019/07/05/setup-cntk-2.7-on-jetson-agx-xavier.html" rel="alternate" type="text/html" title="Jetson AGX Xavier에 CNTK 2.7 C++ 라이브러리 설치하기" /><published>2019-07-05T23:00:00+09:00</published><updated>2019-07-05T23:00:00+09:00</updated><id>http://research.sualab.com/development/2019/07/05/setup-cntk-2.7-on-jetson-agx-xavier</id><content type="html" xml:base="http://research.sualab.com/development/2019/07/05/setup-cntk-2.7-on-jetson-agx-xavier.html">&lt;p&gt;이 포스트에서는 &lt;strong&gt;Jetson AGX Xavier&lt;/strong&gt;(이하 &lt;strong&gt;Xavier&lt;/strong&gt;)에 CNTK 2.7 C++ 라이브러리를 설치하는 방법을 설명하겠습니다. 이 포스트는 공식 CNTK 사이트의 &lt;a href=&quot;https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-Linux&quot; target=&quot;_blank&quot;&gt;Setup CNTK on Linux&lt;/a&gt; 문서를 참조하였습니다. 또한 이 포스트는 &lt;a href=&quot;http://research.sualab.com/etc2017/12/07/Setup-CNTK-Evaluation-Library-on-Jetson-TX1-KOR.html&quot; target=&quot;_blank&quot;&gt;Jetson TX1에 CNTK Evaluation 라이브러리 설치하기&lt;/a&gt;의 후속 포스트입니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;docker-이미지를-활용하는-방법-cpu-버전&quot;&gt;Docker 이미지를 활용하는 방법 (CPU 버전)&lt;/h1&gt;
-
-&lt;p&gt;Xavier 용 CNTK 2.7 C++ 라이브러리가 포함된 Docker 이미지를 &lt;a href=&quot;https://cloud.docker.com/repository/docker/nglee/xavier_cntk&quot; target=&quot;_blank&quot;&gt;여기&lt;/a&gt;에 올려놓았습니다. 단, 이 이미지에는 &lt;strong&gt;CPU 버전만 제공&lt;/strong&gt;되어 있습니다. GPU 기능이 활성화된 버전을 이용하려면 &lt;a href=&quot;https://github.com/nvidia/nvidia-docker&quot; target=&quot;_blank&quot;&gt;nvidia-docker&lt;/a&gt;를 이용해야 하지만 nvidia-docker는 Jetson 계열이 사용하는 Tegra 플랫폼 GPU를 &lt;a href=&quot;https://github.com/NVIDIA/nvidia-docker/wiki/Frequently-Asked-Questions#do-you-support-tegra-platforms-arm64&quot; target=&quot;_blank&quot;&gt;지원하지 않습니다&lt;/a&gt;. 따라서 &lt;strong&gt;Xavier에서 GPU 기능이 활성화된 버전을 이용하려면 CNTK를 직접 빌드해야&lt;/strong&gt; 합니다.&lt;/p&gt;
-
-&lt;p&gt;Docker 이미지는 다음과 같이 받을 수 있습니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ docker pull nglee/xavier_cntk:2.7_CPU_JetPack_4.2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Docker 이미지에 대한 추가 정보는 &lt;a href=&quot;https://hub.docker.com/r/nglee/xavier_cntk&quot; target=&quot;_blank&quot;&gt;여기&lt;/a&gt;를 참고하세요. (Dockerfile은 &lt;a href=&quot;https://github.com/nglee/nglee.github.io/blob/master/assets/Dockerfile&quot; target=&quot;_blank&quot;&gt;여기&lt;/a&gt;)&lt;/p&gt;
-
-&lt;h1 id=&quot;직접-빌드하는-방법-gpu-버전&quot;&gt;직접 빌드하는 방법 (GPU 버전)&lt;/h1&gt;
-
-&lt;p&gt;먼저 Xavier에 &lt;a href=&quot;https://developer.nvidia.com/embedded/jetpack&quot; target=&quot;_blank&quot;&gt;JetPack&lt;/a&gt;을 설치합니다. 포스트 작성 시점에서 최신 JetPack 버전인 4.2 버전이 설치되어 있다고 가정하겠습니다. 혹시 JetPack의 설치 방법이 궁금하신 분은 &lt;a href=&quot;https://www.youtube.com/watch?v=s1QDsa6SzuQ&quot; target=&quot;_blank&quot;&gt;여기&lt;/a&gt;를 참고하시면 좋을 것 같습니다.&lt;/p&gt;
-
-&lt;p&gt;Xavier가 높은 성능을 낼 수 있도록 전력 소모 제한 옵션을 풀어줍니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo nvpmodel -m 0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;apt&lt;/code&gt;를 이용해 필요한 라이브러리들을 설치해줍니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo apt update
-$ sudo apt install -y cmake libbz2-dev curl gfortran libzip-dev
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이제 CNTK 설치를 위한 사전작업으로 다음의 라이브러리들을 설치하겠습니다. Xavier의 저장소 크기가 제한되어 있으므로 각 라이브러리의 설치가 끝나면 라이브러리 소스들을 제거하는 것도 좋은 방법입니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;OpenBLAS 0.3.6&lt;/li&gt;
-  &lt;li&gt;Boost 1.70.0&lt;/li&gt;
-  &lt;li&gt;CUB 1.8.0&lt;/li&gt;
-  &lt;li&gt;Protobuf 3.1.0&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;위 라이브러리들을 설치한 후에 CNTK의 &lt;code class=&quot;highlighter-rouge&quot;&gt;configure&lt;/code&gt; 스크립트가 위 라이브러리를 잘 찾을 수 있도록 symbolic link를 만드는 과정을 거치도록 하겠습니다. 여기까지 마치면 CNTK를 빌드할 수 있습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;openblas-036&quot;&gt;OpenBLAS 0.3.6&lt;/h2&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone -q --depth 1 -b v0.3.6 https://github.com/xianyi/OpenBLAS.git
-$ cd OpenBLAS
-$ make TARGET=ARMV8 -j$(nproc)
-$ sudo make install TARGET=ARMV8 PREFIX=/usr/local/OpenBLAS-0.3.6
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;boost-1700&quot;&gt;Boost 1.70.0&lt;/h2&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone -q --depth 1 -b boost-1.70.0 --recursive -j $(nproc) https://github.com/boostorg/boost.git
-$ cd boost
-$ ./bootstrap.sh --prefix=/usr/local/boost-1.70.0
-$ sudo ./b2 -d0 -j$(nproc) cxxflags=&quot;-std=c++14 -fPIC&quot; linkflags=&quot;-Wl,-rpath,'\$ORIGIN'&quot; install
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;cub-180&quot;&gt;CUB 1.8.0&lt;/h2&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ wget https://github.com/NVlabs/cub/archive/1.8.0.zip
-$ unzip ./1.8.0.zip
-$ sudo cp -r cub-1.8.0 /usr/local
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;protobuf-310&quot;&gt;Protobuf 3.1.0&lt;/h2&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ wget https://github.com/google/protobuf/archive/v3.1.0.tar.gz
-$ tar xzf v3.1.0.tar.gz
-$ cd protobuf-3.1.0
-$ ./autogen.sh
-$ ./configure CFLAGS=-fPIC CXXFLAGS=-fPIC --disable-shared --prefix=/usr/local/protobuf-3.1.0
-$ make -j$(nproc)
-$ sudo make install
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;추가-설정&quot;&gt;추가 설정&lt;/h2&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo ln -s /usr/include/mpi/mpi.h /usr/include/mpi.h
-
-$ sudo mkdir /usr/local/cudnn/cuda/include -p
-$ sudo ln -s /usr/lib/aarch64-linux-gnu /usr/local/cudnn/lib
-$ sudo ln -s /usr/include/aarch64-linux-gnu/cudnn_v7.h /usr/local/cudnn/cuda/include/cudnn.h
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;cntk-27&quot;&gt;CNTK 2.7&lt;/h2&gt;
-
-&lt;p&gt;이제 CNTK를 빌드하겠습니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone -q --depth 1 -b v2.7 --recursive -j $(nproc) https://github.com/Microsoft/CNTK.git
-$ cd CNTK
-$ mkdir build/release -p
-$ cd build/release
-$../../configure --asgd=no \
-                 --cuda=yes \
-                 --with-cuda=/usr/local/cuda \
-                 --with-cudnn=/usr/local/cudnn \
-                 --with-opencv=/usr \
-                 --with-openblas=/usr/local/OpenBLAS-0.3.6 \
-                 --with-boost=/usr/local/boost-1.70.0 \
-                 --with-cub=/usr/local/cub-1.8.0 \
-                 --with-protobuf=/usr/local/protobuf-3.1.0 \
-                 --with-mpi=/usr
-$ make -C ../../ \
-       BUILD_TOP=$PWD \
-       SSE_FLAGS='' \
-       GENCODE_FLAGS='-gencode arch=compute_72,code=\&quot;sm_72,compute_72\&quot;' \
-       all \
-       -j $(nproc)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;빌드가 완료되면 &lt;code class=&quot;highlighter-rouge&quot;&gt;lib&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;bin&lt;/code&gt; 디렉토리가 생성되고 그 밑에 CNTK 2.7 라이브러리와 실행파일이 위치하게 됩니다.&lt;/p&gt;
-
-&lt;h1 id=&quot;테스트&quot;&gt;테스트&lt;/h1&gt;
-
-&lt;p&gt;CNTK가 제대로 빌드되었는지 확인하기 위해 &lt;a href=&quot;https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-Linux#quick-test-of-cntk-build-functionality&quot; target=&quot;_blank&quot;&gt;여기&lt;/a&gt;에 나온 테스트 스텝을 따라할 수 있습니다. 그런데 Jetson 계열이 사용하는 Tegra 플랫폼은 NVML(NVIDIA Management Library) 이용과 관련해서 조심해야 할 부분이 있습니다. &lt;a href=&quot;https://devtalk.nvidia.com/default/topic/999740/jetson-tx1/-libnvidia-ml-so-1-cannot-open-shared-object-file-no-such-file-or-directory-with-cross-compiled-elf/post/5108791/#5108791&quot; target=&quot;_blank&quot;&gt;여기&lt;/a&gt;에 나와있듯이 NVML은 Tegra 플랫폼을 지원하지 않고, stub 라이브러리만 제공합니다. 테스트에 사용할 &lt;code class=&quot;highlighter-rouge&quot;&gt;cntk&lt;/code&gt;라는 바이너리는 NVML을 필요로하기 때문에 stub 라이브러리라도 사용해서 동작하도록 설정하겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo ln -s /usr/local/cuda/targets/aarch64-linux/lib/stubs/libnvidia-ml.so /usr/local/cuda/targets/aarch64-linux/lib/stubs/libnvidia-ml.so.1
-$ sudo bash -c &quot;echo /usr/local/cuda/targets/aarch64-linux/lib/stubs &amp;gt;&amp;gt; /etc/ld.so.conf.d/cntk.conf&quot;
-$ sudo ldconfig
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;먼저 다음과 같이 CPU로 CNTK를 돌려보겠습니다. 다음 명령어에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;[CNTK_SOURCE_BASE]&lt;/code&gt;는 위에서 git을 통해 받은 CNTK 소스코드 경로를 의미합니다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ export PATH=[CNTK_SOURCE_BASE]/build/release/bin:$PATH
-$ cd [CNTK_SOURCE_BASE]/Tutorials/HelloWorld-LogisticRegression
-$ cntk configFile=lr_bs.cntk makeMode=false
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;대략 다음과 같은 내용이 화면에 출력되면서 학습이 진행되어야 합니다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;... (앞 부분 생략) ...
-
-##############################################################################
-#                                                                            #
-# Train command (train action)                                               #
-#                                                                            #
-##############################################################################
-
-
-Model has 9 nodes. Using CPU.
-
-Training criterion:   lr = Logistic
-Evaluation criterion: err = SquareError
-
-Training 3 parameters in 2 parameter tensors.
-
-Finished Epoch[ 1 of 50]: [Training] lr = 0.31759290 * 1000; err = 0.09908521 * 1000; totalSamplesSeen = 1000; learningRatePerSample = 0.039999999; epochTime=0.323581s
-Finished Epoch[ 2 of 50]: [Training] lr = 0.11039351 * 1000; err = 0.02357974 * 1000; totalSamplesSeen = 2000; learningRatePerSample = 0.039999999; epochTime=0.273736s
-Finished Epoch[ 3 of 50]: [Training] lr = 0.08720607 * 1000; err = 0.01866767 * 1000; totalSamplesSeen = 3000; learningRatePerSample = 0.039999999; epochTime=0.259632s
-Finished Epoch[ 4 of 50]: [Training] lr = 0.07586163 * 1000; err = 0.01674400 * 1000; totalSamplesSeen = 4000; learningRatePerSample = 0.039999999; epochTime=0.23207s
-Finished Epoch[ 5 of 50]: [Training] lr = 0.06810059 * 1000; err = 0.01533284 * 1000; totalSamplesSeen = 5000; learningRatePerSample = 0.039999999; epochTime=0.239284s
-Finished Epoch[ 6 of 50]: [Training] lr = 0.06305315 * 1000; err = 0.01422650 * 1000; totalSamplesSeen = 6000; learningRatePerSample = 0.039999999; epochTime=0.265162s
-Finished Epoch[ 7 of 50]: [Training] lr = 0.06117695 * 1000; err = 0.01446881 * 1000; totalSamplesSeen = 7000; learningRatePerSample = 0.039999999; epochTime=0.235583s
-Finished Epoch[ 8 of 50]: [Training] lr = 0.05866559 * 1000; err = 0.01376450 * 1000; totalSamplesSeen = 8000; learningRatePerSample = 0.039999999; epochTime=0.274448s
-
-... (중간 생략) ...
-
-Finished Epoch[49 of 50]: [Training] lr = 0.04173198 * 1000; err = 0.01124937 * 1000; totalSamplesSeen = 49000; learningRatePerSample = 0.039999999; epochTime=0.208398s
-Finished Epoch[50 of 50]: [Training] lr = 0.04399341 * 1000; err = 0.01202173 * 1000; totalSamplesSeen = 50000; learningRatePerSample = 0.039999999; epochTime=0.214831s
-
-
-##############################################################################
-#                                                                            #
-# Output command (write action)                                              #
-#                                                                            #
-##############################################################################
-
-Minibatch[0]: ActualMBSize = 500
-Written to LR.txt*
-Total Samples Evaluated = 500
-
-
-##############################################################################
-#                                                                            #
-# DumpNodeInfo command (dumpNode action)                                     #
-#                                                                            #
-##############################################################################
-
-Warning: node name '__AllNodes__' does not exist in the network. dumping all nodes instead.
-
-
-##############################################################################
-#                                                                            #
-# Test command (test action)                                                 #
-#                                                                            #
-##############################################################################
-
-evalNodeNames are not specified, using all the default evalnodes and training criterion nodes.
-Final Results: Minibatch[1-1]: err = 0.00685278 * 500; lr = 0.02953914 * 500
-
-COMPLETED.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;GPU로 CNTK를 돌리기 위해서는 다음과 같이 합니다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cntk configFile=lr_bs.cntk makeMode=false deviceId=auto
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;CPU로 돌리는 예제와 비교해 보면 훨씬 빠르게 학습이 진행됨을 확인할 수 있을 것입니다.&lt;/p&gt;</content><author><name>이남구</name><email>Namgoo.Lee@cognex.com</email></author><category term="embedded" /><category term="xavier" /><category term="cntk" /><category term="docker" /><summary type="html">이 포스트에서는 Jetson AGX Xavier(이하 Xavier)에 CNTK 2.7 C++ 라이브러리를 설치하는 방법을 설명하겠습니다. 이 포스트는 공식 CNTK 사이트의 Setup CNTK on Linux 문서를 참조하였습니다. 또한 이 포스트는 Jetson TX1에 CNTK Evaluation 라이브러리 설치하기의 후속 포스트입니다.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://research.sualab.com/XavierModule_White.jpeg" /><media:content medium="image" url="http://research.sualab.com/XavierModule_White.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;/ul&gt;</content><author><name>김길호</name><email>Kyle.Kim@cognex.com</email></author><category term="interpretable machine learning" /><category term="interpretability" /><category term="explainable artificial intelligence" /><summary type="html">지금까지의 포스팅을 통해, 수아랩 블로그에서는 다양한 문제 상황에 대하여 동작하는 딥러닝 모델을 직접 제작하고 학습해 왔습니다. 다만 대부분 맨 마지막 과정에서 학습이 완료된 모델을 테스트하는데, 일정 크기의 테스트 데이터셋에 대한 모델의 예측 결과를 바탕으로 정확도(accuracy)와 같이 하나의 숫자로 표현되는 정량적 지표의 값을 계산하고, 그 크기를 보아 ‘딥러닝 모델이 예측을 얼마나 잘 했는지’를 판단하였습니다. 여기에 덧붙여 보완적으로, 올바르게 예측하였거나 잘못 예측한 예시 결과들을 몇 개 샘플링하여 관찰하고, 모델의 예측 결과에 대한 근거를 ‘추측’한 바 있습니다.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://research.sualab.com/post-hoc-methods.png" /><media:content medium="image" url="http://research.sualab.com/post-hoc-methods.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

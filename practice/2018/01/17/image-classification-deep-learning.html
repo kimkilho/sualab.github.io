@@ -280,7 +280,7 @@
 
 <h3 id="datasetsasirra-모듈">datasets.asirra 모듈</h3>
 
-<p><code class="highlighter-rouge">datasets.asirra</code> 모듈은, 데이터셋 요소에 해당하는 모든 함수들과 클래스를 담고 있습니다. 이들 중에서, 디스크로부터 데이터셋을 메모리에 로드하고, 학습 및 예측 과정에서 이들을 미니배치(minibatch) 단위로 추출하는 부분을 중심으로 살펴보도록 하겠습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">datasets.asirra</code> 모듈은, 데이터셋 요소에 해당하는 모든 함수들과 클래스를 담고 있습니다. 이들 중에서, 디스크로부터 데이터셋을 메모리에 로드하고, 학습 및 예측 과정에서 이들을 미니배치(minibatch) 단위로 추출하는 부분을 중심으로 살펴보도록 하겠습니다.</p>
 
 <h4 id="read_asirra_subset-함수">read_asirra_subset 함수</h4>
 
@@ -333,9 +333,9 @@
     <span class="k">return</span> <span class="n">X_set</span><span class="p">,</span> <span class="n">y_set</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">read_asirra_subset</code> 함수에서는 원본 Asirra 데이터셋을 디스크로부터 읽어들인 뒤, 각 이미지를 <script type="math/tex">256\times256</script> 크기로 일괄적으로 리사이징(resizing)하고, 이들을 numpy의 <code class="highlighter-rouge">np.ndarray</code> 형태로 반환합니다. 또한, 레이블의 경우 <code class="highlighter-rouge">one_hot</code> 인자가 <code class="highlighter-rouge">True</code>인 경우 one-hot encoding 형태로 변환하여 반환하도록 하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">read_asirra_subset</code> 함수에서는 원본 Asirra 데이터셋을 디스크로부터 읽어들인 뒤, 각 이미지를 \(256\times256\) 크기로 일괄적으로 리사이징(resizing)하고, 이들을 numpy의 <code class="language-plaintext highlighter-rouge">np.ndarray</code> 형태로 반환합니다. 또한, 레이블의 경우 <code class="language-plaintext highlighter-rouge">one_hot</code> 인자가 <code class="language-plaintext highlighter-rouge">True</code>인 경우 one-hot encoding 형태로 변환하여 반환하도록 하였습니다.</p>
 
-<p>이 때 주의할 점은, 위 함수를 사용하여 전체 학습 데이터셋을 메모리에 로드하고자 할 경우, <em>적어도 16GB 이상의 메모리를 필요로 한다</em>는 점입니다. 메모리 사양이 이에 못 미치는 분들을 위한 궁여지책(?)으로 함수에 <code class="highlighter-rouge">sample_size</code> 인자를 추가하였는데, 이를 명시할 경우 원본 데이터셋 내 전체 이미지들 중 해당 개수의 이미지들만을 랜덤하게 샘플링하여 이를 메모리에 로드하도록 합니다. 당연하게도 전체 데이터셋을 학습에 사용하는 경우보다는 최종 테스트 성능이 하락할 것이나, 전체 구현체를 시험적으로 구동해 보는 데에는 크게 문제가 없을 것이라고 생각합니다.</p>
+<p>이 때 주의할 점은, 위 함수를 사용하여 전체 학습 데이터셋을 메모리에 로드하고자 할 경우, <em>적어도 16GB 이상의 메모리를 필요로 한다</em>는 점입니다. 메모리 사양이 이에 못 미치는 분들을 위한 궁여지책(?)으로 함수에 <code class="language-plaintext highlighter-rouge">sample_size</code> 인자를 추가하였는데, 이를 명시할 경우 원본 데이터셋 내 전체 이미지들 중 해당 개수의 이미지들만을 랜덤하게 샘플링하여 이를 메모리에 로드하도록 합니다. 당연하게도 전체 데이터셋을 학습에 사용하는 경우보다는 최종 테스트 성능이 하락할 것이나, 전체 구현체를 시험적으로 구동해 보는 데에는 크게 문제가 없을 것이라고 생각합니다.</p>
 
 <blockquote>
   <p>하지만 틀림없이 상대적 박탈감을 느끼실 것인데, 이 점에 대해서는 심심한 사과의 말씀을 드립니다.</p>
@@ -453,20 +453,20 @@
         <span class="k">return</span> <span class="n">batch_images</span><span class="p">,</span> <span class="n">batch_labels</span>
 </code></pre></div></div>
 
-<p>데이터셋 요소를 클래스화한 것이 <code class="highlighter-rouge">DataSet</code> 클래스입니다. 여기에는 기본적으로 이미지들과 이에 해당하는 레이블들이 <code class="highlighter-rouge">np.ndarray</code> 타입의 멤버로 포함되어 있습니다. 핵심이 되는 부분은 <code class="highlighter-rouge">next_batch</code> 함수인데, 이는 주어진 <code class="highlighter-rouge">batch_size</code> 크기의 미니배치(이미지, 레이블)를 현재 데이터셋으로부터 추출하여 반환합니다.</p>
+<p>데이터셋 요소를 클래스화한 것이 <code class="language-plaintext highlighter-rouge">DataSet</code> 클래스입니다. 여기에는 기본적으로 이미지들과 이에 해당하는 레이블들이 <code class="language-plaintext highlighter-rouge">np.ndarray</code> 타입의 멤버로 포함되어 있습니다. 핵심이 되는 부분은 <code class="language-plaintext highlighter-rouge">next_batch</code> 함수인데, 이는 주어진 <code class="language-plaintext highlighter-rouge">batch_size</code> 크기의 미니배치(이미지, 레이블)를 현재 데이터셋으로부터 추출하여 반환합니다.</p>
 
 <p>원 AlexNet 논문에서는 학습 단계와 테스트 단계에서의 데이터 증강(data augmentation) 방법을 아래와 같이 서로 다르게 채택하고 있습니다.</p>
 
 <ul>
-  <li>학습 단계: 원본 <script type="math/tex">256\times256</script> 크기의 이미지로부터 <script type="math/tex">227\times227</script> 크기의 패치(patch)를 랜덤한 위치에서 추출하고, <script type="math/tex">50\%</script> 확률로 해당 패치에 대한 수평 방향으로의 대칭 변환(horizontal reflection)을 수행하여, 이미지 하나 당 하나의 패치를 반환함</li>
-  <li>테스트 단계: 원본 <script type="math/tex">256\times256</script> 크기 이미지에서의 좌측 상단, 우측 상단, 좌측 하단, 우측 하단, 중심 위치 각각으로부터 총 5개의 <script type="math/tex">227\times227</script> 패치를 추출하고, 이들 각각에 대해 수평 방향 대칭 변환을 수행하여 얻은 5개의 패치를 추가하여, 이미지 하나 당 총 10개의 패치를 반환함</li>
+  <li>학습 단계: 원본 \(256\times256\) 크기의 이미지로부터 \(227\times227\) 크기의 패치(patch)를 랜덤한 위치에서 추출하고, \(50\%\) 확률로 해당 패치에 대한 수평 방향으로의 대칭 변환(horizontal reflection)을 수행하여, 이미지 하나 당 하나의 패치를 반환함</li>
+  <li>테스트 단계: 원본 \(256\times256\) 크기 이미지에서의 좌측 상단, 우측 상단, 좌측 하단, 우측 하단, 중심 위치 각각으로부터 총 5개의 \(227\times227\) 패치를 추출하고, 이들 각각에 대해 수평 방향 대칭 변환을 수행하여 얻은 5개의 패치를 추가하여, 이미지 하나 당 총 10개의 패치를 반환함</li>
 </ul>
 
-<p><code class="highlighter-rouge">next_batch</code> 함수에서는 데이터 증강을 수행하도록 설정되어 있는 경우에 한해(<code class="highlighter-rouge">augment == True</code>), 현재 학습 단계인지(<code class="highlighter-rouge">is_train == True</code>) 테스트 단계인지(<code class="highlighter-rouge">is_train == False</code>)에 따라 위와 같이 서로 다른 데이터 증강 방법을 적용하고, 이를 통해 얻어진 패치 단위의 이미지들을 반환하도록 하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">next_batch</code> 함수에서는 데이터 증강을 수행하도록 설정되어 있는 경우에 한해(<code class="language-plaintext highlighter-rouge">augment == True</code>), 현재 학습 단계인지(<code class="language-plaintext highlighter-rouge">is_train == True</code>) 테스트 단계인지(<code class="language-plaintext highlighter-rouge">is_train == False</code>)에 따라 위와 같이 서로 다른 데이터 증강 방법을 적용하고, 이를 통해 얻어진 패치 단위의 이미지들을 반환하도록 하였습니다.</p>
 
 <h3 id="원-논문과의-차이점">원 논문과의 차이점</h3>
 
-<p>본래 AlexNet 논문에서는 추출되는 패치의 크기가 <script type="math/tex">224\times224</script>라고 명시되어 있으나, 본 구현체에서는 <script type="math/tex">227\times227</script>로 하였습니다. 실제로 온라인 상의 많은 AlexNet 구현체에서 <script type="math/tex">227\times227</script> 크기를 채택하고 있으며, 이렇게 해야만 올바른 형태로 구현이 가능합니다.</p>
+<p>본래 AlexNet 논문에서는 추출되는 패치의 크기가 \(224\times224\)라고 명시되어 있으나, 본 구현체에서는 \(227\times227\)로 하였습니다. 실제로 온라인 상의 많은 AlexNet 구현체에서 \(227\times227\) 크기를 채택하고 있으며, 이렇게 해야만 올바른 형태로 구현이 가능합니다.</p>
 
 <p>또, AlexNet 논문에서는 여기에 PCA에 기반한 색상 증강(color augmentation)을 추가로 수행하였는데, 본 구현체에서는 구현의 단순화를 위해 이를 반영하지 않았습니다.</p>
 
@@ -480,7 +480,7 @@
 
 <h3 id="learningevaluators-모듈">learning.evaluators 모듈</h3>
 
-<p><code class="highlighter-rouge">learning.evaluators</code> 모듈은, 현재까지 학습된 모델의 성능 평가를 위한 ‘evaluator(성능 평가를 수행하는 개체)’의 클래스를 담고 있습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">learning.evaluators</code> 모듈은, 현재까지 학습된 모델의 성능 평가를 위한 ‘evaluator(성능 평가를 수행하는 개체)’의 클래스를 담고 있습니다.</p>
 
 <h4 id="evaluator-클래스">Evaluator 클래스</h4>
 
@@ -528,9 +528,9 @@
         <span class="k">pass</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">Evaluator</code> 클래스는, evaluator를 서술하는 베이스 클래스입니다. 이는 <code class="highlighter-rouge">worst_score</code>, <code class="highlighter-rouge">mode</code> 프로퍼티(property)와 <code class="highlighter-rouge">score</code>, <code class="highlighter-rouge">is_better</code> 함수로 구성되어 있습니다. 성능 평가 척도에 따라 ‘최저’ 성능 점수와 ‘점수가 높아야 성능이 우수한지, 낮아야 성능이 우수한지’ 등이 다르기 때문에, 이들을 명시하는 부분이 각각 <code class="highlighter-rouge">worst_score</code>와 <code class="highlighter-rouge">mode</code>입니다.</p>
+<p><code class="language-plaintext highlighter-rouge">Evaluator</code> 클래스는, evaluator를 서술하는 베이스 클래스입니다. 이는 <code class="language-plaintext highlighter-rouge">worst_score</code>, <code class="language-plaintext highlighter-rouge">mode</code> 프로퍼티(property)와 <code class="language-plaintext highlighter-rouge">score</code>, <code class="language-plaintext highlighter-rouge">is_better</code> 함수로 구성되어 있습니다. 성능 평가 척도에 따라 ‘최저’ 성능 점수와 ‘점수가 높아야 성능이 우수한지, 낮아야 성능이 우수한지’ 등이 다르기 때문에, 이들을 명시하는 부분이 각각 <code class="language-plaintext highlighter-rouge">worst_score</code>와 <code class="language-plaintext highlighter-rouge">mode</code>입니다.</p>
 
-<p>한편 <code class="highlighter-rouge">score</code> 함수는 테스트용 데이터셋의 실제 레이블 및 이에 대한 모델의 예측 결과를 받아, 지정한 성능 평가 척도에 의거하여 성능 점수를 계산하여 반환합니다. <code class="highlighter-rouge">is_better</code> 함수는 현재의 평가 성능과 현재까지의 ‘최고’ 성능을 서로 비교하여, 현재 성능이 최고 성능보다 더 우수한지 여부를 <code class="highlighter-rouge">bool</code> 타입으로 반환합니다.</p>
+<p>한편 <code class="language-plaintext highlighter-rouge">score</code> 함수는 테스트용 데이터셋의 실제 레이블 및 이에 대한 모델의 예측 결과를 받아, 지정한 성능 평가 척도에 의거하여 성능 점수를 계산하여 반환합니다. <code class="language-plaintext highlighter-rouge">is_better</code> 함수는 현재의 평가 성능과 현재까지의 ‘최고’ 성능을 서로 비교하여, 현재 성능이 최고 성능보다 더 우수한지 여부를 <code class="language-plaintext highlighter-rouge">bool</code> 타입으로 반환합니다.</p>
 
 <h4 id="accuracyevaluator-클래스">AccuracyEvaluator 클래스</h4>
 
@@ -564,7 +564,7 @@
         <span class="k">return</span> <span class="n">curr</span> <span class="o">&gt;</span> <span class="n">best</span> <span class="o">*</span> <span class="n">relative_eps</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">AccuracyEvaluator</code> 클래스는 정확도를 평가 척도로 삼는 evaluator로, <code class="highlighter-rouge">Evaluator</code> 클래스를 구현(implement)한 것입니다. <code class="highlighter-rouge">score</code> 함수에서 정확도를 계산하기 위해, scikit-learn 라이브러리에서 제공하는 <code class="highlighter-rouge">sklearn.metrics.accuracy_score</code> 함수를 불러와 사용하였습니다. 한편 <code class="highlighter-rouge">is_better</code> 함수에서는 두 성능 간의 단순 비교를 수행하는 것이 아니라, 상대적 문턱값(relative threshold)을 사용하여 현재 평가 성능이 최고 평가 성능보다 지정한 비율 이상으로 높은 경우에 한해 <code class="highlighter-rouge">True</code>를 반환하도록 하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">AccuracyEvaluator</code> 클래스는 정확도를 평가 척도로 삼는 evaluator로, <code class="language-plaintext highlighter-rouge">Evaluator</code> 클래스를 구현(implement)한 것입니다. <code class="language-plaintext highlighter-rouge">score</code> 함수에서 정확도를 계산하기 위해, scikit-learn 라이브러리에서 제공하는 <code class="language-plaintext highlighter-rouge">sklearn.metrics.accuracy_score</code> 함수를 불러와 사용하였습니다. 한편 <code class="language-plaintext highlighter-rouge">is_better</code> 함수에서는 두 성능 간의 단순 비교를 수행하는 것이 아니라, 상대적 문턱값(relative threshold)을 사용하여 현재 평가 성능이 최고 평가 성능보다 지정한 비율 이상으로 높은 경우에 한해 <code class="language-plaintext highlighter-rouge">True</code>를 반환하도록 하였습니다.</p>
 
 <h2 id="3-러닝-모델-alexnet">(3) 러닝 모델: AlexNet</h2>
 
@@ -572,7 +572,7 @@
 
 <h3 id="modelslayers-모듈">models.layers 모듈</h3>
 
-<p><code class="highlighter-rouge">models.layers</code> 모듈에서는, 컨볼루션 신경망에서 주로 사용하는 컨볼루션 층(convolutional layer), 완전 연결 층(fully-connected layer) 등을 함수 형태로 정의하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">models.layers</code> 모듈에서는, 컨볼루션 신경망에서 주로 사용하는 컨볼루션 층(convolutional layer), 완전 연결 층(fully-connected layer) 등을 함수 형태로 정의하였습니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">weight_variable</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
     <span class="s">"""
@@ -676,11 +676,11 @@
   <li>바이어스: 지정한 값으로 초기화함</li>
 </ul>
 
-<p>이를 반영하고자 <code class="highlighter-rouge">weight_variable</code> 함수에서는 가중치를 샘플링할 정규 분포의 표준편차인 <code class="highlighter-rouge">stddev</code>을, <code class="highlighter-rouge">bias_variable</code> 함수에서는 바이어스를 초기화할 값인 <code class="highlighter-rouge">value</code>를 인자로 추가하였습니다. AlexNet의 각 층에 따라 초기화에 사용할 가중치의 표준편차 및 바이어스 값 등이 다르게 적용되기 때문에, 이를 조정할 수 있도록 구현하였습니다.</p>
+<p>이를 반영하고자 <code class="language-plaintext highlighter-rouge">weight_variable</code> 함수에서는 가중치를 샘플링할 정규 분포의 표준편차인 <code class="language-plaintext highlighter-rouge">stddev</code>을, <code class="language-plaintext highlighter-rouge">bias_variable</code> 함수에서는 바이어스를 초기화할 값인 <code class="language-plaintext highlighter-rouge">value</code>를 인자로 추가하였습니다. AlexNet의 각 층에 따라 초기화에 사용할 가중치의 표준편차 및 바이어스 값 등이 다르게 적용되기 때문에, 이를 조정할 수 있도록 구현하였습니다.</p>
 
 <h3 id="modelsnn-모듈">models.nn 모듈</h3>
 
-<p><code class="highlighter-rouge">models.nn</code> 모듈은, 컨볼루션 신경망을 표현하는 클래스를 담고 있습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">models.nn</code> 모듈은, 컨볼루션 신경망을 표현하는 클래스를 담고 있습니다.</p>
 
 <h4 id="convnet-클래스">ConvNet 클래스</h4>
 
@@ -782,9 +782,9 @@
         <span class="k">return</span> <span class="n">_y_pred</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">ConvNet</code> 클래스는, 컨볼루션 신경망 모델 객체를 서술하는 베이스 클래스입니다. 어떤 컨볼루션 신경망을 사용할 것이냐에 따라 그 <strong>아키텍처(architecture)</strong>가 달라질 것이기 때문에, <code class="highlighter-rouge">ConvNet</code> 클래스의 자식 클래스에서 이를 <code class="highlighter-rouge">_build_model</code> 함수에서 구현하도록 하였습니다. 한편 컨볼루션 신경망을 학습할 시 사용할 <strong>손실 함수(loss function)</strong> 또한 <code class="highlighter-rouge">ConvNet</code>의 자식 클래스에서 <code class="highlighter-rouge">_build_loss</code> 함수에 구현하도록 하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">ConvNet</code> 클래스는, 컨볼루션 신경망 모델 객체를 서술하는 베이스 클래스입니다. 어떤 컨볼루션 신경망을 사용할 것이냐에 따라 그 <strong>아키텍처(architecture)</strong>가 달라질 것이기 때문에, <code class="language-plaintext highlighter-rouge">ConvNet</code> 클래스의 자식 클래스에서 이를 <code class="language-plaintext highlighter-rouge">_build_model</code> 함수에서 구현하도록 하였습니다. 한편 컨볼루션 신경망을 학습할 시 사용할 <strong>손실 함수(loss function)</strong> 또한 <code class="language-plaintext highlighter-rouge">ConvNet</code>의 자식 클래스에서 <code class="language-plaintext highlighter-rouge">_build_loss</code> 함수에 구현하도록 하였습니다.</p>
 
-<p><code class="highlighter-rouge">predict</code> 함수는, <code class="highlighter-rouge">DataSet</code> 객체인 <code class="highlighter-rouge">dataset</code>을 입력받아 이에 대한 모델의 예측 결과를 반환합니다. 이 때, 테스트 단계에서의 데이터 증강 방법을 채택할 경우(<code class="highlighter-rouge">augment_pred == True</code>), 앞서 설명했던 방식대로 하나의 이미지 당 총 10개의 패치를 얻으며, 이들 각각에 대한 예측 결과를 계산하고 이들의 평균을 계산하는 방식으로 최종적인 예측을 수행하게 됩니다.</p>
+<p><code class="language-plaintext highlighter-rouge">predict</code> 함수는, <code class="language-plaintext highlighter-rouge">DataSet</code> 객체인 <code class="language-plaintext highlighter-rouge">dataset</code>을 입력받아 이에 대한 모델의 예측 결과를 반환합니다. 이 때, 테스트 단계에서의 데이터 증강 방법을 채택할 경우(<code class="language-plaintext highlighter-rouge">augment_pred == True</code>), 앞서 설명했던 방식대로 하나의 이미지 당 총 10개의 패치를 얻으며, 이들 각각에 대한 예측 결과를 계산하고 이들의 평균을 계산하는 방식으로 최종적인 예측을 수행하게 됩니다.</p>
 
 <h4 id="alexnet-클래스">AlexNet 클래스</h4>
 
@@ -913,9 +913,9 @@
         <span class="k">return</span> <span class="n">softmax_loss</span> <span class="o">+</span> <span class="n">weight_decay</span><span class="o">*</span><span class="n">l2_reg_loss</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">AlexNet</code> 클래스는, AlexNet의 아키텍처 및 학습에 사용할 손실 함수를 정의하고자 <code class="highlighter-rouge">ConvNet</code> 클래스를 상속받은 것입니다. <code class="highlighter-rouge">_build_model</code> 함수에서는 전체 아키텍처뿐만 아니라 각 층별 가중치 및 바이어스 초기화를 위한 하이퍼파라미터(hyperparameters; <code class="highlighter-rouge">weights_stddev</code>, <code class="highlighter-rouge">biases_value</code>)와, 핵심적인 정규화 기법인 <strong>드롭아웃(dropout)</strong>을 수행하는 부분을 하나의 독립적인 층 형태로 삽입하여 구현하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">AlexNet</code> 클래스는, AlexNet의 아키텍처 및 학습에 사용할 손실 함수를 정의하고자 <code class="language-plaintext highlighter-rouge">ConvNet</code> 클래스를 상속받은 것입니다. <code class="language-plaintext highlighter-rouge">_build_model</code> 함수에서는 전체 아키텍처뿐만 아니라 각 층별 가중치 및 바이어스 초기화를 위한 하이퍼파라미터(hyperparameters; <code class="language-plaintext highlighter-rouge">weights_stddev</code>, <code class="language-plaintext highlighter-rouge">biases_value</code>)와, 핵심적인 정규화 기법인 <strong>드롭아웃(dropout)</strong>을 수행하는 부분을 하나의 독립적인 층 형태로 삽입하여 구현하였습니다.</p>
 
-<p><code class="highlighter-rouge">_build_loss</code> 함수에서는 AlexNet을 학습하는 데 사용할 <strong>소프트맥스 교차 엔트로피(softmax cross-entropy)</strong> 손실 함수를 구현하였습니다. 이 때, 주요 정규화 기법인 L2 정규화(L2 regularization)를 위해 전체 파라미터에 대한 L2 norm을 계산하고, 여기에 <code class="highlighter-rouge">weight_decay</code> 인자를 통해 전달된 계수를 곱한 뒤 기존 손실함수에 더하여 최종적인 손실 함수를 완성하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">_build_loss</code> 함수에서는 AlexNet을 학습하는 데 사용할 <strong>소프트맥스 교차 엔트로피(softmax cross-entropy)</strong> 손실 함수를 구현하였습니다. 이 때, 주요 정규화 기법인 L2 정규화(L2 regularization)를 위해 전체 파라미터에 대한 L2 norm을 계산하고, 여기에 <code class="language-plaintext highlighter-rouge">weight_decay</code> 인자를 통해 전달된 계수를 곱한 뒤 기존 손실함수에 더하여 최종적인 손실 함수를 완성하였습니다.</p>
 
 <h3 id="원-논문과의-차이점-1">원 논문과의 차이점</h3>
 
@@ -939,7 +939,7 @@
 
 <h3 id="learningoptimizers-모듈">learning.optimizers 모듈</h3>
 
-<p><code class="highlighter-rouge">learning.optimizers</code> 모듈에서는, optimizer의 베이스 클래스인 <code class="highlighter-rouge">Optimizer</code> 클래스와 이를 상속받는 <code class="highlighter-rouge">MomentumOptimizer</code> 클래스를 담고 있습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">learning.optimizers</code> 모듈에서는, optimizer의 베이스 클래스인 <code class="language-plaintext highlighter-rouge">Optimizer</code> 클래스와 이를 상속받는 <code class="language-plaintext highlighter-rouge">MomentumOptimizer</code> 클래스를 담고 있습니다.</p>
 
 <h4 id="optimizer-클래스">Optimizer 클래스</h4>
 
@@ -1114,11 +1114,11 @@
             <span class="k">return</span> <span class="n">train_results</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">Optimizer</code> 클래스는 학습을 통한 모델의 최적화를 담당하기 때문에, 학습 데이터셋(<code class="highlighter-rouge">DataSet</code> 객체)과 학습할 모델(<code class="highlighter-rouge">ConvNet</code> 객체), evaluator(<code class="highlighter-rouge">Evaluator</code> 객체), 그리고 학습과 관련된 기본적인 하이퍼파라미터(<code class="highlighter-rouge">batch_size</code>, <code class="highlighter-rouge">num_epochs</code>, <code class="highlighter-rouge">init_learning_rate</code> 등)들을 멤버 변수 형태로 포함하고 있습니다. SGD 계열의 러닝 알고리즘들 중 구체적으로 어떤 것을 사용할 것인지에 따라, <code class="highlighter-rouge">_optimize_op</code> 함수에서 이를 명시하여 구현하도록 하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">Optimizer</code> 클래스는 학습을 통한 모델의 최적화를 담당하기 때문에, 학습 데이터셋(<code class="language-plaintext highlighter-rouge">DataSet</code> 객체)과 학습할 모델(<code class="language-plaintext highlighter-rouge">ConvNet</code> 객체), evaluator(<code class="language-plaintext highlighter-rouge">Evaluator</code> 객체), 그리고 학습과 관련된 기본적인 하이퍼파라미터(<code class="language-plaintext highlighter-rouge">batch_size</code>, <code class="language-plaintext highlighter-rouge">num_epochs</code>, <code class="language-plaintext highlighter-rouge">init_learning_rate</code> 등)들을 멤버 변수 형태로 포함하고 있습니다. SGD 계열의 러닝 알고리즘들 중 구체적으로 어떤 것을 사용할 것인지에 따라, <code class="language-plaintext highlighter-rouge">_optimize_op</code> 함수에서 이를 명시하여 구현하도록 하였습니다.</p>
 
-<p>또한 학습 과정에서 모델 업데이트를 거듭할수록 매 epochs의 말미마다 <strong>학습률(learning rate)</strong>을 낮춰주어 모델이 수렴(convergence)하도록 유도할 수 있는데, 이를 위한 학습률 스케줄링(scheduling) 방법을 <code class="highlighter-rouge">_update_learning_rate</code> 함수에서 구현하도록 하였습니다. 이 함수에서 현재의 학습률을 나타내는 <code class="highlighter-rouge">curr_learning_rate</code> 멤버 변수의 값을 일정한 규칙에 의거하여 조정하도록 할 수 있습니다.</p>
+<p>또한 학습 과정에서 모델 업데이트를 거듭할수록 매 epochs의 말미마다 <strong>학습률(learning rate)</strong>을 낮춰주어 모델이 수렴(convergence)하도록 유도할 수 있는데, 이를 위한 학습률 스케줄링(scheduling) 방법을 <code class="language-plaintext highlighter-rouge">_update_learning_rate</code> 함수에서 구현하도록 하였습니다. 이 함수에서 현재의 학습률을 나타내는 <code class="language-plaintext highlighter-rouge">curr_learning_rate</code> 멤버 변수의 값을 일정한 규칙에 의거하여 조정하도록 할 수 있습니다.</p>
 
-<p><code class="highlighter-rouge">train</code> 함수는 <code class="highlighter-rouge">Optimizer</code> 클래스의 핵심적인 함수로, 실제 학습을 수행하도록 합니다. <code class="highlighter-rouge">batch_size</code> 크기의 미니배치를 학습 데이터셋으로부터 추출하여 이에 대한 손실 함수의 값을 계산하고, 이를 사용하여 SGD에 기반한 모델 파라미터의 업데이트를 수행합니다. 이 과정에서 매 epoch의 말미에 도달할 때마다, 검증 데이터셋(validation set)에 대하여 현재까지 학습된 모델의 성능을 평가합니다(만약 검증 데이터셋이 따로 주어지지 않은 경우, 기존 학습 데이터셋의 해당 반복 회차에서 추출된 미니배치에 대한 성능 평가로 대체합니다). 현재 모델의 성능 평가 결과가 (<code class="highlighter-rouge">Evaluator</code>의 <code class="highlighter-rouge">is_better</code> 함수에 의해) 지금까지의 최고 성능 기록보다 높다고 판단될 경우, 현재 모델의 파라미터를 디스크에 저장하고 최고 성능 기록을 업데이트합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train</code> 함수는 <code class="language-plaintext highlighter-rouge">Optimizer</code> 클래스의 핵심적인 함수로, 실제 학습을 수행하도록 합니다. <code class="language-plaintext highlighter-rouge">batch_size</code> 크기의 미니배치를 학습 데이터셋으로부터 추출하여 이에 대한 손실 함수의 값을 계산하고, 이를 사용하여 SGD에 기반한 모델 파라미터의 업데이트를 수행합니다. 이 과정에서 매 epoch의 말미에 도달할 때마다, 검증 데이터셋(validation set)에 대하여 현재까지 학습된 모델의 성능을 평가합니다(만약 검증 데이터셋이 따로 주어지지 않은 경우, 기존 학습 데이터셋의 해당 반복 회차에서 추출된 미니배치에 대한 성능 평가로 대체합니다). 현재 모델의 성능 평가 결과가 (<code class="language-plaintext highlighter-rouge">Evaluator</code>의 <code class="language-plaintext highlighter-rouge">is_better</code> 함수에 의해) 지금까지의 최고 성능 기록보다 높다고 판단될 경우, 현재 모델의 파라미터를 디스크에 저장하고 최고 성능 기록을 업데이트합니다.</p>
 
 <h4 id="momentumoptimizer-클래스">MomentumOptimizer 클래스</h4>
 
@@ -1160,19 +1160,19 @@
             <span class="bp">self</span><span class="p">.</span><span class="n">num_bad_epochs</span> <span class="o">=</span> <span class="mi">0</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">MomentumOptimizer</code> 클래스는, SGD+Momentum 기반의 optimizer를 정의하고자 <code class="highlighter-rouge">Optimizer</code> 클래스를 상속받은 것입니다. <code class="highlighter-rouge">_optimize_op</code> 함수에서는 모멘텀의 정도를 조절하는 계수를 <code class="highlighter-rouge">momentum</code> 인자로 전달받아, TensorFlow에서 제공하는 <code class="highlighter-rouge">tf.train.MomentumOptimizer</code> 에 대한 <code class="highlighter-rouge">minimize</code> Operation을 반환합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">MomentumOptimizer</code> 클래스는, SGD+Momentum 기반의 optimizer를 정의하고자 <code class="language-plaintext highlighter-rouge">Optimizer</code> 클래스를 상속받은 것입니다. <code class="language-plaintext highlighter-rouge">_optimize_op</code> 함수에서는 모멘텀의 정도를 조절하는 계수를 <code class="language-plaintext highlighter-rouge">momentum</code> 인자로 전달받아, TensorFlow에서 제공하는 <code class="language-plaintext highlighter-rouge">tf.train.MomentumOptimizer</code> 에 대한 <code class="language-plaintext highlighter-rouge">minimize</code> Operation을 반환합니다.</p>
 
-<p><code class="highlighter-rouge">_update_learning_rate</code> 함수에서는, AlexNet 논문에서 채택한 아래의 학습률 스케줄링 방법을 좀 더 고도화하여 구현하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">_update_learning_rate</code> 함수에서는, AlexNet 논문에서 채택한 아래의 학습률 스케줄링 방법을 좀 더 고도화하여 구현하였습니다.</p>
 
 <ul>
   <li>현재 수준의 학습률에서, 검증 데이터셋에 대한 성능 향상이 수 epochs에 걸쳐 확인되지 않을 경우, 학습률을 일정한 수로 나누어 감소시킨 뒤 학습을 지속함</li>
 </ul>
 
-<p><code class="highlighter-rouge">learning_rate_patience</code>는, 몇 epochs동안 성능 향상이 확인되지 않을 경우 학습률을 조정할지 결정하는 인자이며, <code class="highlighter-rouge">learning_rate_decay</code>의 경우, 기존 학습률을 감소시키기 위해 곱해지는 값을 전달하는 인자입니다. 학습률을 일정 비율로 계속 감소시키다 보면 어느 순간부터는 학습률의 변화량이 미미해지는데, 이 때 이전 학습률과 조정된 학습률 간의 차이가 <code class="highlighter-rouge">eps</code> 인자의 값보다 큰 경우에 한해서만 학습률 조정을 실제로 수행하도록 합니다.</p>
+<p><code class="language-plaintext highlighter-rouge">learning_rate_patience</code>는, 몇 epochs동안 성능 향상이 확인되지 않을 경우 학습률을 조정할지 결정하는 인자이며, <code class="language-plaintext highlighter-rouge">learning_rate_decay</code>의 경우, 기존 학습률을 감소시키기 위해 곱해지는 값을 전달하는 인자입니다. 학습률을 일정 비율로 계속 감소시키다 보면 어느 순간부터는 학습률의 변화량이 미미해지는데, 이 때 이전 학습률과 조정된 학습률 간의 차이가 <code class="language-plaintext highlighter-rouge">eps</code> 인자의 값보다 큰 경우에 한해서만 학습률 조정을 실제로 수행하도록 합니다.</p>
 
 <h2 id="학습-수행-및-테스트-결과">학습 수행 및 테스트 결과</h2>
 
-<p><code class="highlighter-rouge">train.py</code> 스크립트에서는 실제 학습을 수행하는 과정을 구현하였으며, <code class="highlighter-rouge">test.py</code> 스크립트에서는 테스트 데이터셋에 대하여 학습이 완료된 모델을 테스트하는 과정을 구현하였습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 스크립트에서는 실제 학습을 수행하는 과정을 구현하였으며, <code class="language-plaintext highlighter-rouge">test.py</code> 스크립트에서는 테스트 데이터셋에 대하여 학습이 완료된 모델을 테스트하는 과정을 구현하였습니다.</p>
 
 <h3 id="trainpy-스크립트">train.py 스크립트</h3>
 
@@ -1239,15 +1239,15 @@
 <span class="n">train_results</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">details</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">hp_d</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">train.py</code> 스크립트에서는 다음의 3단계 과정을 거칩니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 스크립트에서는 다음의 3단계 과정을 거칩니다.</p>
 
 <ol>
-  <li>원본 학습 데이터셋을 메모리에 로드하고, 이를 학습 데이터셋(80%)과 검증 데이터셋(20%)으로 나눈 뒤 각각을 사용하여 <code class="highlighter-rouge">DataSet</code> 객체를 생성함</li>
+  <li>원본 학습 데이터셋을 메모리에 로드하고, 이를 학습 데이터셋(80%)과 검증 데이터셋(20%)으로 나눈 뒤 각각을 사용하여 <code class="language-plaintext highlighter-rouge">DataSet</code> 객체를 생성함</li>
   <li>학습 수행 및 성능 평가와 관련된 하이퍼파라미터를 설정함</li>
-  <li><code class="highlighter-rouge">ConvNet</code> 객체, <code class="highlighter-rouge">Evaluator</code> 객체 및 <code class="highlighter-rouge">Optimizer</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="highlighter-rouge">Optimizer.train</code> 함수를 호출하여 모델 학습을 수행함</li>
+  <li><code class="language-plaintext highlighter-rouge">ConvNet</code> 객체, <code class="language-plaintext highlighter-rouge">Evaluator</code> 객체 및 <code class="language-plaintext highlighter-rouge">Optimizer</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="language-plaintext highlighter-rouge">Optimizer.train</code> 함수를 호출하여 모델 학습을 수행함</li>
 </ol>
 
-<p>이 때, 원본 데이터셋 저장 경로, 하이퍼파라미터 등 <code class="highlighter-rouge">FIXME</code>로 표시된 부분은 여러분의 상황과 기호에 맞춰 수정하셔야 합니다. 본 글에서 학습을 수행할 당시의 하이퍼파라미터 설정은 아래와 같이 하였습니다.</p>
+<p>이 때, 원본 데이터셋 저장 경로, 하이퍼파라미터 등 <code class="language-plaintext highlighter-rouge">FIXME</code>로 표시된 부분은 여러분의 상황과 기호에 맞춰 수정하셔야 합니다. 본 글에서 학습을 수행할 당시의 하이퍼파라미터 설정은 아래와 같이 하였습니다.</p>
 
 <ul>
   <li>러닝 알고리즘 관련 하이퍼파라미터 설정
@@ -1322,19 +1322,19 @@
 <span class="k">print</span><span class="p">(</span><span class="s">'Test accuracy: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">test_score</span><span class="p">))</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">test.py</code> 스크립트에서도 유사하게, 다음의 3단계 과정을 거칩니다.</p>
+<p><code class="language-plaintext highlighter-rouge">test.py</code> 스크립트에서도 유사하게, 다음의 3단계 과정을 거칩니다.</p>
 
 <ol>
-  <li>원본 테스트 데이터셋을 메모리에 로드하여, <code class="highlighter-rouge">DataSet</code> 객체를 생성함</li>
+  <li>원본 테스트 데이터셋을 메모리에 로드하여, <code class="language-plaintext highlighter-rouge">DataSet</code> 객체를 생성함</li>
   <li>테스트 수행 및 성능 평가와 관련된 하이퍼파라미터를 설정함</li>
-  <li><code class="highlighter-rouge">ConvNet</code> 객체와 <code class="highlighter-rouge">Evaluator</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="highlighter-rouge">tf.train.Saver</code>의 <code class="highlighter-rouge">restore</code> 함수 호출을 통해 학습이 완료된 모델의 파라미터들을 로드하고 <code class="highlighter-rouge">ConvNet.predict</code> 함수와 <code class="highlighter-rouge">Evaluator.score</code> 함수를 순서대로 호출하여 모델 테스트 성능을 평가함</li>
+  <li><code class="language-plaintext highlighter-rouge">ConvNet</code> 객체와 <code class="language-plaintext highlighter-rouge">Evaluator</code> 객체를 생성하고, TensorFlow Graph와 Session을 초기화한 뒤, <code class="language-plaintext highlighter-rouge">tf.train.Saver</code>의 <code class="language-plaintext highlighter-rouge">restore</code> 함수 호출을 통해 학습이 완료된 모델의 파라미터들을 로드하고 <code class="language-plaintext highlighter-rouge">ConvNet.predict</code> 함수와 <code class="language-plaintext highlighter-rouge">Evaluator.score</code> 함수를 순서대로 호출하여 모델 테스트 성능을 평가함</li>
 </ol>
 
 <h3 id="학습-결과-분석">학습 결과 분석</h3>
 
 <h4 id="학습-곡선">학습 곡선</h4>
 
-<p><code class="highlighter-rouge">train.py</code> 스크립트를 실행하여, 실제 학습 수행 과정에서 아래의 정보들을 추적하여, 이를 <strong>학습 곡선(learning curve)</strong>으로 나타내었습니다.</p>
+<p><code class="language-plaintext highlighter-rouge">train.py</code> 스크립트를 실행하여, 실제 학습 수행 과정에서 아래의 정보들을 추적하여, 이를 <strong>학습 곡선(learning curve)</strong>으로 나타내었습니다.</p>
 
 <ul>
   <li>매 반복 회차에서의 손실 함수의 값</li>
