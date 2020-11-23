@@ -302,9 +302,9 @@ Architecture Search 뿐만 아니라 비슷한 아이디어를 다양한 곳에 
   
   
   <meta property="article:published_time" content="2018-09-28T17:00:00+09:00">
-  <meta property="article:author" content="http://research.sualab.com/about/">
+  <meta property="article:author" content="http://github.sualab.io/about/">
   
-  <meta property="og:url" content="http://research.sualab.com/review/2018/09/28/nasnet-review.html" />
+  <meta property="og:url" content="http://github.sualab.io/review/2018/09/28/nasnet-review.html" />
   
   <meta itemprop="keywords" content="automl,architecture-search" />
   
@@ -320,7 +320,7 @@ Architecture Search 뿐만 아니라 비슷한 아이디어를 다양한 곳에 
   <meta name="description" content="안녕하세요, 오늘은 최근 주목받고 있는 AutoML 관련 논문을 리뷰하려고 합니다. 논문 제목은 “Learning Transferable Architectures for Scalable Image Recognition” 이며 올해, 2018년 CVPR에 발표된 논문입니다. 이 논문...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://research.sualab.com/review/2018/09/28/nasnet-review.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://github.sualab.io/review/2018/09/28/nasnet-review.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -569,8 +569,8 @@ Search space, 즉 탐색 공간의 차이로 인해 많은 것을 얻을 수 있
 작곡을 architecture search로 치환하면 NAS와 NASNet의 관계가 되는데, 이 비유는 이번 단락을 다 이해하시면 쉽게 와 닿으실 수 있을 것이라 생각합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig1_one_block_example.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/nasnet-review/fig1_one_block_example.PNG" alt="그림 1. 하나의 Block 생성 과정 예시" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig1_one_block_example.PNG" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/nasnet-review/fig1_one_block_example.PNG" alt="그림 1. 하나의 Block 생성 과정 예시" />
 </a>
 <span class="caption">그림 1. 하나의 Block 생성 과정 예시</span></p>
 
@@ -589,8 +589,8 @@ Operation의 종류는 위의 그림에 나와있으며 identity, pooling, conv�
 이렇게 순차적으로 B개의 block을 만들어내면 하나의 Convolution Cell을 구성하게 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig2_block_to_cell_example.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/nasnet-review/fig2_block_to_cell_example.png" alt="그림 2. Block으로부터 Convolution Cell이 생성되는 과정" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig2_block_to_cell_example.png" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/nasnet-review/fig2_block_to_cell_example.png" alt="그림 2. Block으로부터 Convolution Cell이 생성되는 과정" />
 </a>
 <span class="caption">그림 2. Block으로부터 Convolution Cell이 생성되는 과정</span></p>
 
@@ -607,8 +607,8 @@ Normal Cell을 구성할 때에는 연산들의 stride가 1로 고정이 되며,
 이제 이렇게 block을 만들고, 만든 block으로 convolution cell을 만들어서 어떻게 전체 architecture를 구성하는지 설명 드리겠습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig3_making_architecture_example.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/nasnet-review/fig3_making_architecture_example.PNG" alt="그림 3. Block과 Convolution Cell로부터 전체 architecture를 생성하는 과정" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig3_making_architecture_example.PNG" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/nasnet-review/fig3_making_architecture_example.PNG" alt="그림 3. Block과 Convolution Cell로부터 전체 architecture를 생성하는 과정" />
 </a>
 <span class="caption">그림 3. Block과 Convolution Cell로부터 전체 architecture를 생성하는 과정</span></p>
 
@@ -636,8 +636,8 @@ RNN controller를 학습시키기 위한 강화학습 알고리즘으로는 선�
 우선 선행 연구 NAS에서 찾은 architecture와, NASNet 방법으로 찾은 architecture가 어떻게 다른 지 분석을 하겠습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig4_NAS_final_architecture.PNG" target="_blank">
-  <img class="medium-image" src="http://research.sualab.com/assets/images/nasnet-review/fig4_NAS_final_architecture.PNG" alt="그림 4. NAS final architecture" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig4_NAS_final_architecture.PNG" target="_blank">
+  <img class="medium-image" src="http://github.sualab.io/assets/images/nasnet-review/fig4_NAS_final_architecture.PNG" alt="그림 4. NAS final architecture" />
 </a>
 <span class="caption">그림 4. NAS final architecture</span></p>
 
@@ -647,8 +647,8 @@ Architecture를 자세히 들여다보면 저희가 주로 사용하는 3x3 conv
 또한 skip connection이 굉장히 많으며 사람이 design하기에는 다소 무리가 있을 정도로 불규칙성이 심한 것을 확인할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig5_NASNet_final_architecture.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/nasnet-review/fig5_NASNet_final_architecture.PNG" alt="그림 5. NASNet-A final architecture" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig5_NASNet_final_architecture.PNG" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/nasnet-review/fig5_NASNet_final_architecture.PNG" alt="그림 5. NASNet-A final architecture" />
 </a>
 <span class="caption">그림 5. NASNet-A final architecture</span></p>
 
@@ -668,8 +668,8 @@ Architecture를 자세히 들여다보면 저희가 주로 사용하는 3x3 conv
 우선 목표로 삼았던 CIFAR-10 데이터셋에 대한 실험 결과를 설명 드리고, NASNet의 가장 큰 장점인 transferable한 특징을 잘 보여주는 여러 실험 결과를 설명 드리겠습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig6_cifar_10_result_table.PNG" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/nasnet-review/fig6_cifar_10_result_table.PNG" alt="그림 6. CIFAR-10 실험 결과" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig6_cifar_10_result_table.PNG" target="_blank">
+  <img class="large-image" src="http://github.sualab.io/assets/images/nasnet-review/fig6_cifar_10_result_table.PNG" alt="그림 6. CIFAR-10 실험 결과" />
 </a>
 <span class="caption">그림 6. CIFAR-10 실험 결과</span></p>
 
@@ -677,13 +677,13 @@ Architecture를 자세히 들여다보면 저희가 주로 사용하는 3x3 conv
 우선 SOTA로 알려진 방법론들과, 선행 연구인 NAS의 결과가 제시되어 있고, 그 아래에는 NASNet parameter 수를 조절하고 구조에 변형을 주었을 때의 실험 결과가 제시되어 있습니다. 
 표의 결과는 정확도를 5번 측정하여서 평균을 낸 결과입니다.</p>
 
-<p>앞서 리뷰했던 논문인 <a href="http://research.sualab.com/machine-learning/computer-vision/2018/06/28/shake-shake-regularization-review.html" target="_blank">shake-shake regularization</a>에 cutout을 적용하였을 때의 2.56% error rate이 현존하는 방법론 중에 가장 낮은 error rate였는데 NASNet을 사용하면 거의 비슷한 수의 parameter로 더 낮은 2.40%의 error rate를 달성할 수 있는 것을 확인할 수 있습니다. 
+<p>앞서 리뷰했던 논문인 <a href="http://github.sualab.io/machine-learning/computer-vision/2018/06/28/shake-shake-regularization-review.html" target="_blank">shake-shake regularization</a>에 cutout을 적용하였을 때의 2.56% error rate이 현존하는 방법론 중에 가장 낮은 error rate였는데 NASNet을 사용하면 거의 비슷한 수의 parameter로 더 낮은 2.40%의 error rate를 달성할 수 있는 것을 확인할 수 있습니다. 
 또한 가장 성능이 좋았던 경우는 2.19%의 error rate를 달성하였다고 합니다. 
 물론 cutout을 적용하지 않은 경우에는 shake shake의 결과가 더 좋긴 하지만, 강화학습으로 찾은 network가 사람이 공을 들여서 design한 network에 버금가는 성능을 보이는 것 만으로도 큰 의미를 가질 수 있다고 생각합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig7_cifar_imagenet_architecture.PNG" target="_blank">
-  <img class="medium-image" src="http://research.sualab.com/assets/images/nasnet-review/fig7_cifar_imagenet_architecture.PNG" alt="그림 7. CIFAR10, ImageNet architecture 구조" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig7_cifar_imagenet_architecture.PNG" target="_blank">
+  <img class="medium-image" src="http://github.sualab.io/assets/images/nasnet-review/fig7_cifar_imagenet_architecture.PNG" alt="그림 7. CIFAR10, ImageNet architecture 구조" />
 </a>
 <span class="caption">그림 7. CIFAR10, ImageNet architecture 구조</span></p>
 
@@ -693,8 +693,8 @@ Architecture를 자세히 들여다보면 저희가 주로 사용하는 3x3 conv
 이렇게 CIFAR-10에서 찾은 Convolution Cell을 토대로 ImageNet을 위한 architecture를 구성해서 학습을 시켰을 때 성능이 어느 정도가 나올지 궁금할 수 있는데, 그 결과가 다음 단락에 제시되어 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig8_imagenet_sota.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/nasnet-review/fig8_imagenet_sota.png" alt="그림 8. ImageNet challenge top-5 error 그래프" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig8_imagenet_sota.png" target="_blank">
+  <img class="large-image" src="http://github.sualab.io/assets/images/nasnet-review/fig8_imagenet_sota.png" alt="그림 8. ImageNet challenge top-5 error 그래프" />
 </a>
 <span class="caption">그림 8. ImageNet challenge top-5 error 그래프</span></p>
 
@@ -705,8 +705,8 @@ CIFAR-10과 같이 작은 이미지에 대해서도 수백개의 GPU로 몇 달�
 이 어려운 일을 NASNet에서 해냈습니다. 물론 결과도 가히 충격적이라 할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig9_imagenet_result_table.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/nasnet-review/fig9_imagenet_result_table.PNG" alt="그림 9. ImageNet 실험 결과" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig9_imagenet_result_table.PNG" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/nasnet-review/fig9_imagenet_result_table.PNG" alt="그림 9. ImageNet 실험 결과" />
 </a>
 <span class="caption">그림 9. ImageNet 실험 결과</span></p>
 
@@ -717,16 +717,16 @@ CIFAR-10과 같이 작은 이미지에 대해서도 수백개의 GPU로 몇 달�
 저는 이 실험 결과를 보고 이제 image classification 분야에서는 사람이 network를 design할 필요가 없을 수도 있겠다고 느꼈습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig10_mobile_imagenet_result_table.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/nasnet-review/fig10_mobile_imagenet_result_table.PNG" alt="그림 10. Mobile device 타겟 ImageNet 실험 결과" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig10_mobile_imagenet_result_table.PNG" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/nasnet-review/fig10_mobile_imagenet_result_table.PNG" alt="그림 10. Mobile device 타겟 ImageNet 실험 결과" />
 </a>
 <span class="caption">그림 10. Mobile device 타겟 ImageNet 실험 결과</span></p>
 
 <p>또한 mobile device를 target으로 한 여러 모델들과 비슷한 parameter 수를 사용하였을 때 ImageNet에 대해서 훨씬 높은 정확도를 보이는 것을 확인할 수 있습니다. 이 논문에서 주장하고 있는 Transferability를 잘 보여주고 있다고 생각합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/nasnet-review/fig11_detection_result_table.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/nasnet-review/fig11_detection_result_table.PNG" alt="그림 11. COCO object detection 실험 결과" />
+<p><a href="http://github.sualab.io/assets/images/nasnet-review/fig11_detection_result_table.PNG" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/nasnet-review/fig11_detection_result_table.PNG" alt="그림 11. COCO object detection 실험 결과" />
 </a>
 <span class="caption">그림 11. COCO object detection 실험 결과</span></p>
 
