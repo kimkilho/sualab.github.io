@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2018-11-23T09:00:00+09:00">
-  <meta property="article:author" content="http://localhost:4000/about/">
+  <meta property="article:author" content="http://research.sualab.com/about/">
   
-  <meta property="og:url" content="http://localhost:4000/practice/2018/11/23/image-segmentation-deep-learning.html" />
+  <meta property="og:url" content="http://research.sualab.com/practice/2018/11/23/image-segmentation-deep-learning.html" />
   
   <meta itemprop="keywords" content="segmentation,GCN,tensorflow" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="안녕하세요! 딥러닝을 이용한 Detection 문제 해결 포스팅에 이어, 정말 오랜만에 이미지 인식 Segmentation에 관한 문제 해결 사례를 소개해드리도록 하겠습니다. 이번 포스팅도 앞선 포스팅과 마찬가지로 TensorFlow 구현 코드와 함께 진행됩니다. Segmentat...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://localhost:4000/practice/2018/11/23/image-segmentation-deep-learning.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://research.sualab.com/practice/2018/11/23/image-segmentation-deep-learning.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -50,6 +50,18 @@
                 });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110963421-1');
+</script>
+
 
   
 </head>
@@ -210,7 +222,7 @@
 
 <h2 id="서론">서론</h2>
 
-<p><a href="http://localhost:4000/computer-vision/2017/11/29/image-recognition-overview-1.html" target="_blank">이미지 인식 문제의 개요: PASCAL VOC Challenge를 중심으로</a>에서 언급한 바와 같이, <strong>PASCAL VOC challenge</strong>에서 중요하게 다루는 3가지 이미지 인식 문제 중 Classification, Detection 이어서 마지막으로 <strong>Segmentation</strong> 기술로 해결할 수 있는 간단한 사례를 소개하고, 이를 딥러닝 기술 중 <strong>Encoder-Decoder 구조</strong> 중 널리 알려진 <strong>GCN(Global Convolutional Network)</strong> 망을 통해 해결하는 과정을 설명드리겠습니다.</p>
+<p><a href="http://research.sualab.com/computer-vision/2017/11/29/image-recognition-overview-1.html" target="_blank">이미지 인식 문제의 개요: PASCAL VOC Challenge를 중심으로</a>에서 언급한 바와 같이, <strong>PASCAL VOC challenge</strong>에서 중요하게 다루는 3가지 이미지 인식 문제 중 Classification, Detection 이어서 마지막으로 <strong>Segmentation</strong> 기술로 해결할 수 있는 간단한 사례를 소개하고, 이를 딥러닝 기술 중 <strong>Encoder-Decoder 구조</strong> 중 널리 알려진 <strong>GCN(Global Convolutional Network)</strong> 망을 통해 해결하는 과정을 설명드리겠습니다.</p>
 
 <p>앞서 말씀드린 것과 같이 이번 포스팅은 개념적인 설명부터 시작하면 지나치게 글이 길어지고 집중도가 떨어질 것 같아 Detection 포스팅과 마찬가지로 (1) 딥러닝 및 머신러닝에 대한 어느정도의 이해와, (2) Python 언어 및 TensorFlow 프레임워크에 대한 이해, 그리고 (3) Semantic Segmentation 알고리즘에 대한 전반적인 이해를 알고 있다는 전제하에 글을 쓰겠습니다. 글을 읽다가 이해가 안되는 부분이 있다면 다른곳에 좋은 글이 많이 있으니 숙지하신 후 읽어보시길 권장해 드립니다.</p>
 
@@ -218,7 +230,7 @@
 
 <p><strong>개 vs 고양이 분할</strong> 문제를 해결하기 위한 딥러닝 알고리즘으로는 <strong>Encoder-Decoder</strong>계열의 <strong>GCN</strong>(<strong>Global Convolutional Network</strong>)를 채택하였습니다. 공개된 Segmentation(TensorFlow) 구현체의 경우, DeepLab으로 대표되는 <strong>Dilated convolution(Atrous convolution)</strong> 계열이 대부분입니다. Dilated convolution 계열의 경우 성능적으로 우수하나, 많은 메모리를 잡아먹고 속도 면에서 좋지 않은 경우가 많습니다. 추가로, DeepLab 계열은 TensorFlow 자체에 구현체가 있으므로 공부하기가 편하나, Encoder-Decoder 계열은 상대적으로 구현체가 적어 차별화(?)를 위해 <strong>GCN</strong>을 선택하였습니다.</p>
 
-<p>GCN 구현체는 앞선 <a href="http://localhost:4000/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">Classification 문제</a>와 같이 데이터셋(data set), 성능 평가(performance evaluation), 러닝 모델(learning model), 러닝 알고리즘(learning algorithm) 4가지 요소를 중심으로 작성하였으며, 이전 포스팅과 겹치지 않은 부분 위주로 소개해드리겠습니다.</p>
+<p>GCN 구현체는 앞선 <a href="http://research.sualab.com/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">Classification 문제</a>와 같이 데이터셋(data set), 성능 평가(performance evaluation), 러닝 모델(learning model), 러닝 알고리즘(learning algorithm) 4가지 요소를 중심으로 작성하였으며, 이전 포스팅과 겹치지 않은 부분 위주로 소개해드리겠습니다.</p>
 
 <h2 id="1-데이터셋-개vs고양이">(1) 데이터셋: 개vs고양이</h2>
 
@@ -232,8 +244,8 @@
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/image-segmentation-deep-learning/example.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/image-segmentation-deep-learning/example.png" alt="개vs고양이 데이터셋 예시" />
+<p><a href="http://research.sualab.com/assets/images/image-segmentation-deep-learning/example.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/image-segmentation-deep-learning/example.png" alt="개vs고양이 데이터셋 예시" />
 </a>
 <span class="caption">개vs고양이 데이터셋 예시</span></p>
 
@@ -645,8 +657,8 @@
 <p><code class="language-plaintext highlighter-rouge">SegNet</code> 클래스는 , 기본 추상 베이스 클래스로, 확장성을 위해 전반적인 Segmentation Network를 포괄하도록 구현하였습니다. <code class="language-plaintext highlighter-rouge">_build_model</code> 과 <code class="language-plaintext highlighter-rouge">_build_loss</code> 함수는 <code class="language-plaintext highlighter-rouge">SegNet</code>의 자식 클래스에서 구현하도록 하였고, <code class="language-plaintext highlighter-rouge">predict</code> 함수는 모델의 예측 결과를 반환합니다. 보통 Segmentation의 경우 Detection과 다르게 architecture를 구축하는 부분을 제외하고 loss 등은 크게 변하지 않습니다. 추상 클래스를 잘 정의해두면 지금 구현하는 GCN뿐만 아니라 다양한 Segmentation architecuture를 큰 시간 소비없이 손쉽게 구현할 수 있을 것이라 생각합니다!</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/image-segmentation-deep-learning/overview_gcn.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/image-segmentation-deep-learning/overview_gcn.png" alt="GCN Architecture" />
+<p><a href="http://research.sualab.com/assets/images/image-segmentation-deep-learning/overview_gcn.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/image-segmentation-deep-learning/overview_gcn.png" alt="GCN Architecture" />
 </a>
 <span class="caption">GCN Architecture</span></p>
 
@@ -1100,8 +1112,8 @@
 <p>Classification 문제때와 마찬가지로 학습 수행 과정동안 학습 곡선을 그려보았습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/image-segmentation-deep-learning/plot.png" target="_blank">
-  <img class="large-image" src="http://localhost:4000/assets/images/image-segmentation-deep-learning/plot.png" alt="학습 곡선 플롯팅 결과&lt;br&gt;&lt;small&gt;(파란색: 학습 데이터셋 정확도, 빨간색: 검증 데이터셋 정확도)&lt;/small&gt;" />
+<p><a href="http://research.sualab.com/assets/images/image-segmentation-deep-learning/plot.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/image-segmentation-deep-learning/plot.png" alt="학습 곡선 플롯팅 결과&lt;br&gt;&lt;small&gt;(파란색: 학습 데이터셋 정확도, 빨간색: 검증 데이터셋 정확도)&lt;/small&gt;" />
 </a>
 <span class="caption">학습 곡선 플롯팅 결과<br /><small>(파란색: 학습 데이터셋 정확도, 빨간색: 검증 데이터셋 정확도)</small></span></p>
 
@@ -1112,14 +1124,14 @@
 <p>테스트 결과 측정된 Pixel accuracy 값은 <strong>0.9556</strong>로 꽤 높은 값을 가졌습니다. 하지만 Pixel accuracy는 사용하는 데이터셋의 Foreground가 큰 경우에도 불구하고, 배경으로 모두 예측한 경우에도 꽤 높은 값을 가질 수 있기 때문에 값만 보고 추측하기는 어려울 때가 많습니다. 나중에 추가로 mIoU(mean Intersection over Union)등을 성능 지표로 삼고 다시 체크해보시길 추천드립니다. 돌아와서, 성능 값만 가지고 모델이 정말 잘 예측하는 지 신뢰하기 힘들기 때문에 실제 테스트 이미지에서 정말 객체 분할 및 분류를 잘했는지 확인하기 위하여 실제 이미지에 예측한 마스크를 시각화 해보았습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/image-segmentation-deep-learning/correct.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/image-segmentation-deep-learning/correct.png" alt="정확하게 예측한 결과 예시" />
+<p><a href="http://research.sualab.com/assets/images/image-segmentation-deep-learning/correct.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/image-segmentation-deep-learning/correct.png" alt="정확하게 예측한 결과 예시" />
 </a>
 <span class="caption">정확하게 예측한 결과 예시</span></p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/image-segmentation-deep-learning/incorrect.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/image-segmentation-deep-learning/incorrect.png" alt="미흡하게 예측한 결과 예시" />
+<p><a href="http://research.sualab.com/assets/images/image-segmentation-deep-learning/incorrect.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/image-segmentation-deep-learning/incorrect.png" alt="미흡하게 예측한 결과 예시" />
 </a>
 <span class="caption">미흡하게 예측한 결과 예시</span></p>
 

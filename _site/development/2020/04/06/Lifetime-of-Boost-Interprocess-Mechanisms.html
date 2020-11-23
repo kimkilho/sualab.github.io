@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2020-04-06T23:00:00+09:00">
-  <meta property="article:author" content="http://localhost:4000/about/">
+  <meta property="article:author" content="http://research.sualab.com/about/">
   
-  <meta property="og:url" content="http://localhost:4000/development/2020/04/06/Lifetime-of-Boost-Interprocess-Mechanisms.html" />
+  <meta property="og:url" content="http://research.sualab.com/development/2020/04/06/Lifetime-of-Boost-Interprocess-Mechanisms.html" />
   
   <meta itemprop="keywords" content="boost,c++,gdb" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="이번 포스트에서는 Boost의 Interproces에 포함된 자원들의 지속시간(Lifetime)을 테스트해본 경험을 공유하려합니다. 이런 테스트를 해 본 계기는 개발 과정에서 프로그램이 비정상종료는 경우, 혹은 디버거를 이용한 디버깅 도중 자원을 해제하는 부분에 도달하기 전에 프로...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://localhost:4000/development/2020/04/06/Lifetime-of-Boost-Interprocess-Mechanisms.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://research.sualab.com/development/2020/04/06/Lifetime-of-Boost-Interprocess-Mechanisms.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -50,6 +50,18 @@
                 });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110963421-1');
+</script>
+
 
   
 </head>

@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2019-02-19T09:00:00+09:00">
-  <meta property="article:author" content="http://localhost:4000/about/">
+  <meta property="article:author" content="http://research.sualab.com/about/">
   
-  <meta property="og:url" content="http://localhost:4000/introduction/practice/2019/02/19/bayesian-optimization-overview-1.html" />
+  <meta property="og:url" content="http://research.sualab.com/introduction/practice/2019/02/19/bayesian-optimization-overview-1.html" />
   
   <meta itemprop="keywords" content="bayesian optimization,hyperparameter optimization,gaussian process" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="지난 &amp;lt;Learning Transferable Architectures for Scalable Image Recognition 리뷰&amp;gt; 글의 서두에서 ‘AutoML’이라는 주제에 대해 간단히 소개해 드린 적이 있습니다. AutoML을 한 문장으로 표현하자면 ‘Machine...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://localhost:4000/introduction/practice/2019/02/19/bayesian-optimization-overview-1.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://research.sualab.com/introduction/practice/2019/02/19/bayesian-optimization-overview-1.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -50,6 +50,18 @@
                 });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110963421-1');
+</script>
+
 
   
 </head>
@@ -191,7 +203,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>지난 <a href="http://localhost:4000/machine-learning/computer-vision/2018/09/28/nasnet-review.html" target="_blank">&lt;Learning Transferable Architectures for Scalable Image Recognition 리뷰&gt;</a> 글의 서두에서 ‘AutoML’이라는 주제에 대해 간단히 소개해 드린 적이 있습니다. AutoML을 한 문장으로 표현하자면 ‘Machine Learning으로 설계하는 Machine Learning’이라고 하였으며, 현재 3가지 방향으로 연구가 진행된다고 하였습니다.</p>
+    <p>지난 <a href="http://research.sualab.com/machine-learning/computer-vision/2018/09/28/nasnet-review.html" target="_blank">&lt;Learning Transferable Architectures for Scalable Image Recognition 리뷰&gt;</a> 글의 서두에서 ‘AutoML’이라는 주제에 대해 간단히 소개해 드린 적이 있습니다. AutoML을 한 문장으로 표현하자면 ‘Machine Learning으로 설계하는 Machine Learning’이라고 하였으며, 현재 3가지 방향으로 연구가 진행된다고 하였습니다.</p>
 
 <ol>
   <li>Automated Feature Learning</li>
@@ -231,8 +243,8 @@
 </blockquote>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-1/unluck-in-manual-search-process.gif" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-1/unluck-in-manual-search-process.gif" alt="학습률에 대한 Manual Search 과정에서의 불운한 결과 예시" />
+<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/unluck-in-manual-search-process.gif" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/unluck-in-manual-search-process.gif" alt="학습률에 대한 Manual Search 과정에서의 불운한 결과 예시" />
 </a>
 <span class="caption">학습률에 대한 Manual Search 과정에서의 불운한 결과 예시</span></p>
 
@@ -255,24 +267,24 @@
 <p><strong>Grid Search</strong>는 탐색의 대상이 되는 특정 구간 내의 후보 hyperparameter 값들을 일정한 간격을 두고 선정하여, 이들 각각에 대하여 측정한 성능 결과를 기록한 뒤, 가장 높은 성능을 발휘했던 hyperparameter 값을 선정하는 방법입니다. 전체 탐색 대상 구간을 어떻게 설정할지, 간격의 길이는 어떻게 설정할지 등을 결정하는 데 있어 여전히 사람의 손이 필요하나, 앞선 Manual Search와 비교하면 좀 더 균등하고 전역적인 탐색이 가능하다는 장점이 있습니다. 반면 탐색 대상 hyperparameter의 개수를 한 번에 여러 종류로 가져갈수록, 전체 탐색 시간이 기하급수적으로 증가한다는 단점이 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-1/grid-search-process.gif" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-1/grid-search-process.gif" alt="학습률에 대한 Grid Search 과정 예시" />
+<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/grid-search-process.gif" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/grid-search-process.gif" alt="학습률에 대한 Grid Search 과정 예시" />
 </a>
 <span class="caption">학습률에 대한 Grid Search 과정 예시</span></p>
 
 <p>반면 <strong>Random Search</strong>는 Grid Search와 큰 맥락은 유사하나, 탐색 대상 구간 내의 후보 hyperparameter 값들을 랜덤 샘플링(sampling)을 통해 선정한다는 점이 다릅니다. Random Search는 Grid Search에 비해 불필요한 반복 수행 횟수를 대폭 줄이면서, 동시에 정해진 간격(grid) 사이에 위치한 값들에 대해서도 확률적으로 탐색이 가능하므로, 최적 hyperparameter 값을 더 빨리 찾을 수 있는 것으로 알려져 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-1/random-search-process.gif" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-1/random-search-process.gif" alt="학습률에 대한 Random Search 과정 예시&lt;br&gt;&lt;small&gt;(구간 $$[0.01, 0.05)$$에서 Python의 random.random 함수 10회 실행 결과; random.seed=0)&lt;/small&gt;" />
+<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/random-search-process.gif" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/random-search-process.gif" alt="학습률에 대한 Random Search 과정 예시&lt;br&gt;&lt;small&gt;(구간 $$[0.01, 0.05)$$에서 Python의 random.random 함수 10회 실행 결과; random.seed=0)&lt;/small&gt;" />
 </a>
 <span class="caption">학습률에 대한 Random Search 과정 예시<br /><small>(구간 \([0.01, 0.05)\)에서 Python의 random.random 함수 10회 실행 결과; random.seed=0)</small></span></p>
 
 <p>그럼에도 불구하고, Random Search도 ‘여전히 약간의 불필요한 탐색을 반복하는 것 같다’는 느낌을 지우기 어려우실 것이라고 생각합니다. 왜냐하면 Grid Search와 Random Search 모두, 바로 다음 번 시도할 후보 hyperparameter 값을 선정하는 과정에서, 이전까지의 조사 과정에서 얻어진 hyperparameter 값들의 성능 결과에 대한 ‘사전 지식’이 전혀 반영되어 있지 않기 때문입니다(반면 Manual Search 과정에서는 사전 지식이 매 차례마다 여러분들의 은연 중에 반영된 바 있습니다).</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-1/grid-search-vs-random-search.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-1/grid-search-vs-random-search.png" alt="Grid Search 결과와 Random Search 결과 비교 예시&lt;br&gt;&lt;small&gt;\[Bergstra and Bengio(2012)\]&lt;/small&gt;" />
+<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/grid-search-vs-random-search.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/grid-search-vs-random-search.png" alt="Grid Search 결과와 Random Search 결과 비교 예시&lt;br&gt;&lt;small&gt;\[Bergstra and Bengio(2012)\]&lt;/small&gt;" />
 </a>
 <span class="caption">Grid Search 결과와 Random Search 결과 비교 예시<br /><small>[Bergstra and Bengio(2012)]</small></span></p>
 
@@ -285,8 +297,8 @@
 <p>Bayesian Optimization에는 두 가지 필수 요소가 존재합니다. 먼저 <strong>Surrogate Model</strong>은, 현재까지 조사된 입력값-함숫값 점들 \((x_1, f(x_1)), ..., (x_t, f(x_t))\)를 바탕으로, 미지의 목적 함수의 형태에 대한 확률적인 추정을 수행하는 모델을 지칭합니다. 그리고 <strong>Acquisition Function</strong>은, 목적 함수에 대한 현재까지의 확률적 추정 결과를 바탕으로, ‘최적 입력값 \(x^{*}\)를 찾는 데 있어 가장 유용할 만한’ 다음 입력값 후보 \(x_{t+1}\)을 추천해 주는 함수를 지칭합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-1/bayesian-optimization-algorithm.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-1/bayesian-optimization-algorithm.png" alt="Bayesian Optimization 알고리즘의 의사 코드(pseudo-code)" />
+<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/bayesian-optimization-algorithm.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/bayesian-optimization-algorithm.png" alt="Bayesian Optimization 알고리즘의 의사 코드(pseudo-code)" />
 </a>
 <span class="caption">Bayesian Optimization 알고리즘의 의사 코드(pseudo-code)</span></p>
 
@@ -305,8 +317,8 @@
 <p>현재까지 조사된 입력값-함숫값 점들 \((x_1, f(x_1)), ..., (x_t, f(x_t))\)를 바탕으로, GP는 목적 함수에 대한 확률적 추정을 아래 그림과 같이 수행합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example.png" alt="GP를 사용한 Bayesian Optimization 진행 과정 예시 &lt;br&gt;&lt;small&gt;(검은색 점선: 실제 목적 함수, 검은색 실선: 추정된 평균 함수, &lt;br&gt;파란색 음영: 추정된 표준편차, 검은색 점: 현재까지 조사된 입력값-함숫값 점, &lt;br&gt;하단의 녹색 실선: Acquisition Function)&lt;br&gt;\[Brochu et al.(2010)\]&lt;/small&gt;" />
+<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example.png" alt="GP를 사용한 Bayesian Optimization 진행 과정 예시 &lt;br&gt;&lt;small&gt;(검은색 점선: 실제 목적 함수, 검은색 실선: 추정된 평균 함수, &lt;br&gt;파란색 음영: 추정된 표준편차, 검은색 점: 현재까지 조사된 입력값-함숫값 점, &lt;br&gt;하단의 녹색 실선: Acquisition Function)&lt;br&gt;\[Brochu et al.(2010)\]&lt;/small&gt;" />
 </a>
 <span class="caption">GP를 사용한 Bayesian Optimization 진행 과정 예시 <br /><small>(검은색 점선: 실제 목적 함수, 검은색 실선: 추정된 평균 함수, <br />파란색 음영: 추정된 표준편차, 검은색 점: 현재까지 조사된 입력값-함숫값 점, <br />하단의 녹색 실선: Acquisition Function)<br />[Brochu et al.(2010)]</small></span></p>
 
@@ -325,8 +337,8 @@
 <p>Surrogate Model이 목적 함수에 대하여 확률적으로 추정한 현재까지의 결과를 바탕으로, 바로 다음 번에 함숫값을 조사할 입력값 후보 \(x_{t+1}\)을  추천해 주는 함수를 Acquisition Function이라고 하였습니다. 이 때 선정되는 \(x_{t+1}\)은, 결과적으로 목적 함수의 최적 입력값 \(x^{*}\)을 찾는 데 있어 ‘가장 유용할 만한’ 것이라고 언급한 바 있습니다. 이 때의 ‘유용할 만하다’는 표현의 의미에 대하여 생각해 보도록 하겠습니다. 설명을 위해, GP를 사용한 목적 함수 추정 과정에서 \(t=2\)일 때의 상황을 나타내는 그림을 다시 가져왔습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example-teq2.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example-teq2.png" alt="GP를 사용한 Bayesian Optimization 진행 과정 중 $$t=2$$일 때의 상황" />
+<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example-teq2.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example-teq2.png" alt="GP를 사용한 Bayesian Optimization 진행 과정 중 $$t=2$$일 때의 상황" />
 </a>
 <span class="caption">GP를 사용한 Bayesian Optimization 진행 과정 중 \(t=2\)일 때의 상황</span></p>
 
@@ -341,8 +353,8 @@
 <p><strong>Expected Improvement(이하 EI)</strong> 함수는 이러한 exploration 전략 및 exploitation 전략 모두를 내재적으로 일정 수준 포함하도록 설계된 것으로, Acquisition Function으로 가장 많이 사용됩니다. EI는 현재까지 추정된 목적 함수를 바탕으로, 어느 후보 입력값 \(x\)에 대하여 ‘현재까지 조사된 점들의 함숫값 \(f(x_1), ..., f(x_t)\) 중 최대 함숫값 \(f(x^{+}) = \max_{i} f(x_i)\)보다 더 큰 함숫값을 도출할 확률(Probability of Improvement; 이하 <em>PI</em>)’ 및 ‘그 함숫값과 \(f(x^{+})\) 간의 <em>차이값</em>(magnitude)’을 종합적으로 고려하여, 해당 입력값 \(x\)의 ‘유용성’을 나타내는 숫자를 출력합니다. 이 때, PI의 개념을 이해해 보기 위해 아래 그림을 살펴보도록 하겠습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-1/probability-of-improvement-in-gaussian-process-example.png" target="_blank">
-  <img class="large-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-1/probability-of-improvement-in-gaussian-process-example.png" alt="GP 사용 시, '최대 함숫값 $$f(x^{+})$$보다 더 큰 함숫값을 도출할 확률(PI)'에 대한 시각화 예시&lt;br&gt;&lt;small&gt;(세로 방향 점선: 입력값 $$x_1$$, $$x_2$$, $$x_3$$에서의 함숫값 $$f(x_1)$$, $$f(x_2)$$, $$f(x_3)$$ 각각에 대한 확률 분포, &lt;br&gt;초록색 음영: $$f(x_3)$$의 확률 분포 상에서, 그 값이 $$f(x^{+})$$보다 큰 영역)&lt;br&gt;[Brochu et al.(2010)]&lt;/small&gt;" />
+<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/probability-of-improvement-in-gaussian-process-example.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/probability-of-improvement-in-gaussian-process-example.png" alt="GP 사용 시, '최대 함숫값 $$f(x^{+})$$보다 더 큰 함숫값을 도출할 확률(PI)'에 대한 시각화 예시&lt;br&gt;&lt;small&gt;(세로 방향 점선: 입력값 $$x_1$$, $$x_2$$, $$x_3$$에서의 함숫값 $$f(x_1)$$, $$f(x_2)$$, $$f(x_3)$$ 각각에 대한 확률 분포, &lt;br&gt;초록색 음영: $$f(x_3)$$의 확률 분포 상에서, 그 값이 $$f(x^{+})$$보다 큰 영역)&lt;br&gt;[Brochu et al.(2010)]&lt;/small&gt;" />
 </a>
 <span class="caption">GP 사용 시, ‘최대 함숫값 \(f(x^{+})\)보다 더 큰 함숫값을 도출할 확률(PI)’에 대한 시각화 예시<br /><small>(세로 방향 점선: 입력값 \(x_1\), \(x_2\), \(x_3\)에서의 함숫값 \(f(x_1)\), \(f(x_2)\), \(f(x_3)\) 각각에 대한 확률 분포, <br />초록색 음영: \(f(x_3)\)의 확률 분포 상에서, 그 값이 \(f(x^{+})\)보다 큰 영역)<br />[Brochu et al.(2010)]</small></span></p>
 
@@ -372,8 +384,8 @@ EI(x) &amp; = \mathbb{E} [\max (f(x) - f(x^{+}), 0)] \\
 <p>앞서 GP를 사용한 목적 함수 추정 과정의 \(t=4\)일 때의 상황에서, 상기 EI 계산식을 그대로 사용하여 각 입력값 \(x\) 별 EI의 값 \(EI(x)\)를 계산한 결과를 도시하면, 아래 그림의 하단에 있는 초록색 실선과 같이 나타납니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example-teq4.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example-teq4.png" alt="GP를 사용한 Bayesian Optimization 진행 과정 중 $$t=4$$일 때의 상황" />
+<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example-teq4.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/bayesian-optimization-procedure-example-teq4.png" alt="GP를 사용한 Bayesian Optimization 진행 과정 중 $$t=4$$일 때의 상황" />
 </a>
 <span class="caption">GP를 사용한 Bayesian Optimization 진행 과정 중 \(t=4\)일 때의 상황</span></p>
 
@@ -388,8 +400,8 @@ EI(x) &amp; = \mathbb{E} [\max (f(x) - f(x^{+}), 0)] \\
 <p>지금까지 Bayesian Optimization의 필수 요소 및 이들의 기본적인 작동 방식을 파악해 보았습니다. 이제 실제로 딥러닝 모델의 hyperparameter를 탐색할 시 Bayesian Optimization이 적용되는 시나리오에 대하여 좀 더 구체적으로 가시화하여 보여 드리도록 하겠습니다. 설명의 편의를 위해, 여기에서는 학습률(learning rate) 하나만을 탐색 대상 hyperparameter로 놓고 서술하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-1/bayesian-optimization-process.gif" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-1/bayesian-optimization-process.gif" alt="학습률에 대한 Bayesian Optimization(GP, EI) 과정 예시&lt;br&gt;&lt;small&gt;(구간 $$[0.01, 0.09]$$에서 최초 3개($$n=3$$), 총 11개($$N=11$$)의 점에 대한 반복 조사 결과;&lt;br&gt;상단: 목적 함수 $$f(x)$$에 대한 GP의 확률적 추정 결과, 하단: 확률적 추정 결과에 대한 EI 함수 계산 결과;&lt;br&gt;*bayesian-optimization* 라이브러리 사용, random_seed=1)&lt;/small&gt;" />
+<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/bayesian-optimization-process.gif" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-1/bayesian-optimization-process.gif" alt="학습률에 대한 Bayesian Optimization(GP, EI) 과정 예시&lt;br&gt;&lt;small&gt;(구간 $$[0.01, 0.09]$$에서 최초 3개($$n=3$$), 총 11개($$N=11$$)의 점에 대한 반복 조사 결과;&lt;br&gt;상단: 목적 함수 $$f(x)$$에 대한 GP의 확률적 추정 결과, 하단: 확률적 추정 결과에 대한 EI 함수 계산 결과;&lt;br&gt;*bayesian-optimization* 라이브러리 사용, random_seed=1)&lt;/small&gt;" />
 </a>
 <span class="caption">학습률에 대한 Bayesian Optimization(GP, EI) 과정 예시<br /><small>(구간 \([0.01, 0.09]\)에서 최초 3개(\(n=3\)), 총 11개(\(N=11\))의 점에 대한 반복 조사 결과;<br />상단: 목적 함수 \(f(x)\)에 대한 GP의 확률적 추정 결과, 하단: 확률적 추정 결과에 대한 EI 함수 계산 결과;<br /><em>bayesian-optimization</em> 라이브러리 사용, random_seed=1)</small></span></p>
 
@@ -428,7 +440,7 @@ EI(x) &amp; = \mathbb{E} [\max (f(x) - f(x^{+}), 0)] \\
 
 <p>*다음 편에서는 지금까지의 이해를 바탕으로, 실제 Bayesian Optimization을 위한 Python 라이브러리인 <em>bayesian-optimization</em>을 사용하여 간단한 예시 함수의 최적해를 탐색하는 과정을 먼저 소개하고, 실제 딥러닝 모델의 최적 hyperparameter를 탐색하는 과정을 여러분들께 안내해 드리고자 합니다.</p>
 
-<p><a href="http://localhost:4000/introduction/practice/2019/04/01/bayesian-optimization-overview-2.html">(다음 포스팅 보기)</a></p>
+<p><a href="http://research.sualab.com/introduction/practice/2019/04/01/bayesian-optimization-overview-2.html">(다음 포스팅 보기)</a></p>
 
 <h2 id="references">References</h2>
 

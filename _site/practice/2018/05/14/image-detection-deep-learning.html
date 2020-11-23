@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2018-05-14T09:00:00+09:00">
-  <meta property="article:author" content="http://localhost:4000/about/">
+  <meta property="article:author" content="http://research.sualab.com/about/">
   
-  <meta property="og:url" content="http://localhost:4000/practice/2018/05/14/image-detection-deep-learning.html" />
+  <meta property="og:url" content="http://research.sualab.com/practice/2018/05/14/image-detection-deep-learning.html" />
   
   <meta itemprop="keywords" content="detection,yolov2,tensorflow" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="안녕하세요, 오랜만에 포스팅합니다. 이전 글인 Classification 문제에 이어 딥러닝을 적용하여 Detection 문제를 해결한 사례를 앞선 포스팅과 마찬가지로 Tensorflow 구현 코드와 함께 소개해드리겠습니다. 이미 많은 포스팅에서 Detection에 대한 설명과 그...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://localhost:4000/practice/2018/05/14/image-detection-deep-learning.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://research.sualab.com/practice/2018/05/14/image-detection-deep-learning.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -50,6 +50,18 @@
                 });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110963421-1');
+</script>
+
 
   
 </head>
@@ -210,7 +222,7 @@
 
 <h2 id="서론">서론</h2>
 
-<p><a href="http://localhost:4000/computer-vision/2017/11/29/image-recognition-overview-1.html" target="_blank">이미지 인식 문제의 개요: PASCAL VOC Challenge를 중심으로</a>에서 언급한 바와 같이, <strong>PASCAL VOC challenge</strong>에서 중요하게 다루는 3가지 이미지 인식 문제 중 Classification에 이어서 <strong>Detection</strong>기술로 해결할 수 있는 간단한 사례를 소개하고, 이를 딥러닝 기술 중 많은 분들이 접해본 <strong>YOLO</strong>계열 기술을 통해 해결하는 과정을 설명드리겠습니다.</p>
+<p><a href="http://research.sualab.com/computer-vision/2017/11/29/image-recognition-overview-1.html" target="_blank">이미지 인식 문제의 개요: PASCAL VOC Challenge를 중심으로</a>에서 언급한 바와 같이, <strong>PASCAL VOC challenge</strong>에서 중요하게 다루는 3가지 이미지 인식 문제 중 Classification에 이어서 <strong>Detection</strong>기술로 해결할 수 있는 간단한 사례를 소개하고, 이를 딥러닝 기술 중 많은 분들이 접해본 <strong>YOLO</strong>계열 기술을 통해 해결하는 과정을 설명드리겠습니다.</p>
 
 <p>앞서 말씀드린 것과 같이 이번 포스팅은 개념적인 설명부터 시작하면 지나치게 글이 길어지고 집중도가 떨어질 것 같아 (1) 딥러닝 및 머신러닝에 대한 어느정도의 이해와, (2) Python 언어 및 TensorFlow 프레임워크에 대한 이해, 그리고 (3) YOLO계열 Detection 알고리즘에 대한 전반적인 이해를 알고 있다는 전제하에 글을 쓰겠습니다. 글을 읽다가 이해가 안되는 부분이 있다면 다른곳에 좋은 글이 많이 있으니 숙지하신 후 읽어보시길 권장드립니다.</p>
 
@@ -218,7 +230,7 @@
 
 <p><strong>얼굴 인식</strong> 문제를 해결하기 위한 딥러닝 알고리즘으로는 <strong>YOLO</strong>계열의 두번째 버전인 <strong>YOLOv2</strong>(<strong>YOLO9000</strong>)를 채택하였습니다. YOLO 모델의 경우 조금 시간이 지난 모델이긴 하지만, 속도면에서 요즘 모델과 비교해도 여전히 빠르며 성능도 여전히 준수한 편이며 직관적이기 때문에 이해하고 적용하는 데 <strong>R-CNN</strong>계열 혹은 <strong>SSD(Single Shot Detector)</strong>보다 나을 것이라 판단하였습니다.</p>
 
-<p>YOLOv2 구현체는 앞선 <a href="http://localhost:4000/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">Classification 문제</a>와 같이 데이터셋(data set), 성능 평가(performance evaluation), 러닝 모델(learning model), 러닝 알고리즘(leaning algorithm) 4가지 요소를 중심으로 작성하였으며  이전 포스팅과 겹치지 않은 부분 위주로 소개해드리겠습니다.</p>
+<p>YOLOv2 구현체는 앞선 <a href="http://research.sualab.com/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">Classification 문제</a>와 같이 데이터셋(data set), 성능 평가(performance evaluation), 러닝 모델(learning model), 러닝 알고리즘(leaning algorithm) 4가지 요소를 중심으로 작성하였으며  이전 포스팅과 겹치지 않은 부분 위주로 소개해드리겠습니다.</p>
 
 <h2 id="1-데이터셋-얼굴인식-face-detection">(1) 데이터셋: 얼굴인식 (Face Detection)</h2>
 
@@ -234,8 +246,8 @@
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/image-detection-deep-learning/example.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/image-detection-deep-learning/example.png" alt="얼굴 인식 데이터셋 예시 (annotation 변환 후)" />
+<p><a href="http://research.sualab.com/assets/images/image-detection-deep-learning/example.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/image-detection-deep-learning/example.png" alt="얼굴 인식 데이터셋 예시 (annotation 변환 후)" />
 </a>
 <span class="caption">얼굴 인식 데이터셋 예시 (annotation 변환 후)</span></p>
 
@@ -1093,8 +1105,8 @@
 <p>손실 함수의 경우 Classification 때보다 다소 복잡합니다. dataset.data 모듈에서 설명한 것과 같이 책임을 갖는 앵커의 경우 검출할 객체의 좌표, 그 박스의 신뢰도(confidence), 클래스의 확률(class_probs)의 차이의 제곱을 총 손실로 가지며, 책임이 없는 앵커는 신뢰도가 0이 되게끔 손실을 줘 학습을 진행합니다. 제 부족한 설명으로 이해가 잘 안될 것 같은데요, 앞서 정의한 <code class="language-plaintext highlighter-rouge">_build_loss</code> 함수 부분과 밑의 손실 함수 수식을 차근차근 따라가면 이해에 큰 도움이 될 것 같습니다!</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/image-detection-deep-learning/yolo_loss_function.jpg" target="_blank">
-  <img class="large-image" src="http://localhost:4000/assets/images/image-detection-deep-learning/yolo_loss_function.jpg" alt="YOLO 신경망의 손실 함수 수식" />
+<p><a href="http://research.sualab.com/assets/images/image-detection-deep-learning/yolo_loss_function.jpg" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/image-detection-deep-learning/yolo_loss_function.jpg" alt="YOLO 신경망의 손실 함수 수식" />
 </a>
 <span class="caption">YOLO 신경망의 손실 함수 수식</span></p>
 
@@ -1448,8 +1460,8 @@
 <p>Classification 문제때와 마찬가지로 학습 수행 과정동안 학습 곡선을 그려보았습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/image-detection-deep-learning/plot.png" target="_blank">
-  <img class="large-image" src="http://localhost:4000/assets/images/image-detection-deep-learning/plot.png" alt="학습 곡선 플롯팅 결과" />
+<p><a href="http://research.sualab.com/assets/images/image-detection-deep-learning/plot.png" target="_blank">
+  <img class="large-image" src="http://research.sualab.com/assets/images/image-detection-deep-learning/plot.png" alt="학습 곡선 플롯팅 결과" />
 </a>
 <span class="caption">학습 곡선 플롯팅 결과</span></p>
 
@@ -1460,14 +1472,14 @@
 <p>테스트 결과 측정된 재현율(Recall)값은 <strong>0.8734</strong>로 꽤 높은 값을 가졌습니다. 하지만 재현율 값의 경우, 얼굴이 아닌 다른 곳을 얼굴이라고 예측해도 값에 지장을 주지 않기 때문에, 엄밀한 성능 지표라고 할 수 없습니다. 이후에 실험을 하실 때 mAP, F1 score, IOU 등 상황에 맞는 성능 지표를 만들어 학습을 진행하시면 보다 좋은 성능을 가지는 모델을 얻을 수 있습니다. 다시 돌아와서, 재현율 값만 가지고 모델이 정말 잘 예측하는 지 신뢰하기 힘들기 때문에 실제 테스트 이미지에서 정말 얼굴을 잘 인식했는지 예측된 바운딩 박스를 그려 눈으로 확인해보았습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/image-detection-deep-learning/correct.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/image-detection-deep-learning/correct.png" alt="맞게 예측한 얼굴 인식 결과 예시" />
+<p><a href="http://research.sualab.com/assets/images/image-detection-deep-learning/correct.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/image-detection-deep-learning/correct.png" alt="맞게 예측한 얼굴 인식 결과 예시" />
 </a>
 <span class="caption">맞게 예측한 얼굴 인식 결과 예시</span></p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://localhost:4000/assets/images/image-detection-deep-learning/incorrect.png" target="_blank">
-  <img class="full-image" src="http://localhost:4000/assets/images/image-detection-deep-learning/incorrect.png" alt="잘못 예측한 얼굴 인식 결과 예시" />
+<p><a href="http://research.sualab.com/assets/images/image-detection-deep-learning/incorrect.png" target="_blank">
+  <img class="full-image" src="http://research.sualab.com/assets/images/image-detection-deep-learning/incorrect.png" alt="잘못 예측한 얼굴 인식 결과 예시" />
 </a>
 <span class="caption">잘못 예측한 얼굴 인식 결과 예시</span></p>
 
