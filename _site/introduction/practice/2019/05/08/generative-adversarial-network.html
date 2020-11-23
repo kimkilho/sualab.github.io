@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2019-05-08T09:00:00+09:00">
-  <meta property="article:author" content="http://github.sualab.io/about/">
+  <meta property="article:author" content="http://sualab.github.io/about/">
   
-  <meta property="og:url" content="http://github.sualab.io/introduction/practice/2019/05/08/generative-adversarial-network.html" />
+  <meta property="og:url" content="http://sualab.github.io/introduction/practice/2019/05/08/generative-adversarial-network.html" />
   
   <meta itemprop="keywords" content="generative adversarial network,DCGAN,tensorflow" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="안녕하세요. 이번에 포스팅 할 주제는 기존에 다루었던 내용들과는 조금 다른 내용을 이야기 해볼까 합니다. Generative adversarial networks(이하 GAN)으로 불리는 분야에 대하여 소개 해 드리려 합니다. 해당 분야는 처음 등장한 2014년 이후로 지금까지 매...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://github.sualab.io/introduction/practice/2019/05/08/generative-adversarial-network.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://sualab.github.io/introduction/practice/2019/05/08/generative-adversarial-network.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -228,8 +228,8 @@
 <p>GAN은 이미지를 생성하는 방법론으로 2014년 처음 등장한 이래로 매우 빠르게 연구되어 많은 방법론과 그 응용이 학계에 발표되었습니다. 단순히 이미지를 생성하는 수준에서 주어진 이미지를 다른 화풍의 이미지로 바꾸는 <a href="https://arxiv.org/pdf/1807.10201.pdf" target="_blank">style transfer</a>까지 다양한 응용이 가능하며 기존 <a href="https://arxiv.org/pdf/1511.06434.pdf" target="_blank">image recognition 작업의 성능을 향상</a>시킬 수도 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/teaser_eccv18_cezanne.jpg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/teaser_eccv18_cezanne.jpg" alt="자동차 사진을 세잔 화풍으로 전이한 이미지" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/teaser_eccv18_cezanne.jpg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/teaser_eccv18_cezanne.jpg" alt="자동차 사진을 세잔 화풍으로 전이한 이미지" />
 </a>
 <span class="caption">자동차 사진을 세잔 화풍으로 전이한 이미지</span></p>
 
@@ -242,36 +242,36 @@
 <p>기존에 다루었던 image classification, object detection, image segmentation 문제들은 입력 이미지(\(x\))가 있을때 그에 따른 정답(\(y\))을 찾는 문제들입니다. image classification에서 주어진 이미지가 있을때, 그 이미지가 개의 이미지인지 고양이의 이미지인지 구별하는 문제등을 생각하면 됩니다. 이러한 모델은 <strong>discriminative model</strong>이라고 합니다. 즉 \(p(y \mid x)\)의 분포를 학습하여 이미지를 구별하는데 초점을 맞춘 모델이라고 생각하시면 됩니다. 일반적인 discriminative model의 경우 주어진 이미지를 구분하기 위한 특징점들을 찾아 분류하는 것을 목표로 하고 있습니다. 모델을 사람에 비유한다면 주어진 사진에서 보여지는 동물의 눈, 수염, 귀, 꼬리와 같은 요소를 보고 사진속의 동물이 개인지 고양이인지 구별하는 형태입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/random-dogs-cats-predictions.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/random-dogs-cats-predictions.png" alt="개와 고양이를 구분하는 문제" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/random-dogs-cats-predictions.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/random-dogs-cats-predictions.png" alt="개와 고양이를 구분하는 문제" />
 </a>
 <span class="caption">개와 고양이를 구분하는 문제</span></p>
 
 <p>Dicriminative model을 사용하면서 한번쯤은 생각해봤을 상상이 있습니다. 만약 개의 눈, 수염, 귀, 꼬리 등의 요소가 어떻게 생겼는지를 알고 있으면 이를 이용해 개의 모습을 그릴 수 있지 않을까요? 긴 허리, 짧은 다리, 검은색과 갈색 털, 접힌 귀, 검은 눈동자를 위치에 맞게 그리면 닥스훈트 한마리를 그릴 수 있는 것입니다. 이 생각에서 착안한 것이 바로 <strong>generative model</strong>입니다. 즉, generative model은 데이터의 분포 \(p(x)\)를 학습하는 것을 목표로 하는 model을 의미합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/MiniDachshund1_wb.jpg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/MiniDachshund1_wb.jpg" alt="긴 허리, 짧은 다리 등으로 우리는 닥스훈트를 인식 할 수 있다" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/MiniDachshund1_wb.jpg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/MiniDachshund1_wb.jpg" alt="긴 허리, 짧은 다리 등으로 우리는 닥스훈트를 인식 할 수 있다" />
 </a>
 <span class="caption">긴 허리, 짧은 다리 등으로 우리는 닥스훈트를 인식 할 수 있다</span></p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/drawn_dachshund.jpg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/drawn_dachshund.jpg" alt="긴 허리, 짧은 다리 등을 그리면 닥스훈트를 그릴 수 있다." />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/drawn_dachshund.jpg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/drawn_dachshund.jpg" alt="긴 허리, 짧은 다리 등을 그리면 닥스훈트를 그릴 수 있다." />
 </a>
 <span class="caption">긴 허리, 짧은 다리 등을 그리면 닥스훈트를 그릴 수 있다.</span></p>
 
 <p>일반적인 generative 모델은 discriminative 모델과 같이 오랜 기간 연구되어 왔습니다. 딥러닝이 보편화되기 이전에도 GMM(Gaussian Mixture Model), HMM(Hidden Markov Model)등의 방법론들을 중심으로 연구가 진행되어 왔습니다. 딥러닝이 보편화 된 이후 generative model은 <strong>GAN(Generative Adversarial Networks)</strong>, <strong>VAE(Variational Auto-Encoder)</strong>, 시계열 데이터 생성에 적합하다고 알려진 RNN(Recurrent Neural Network)등의 방향으로 연구되고 있습니다. 이 포스팅은 그 중 GAN에 대해서만 설명하며 다른 방법론들에 대해서는 기회가 된다면 나중에 다뤄보겠습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/gen_models_anim_1.gif" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/gen_models_anim_1.gif" alt="VAE 학습 과정" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/gen_models_anim_1.gif" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/gen_models_anim_1.gif" alt="VAE 학습 과정" />
 </a>
 <span class="caption">VAE 학습 과정</span></p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/GAN_samples.gif" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/GAN_samples.gif" alt="GAN 학습 과정.(이번 구현으로 만들 수 있다.)" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/GAN_samples.gif" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/GAN_samples.gif" alt="GAN 학습 과정.(이번 구현으로 만들 수 있다.)" />
 </a>
 <span class="caption">GAN 학습 과정.(이번 구현으로 만들 수 있다.)</span></p>
 
@@ -299,8 +299,8 @@
 <p>GAN을 학습하기 위해 사용하는 데이터로 <strong><a href="https://github.com/NVlabs/ffhq-dataset" target="_blank">Flickr Face HQ Dataset</a></strong> 을 사용하겠습니다. 이름에서 알 수 있듯이 Flickr를 통해 수집된 데이터들을 사용했으며 얼굴이미지만 모은 dataset이므로 별도의 annotation없이 학습이 진행됩니다. 실제로는 class정보를 이용하여 원하는 class의 데이터를 생성하는 것도 가능하지만 이번에 사용할 얼굴 데이터셋에서는 별도의 annotation이 없이 얼굴 이미지만 사용하여 GAN을 학습합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/FFHQ_image_sample.jpg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/FFHQ_image_sample.jpg" alt="FFHQ 데이터셋 예시" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/FFHQ_image_sample.jpg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/FFHQ_image_sample.jpg" alt="FFHQ 데이터셋 예시" />
 </a>
 <span class="caption">FFHQ 데이터셋 예시</span></p>
 
@@ -874,8 +874,8 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
 <p><code class="language-plaintext highlighter-rouge">_build_generator</code> 함수는 임의의 random vector \(z\)로부터 이미지를 생성하는 네트워크를 구성합니다. DCGAN 논문이 많은 영향을 준 부분이 이 부분입니다. 초창기 GAN에서는 generator를 구성할때 주로 Fully-connected layer를 사용하였지만 DCGAN이라는 이름에서 알 수 있듯이 이 논문에서 <strong>Convolution layer</strong> 를 사용하게 됩니다. Generator에서 사용하는 conv layer는 편의상 deconv로 표기 했지만 정식 명칭은 <strong>fractionally-strided convolution</strong>으로 strided convolution이 일반적으로 이미지의 크기를 줄여주는 것과 반대 역할을 하게 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/DCGAN_gen.JPG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/DCGAN_gen.JPG" alt="DCGAN에서 사용한 Generator 구조. 사용한 Dataset이 FFHQ와는 다르므로 일부 값이 변경됨" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/DCGAN_gen.JPG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/DCGAN_gen.JPG" alt="DCGAN에서 사용한 Generator 구조. 사용한 Dataset이 FFHQ와는 다르므로 일부 값이 변경됨" />
 </a>
 <span class="caption">DCGAN에서 사용한 Generator 구조. 사용한 Dataset이 FFHQ와는 다르므로 일부 값이 변경됨</span></p>
 
@@ -1105,8 +1105,8 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
 <p>또, 중간중간 이미지가 어떻게 생성되었는지를 확인하기 위해 정해진 sample_z를 이용하여 생성되는 이미지를 저장하여 비교 할 수 있도록 구현합니다. 해당 부분을 구현하게 되면 생성되는 이미지들을 가지고 다음처럼 변화 여부를 확인 할 수도 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/GAN_samples.gif" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/GAN_samples.gif" alt="GAN 학습 과정" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/GAN_samples.gif" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/GAN_samples.gif" alt="GAN 학습 과정" />
 </a>
 <span class="caption">GAN 학습 과정</span></p>
 
@@ -1307,8 +1307,8 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
 <p>다른 문제들과 마찬가지로 학습 수행 과정동안 학습 곡선을 그려보았습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/learning_curve-result-1.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/learning_curve-result-1.png" alt="학습 곡선 플롯팅 결과&lt;br&gt;&lt;small&gt;(상단 파란색: Discriminator loss, 상단 빨간색: Generator loss)(하단 파란색: 학습 batch FID, 하단 빨간색: Random하게 생성된 다수의 이미지로 측정한 FID)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/learning_curve-result-1.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/learning_curve-result-1.png" alt="학습 곡선 플롯팅 결과&lt;br&gt;&lt;small&gt;(상단 파란색: Discriminator loss, 상단 빨간색: Generator loss)(하단 파란색: 학습 batch FID, 하단 빨간색: Random하게 생성된 다수의 이미지로 측정한 FID)&lt;/small&gt;" />
 </a>
 <span class="caption">학습 곡선 플롯팅 결과<br /><small>(상단 파란색: Discriminator loss, 상단 빨간색: Generator loss)(하단 파란색: 학습 batch FID, 하단 빨간색: Random하게 생성된 다수의 이미지로 측정한 FID)</small></span></p>
 
@@ -1319,16 +1319,16 @@ LeakyReLU는 ReLU와 비슷하지만 입력이 음수일경우 0을 내보내는
 <p>가장 잘 나온 모델을 사용하여 측정한 FID의 값은 <strong>34.73</strong>이었습니다. 현재 state-of-the-art로 불리는 방법론들이 10이하인 것을 고려하면 아직은 부족한 결과이긴 합니다. 생성된 이미지를 보면 대부분은 잘 생성되었지만 일부 이미지가 비현실적인 것을 확인 하실 수 있습니다. 완벽하게 학습되지 않은 것을 알 수 있는 부분입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/sample_image_random.jpg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/sample_image_random.jpg" alt="random하게 생성된 얼굴 이미지들" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/sample_image_random.jpg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/sample_image_random.jpg" alt="random하게 생성된 얼굴 이미지들" />
 </a>
 <span class="caption">random하게 생성된 얼굴 이미지들</span></p>
 
 <p>또한, 양 끝의 두 상이한 이미지에 대해 서로의 이미지로 매끄럽게 이동하는 것을 확인 하실 수 있습니다. DCGAN 논문에서 이를 <strong>walking in the latent space</strong>라는 재밌는 표현으로 정의하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/generative-adversarial-network/sample_image_interpolate.jpg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/generative-adversarial-network/sample_image_interpolate.jpg" alt="안경 쓴 남자가 안경 안 쓴 여자로 바뀌는 모습" />
+<p><a href="http://sualab.github.io/assets/images/generative-adversarial-network/sample_image_interpolate.jpg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/generative-adversarial-network/sample_image_interpolate.jpg" alt="안경 쓴 남자가 안경 안 쓴 여자로 바뀌는 모습" />
 </a>
 <span class="caption">안경 쓴 남자가 안경 안 쓴 여자로 바뀌는 모습</span></p>
 

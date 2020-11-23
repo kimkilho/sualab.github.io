@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2017-11-29T09:00:00+09:00">
-  <meta property="article:author" content="http://github.sualab.io/about/">
+  <meta property="article:author" content="http://sualab.github.io/about/">
   
-  <meta property="og:url" content="http://github.sualab.io/introduction/2017/11/29/image-recognition-overview-1.html" />
+  <meta property="og:url" content="http://sualab.github.io/introduction/2017/11/29/image-recognition-overview-1.html" />
   
   <meta itemprop="keywords" content="pascal voc,classification,detection,segmentation" />
   
@@ -40,7 +40,7 @@
   <meta name="description" content="지난 번 글까지 해서 수아랩의 핵심 기술들 중 하나인 ‘딥러닝’에 대해 알아보았습니다. 오늘날 딥러닝 기술이 적용되고 있는 분야는 이미지 인식, 음성 인식, 자연어 처리 등 여러 가지가 있습니다. 오늘은 이러한 적용 분야들 중, 딥러닝의 위력을 가장 드라마틱하게 보여주고 있다고 할...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://github.sualab.io/introduction/2017/11/29/image-recognition-overview-1.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://sualab.github.io/introduction/2017/11/29/image-recognition-overview-1.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -214,8 +214,8 @@
 <p><strong>이미지 인식(image recognition)</strong> 문제에서는, 기계로 하여금 주어진 이미지 상에 포함되어 있는 대상이 <em>무엇인지</em>, 또한 <em>어느 위치에 있는지</em> 등을 파악하도록 하는 것을 주된 목표로 합니다. 예를 들어, 수아랩 기술 블로그를 오랫동안 보아 오셨다면 너무나도 친숙할 만한, 아래와 같은 이미지가 주어졌다고 합시다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/tree-image.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/tree-image.png" alt="인간이 받아들이는 나무 이미지" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/tree-image.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/tree-image.png" alt="인간이 받아들이는 나무 이미지" />
 </a>
 <span class="caption">인간이 받아들이는 나무 이미지</span></p>
 
@@ -224,8 +224,8 @@
 <p>그러나 오늘날 과학 기술이 꽃을 피운 21세기에 접어들었음에도 불구하고, 이렇게 어린 아이조차도 쉽게 할 수 있는 이미지 인식이, 기계에게는 여전히 매우 어려운 일로 받아들여지고 있습니다. 지난 <a href="http://research.sualab.com/machine-learning/2017/09/04/what-is-machine-learning.html" target="_blank">&lt;머신러닝이란 무엇인가?&gt;</a> 글에서도 언급하였듯이, 기계는 이미지를 <strong>픽셀(pixel)</strong> 단위의 수치화된 형태로 받아들이며, 일반적으로 인간이 보고 이해할 수 있을만큼 큰 이미지는 매우 많은 수의 픽셀들로 구성되어 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/tree-image-pixels.svg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/tree-image-pixels.svg" alt="기계가 받아들이는 나무 이미지: 수많은 픽셀을 통한 표현*&lt;br&gt;&lt;small&gt;(*주의: 격자 안의 하나의 정사각형의 크기는 실제 1픽셀보다는 크며, 설명을 돕기 위해 과장하였습니다.)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/tree-image-pixels.svg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/tree-image-pixels.svg" alt="기계가 받아들이는 나무 이미지: 수많은 픽셀을 통한 표현*&lt;br&gt;&lt;small&gt;(*주의: 격자 안의 하나의 정사각형의 크기는 실제 1픽셀보다는 크며, 설명을 돕기 위해 과장하였습니다.)&lt;/small&gt;" />
 </a>
 <span class="caption">기계가 받아들이는 나무 이미지: 수많은 픽셀을 통한 표현*<br /><small>(*주의: 격자 안의 하나의 정사각형의 크기는 실제 1픽셀보다는 크며, 설명을 돕기 위해 과장하였습니다.)</small></span></p>
 
@@ -242,22 +242,22 @@
 <p>이미지 인식 연구 초창기에 뇌 과학의 연구 성과를 마냥 기다릴 수만은 없었던 공학자들은, 인간의 인식 메커니즘을 그대로 모방하려는 시도 대신, 기존의 이미지 인식 문제의 범위를 좁혀서 좀 더 특수한 목적을 지니는 쉬운 형태의 문제로 치환하고 이들을 수학적 기법을 통해 해결하는 방법을 고안해 왔습니다. 예를 들어, 인간의 ‘선택적 주의 집중’ 및 ‘문맥 파악’ 능력에는 못 미치지만, 어떤 특수한 문제 해결에 효과적인 <strong>요인(feature)</strong>을 정의하여 사용하고, 이들을 ‘종합하고 이해’하도록 하기 위해 <strong>러닝 모델(learning model)</strong>과 <strong>러닝 알고리즘(learning algorithm)</strong>을 사용하여 이를 머신러닝 차원으로 해결하고자 하였습니다. 특수한 이미지 인식 문제로는 <em>얼굴 인식(face recognition)</em>, <em>필적 인식(handwriting recognition)</em> 등이 대표적입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/face-recognition-examples.png" target="_blank">
-  <img class="medium-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/face-recognition-examples.png" alt="특수한 이미지 인식 문제 예시: 얼굴 인식(FERET database)" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/face-recognition-examples.png" target="_blank">
+  <img class="medium-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/face-recognition-examples.png" alt="특수한 이미지 인식 문제 예시: 얼굴 인식(FERET database)" />
 </a>
 <span class="caption">특수한 이미지 인식 문제 예시: 얼굴 인식(FERET database)</span></p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/mnist-handwriting-examples.png" target="_blank">
-  <img class="small-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/mnist-handwriting-examples.png" alt="특수한 이미지 인식 문제 예시: 필적 인식(MNIST database)" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/mnist-handwriting-examples.png" target="_blank">
+  <img class="small-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/mnist-handwriting-examples.png" alt="특수한 이미지 인식 문제 예시: 필적 인식(MNIST database)" />
 </a>
 <span class="caption">특수한 이미지 인식 문제 예시: 필적 인식(MNIST database)</span></p>
 
 <p>초창기의 이러한 시도들을 통해 자신감을 얻은 공학자들은, 좀 더 과감한 도전을 하기 시작하였습니다. 인간이 일상 속에서 접할 수 있는 몇 가지 주요한 사물들을 인식하기 위한 시도를 시작한 것입니다. 이는, 기계의 이미지 인식 성능의 벤치마크(benchmark)로 삼을 수 있는 다양한 데이터셋이 등장한 데에서부터 출발하였습니다. 예를 들어, <em>CIFAR-10 dataset</em>은 일반적인 이미지 인식을 위한 가장 대표적인 벤치마크용 데이터셋으로, 32x32 크기의 작은 컬러 이미지 상에 10가지 사물 중 어떤 것이 포함되어 있는지를 단순 분류하는 문제를 제시하기 위해 만들어졌습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/cifar10-examples.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/cifar10-examples.png" alt="일반적인 이미지 인식 데이터셋 예시: CIFAR-10" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/cifar10-examples.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/cifar10-examples.png" alt="일반적인 이미지 인식 데이터셋 예시: CIFAR-10" />
 </a>
 <span class="caption">일반적인 이미지 인식 데이터셋 예시: CIFAR-10</span></p>
 
@@ -266,8 +266,8 @@
 <p>연구실 차원에서의 이런 올망졸망한(?) 벤치마크 데이터셋에서 출발하여, 그 후에는 1만 장 이상의 거대한 스케일의 이미지 데이터셋에 대하여 인식 성능을 겨루는 대회가 본격적으로 등장하였습니다. 초창기의 이미지 인식 대회 중 가장 대표적인 것이 <em>PASCAL VOC Challenge</em>입니다. 이 대회를 기점으로, 이미지 인식에서 다루는 문제들이 어느 정도 정형화되었다고 할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/classification-detection-segmentation.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/classification-detection-segmentation.png" alt="PASCAL VOC Challenge 문제: Classification, Detection, Segmentation" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/classification-detection-segmentation.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/classification-detection-segmentation.png" alt="PASCAL VOC Challenge 문제: Classification, Detection, Segmentation" />
 </a>
 <span class="caption">PASCAL VOC Challenge 문제: Classification, Detection, Segmentation</span></p>
 
@@ -282,16 +282,16 @@
 <p>본격적인 Classification을 수행하기 전에, 반드시 관심의 대상이 되는 클래스들을 미리 정해놓고 작업을 시작해야 합니다. 예를 들어, PASCAL VOC Challenge에서는 총 20가지 클래스를 상정하고, 이에 대한 classification을 수행하도록 하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/pascal-voc-classes.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/pascal-voc-classes.png" alt="PASCAL VOC Challenge에서 다루는 20가지 클래스&lt;br&gt;&lt;small&gt;(좌측 절반 10개: 'aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow',&lt;br&gt; 우측 절반 10개: 'dining table', 'dog', 'horse', 'motorbike', 'person', 'potted plant', 'sheep', 'sofa', 'train', 'TV/monitor')&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/pascal-voc-classes.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/pascal-voc-classes.png" alt="PASCAL VOC Challenge에서 다루는 20가지 클래스&lt;br&gt;&lt;small&gt;(좌측 절반 10개: 'aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow',&lt;br&gt; 우측 절반 10개: 'dining table', 'dog', 'horse', 'motorbike', 'person', 'potted plant', 'sheep', 'sofa', 'train', 'TV/monitor')&lt;/small&gt;" />
 </a>
 <span class="caption">PASCAL VOC Challenge에서 다루는 20가지 클래스<br /><small>(좌측 절반 10개: ‘aeroplane’, ‘bicycle’, ‘bird’, ‘boat’, ‘bottle’, ‘bus’, ‘car’, ‘cat’, ‘chair’, ‘cow’,<br /> 우측 절반 10개: ‘dining table’, ‘dog’, ‘horse’, ‘motorbike’, ‘person’, ‘potted plant’, ‘sheep’, ‘sofa’, ‘train’, ‘TV/monitor’)</small></span></p>
 
 <p>PASCAL VOC Challenge를 비롯한 대부분의 이미지 인식 대회의 Classification 문제에서는, 주어진 이미지 안에 특정 클래스의 사물이 존재할 ‘가능성’ 내지는 ‘믿음’을 나타내는 <strong>신뢰도 점수(confidence score)</strong>를 제출하도록 요구합니다. 즉, ‘주어진 이미지 안에 클래스 X의 사물이 있다’는 식의 단정적인 결론 대신, ‘주어진 이미지 안에 클래스 X의 사물이 존재할 가능성이 \(s_X\), 클래스 Y의 사물이 존재할 가능성이 \(s_Y\), 클래스 Z의 사물이 존재할 가능성이 \(s_Z\), …’ 식의 결과물을 제출하도록 요구하고, 이를 통해 추후 정답 여부 확인 시 해당 결과물에 대한 사후적인 해석의 여지를 두게 되는 것입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/classification-model.svg" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/classification-model.svg" alt="Classification 문제&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2009 데이터셋 - 2009_001984.jpg)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/classification-model.svg" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/classification-model.svg" alt="Classification 문제&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2009 데이터셋 - 2009_001984.jpg)&lt;/small&gt;" />
 </a>
 <span class="caption">Classification 문제<br /><small>(예시 이미지: VOC2009 데이터셋 - 2009_001984.jpg)</small></span></p>
 
@@ -302,8 +302,8 @@
 <p>먼저 <em>모든 이미지가 반드시 하나의 사물만을 포함하도록</em> 전제되어 있는 경우를 생각해 봅시다. 이를 편의 상 ‘<em>단일 사물 분류</em>’ 문제라고 지칭하도록 하겠습니다. 이 경우, 전체 클래스에 대한 신뢰도 점수 중 가장 큰 신뢰도 점수를 갖는 클래스를 선정하여, ‘주어진 이미지 안에 해당 클래스가 포함되어 있을 것이다’고 결론지을 수 있습니다. 예를 들어, 아래와 같이 ‘고양이’를 담고 있는 이미지가 주어졌을 때, 전체 20가지 클래스에 대한 신뢰도 점수들을 비교하여 그 중 가장 큰 신뢰도 점수를 지니는 ‘cat’ 클래스를 선정하여 제시할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/single-object-classification-confidence-scores.svg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/single-object-classification-confidence-scores.svg" alt="단일 사물 분류 문제에서의 신뢰도 점수 해석&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2008 데이터셋 - 2008_005977.jpg)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/single-object-classification-confidence-scores.svg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/single-object-classification-confidence-scores.svg" alt="단일 사물 분류 문제에서의 신뢰도 점수 해석&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2008 데이터셋 - 2008_005977.jpg)&lt;/small&gt;" />
 </a>
 <span class="caption">단일 사물 분류 문제에서의 신뢰도 점수 해석<br /><small>(예시 이미지: VOC2008 데이터셋 - 2008_005977.jpg)</small></span></p>
 
@@ -314,8 +314,8 @@
 <p>이러한 문제 상황에서는 이미지 인식 대회마다 결론을 도출하는 방식이 조금씩 다르나, PASCAL VOC Challenge의 경우에는 각 클래스마다 <strong>문턱값(threshold)</strong>을 미리 설정해 놓고, 주어진 이미지의 <em>각 클래스 별 신뢰도 점수가 문턱값보다 <strong>큰</strong> 경우에 한하여 ‘주어진 이미지 안에 해당 클래스가 포함되어 있을 것이다’고 결론</em>짓도록 합니다. 예를 들어, 아래와 같이 ‘소’와 ‘사람’을 동시에 담고 있는 이미지가 주어졌을 때, 20가지 클래스 각각의 신뢰도 점수들을 조사하여, 이들 중 사전에 정한 문턱값보다 큰 신뢰도 점수를 지니는 ‘cow’와 ‘person’ 클래스를 선정하여 제시할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/multiple-objects-classification-confidence-scores.svg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/multiple-objects-classification-confidence-scores.svg" alt="복수 사물 분류 문제에서의 신뢰도 점수 해석&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2010 데이터셋 - 2010_001692.jpg)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/multiple-objects-classification-confidence-scores.svg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/multiple-objects-classification-confidence-scores.svg" alt="복수 사물 분류 문제에서의 신뢰도 점수 해석&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2010 데이터셋 - 2010_001692.jpg)&lt;/small&gt;" />
 </a>
 <span class="caption">복수 사물 분류 문제에서의 신뢰도 점수 해석<br /><small>(예시 이미지: VOC2010 데이터셋 - 2010_001692.jpg)</small></span></p>
 
@@ -338,8 +338,8 @@
 <p>단일 사물 분류 문제에서는,  위에서 정의된 정확도를 평가 척도로 즉각 사용하여도 크게 문제가 없습니다. 예를 들어, 아래와 같이 전체 테스트용 이미지가 10개 있었다고 할 때, 분류 모델이 이들 중 7개를 올바르게 예측했다면, 정확도는 \(7 / 10 = 0.7\)(\(70\%\))이 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/accuracy-example.svg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/accuracy-example.svg" alt="단일 사물 분류 문제에서의 정확도 계산 예시" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/accuracy-example.svg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/accuracy-example.svg" alt="단일 사물 분류 문제에서의 정확도 계산 예시" />
 </a>
 <span class="caption">단일 사물 분류 문제에서의 정확도 계산 예시</span></p>
 
@@ -374,16 +374,16 @@
 <p>평균 정밀도를 계산하는 구체적인 과정을 보면, 아래 그림과 같이 원본 테스트 이미지들을 모델이 예측한 클래스를 기준으로 나눈 후, 각각에 대하여 정밀도를 따로 계산한 뒤, 이렇게 얻어진 클래스 별 정밀도의 평균을 계산합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/precision-per-class-example.svg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/precision-per-class-example.svg" alt="복수 사물 분류 문제에서의 클래스 별 정밀도 계산 예시&lt;br&gt;&lt;small&gt;(그림에 제시된 3개의 클래스에 대한 전체 평균 정밀도는 $$(0.4+0.6+0.4)/3 = 0.47(47\%)$$)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/precision-per-class-example.svg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/precision-per-class-example.svg" alt="복수 사물 분류 문제에서의 클래스 별 정밀도 계산 예시&lt;br&gt;&lt;small&gt;(그림에 제시된 3개의 클래스에 대한 전체 평균 정밀도는 $$(0.4+0.6+0.4)/3 = 0.47(47\%)$$)&lt;/small&gt;" />
 </a>
 <span class="caption">복수 사물 분류 문제에서의 클래스 별 정밀도 계산 예시<br /><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 정밀도는 \((0.4+0.6+0.4)/3 = 0.47(47\%)\))</small></span></p>
 
 <p>다음으로 평균 재현율을 계산하는 구체적인 과정을 보면, 아래 그림과 같이 원본 테스트 이미지들을 실제 클래스를 기준으로 나눈 후, 각 클래스에 대하여 재현율을 따로 계산한 뒤, 이렇게 얻어진 클래스 별 재현율의 평균을 계산합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/recall-per-class-example.svg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/recall-per-class-example.svg" alt="복수 사물 분류 문제에서의 클래스 별 재현율 계산 예시&lt;br&gt;&lt;small&gt;(그림에 제시된 3개의 클래스에 대한 전체 평균 재현율은 $$(0.6+1.0+0.8)/3 = 0.8(80\%)$$)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/recall-per-class-example.svg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/recall-per-class-example.svg" alt="복수 사물 분류 문제에서의 클래스 별 재현율 계산 예시&lt;br&gt;&lt;small&gt;(그림에 제시된 3개의 클래스에 대한 전체 평균 재현율은 $$(0.6+1.0+0.8)/3 = 0.8(80\%)$$)&lt;/small&gt;" />
 </a>
 <span class="caption">복수 사물 분류 문제에서의 클래스 별 재현율 계산 예시<br /><small>(그림에 제시된 3개의 클래스에 대한 전체 평균 재현율은 \((0.6+1.0+0.8)/3 = 0.8(80\%)\))</small></span></p>
 
@@ -398,24 +398,24 @@
 <p>(1)과 (2)의 상황에서 확인할 수 있듯이, <em>정밀도와 재현율 간에는 서로 약한 trade-off 관계가 존재</em>합니다. 좀 더 구체적으로 ‘car’ 클래스에 대하여, 테스트 이미지들에 대한 분류 모델의 신뢰도 점수가 계산된 상황에서, 문턱값의 변화에 따라 모델의 예측 결과 및 실제 정답 여부를 아래 그림과 같이 나타냈습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/threshold-to-classification-results.svg" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/threshold-to-classification-results.svg" alt="'car' 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 표&lt;br&gt;&lt;small&gt;(정밀도 n/a의 경우, 클래스 $$c$$로 예측한 이미지 수가 0개이므로 계산이 불가함을 나타냄)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/threshold-to-classification-results.svg" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/threshold-to-classification-results.svg" alt="'car' 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 표&lt;br&gt;&lt;small&gt;(정밀도 n/a의 경우, 클래스 $$c$$로 예측한 이미지 수가 0개이므로 계산이 불가함을 나타냄)&lt;/small&gt;" />
 </a>
 <span class="caption">‘car’ 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 표<br /><small>(정밀도 n/a의 경우, 클래스 \(c\)로 예측한 이미지 수가 0개이므로 계산이 불가함을 나타냄)</small></span></p>
 
 <p>위 그림에서는 편의 상 문턱값을 \(1.0\) 간격으로 조정하면서 정밀도 및 재현율을 측정한 것인데, 문턱값의 조정 간격을 더 짧게 하고 정밀도와 재현율을 측정하면 아래와 같은 형태의 플롯을 얻을 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/precision-recall-to-threshold-plot.svg" target="_blank">
-  <img class="medium-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/precision-recall-to-threshold-plot.svg" alt="'car' 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 플롯" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/precision-recall-to-threshold-plot.svg" target="_blank">
+  <img class="medium-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/precision-recall-to-threshold-plot.svg" alt="'car' 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 플롯" />
 </a>
 <span class="caption">‘car’ 클래스의 문턱값에 따른, 정밀도 및 재현율 결과 변화 플롯</span></p>
 
 <p>위 플롯에서, 정밀도 혹은 재현율이 변화하는 지점만을 포착하여, 이들 지점에서의 \((재현율, 정밀도)\)를 아래 그림과 같이 2차원 평면 상에 나타내는 것이 더 일반적인 표현 방법에 해당합니다. 이를 <strong>정밀도-재현율 곡선(precision-recall curve)</strong>이라고 부릅니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-1/precision-recall-curve-plot.svg" target="_blank">
-  <img class="medium-image" src="http://github.sualab.io/assets/images/image-recognition-overview-1/precision-recall-curve-plot.svg" alt="'car' 클래스의 문턱값에 따른, 정밀도-재현율 곡선 플롯" />
+<p><a href="http://sualab.github.io/assets/images/image-recognition-overview-1/precision-recall-curve-plot.svg" target="_blank">
+  <img class="medium-image" src="http://sualab.github.io/assets/images/image-recognition-overview-1/precision-recall-curve-plot.svg" alt="'car' 클래스의 문턱값에 따른, 정밀도-재현율 곡선 플롯" />
 </a>
 <span class="caption">‘car’ 클래스의 문턱값에 따른, 정밀도-재현율 곡선 플롯</span></p>
 

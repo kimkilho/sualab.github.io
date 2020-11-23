@@ -18,7 +18,7 @@ web: https://www.cognex.co.kr/
 description: > # this means to ignore newlines until "baseurl:"
     Cognex Deep Learning Lab-KOR research blog: covers subjects regarding machine learning, computer vision, high-performance computing, and so on.
 baseurl: "/" # the subpath of your site, e.g. /blog
-url: "http://github.sualab.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://sualab.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 facebook_username: cognexcorp
 
 # Build settings
