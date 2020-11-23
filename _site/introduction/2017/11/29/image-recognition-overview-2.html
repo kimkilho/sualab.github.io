@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2017-11-29T10:00:00+09:00">
-  <meta property="article:author" content="http://research.sualab.com/about/">
+  <meta property="article:author" content="http://github.sualab.io/about/">
   
-  <meta property="og:url" content="http://research.sualab.com/introduction/2017/11/29/image-recognition-overview-2.html" />
+  <meta property="og:url" content="http://github.sualab.io/introduction/2017/11/29/image-recognition-overview-2.html" />
   
   <meta itemprop="keywords" content="pascal voc,classification,detection,segmentation" />
   
@@ -40,7 +40,7 @@
   <meta name="description" content="(이전 포스팅 보기)">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://research.sualab.com/introduction/2017/11/29/image-recognition-overview-2.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://github.sualab.io/introduction/2017/11/29/image-recognition-overview-2.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -214,8 +214,8 @@
 <p>Detection에서 ‘박스 형태’로 위치를 표시한다고 하였는데, 이 때 사용하는 박스는 네 변이 이미지 상에서 수직/수평 방향을 향한(axis-aligned) 직사각형 모양의 박스입니다. 이는 아래 그림과 같은 형태의 박스를 지칭하며, 이를 <strong>바운딩 박스(bounding box)</strong>라고 부릅니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-recognition-overview-2/pascal-voc-detection-bbox-example.svg" target="_blank">
-  <img class="medium-image" src="http://research.sualab.com/assets/images/image-recognition-overview-2/pascal-voc-detection-bbox-example.svg" alt="Detection 문제에서의 바운딩 박스 예시&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2009 데이터셋 - 2009_002093.jpg)&lt;/small&gt;" />
+<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-2/pascal-voc-detection-bbox-example.svg" target="_blank">
+  <img class="medium-image" src="http://github.sualab.io/assets/images/image-recognition-overview-2/pascal-voc-detection-bbox-example.svg" alt="Detection 문제에서의 바운딩 박스 예시&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2009 데이터셋 - 2009_002093.jpg)&lt;/small&gt;" />
 </a>
 <span class="caption">Detection 문제에서의 바운딩 박스 예시<br /><small>(예시 이미지: VOC2009 데이터셋 - 2009_002093.jpg)</small></span></p>
 
@@ -224,8 +224,8 @@
 <p>여기에서도 마찬가지로, 만약 ‘<em>단일 사물 검출</em>’ 문제를 전제한다면, 수행하는 모델은 바운딩 박스 하나에 대한 결과물만을 내도록 디자인하면 됩니다. 반면 ‘<em>복수 사물 검출</em>’ 문제를 전제한다면, 검출 모델로 하여금 ‘1번 바운딩 박스 \((x_1^{(1)}, y_1^{(1)}, x_2^{(1)}, y_2^{(1)})\) 안에는 {클래스 X: \(s_X^{(1)}\), 클래스 Y: \(s_Y^{(1)}\), …}, 2번 바운딩 박스 \((x_1^{(2)}, y_1^{(2)}, x_2^{(2)}, y_2^{(2)})\) 안에는 {클래스 X: \(s_X^{(2)}\), 클래스 Y: \(s_Y^{(2)}\), …}, 3번 바운딩 박스 \((x_1^{(3)}, y_1^{(3)}, x_2^{(3)}, y_2^{(3)})\) 안에는 {클래스 X: \(s_X^{(3)}\), 클래스 Y: \(s_Y^{(3)}\), …}’의 형태로, 복수 개의 바운딩 박스에 대한 결과물을 제출하도록 디자인해야 합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-recognition-overview-2/detection-model.svg" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/image-recognition-overview-2/detection-model.svg" alt="Detection 문제(복수 사물 검출 문제)&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2009 데이터셋 - 2009_002807.jpg)&lt;/small&gt;" />
+<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-2/detection-model.svg" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/image-recognition-overview-2/detection-model.svg" alt="Detection 문제(복수 사물 검출 문제)&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2009 데이터셋 - 2009_002807.jpg)&lt;/small&gt;" />
 </a>
 <span class="caption">Detection 문제(복수 사물 검출 문제)<br /><small>(예시 이미지: VOC2009 데이터셋 - 2009_002807.jpg)</small></span></p>
 
@@ -244,8 +244,8 @@ B_p\text{와 } B_{gt}\text{ 의 IOU} = \frac{B_p \cap B_{gt} \text{ 영역 넓�
 \end{equation}</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-recognition-overview-2/bbox-overlap.svg" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/image-recognition-overview-2/bbox-overlap.svg" alt="$$B_p$$와 $$B_{gt}$$ 간의 IOU 계산" />
+<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-2/bbox-overlap.svg" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/image-recognition-overview-2/bbox-overlap.svg" alt="$$B_p$$와 $$B_{gt}$$ 간의 IOU 계산" />
 </a>
 <span class="caption">\(B_p\)와 \(B_{gt}\) 간의 IOU 계산</span></p>
 
@@ -254,8 +254,8 @@ B_p\text{와 } B_{gt}\text{ 의 IOU} = \frac{B_p \cap B_{gt} \text{ 영역 넓�
 <p>이 때 주의할 점은, 하나의 GT 바운딩 박스에 대하여 여러 개의 예측 바운딩 박스가 모두 IOU를 50% 넘겨 매칭된 경우, 이들 모두 결과적으로는 매칭에 실패한 것으로 간주되어 채점 대상에서 누락된다는 점입니다. 예측 바운딩 박스와 GT 바운딩 박스 간의 매칭 성사 및 실패 사례를 아래 그림에서 나타내었습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-recognition-overview-2/bbox-overlap-examples.svg" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/image-recognition-overview-2/bbox-overlap-examples.svg" alt="$$B_p$$와 $$B_{gt}$$ 간의 매칭 사례&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2010 데이터셋 - 2010_000413.jpg)&lt;/small&gt;" />
+<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-2/bbox-overlap-examples.svg" target="_blank">
+  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-2/bbox-overlap-examples.svg" alt="$$B_p$$와 $$B_{gt}$$ 간의 매칭 사례&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2010 데이터셋 - 2010_000413.jpg)&lt;/small&gt;" />
 </a>
 <span class="caption">\(B_p\)와 \(B_{gt}\) 간의 매칭 사례<br /><small>(예시 이미지: VOC2010 데이터셋 - 2010_000413.jpg)</small></span></p>
 
@@ -280,8 +280,8 @@ B_p\text{와 } B_{gt}\text{ 의 IOU} = \frac{B_p \cap B_{gt} \text{ 영역 넓�
 <p>Segmentation 문제에서는, <em>주어진 이미지 안에 어느 특정한 클래스에 해당하는 사물이 (만약 있다면) 어느 위치에 포함되어 있는지 ‘픽셀 단위로’ 분할하는 모델을 만드는 것</em>을 목표로 합니다. 이는 사물의 위치를 바운딩 박스로 표시하는 Detection 문제보다 더 자세하게 위치를 표시해야 하기 때문에, Detection 문제보다 더 어려운 문제에 해당합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-recognition-overview-2/segmentation-model.svg" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/image-recognition-overview-2/segmentation-model.svg" alt="Segmentation 문제&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2007 데이터셋 - 2007_001423.jpg)&lt;/small&gt;" />
+<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-2/segmentation-model.svg" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/image-recognition-overview-2/segmentation-model.svg" alt="Segmentation 문제&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2007 데이터셋 - 2007_001423.jpg)&lt;/small&gt;" />
 </a>
 <span class="caption">Segmentation 문제<br /><small>(예시 이미지: VOC2007 데이터셋 - 2007_001423.jpg)</small></span></p>
 
@@ -290,8 +290,8 @@ B_p\text{와 } B_{gt}\text{ 의 IOU} = \frac{B_p \cap B_{gt} \text{ 영역 넓�
 <p>가령 ‘person’ 클래스를 나타내는 값이 \(1\)이라고 했다면, 아래 그림과 같이 사람이 포함된 이미지를 받았을 때 실제 사람이 위치하는 ‘person’ 영역에만 \(1\)을, 그렇지 않은 ‘background’ 영역에는 \(0\)을 기재할 수 있습니다. 이런 식으로 하여, ‘dog’, ‘pottedplant’, ‘motorbike’ 등의 다른 클래스에 대해서도, \(2\), \(3\), \(4\) 등 해당 클래스들을 나타내는 값을 표기하는 방식으로 예측 마스크를 생성할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-recognition-overview-2/segmentation-result-to-values.svg" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/image-recognition-overview-2/segmentation-result-to-values.svg" alt="Segmentation 분할 결과 = 픽셀 단위 분류 결과&lt;br&gt;&lt;small&gt;(좌측 이미지는 PASCAL VOC Challenge의 마스킹 규칙에 맞게 빨간색으로 채색하였으며,&lt;br&gt;우측 결과물과 실제로 완벽하게 일치하지는 않습니다.)&lt;/small&gt;" />
+<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-2/segmentation-result-to-values.svg" target="_blank">
+  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-2/segmentation-result-to-values.svg" alt="Segmentation 분할 결과 = 픽셀 단위 분류 결과&lt;br&gt;&lt;small&gt;(좌측 이미지는 PASCAL VOC Challenge의 마스킹 규칙에 맞게 빨간색으로 채색하였으며,&lt;br&gt;우측 결과물과 실제로 완벽하게 일치하지는 않습니다.)&lt;/small&gt;" />
 </a>
 <span class="caption">Segmentation 분할 결과 = 픽셀 단위 분류 결과<br /><small>(좌측 이미지는 PASCAL VOC Challenge의 마스킹 규칙에 맞게 빨간색으로 채색하였으며,<br />우측 결과물과 실제로 완벽하게 일치하지는 않습니다.)</small></span></p>
 
@@ -302,8 +302,8 @@ B_p\text{와 } B_{gt}\text{ 의 IOU} = \frac{B_p \cap B_{gt} \text{ 영역 넓�
 <p>Segmentation 문제는 <strong>Semantic Segmentation</strong>과 <strong>Instance Segmentation</strong>의 두 가지 세부 문제로 구분할 수 있습니다. Semantic Segmentation은 분할의 기본 단위를 클래스로 하여, 동일한 클래스에 해당하는 사물을 예측 마스크 상에 동일한 색상으로 표시합니다. 반면 Instance Segmentation은 분할의 기본 단위를 사물로 하여, 동일한 클래스에 해당하더라도 서로 다른 사물에 해당하면 이들을 예측 마스크 상에 다른 색상으로 표시합니다. 아래 그림에서 Semantic Segmentation과 Instance Segmentation 간의 차이를 극명하게 확인할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-recognition-overview-2/segmentation-types.svg" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/image-recognition-overview-2/segmentation-types.svg" alt="Segmentation의 종류: Semantic Segmentation, Instance Segmentation&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2007 데이터셋 - 2007_000129.jpg)&lt;/small&gt;" />
+<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-2/segmentation-types.svg" target="_blank">
+  <img class="large-image" src="http://github.sualab.io/assets/images/image-recognition-overview-2/segmentation-types.svg" alt="Segmentation의 종류: Semantic Segmentation, Instance Segmentation&lt;br&gt;&lt;small&gt;(예시 이미지: VOC2007 데이터셋 - 2007_000129.jpg)&lt;/small&gt;" />
 </a>
 <span class="caption">Segmentation의 종류: Semantic Segmentation, Instance Segmentation<br /><small>(예시 이미지: VOC2007 데이터셋 - 2007_000129.jpg)</small></span></p>
 
@@ -318,8 +318,8 @@ A_p\text{와 } A_{gt}\text{ 의 IOU} = \frac{A_p \cap A_{gt} \text{ 영역 넓�
 \end{equation}</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-recognition-overview-2/segmentation-iou.svg" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/image-recognition-overview-2/segmentation-iou.svg" alt="$$A_p$$와 $$A_{gt}$$ 간의 IOU 계산&lt;br&gt;&lt;small&gt;(마스크 상의 흰 색으로 표시된 픽셀들의 경우, IOU 계산 시 고려 대상에서 제외됨,&lt;br&gt;예시 이미지: VOC2007 데이터셋 - 2007_001458.jpg)&lt;/small&gt;" />
+<p><a href="http://github.sualab.io/assets/images/image-recognition-overview-2/segmentation-iou.svg" target="_blank">
+  <img class="full-image" src="http://github.sualab.io/assets/images/image-recognition-overview-2/segmentation-iou.svg" alt="$$A_p$$와 $$A_{gt}$$ 간의 IOU 계산&lt;br&gt;&lt;small&gt;(마스크 상의 흰 색으로 표시된 픽셀들의 경우, IOU 계산 시 고려 대상에서 제외됨,&lt;br&gt;예시 이미지: VOC2007 데이터셋 - 2007_001458.jpg)&lt;/small&gt;" />
 </a>
 <span class="caption">\(A_p\)와 \(A_{gt}\) 간의 IOU 계산<br /><small>(마스크 상의 흰 색으로 표시된 픽셀들의 경우, IOU 계산 시 고려 대상에서 제외됨,<br />예시 이미지: VOC2007 데이터셋 - 2007_001458.jpg)</small></span></p>
 
