@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2017-10-10T10:00:00+09:00">
-  <meta property="article:author" content="http://github.sualab.io/about/">
+  <meta property="article:author" content="http://sualab.github.io/about/">
   
-  <meta property="og:url" content="http://github.sualab.io/introduction/2017/10/10/what-is-deep-learning-2.html" />
+  <meta property="og:url" content="http://sualab.github.io/introduction/2017/10/10/what-is-deep-learning-2.html" />
   
   <meta itemprop="keywords" content="deep learning,deep neural networks,representation learning" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="(이전 포스팅 보기)">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://github.sualab.io/introduction/2017/10/10/what-is-deep-learning-2.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://sualab.github.io/introduction/2017/10/10/what-is-deep-learning-2.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -227,16 +227,16 @@
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/what-is-deep-learning-2/tree-classifier-optimal-features.svg" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/what-is-deep-learning-2/tree-classifier-optimal-features.svg" alt="나무 여부 구별 문제의 최적 요인" />
+<p><a href="http://sualab.github.io/assets/images/what-is-deep-learning-2/tree-classifier-optimal-features.svg" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/what-is-deep-learning-2/tree-classifier-optimal-features.svg" alt="나무 여부 구별 문제의 최적 요인" />
 </a>
 <span class="caption">나무 여부 구별 문제의 최적 요인</span></p>
 
 <p>좀 더 구체적으로, 나무 이미지 맨 위에서부터 j번째, 맨 왼쪽에서부터 i번째 위치한 픽셀의 RGB값을 각각 \(x_{(j,i,R)}, x_{(j,i,G)}, x_{(j,i,B)}\)라 하여 벡터로 변환해 주면, 이미지 상단 중앙의 10픽셀 길이 정사각형 영역 내 100개 픽셀, 하단 중앙의 10픽셀 길이 정사각형 영역 내 100개 픽셀, 두 요인 \(f_1\), \(f_2\)의 계산 공식은 아래와 같이 됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/what-is-deep-learning-2/tree-image-vectorized.svg" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/what-is-deep-learning-2/tree-image-vectorized.svg" alt="나무 이미지의 입력 벡터화" />
+<p><a href="http://sualab.github.io/assets/images/what-is-deep-learning-2/tree-image-vectorized.svg" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/what-is-deep-learning-2/tree-image-vectorized.svg" alt="나무 이미지의 입력 벡터화" />
 </a>
 <span class="caption">나무 이미지의 입력 벡터화</span></p>
 
@@ -252,16 +252,16 @@ f_2 = \frac{1}{300}\big(x_{(71,71,R)}+x_{(71,71,G)}, …, +x_{(80,80,B)}\big)
 <p>그런데, 나무 여부를 구별하는 데 있어 아래와 같은 구조의 심층 신경망을 러닝 모델로 사용한다고 가정해봅시다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/what-is-deep-learning-2/tree-classifier-deep-neural-network.svg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/what-is-deep-learning-2/tree-classifier-deep-neural-network.svg" alt="나무 여부 구별 문제를 위한 심층 신경망 구조" />
+<p><a href="http://sualab.github.io/assets/images/what-is-deep-learning-2/tree-classifier-deep-neural-network.svg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/what-is-deep-learning-2/tree-classifier-deep-neural-network.svg" alt="나무 여부 구별 문제를 위한 심층 신경망 구조" />
 </a>
 <span class="caption">나무 여부 구별 문제를 위한 심층 신경망 구조</span></p>
 
 <p>맨 처음 상황에서, 입력층과 은닉층 사이의 가중치들은 ‘적절히’ 초기화되어 있습니다. 그런데, 요인 표현 방법을 스스로 학습할 수 있는 심층 신경망은, 학습이 진행될 수록 이 가중치들을 서서히 업데이트하면서 최종적으로는 아래와 같이 되도록 만듭니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/what-is-deep-learning-2/tree-classifier-deep-neural-network-optimized.svg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/what-is-deep-learning-2/tree-classifier-deep-neural-network-optimized.svg" alt="나무 여부 구별 심층 신경망의 최종 학습 결과" />
+<p><a href="http://sualab.github.io/assets/images/what-is-deep-learning-2/tree-classifier-deep-neural-network-optimized.svg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/what-is-deep-learning-2/tree-classifier-deep-neural-network-optimized.svg" alt="나무 여부 구별 심층 신경망의 최종 학습 결과" />
 </a>
 <span class="caption">나무 여부 구별 심층 신경망의 최종 학습 결과</span></p>
 
@@ -280,8 +280,8 @@ f_2 = \frac{1}{300}\big(x_{(71,71,R)}+x_{(71,71,G)}, …, +x_{(80,80,B)}\big)
 <p>이는 특히 이미지 인식 분야에서 컨볼루션 신경망을 사용했을 때 더욱 가시적으로 드라마틱하게 드러납니다. 우리 주변의 다양한 사물 이미지를 분류할 수 있도록 학습된 심층 컨볼루션 신경망을 해부해 본 결과, 각 컨볼루션 층에 생성된 출력값이 아래 그림과 같은 양상을 보이는 것을 발견했습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/what-is-deep-learning-2/convolutional-neural-network-representations.svg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/what-is-deep-learning-2/convolutional-neural-network-representations.svg" alt="컨볼루션 신경망의 추상화된 요인 표현 기능" />
+<p><a href="http://sualab.github.io/assets/images/what-is-deep-learning-2/convolutional-neural-network-representations.svg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/what-is-deep-learning-2/convolutional-neural-network-representations.svg" alt="컨볼루션 신경망의 추상화된 요인 표현 기능" />
 </a>
 <span class="caption">컨볼루션 신경망의 추상화된 요인 표현 기능</span></p>
 
@@ -304,8 +304,8 @@ f_2 = \frac{1}{300}\big(x_{(71,71,R)}+x_{(71,71,G)}, …, +x_{(80,80,B)}\big)
 <p>이미지 인식 연구를 위한 대규모 프로젝트인 이미지넷(ImageNet) 측에서 개최하는 대회인 ILSVRC(ImageNet Large Scale Visual Recognition Challenge)에서는 매년 전 세계 각국에서 온 수많은 참가자들이 총 1,000개 카테고리의 사물들을 담고 있는 총 1,431,167장의 이미지 데이터셋을 대상으로 이미지 인식 문제 해결을 위한 대결을 펼쳐 왔습니다. 그러던 중, 2012년도 ILSVRC에서 토론토 대학 소속 대학원생 Alex Krizhevsky 외 2인이 심층 신경망을 러닝 모델로 사용하여 대회에 도전장을 던졌고, 그 전까지 20% 이상에 머물렀던 분류 오류율(error rate)을 10%대로 낮추는 쾌거를 거두며 우승하였습니다. 이를 통해 Alex Krizhevsky는 일약 스타덤에 올랐으며, 이는 향후 딥러닝의 부흥을 알리는 신호탄이 되었다고 해도 과언이 아닙니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/what-is-deep-learning-2/ilsvrc-error-rate-change.svg" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/what-is-deep-learning-2/ilsvrc-error-rate-change.svg" alt="ILSVRC에서의 연도에 따른 최저 오류율 기록" />
+<p><a href="http://sualab.github.io/assets/images/what-is-deep-learning-2/ilsvrc-error-rate-change.svg" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/what-is-deep-learning-2/ilsvrc-error-rate-change.svg" alt="ILSVRC에서의 연도에 따른 최저 오류율 기록" />
 </a>
 <span class="caption">ILSVRC에서의 연도에 따른 최저 오류율 기록</span></p>
 
@@ -342,8 +342,8 @@ f_2 = \frac{1}{300}\big(x_{(71,71,R)}+x_{(71,71,G)}, …, +x_{(80,80,B)}\big)
 <p>그런데 사실은 그 부분만을 볼 것이 아니라, ‘ILSVRC에서 무려 <em>1,431,167장</em>의 이미지로 구성된 데이터셋을 제공하였다’는 부분에 <em>특히</em> 더 주목해야 합니다(따로 명시해놓지는 않았지만, ‘적절하게 정제된’ 이미지를 의미합니다). 1,000개 카테고리의 사물을 인간 수준으로 분류하는 데 있어, 1개 카테고리 당 대략 <em>1,431장</em>의 이미지를 필요로 하였다고 해석할 수 있습니다. 여러분이 유년 시절에 다양한 사물의 개념에 대해 파악하던 시절을 떠올려보면, 이를테면, ‘나무’라는 사물의 개념을 파악하기 위해 무려 1,431장의 그림들을 보진 않았을 것이라고 감히 확신합니다(‘나무 전집’ 따위의 책도, 그 안에 1,431장의 나무들을 담고 있진 않을 것 같습니다).</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/what-is-deep-learning-2/ilsvrc-images-example.jpg" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/what-is-deep-learning-2/ilsvrc-images-example.jpg" alt="ILSVRC에서 제공된 이미지의 일부 예시" />
+<p><a href="http://sualab.github.io/assets/images/what-is-deep-learning-2/ilsvrc-images-example.jpg" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/what-is-deep-learning-2/ilsvrc-images-example.jpg" alt="ILSVRC에서 제공된 이미지의 일부 예시" />
 </a>
 <span class="caption">ILSVRC에서 제공된 이미지의 일부 예시</span></p>
 
@@ -360,8 +360,8 @@ f_2 = \frac{1}{300}\big(x_{(71,71,R)}+x_{(71,71,G)}, …, +x_{(80,80,B)}\big)
 <p>딥러닝 모델이 실제 산업에 적용되는 상황에서 발목을 잡게 되는 또 다른 부분은, 바로 느린 속도와 높은 요구 사양입니다. 이는 특히 저희 수아랩이 집중하고 있는 제조업 분야에서의 중요한 선결 과제로 손꼽힙니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/what-is-deep-learning-2/production-line-example.png" target="_blank">
-  <img class="medium-image" src="http://github.sualab.io/assets/images/what-is-deep-learning-2/production-line-example.png" alt="제조업 생산 라인의 모습" />
+<p><a href="http://sualab.github.io/assets/images/what-is-deep-learning-2/production-line-example.png" target="_blank">
+  <img class="medium-image" src="http://sualab.github.io/assets/images/what-is-deep-learning-2/production-line-example.png" alt="제조업 생산 라인의 모습" />
 </a>
 <span class="caption">제조업 생산 라인의 모습</span></p>
 

@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2018-06-28T19:50:01+09:00">
-  <meta property="article:author" content="http://github.sualab.io/about/">
+  <meta property="article:author" content="http://sualab.github.io/about/">
   
-  <meta property="og:url" content="http://github.sualab.io/practice/review/2018/06/28/shake-shake-regularization-review.html" />
+  <meta property="og:url" content="http://sualab.github.io/practice/review/2018/06/28/shake-shake-regularization-review.html" />
   
   <meta itemprop="keywords" content="shake-shake,regularization,tensorflow" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="안녕하세요, 이번 포스팅에서는 이전 글에서 주로 다뤘던 이미지 인식 분야에서 보편적으로 적용되는 데이터 증강 기법을 소개 드리고, 관련된 내용 중 최신 논문에서 사용된 Shake-Shake 기법을 소개 드리려고 합니다. 데이터 증강 기법은 전부터 잘 알려져 있는 방법들이 많기 때문...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://github.sualab.io/practice/review/2018/06/28/shake-shake-regularization-review.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://sualab.github.io/practice/review/2018/06/28/shake-shake-regularization-review.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -232,8 +232,8 @@
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/Image_Flip.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/Image_Flip.PNG" alt="이미지 반전 예시" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/Image_Flip.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/Image_Flip.PNG" alt="이미지 반전 예시" />
 </a>
 <span class="caption">이미지 반전 예시</span></p>
 
@@ -244,8 +244,8 @@
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/Image_Rotation.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/Image_Rotation.PNG" alt="이미지 회전 예시" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/Image_Rotation.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/Image_Rotation.PNG" alt="이미지 회전 예시" />
 </a>
 <span class="caption">이미지 회전 예시</span></p>
 
@@ -256,8 +256,8 @@
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/Image_Crop.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/Image_Crop.png" alt="이미지 자르기 예시" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/Image_Crop.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/Image_Crop.png" alt="이미지 자르기 예시" />
 </a>
 <span class="caption">이미지 자르기 예시</span></p>
 
@@ -269,8 +269,8 @@
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/Image_Color_jittering.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/Image_Color_jittering.png" alt="Color jittering 예시" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/Image_Color_jittering.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/Image_Color_jittering.png" alt="Color jittering 예시" />
 </a>
 <span class="caption">Color jittering 예시</span></p>
 
@@ -280,8 +280,8 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 가장 중요한 점은 데이터셋의 특징에 따라 사용 가능한 증강 기법도 다르기 때문에 사용하실 때 데이터의 성질을 변화시키지 않는 선에서 사용해야 한다는 점입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/MNIST_false_aug_example.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/MNIST_false_aug_example.png" alt="MNIST 데이터셋 잘못된 증강 예시" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/MNIST_false_aug_example.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/MNIST_false_aug_example.png" alt="MNIST 데이터셋 잘못된 증강 예시" />
 </a>
 <span class="caption">MNIST 데이터셋 잘못된 증강 예시</span></p>
 
@@ -292,8 +292,8 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 <p>이번 포스팅에서 소개드릴 Shake-Shake regularization 논문은 앞서 설명 드렸던 data augmentation 기법과 관련이 있습니다. 차이점은 일반적인 augmentation은 입력 이미지를 타겟으로 이루어지는 반면, Shake-shake 기법은 논문의 표현을 인용하면 “Internal Representations”에 augmentation 기법을 적용하겠다고 주장을 합니다. 아래의 그림이 이를 잘 설명해주고 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/Fig_1_shake_shake_example.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/Fig_1_shake_shake_example.PNG" alt="Shake Shake 예시" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/Fig_1_shake_shake_example.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/Fig_1_shake_shake_example.PNG" alt="Shake Shake 예시" />
 </a>
 <span class="caption">Shake Shake 예시</span></p>
 
@@ -302,8 +302,8 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 <p>다소 실험적인 방법론이라 왜 이러한 시도가 있었는지 잘 이해가 되지 않을 수 있습니다. 더 깊은 이해를 위해서는 선행 연구들을 살펴보아야 합니다. 하지만 이번 포스팅에는 선행 연구들도 정리하면 글이 너무 길어지고 요점을 제대로 짚지 못할 것 같아 간단하게 키워드와 그림으로 소개 드리겠습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/related_work.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/related_work.PNG" alt="선행 연구" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/related_work.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/related_work.PNG" alt="선행 연구" />
 </a>
 <span class="caption">선행 연구</span></p>
 
@@ -316,8 +316,8 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 <p>내부 구조는 다소 복잡하게 구성이 되어있습니다. 전체 26개의 layer 중에 첫 3x3 convolution layer와 마지막 fully-connected layer를 제외한 24개의 layer는 3개의 stage로 구성되고, 각 stage는 4개의 block으로 구성 되어있는 계층적인 구조로 구성이 되어있습니다. 글로만 설명을 하면 굉장히 복잡하기 때문에 그림을 준비하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/ShakeNet_Architecture.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/ShakeNet_Architecture.PNG" alt="ShakeNet Architecture" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/ShakeNet_Architecture.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/ShakeNet_Architecture.PNG" alt="ShakeNet Architecture" />
 </a>
 <span class="caption">ShakeNet Architecture</span></p>
 
@@ -358,8 +358,8 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 <p>우선 Forward pass에서는 α 값을 0.5로 고정하는 “Even” 방식과, random 스칼라 값을 사용하는 “Shake” 방식으로 나뉩니다. Backward pass에서는 마찬가지로 β 값을 0.5로 고정하는 “Even” 방식과 random 스칼라 값을 사용하는 “Shake” 방식, forward pass에서 사용했던 α 값을 그대로 β 값으로 사용하는 “Keep” 방식으로 나뉩니다. 마지막으로 Mini-batch를 update해줄 때 각 배치의 이미지마다 다른 α, β 값을 사용하는 “Image” 방식과 하나의 mini-batch에서 같은 α, β 값을 사용하는 “Batch” 방식으로 나뉩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/Table_1_option.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/Table_1_option.PNG" alt="3가지 옵션에 따른 성능 결과" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/Table_1_option.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/Table_1_option.PNG" alt="3가지 옵션에 따른 성능 결과" />
 </a>
 <span class="caption">3가지 옵션에 따른 성능 결과</span></p>
 
@@ -383,8 +383,8 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/Table_3_Result.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/Table_3_Result.PNG" alt="기존 SOTA 망과 성능 비교 결과" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/Table_3_Result.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/Table_3_Result.PNG" alt="기존 SOTA 망과 성능 비교 결과" />
 </a>
 <span class="caption">기존 SOTA 망과 성능 비교 결과</span></p>
 
@@ -393,16 +393,16 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 <p>논문의 결과 다음 부분에는 딥러닝 논문에서 흔히 볼 수 있는 제안한 방법이 잘되는 이유를 관찰하고, 여러 셋팅을 바꿔가며 분석한 내용이 제시되어 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/correlation_result.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/correlation_result.PNG" alt="Residual branch간 correlation 분석" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/correlation_result.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/correlation_result.PNG" alt="Residual branch간 correlation 분석" />
 </a>
 <span class="caption">Residual branch간 correlation 분석</span></p>
 
 <p>첫째론 Residual branch간 correlation을 분석하였습니다. 2개의 residual branch의 출력 feature map을 일렬로 펼친 뒤, 두 vector간의 covariance를 계산하여 correlation을 구하였습니다. 앞선 Table 1의 결과들 중 성능 차이가 컸던 “Even”-“Even”-“Batch” 조합(이하 E-E-B)과 “Shake”-“Shake”-“Image” 조합(이하 S-S-I) 간의 비교를 진행하였습니다. 그 결과, 성능이 좋았던 S-S-I 모델이 E-E-B 모델에 비해 대부분의 block에서 correlation이 작게 측정되었음을 관찰할 수 있고, 이는 E-E-B 모델에서 regularization 효과가 더 컸음을 보여주고 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/Fig_5_alpha.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/Fig_5_alpha.PNG" alt="β 값 결정 방법에 따른 성능 변화" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/Fig_5_alpha.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/Fig_5_alpha.PNG" alt="β 값 결정 방법에 따른 성능 변화" />
 </a>
 <span class="caption">β 값 결정 방법에 따른 성능 변화</span></p>
 
@@ -421,8 +421,8 @@ Color Jittering이라 불리는 방법이 주된 노이즈 주입 기법인데, 
 <p>본 논문에서는 성능 검증을 위해 CIFAR-10, CIFAR-100 데이터셋에 대해 실험을 진행하였습니다. 하지만 이번 포스팅에서는 편의상 CIFAR-10 데이터셋에 대해서만 실험을 진행하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/cifar10_example.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/cifar10_example.PNG" alt="CIFAR-10 예시" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/cifar10_example.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/cifar10_example.PNG" alt="CIFAR-10 예시" />
 </a>
 <span class="caption">CIFAR-10 예시</span></p>
 
@@ -1032,8 +1032,8 @@ Forward pass와 관련이 있는 α를 rand_forward라는 변수로 선언을 �
 <p><code class="language-plaintext highlighter-rouge">MomentumOptimizer</code> 클래스는 <code class="language-plaintext highlighter-rouge">Optimizer</code> 클래스를 상속받아 SGD+Momentum 기반의 optimizer를 코드로 정의한 클래스입니다. Momentum 계수는 논문에서 사용한 값인 0.9를 사용하였고 Tensorflow에서 제공하는 <code class="language-plaintext highlighter-rouge">tf.train.MomentumOptimizer</code> 를 그대로 사용하여 구현하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/Cosine_SGDR.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/Cosine_SGDR.png" alt="Cosine annealing(SGDR)" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/Cosine_SGDR.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/Cosine_SGDR.png" alt="Cosine annealing(SGDR)" />
 </a>
 <span class="caption">Cosine annealing(SGDR)</span></p>
 
@@ -1151,8 +1151,8 @@ Forward pass와 관련이 있는 α를 rand_forward라는 변수로 선언을 �
 <h4 id="학습-곡선">학습 곡선</h4>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/shake-shake-regularization-review/Accuracy_graph.PNG" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/shake-shake-regularization-review/Accuracy_graph.PNG" alt="학습 곡선 플롯팅 결과" />
+<p><a href="http://sualab.github.io/assets/images/shake-shake-regularization-review/Accuracy_graph.PNG" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/shake-shake-regularization-review/Accuracy_graph.PNG" alt="학습 곡선 플롯팅 결과" />
 </a>
 <span class="caption">학습 곡선 플롯팅 결과</span></p>
 

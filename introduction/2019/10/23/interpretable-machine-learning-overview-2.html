@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2019-10-23T09:00:00+09:00">
-  <meta property="article:author" content="http://github.sualab.io/about/">
+  <meta property="article:author" content="http://sualab.github.io/about/">
   
-  <meta property="og:url" content="http://github.sualab.io/introduction/2019/10/23/interpretable-machine-learning-overview-2.html" />
+  <meta property="og:url" content="http://sualab.github.io/introduction/2019/10/23/interpretable-machine-learning-overview-2.html" />
   
   <meta itemprop="keywords" content="interpretable machine learning,interpretability,explainable artificial intelligence" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="앞선 글에서 머신러닝 모델에 대한 해석력 확보를 위한 Interpretable Machine Learning(이하 IML)의 개요를 다뤘습니다. 이번 글에서는 IML에 대한 지금까지의 이해를 바탕으로, 많은 분들이 관심을 가지고 계실 딥러닝 모델에 대한 주요 IML 방법론들에 대해...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://github.sualab.io/introduction/2019/10/23/interpretable-machine-learning-overview-2.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://sualab.github.io/introduction/2019/10/23/interpretable-machine-learning-overview-2.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -218,35 +218,35 @@
 
 <h2 id="activationweight-visualization">Activation/Weight Visualization</h2>
 
-<p>오늘날 이미지 인식 문제에 사용되는 전형적인 딥러닝 모델인 <a href="http://github.sualab.io/introduction/2017/10/10/what-is-deep-learning-1.html#컨볼루션-신경망" target="_blank">컨볼루션 신경망(CNN: convolutional neural network)</a>을 단순화시키면 아래 그림과 같이 나타낼 수 있습니다. 어느 이미지가 입력되면, 사전에 학습된 복수 개의 layer(층)들을 거치면서 feature extraction(요인 추출)을 수행하여 feature map(요인 맵)들이 생성되고, 이것이 뒤따르는 복수 개의 layer들을 거쳐 확률 형태의 prediction(예측) 결과를 산출하는 구조입니다.</p>
+<p>오늘날 이미지 인식 문제에 사용되는 전형적인 딥러닝 모델인 <a href="http://sualab.github.io/introduction/2017/10/10/what-is-deep-learning-1.html#컨볼루션-신경망" target="_blank">컨볼루션 신경망(CNN: convolutional neural network)</a>을 단순화시키면 아래 그림과 같이 나타낼 수 있습니다. 어느 이미지가 입력되면, 사전에 학습된 복수 개의 layer(층)들을 거치면서 feature extraction(요인 추출)을 수행하여 feature map(요인 맵)들이 생성되고, 이것이 뒤따르는 복수 개의 layer들을 거쳐 확률 형태의 prediction(예측) 결과를 산출하는 구조입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/image-features-prediction-diagram.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/image-features-prediction-diagram.png" alt="컨볼루션 신경망의 기본 구성" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/image-features-prediction-diagram.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/image-features-prediction-diagram.png" alt="컨볼루션 신경망의 기본 구성" />
 </a>
 <span class="caption">컨볼루션 신경망의 기본 구성</span></p>
 
 <p>컨볼루션 신경망이 특정 예측 결과를 도출하게 된 근거를 해석하기 위해 가장 직관적으로 생각할 수 있는 방법으로, 중간 계산 과정에서 생성된 feature map 각각을 들여다보는 방법이 있습니다. 보통 일반적인 머신러닝 모델에서 feature를 ‘들여다본다’ 함은, feature로 계산된 값의 크기를 비교하고 통계적 분포 등을 조사하는 것이 될 것입니다. 그러나 컨볼루션 신경망의 feature map은 그 특유의 2차원적 구조 때문에 이를 마치 이미지처럼 그려볼 수 있다는 장점이 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/activation-visualization-example.jpeg" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/activation-visualization-example.jpeg" alt="컨볼루션 신경망의 각 layer에서의 activation visualization 결과 예시 &lt;small&gt;(Andrej Karpathy)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/activation-visualization-example.jpeg" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/activation-visualization-example.jpeg" alt="컨볼루션 신경망의 각 layer에서의 activation visualization 결과 예시 &lt;small&gt;(Andrej Karpathy)&lt;/small&gt;" />
 </a>
 <span class="caption">컨볼루션 신경망의 각 layer에서의 activation visualization 결과 예시 <small>(Andrej Karpathy)</small></span></p>
 
 <p>위 그림은 3개 layer들로 구성된 아주 간단한 컨볼루션 신경망을 학습한 뒤, 여기에 자동차가 포함된 이미지를 입력했을 때의 각 layer에서의 feature map들을 이미지 형태로 표시한 결과를 보여주고 있습니다. 특정 이미지를 입력했을 때의 각 feature map이 ‘활성화된(activation)’ 정도를 보여준다는 맥락에서, 이러한 해석 방법을 보통 ‘<strong>Activation Visualization</strong>(활성값 시각화)’이라고 부릅니다. Activation Visualization을 통해, 여러분들은 학습이 완료된 컨볼루션 신경망의 각 layer에서 어떤 feature map이 이미지 상의 어떠한 특징들을 커버하고 있는지 추측할 수 있습니다. 이를테면 아래 그림과 같이, 사람 또는 동물의 얼굴이 포함되어 있는 이미지들을 입력할 때, 공통적으로 최대로 활성화되는 feature map이 무엇인지 조사하고, 이들을 시각화함으로써 해당 feature map이 실제로 ‘얼굴’을 커버하는 경향을 보이는지 확인할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/face-activation-example.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/face-activation-example.png" alt="사람 또는 동물의 '얼굴'을 커버하는 feature map의 Activation Visualization 결과 예시 &lt;small&gt;(Jason Yosinski et al.)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/face-activation-example.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/face-activation-example.png" alt="사람 또는 동물의 '얼굴'을 커버하는 feature map의 Activation Visualization 결과 예시 &lt;small&gt;(Jason Yosinski et al.)&lt;/small&gt;" />
 </a>
 <span class="caption">사람 또는 동물의 ‘얼굴’을 커버하는 feature map의 Activation Visualization 결과 예시 <small>(Jason Yosinski et al.)</small></span></p>
 
 <p>Activation Visualization의 필수 조건을 꼽는다면, 해석 대상이 되는 컨볼루션 신경망에 반드시 예시 이미지들을 입력해 준 뒤 그 결과의 경향성을 관찰해야 한다는 점이 있습니다. 이러한 조건을 회피하기 위한 방법으로, 학습된 컨볼루션 신경망이 보유한 weights(가중치, 필터) 자체를 그대로 시각화해볼 수 있습니다. 컨볼루션 신경망의 weights 또한 2차원적 구조를 지니기 때문에, feature map처럼 이미지 형태로 그려볼 수 있습니다. 이를 보통 ‘<strong>Weight Visualization</strong>(가중치 시각화)’이라고 부릅니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/weight-visualization-example.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/weight-visualization-example.png" alt="컨볼루션 신경망의 1, 2, 3번째 컨볼루션 layer에서의 weight visualization 결과 예시&lt;br&gt;&lt;small&gt;(Jost Tobias Springenberg et al.)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/weight-visualization-example.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/weight-visualization-example.png" alt="컨볼루션 신경망의 1, 2, 3번째 컨볼루션 layer에서의 weight visualization 결과 예시&lt;br&gt;&lt;small&gt;(Jost Tobias Springenberg et al.)&lt;/small&gt;" />
 </a>
 <span class="caption">컨볼루션 신경망의 1, 2, 3번째 컨볼루션 layer에서의 weight visualization 결과 예시<br /><small>(Jost Tobias Springenberg et al.)</small></span></p>
 
@@ -257,16 +257,16 @@
 <p>Activation/Weight Visualization 이후로, 각 feature map이 커버하는 시각적 특징이 정확히 무엇인지 더욱 효과적으로 찾고 가시화하고자 하는 시도가 자연스럽게 늘어나기 시작하였습니다. 그 중 하나로, 컨볼루션 신경망 상의 어느 타겟 출력값을 하나 고정해 놓고, 이를 최대로 활성화하는 입력 이미지를 찾거나 생성하는 방법을 생각해볼 수 있는데, 이를 ‘<strong>Activation Maximization</strong>(활성값 최대화)’이라고 부릅니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/activation-maximization-concept.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/activation-maximization-concept.png" alt="Activation Maximization의 기본 컨셉&lt;br&gt;&lt;small&gt;('argmax': 'TARGET'을 최대로 활성화하는 'INPUT' 탐색 또는 생성)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/activation-maximization-concept.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/activation-maximization-concept.png" alt="Activation Maximization의 기본 컨셉&lt;br&gt;&lt;small&gt;('argmax': 'TARGET'을 최대로 활성화하는 'INPUT' 탐색 또는 생성)&lt;/small&gt;" />
 </a>
 <span class="caption">Activation Maximization의 기본 컨셉<br /><small>(‘argmax’: ‘TARGET’을 최대로 활성화하는 ‘INPUT’ 탐색 또는 생성)</small></span></p>
 
 <p>예를 들어, 위 그림과 같이 어느 feature map 상의 특정 neuron(뉴런)을 조사 타겟으로 설정하고, 이를 <em>최대 수준으로 활성화시키는</em> 입력 이미지의 형태를 조사하는 것이 가장 대표적인 Activation Maximization이라고 할 수 있습니다. 이때, feature map 상의 특정 neuron 외에도 feature map(=channel) 또는 복수 개의 feature map들을 포괄하는 하나의 layer 등도 타겟으로 설정할 수 있으며, 최종 prediction layer의 특정 logit(로짓) 또한 타겟으로 설정할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/types-of-target-activation.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/types-of-target-activation.png" alt="컨볼루션 신경망 상의 타겟 출력값 후보 &lt;small&gt;(Christopher Olah et al.)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/types-of-target-activation.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/types-of-target-activation.png" alt="컨볼루션 신경망 상의 타겟 출력값 후보 &lt;small&gt;(Christopher Olah et al.)&lt;/small&gt;" />
 </a>
 <span class="caption">컨볼루션 신경망 상의 타겟 출력값 후보 <small>(Christopher Olah et al.)</small></span></p>
 
@@ -275,16 +275,16 @@
 <p>Activation Maximization을 위한 나이브한 방법으로, 컨볼루션 신경망 상의 타겟 출력값을 최대로 활성화하는 입력 이미지들을 현재 가지고 있는 데이터셋 상에서 탐색할 수 있는데, 해당 이미지들을 여기에서는 ‘<strong>Maximally Activating Images</strong>(활성값 최대화 이미지)’라고 부르겠습니다. 예를 들어, 아래 그림과 같이 타겟 출력값을 어느 하나의 feature map으로 설정할 경우, 데이터셋 상의 이미지들을 하나씩 컨볼루션 신경망에 입력하면서 그 과정에서 해당 feature map을 최대로 활성화시켰던 이미지가 무엇인지를 탐색합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/maximally-activating-images-concept.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/maximally-activating-images-concept.png" alt="Maximally Activating Images 탐색 예시&lt;br&gt;&lt;small&gt;('argmax': 'TARGET'을 최대로 활성화하는 'INPUT'을 데이터셋 상에서 탐색)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/maximally-activating-images-concept.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/maximally-activating-images-concept.png" alt="Maximally Activating Images 탐색 예시&lt;br&gt;&lt;small&gt;('argmax': 'TARGET'을 최대로 활성화하는 'INPUT'을 데이터셋 상에서 탐색)&lt;/small&gt;" />
 </a>
 <span class="caption">Maximally Activating Images 탐색 예시<br /><small>(‘argmax’: ‘TARGET’을 최대로 활성화하는 ‘INPUT’을 데이터셋 상에서 탐색)</small></span></p>
 
 <p>Maximally Activating Images는 각 feature map을 최대로 활성화시키는 입력 이미지를 실제 데이터셋으로부터 탐색한다는 점에서, feature map이 커버하는 현실 이미지 상의 시각적 특징을 좀 더 직접적으로 파악하는 데 도움을 줍니다. 보통은 상위 몇 개의 Maximally Activating Images를 일단 뽑아낸 뒤 이들 각각에 대하여 Activation Visualization을 추가로 수행함으로써, 해당 feature map이 Maximally Activating Images 상의 어느 부분에 초점을 맞추는지 보다 면밀하게 확인할 수 있습니다. 그 결과, 특정 layer 내 각 feature map이 커버하는 현실 이미지 상의 시각적 특징들(e.g. 검은색 원형 부분, 물체의 곡선 경계, 알파벳 글자 등)을 아래 그림과 같이 patch(패치) 형태로 자세히 확인해볼 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/maximally-activating-patches-example.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/maximally-activating-patches-example.png" alt="컨볼루션 신경망의 6, 9번째 컨볼루션 layer 내 각 feature map의 상위 10개 Maximally Activating *Patches* 예시 &lt;small&gt;(Jost Tobias Springenberg et al.)&lt;/small&gt;&lt;br&gt;&lt;small&gt;(각 행은 하나의 feature map에 대응되며, 좌측부터 활성값의 내림차순으로 상위 10개 이미지를 나타냄)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/maximally-activating-patches-example.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/maximally-activating-patches-example.png" alt="컨볼루션 신경망의 6, 9번째 컨볼루션 layer 내 각 feature map의 상위 10개 Maximally Activating *Patches* 예시 &lt;small&gt;(Jost Tobias Springenberg et al.)&lt;/small&gt;&lt;br&gt;&lt;small&gt;(각 행은 하나의 feature map에 대응되며, 좌측부터 활성값의 내림차순으로 상위 10개 이미지를 나타냄)&lt;/small&gt;" />
 </a>
 <span class="caption">컨볼루션 신경망의 6, 9번째 컨볼루션 layer 내 각 feature map의 상위 10개 Maximally Activating <em>Patches</em> 예시 <small>(Jost Tobias Springenberg et al.)</small><br /><small>(각 행은 하나의 feature map에 대응되며, 좌측부터 활성값의 내림차순으로 상위 10개 이미지를 나타냄)</small></span></p>
 
@@ -295,8 +295,8 @@
 <p>보유한 데이터셋에 의존하지 않고 feature map 등이 커버하는 시각적 특징을 좀 더 직접적으로 조사하고자, gradient ascent(경사 상승법)에 기반한 optimization(최적화)을 통해 타겟 출력값을 최대로 활성화하는 입력 이미지를 직접 <em>생성</em>하는 접근이 시도되었습니다. 이러한 방법을 여기에서는 ‘<strong>Maximization by Optimization</strong>(최적화 기반 최대화)’이라고 부르겠습니다.  <small>(엄밀하게는, 보통 Activation Maximization이라고 하면, 이 Maximization by Optimization 방법을 의미합니다. Christopher Olah et al. 에서는 이를 ‘<a href="https://distill.pub/2017/feature-visualization" target="_blank">Feature Visualization</a>‘이라고 표현하기도 합니다.)</small></p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-concept.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-concept.png" alt="Maximization by Optimization 예시&lt;br&gt;&lt;small&gt;('argmax': 'TARGET'을 최대로 활성화하는 'INPUT'을 생성)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-concept.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-concept.png" alt="Maximization by Optimization 예시&lt;br&gt;&lt;small&gt;('argmax': 'TARGET'을 최대로 활성화하는 'INPUT'을 생성)&lt;/small&gt;" />
 </a>
 <span class="caption">Maximization by Optimization 예시<br /><small>(‘argmax’: ‘TARGET’을 최대로 활성화하는 ‘INPUT’을 생성)</small></span></p>
 
@@ -307,24 +307,24 @@
 <p>아래의 예시 그림들은 타겟 출력값을 서로 다른 feature map으로 설정했을 시 Maximization by Optimization 결과가 달라지는 것을 잘 보여주고 있습니다. 대체로 앞쪽 layer에 위치한 feature map들의 경우 단순하고 반복적인 패턴(edges, textures)을 커버하는 경향을 보이며, 뒷쪽 layer에 위치한 feature map들의 경우 그보다는 좀 더 복잡한 무늬, 모종의 사물의 일부분 또는 전체를 커버하는 경향을 보임을 확인할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-on-feature-map-examples.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-on-feature-map-examples.png" alt="타겟 출력값을 서로 다른 feature map으로 설정했을 시의 다양한 Maximization by Optimization 수행 결과 예시 &lt;small&gt;(Christopher Olah et al.)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-on-feature-map-examples.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-on-feature-map-examples.png" alt="타겟 출력값을 서로 다른 feature map으로 설정했을 시의 다양한 Maximization by Optimization 수행 결과 예시 &lt;small&gt;(Christopher Olah et al.)&lt;/small&gt;" />
 </a>
 <span class="caption">타겟 출력값을 서로 다른 feature map으로 설정했을 시의 다양한 Maximization by Optimization 수행 결과 예시 <small>(Christopher Olah et al.)</small></span></p>
 
 <p>만일 Maximization by Optimization의 타겟 출력값을 feature map 대신 layer로 설정할 경우, 아래의 예시 그림들과 같이 상당히 드라마틱한 결과를 얻을 수 있습니다. 이들이 마치 꿈속에서만 등장할 것 같은 생소한 인상을 주었기 때문에, 연구자들은 여기에 ‘<strong>DeepDream</strong>‘이라는 이름을 붙였습니다. 그림에서도 확인하실 수 있듯이 layer 상의 feature map들에서 커버하는 패턴 또는 모양이 하나로 융합된 듯한 결과물을 생산해 내는데, 해석 가능성의 측면에서 봤을 땐 feature map 각각에 대한 관찰 결과에 비해 다소 난해한 듯한 특징을 보여주고 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/deepdream-result-examples.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/deepdream-result-examples.png" alt="타겟 출력값을 서로 다른 layer로 설정했을 시의 다양한 Maximization by Optimization(DeepDream) 수행 결과 예시 &lt;small&gt;(DeepDreaming with TensorFlow로 저자가 직접 생성한 결과물)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/deepdream-result-examples.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/deepdream-result-examples.png" alt="타겟 출력값을 서로 다른 layer로 설정했을 시의 다양한 Maximization by Optimization(DeepDream) 수행 결과 예시 &lt;small&gt;(DeepDreaming with TensorFlow로 저자가 직접 생성한 결과물)&lt;/small&gt;" />
 </a>
 <span class="caption">타겟 출력값을 서로 다른 layer로 설정했을 시의 다양한 Maximization by Optimization(DeepDream) 수행 결과 예시 <small>(DeepDreaming with TensorFlow로 저자가 직접 생성한 결과물)</small></span></p>
 
 <p>한편, Maximization by Optimization의 타겟 출력값을 최종 prediction layer의 logit으로 설정할 경우, 아래의 예시 그림들과 같이 좀 더 온전한 사물에 가까운 결과를 확인할 수 있습니다. 해당 logit에 대응되는 클래스(class)를 대표하는 ‘전형적인’ 사물을 만들어 냈다고 할 수 있습니다. 이에 대한 관찰을 통해, 각 클래스에 대하여 주어진 학습 데이터셋으로부터 컨볼루션 신경망이 학습을 수행한 결과가 대략 어떤 형태인지 집약적으로 확인해 볼 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-on-logit-examples.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-on-logit-examples.png" alt="타겟 출력값을 서로 다른 클래스 logit으로 설정했을 시의 다양한 Maximization by Optimization 수행 결과 예시 &lt;small&gt;(Anh Nguyen et al.)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-on-logit-examples.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/maximization-by-optimization-on-logit-examples.png" alt="타겟 출력값을 서로 다른 클래스 logit으로 설정했을 시의 다양한 Maximization by Optimization 수행 결과 예시 &lt;small&gt;(Anh Nguyen et al.)&lt;/small&gt;" />
 </a>
 <span class="caption">타겟 출력값을 서로 다른 클래스 logit으로 설정했을 시의 다양한 Maximization by Optimization 수행 결과 예시 <small>(Anh Nguyen et al.)</small></span></p>
 
@@ -337,8 +337,8 @@
 <p>사실 앞서 살펴보았던 Activation Visualization도 컨볼루션 신경망의 예측 결과에 대한 Attribution의 수단으로 활용될 수는 있으나, 아래 그림과 같이 많은 수의 feature map들을 매번 동시적으로 확인해야 한다는 점에서 그다지 매력적이지는 못합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/deep-visualization-example.jpg" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/deep-visualization-example.jpg" alt="Activation Visualization을 통한 예측 결과 설명 예시 &lt;small&gt;(Jason Yosinski et al.)&lt;/small&gt;&lt;br&gt;&lt;small&gt;(좌측 상단: 입력 이미지, 중앙: 5번째 컨볼루션 layer의 모든 feature map들에 대한 시각화 결과)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/deep-visualization-example.jpg" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/deep-visualization-example.jpg" alt="Activation Visualization을 통한 예측 결과 설명 예시 &lt;small&gt;(Jason Yosinski et al.)&lt;/small&gt;&lt;br&gt;&lt;small&gt;(좌측 상단: 입력 이미지, 중앙: 5번째 컨볼루션 layer의 모든 feature map들에 대한 시각화 결과)&lt;/small&gt;" />
 </a>
 <span class="caption">Activation Visualization을 통한 예측 결과 설명 예시 <small>(Jason Yosinski et al.)</small><br /><small>(좌측 상단: 입력 이미지, 중앙: 5번째 컨볼루션 layer의 모든 feature map들에 대한 시각화 결과)</small></span></p>
 
@@ -349,16 +349,16 @@
 <p>컨볼루션 신경망의 예측 결과로부터 Saliency Map을 도출하기 위한 가장 간단한 방법은, 예측 클래스 logit \(y_c\)의 입력 이미지 \(X\)에 대한 gradient \(\partial y_c / \partial X\)를 계산하는 것입니다. 마치 앞서 소개했던 Maximization by Optimization과 유사해 보일 것인데, Maximization by Optimization이 랜덤한 이미지에서 출발하여 feature map의 gradient를 반복적으로 더해주는 gradient ascent를 통해 가상의 이미지를 생성하였다면, Saliency Map의 경우 실제 입력 이미지에 대한 예측 클래스 logit의 gradient를 한 번만 계산하여 이를 그대로 활용한다는 점이 차이라고 할 수 있겠습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/saliency-map-with-gradient-concept.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/saliency-map-with-gradient-concept.png" alt="예측 클래스에 대한 gradient 계산을 통해 얻어진 Saliency Map 예시" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/saliency-map-with-gradient-concept.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/saliency-map-with-gradient-concept.png" alt="예측 클래스에 대한 gradient 계산을 통해 얻어진 Saliency Map 예시" />
 </a>
 <span class="caption">예측 클래스에 대한 gradient 계산을 통해 얻어진 Saliency Map 예시</span></p>
 
-<p>Saliency Map을 관찰함으로써, 컨볼루션 신경망의 특정 예측 결과가 이미지 상의 어느 부분에 기인하였는지 아래 그림과 같이 확인할 수 있습니다. 뿐만 아니라, 이렇게 얻어진 Saliency Map을 적절하게 가공하여, 이를 <a href="http://github.sualab.io/introduction/2017/11/29/image-recognition-overview-2.html#segmentation" target="_blank">Segmentation 문제</a>에 적용하는 시도도 이루어지고 있습니다.</p>
+<p>Saliency Map을 관찰함으로써, 컨볼루션 신경망의 특정 예측 결과가 이미지 상의 어느 부분에 기인하였는지 아래 그림과 같이 확인할 수 있습니다. 뿐만 아니라, 이렇게 얻어진 Saliency Map을 적절하게 가공하여, 이를 <a href="http://sualab.github.io/introduction/2017/11/29/image-recognition-overview-2.html#segmentation" target="_blank">Segmentation 문제</a>에 적용하는 시도도 이루어지고 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/saliency-map-examples.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/saliency-map-examples.png" alt="컨볼루션 신경망의 예측 결과에 대한 Saliency Map 도출 결과 예시 &lt;small&gt;(Karen Simonyan et al.)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/saliency-map-examples.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/saliency-map-examples.png" alt="컨볼루션 신경망의 예측 결과에 대한 Saliency Map 도출 결과 예시 &lt;small&gt;(Karen Simonyan et al.)&lt;/small&gt;" />
 </a>
 <span class="caption">컨볼루션 신경망의 예측 결과에 대한 Saliency Map 도출 결과 예시 <small>(Karen Simonyan et al.)</small></span></p>
 
@@ -369,16 +369,16 @@
 <p>앞서 보았던 Activation Visualization이 feature map의 시각화 결과를 각각 시각화하는 방법이었다면, Class Activation Map은 prediction layer 직전의 weights를 사용하여 해당 feature map들의 가중합을 계산한 결과물만을 시각화함으로써, 특정 예측 클래스에 대한 전체 feature map들의 ‘평균적인’ 활성화 결과를 확인하는 방법이라고 할 수 있습니다. Class Activation Map을 제안한 저자<small>(Bolei Zhou et al.)</small>의 논문에 수록된 아래 그림을 통해, 이러한 컨셉을 한눈에 이해할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/class-activation-mapping.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/class-activation-mapping.png" alt="예측 클래스에 대해 얻어진 Class Activation Map 예시 &lt;small&gt;(Bolei Zhou et al.)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/class-activation-mapping.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/class-activation-mapping.png" alt="예측 클래스에 대해 얻어진 Class Activation Map 예시 &lt;small&gt;(Bolei Zhou et al.)&lt;/small&gt;" />
 </a>
 <span class="caption">예측 클래스에 대해 얻어진 Class Activation Map 예시 <small>(Bolei Zhou et al.)</small></span></p>
 
 <p>Saliency Map이 입력 이미지 상에서 Attribution을 수행하여 다소 산개된 점 형태의 결과물을 도출한다면, Class Activation Map은 컨볼루션 layer 상에서 Attribution을 수행하기 때문에 상대적으로 부드러운 Attribution 결과를 보여준다는 특징이 있습니다. 아래 그림을 통해 이러한 특징을 엿볼 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/class-activation-map-examples.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/class-activation-map-examples.png" alt="컨볼루션 신경망의 예측 결과에 대한 Class Activation Map 도출 결과 예시 &lt;small&gt;(Bolei Zhou et al.)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/class-activation-map-examples.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/class-activation-map-examples.png" alt="컨볼루션 신경망의 예측 결과에 대한 Class Activation Map 도출 결과 예시 &lt;small&gt;(Bolei Zhou et al.)&lt;/small&gt;" />
 </a>
 <span class="caption">컨볼루션 신경망의 예측 결과에 대한 Class Activation Map 도출 결과 예시 <small>(Bolei Zhou et al.)</small></span></p>
 
@@ -387,24 +387,24 @@
 <p>Attribution이 단일 입력 이미지에 대한 컨볼루션 신경망의 예측 결과에 대한 설명을 제공한다면, ‘<strong>Dataset Visualization</strong>(데이터셋 시각화)’은 데이터셋 상에 포함된 전체 이미지들에 대한 컨볼루션 신경망의 예측 결과의 일반적 경향성에 대한 설명을 제공합니다. 예를 들어, 아래 그림과 같이 하나의 컨볼루션 layer를 관찰 대상으로 고정해 놓고, 데이터셋 상의 이미지들을 하나씩 입력하여 이들 각각에 대한 feature map들을 산출한 뒤, 여기에 <em>Dimensionality Reduction</em>(차원 축소) 방법을 적용하여 2차원(2D) 또는 3차원(3D) feature space(요인 공간) 상의 점으로 도시할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/dataset-visualization-concept.png" target="_blank">
-  <img class="full-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/dataset-visualization-concept.png" alt="컨볼루션 layer 상의 feature maps의 2D feature space로의 Dataset Visualization 예시" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/dataset-visualization-concept.png" target="_blank">
+  <img class="full-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/dataset-visualization-concept.png" alt="컨볼루션 layer 상의 feature maps의 2D feature space로의 Dataset Visualization 예시" />
 </a>
 <span class="caption">컨볼루션 layer 상의 feature maps의 2D feature space로의 Dataset Visualization 예시</span></p>
 
-<p>Dataset Visualization을 위한 대표적인 Dimensionality Reduction 방법으로는 <a href="https://en.wikipedia.org/wiki/Principal_component_analysis" target="_blank">PCA(principal component analysis)</a>, <a href="http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf" target="_blank">t-SNE(t-distributed stochastic neighbor embedding)</a>, <a href="https://arxiv.org/pdf/1802.03426" target="_blank">UMAP(uniform manifold approximation and projection)</a> 등이 있습니다. 이들은 컨볼루션 신경망의 feature maps 뿐만 아니라, 다른 high-dimensional(고차원) 데이터의 시각화를 위해서도 범용적으로 적용할 수 있는 Dimensionality Reduction 방법에 해당합니다. 예를 들어 <a href="http://github.sualab.io/introduction/2017/11/29/image-recognition-overview-1.html#인간의-인식-성능을-좇기-위한-도전" target="_blank">MNIST 데이터셋</a>으로 학습한 컨볼루션 신경망에 대하여 t-SNE를 적용할 경우, 아래 그림과 같은 형태의 Dataset Visualization 결과를 도출할 수 있습니다.</p>
+<p>Dataset Visualization을 위한 대표적인 Dimensionality Reduction 방법으로는 <a href="https://en.wikipedia.org/wiki/Principal_component_analysis" target="_blank">PCA(principal component analysis)</a>, <a href="http://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf" target="_blank">t-SNE(t-distributed stochastic neighbor embedding)</a>, <a href="https://arxiv.org/pdf/1802.03426" target="_blank">UMAP(uniform manifold approximation and projection)</a> 등이 있습니다. 이들은 컨볼루션 신경망의 feature maps 뿐만 아니라, 다른 high-dimensional(고차원) 데이터의 시각화를 위해서도 범용적으로 적용할 수 있는 Dimensionality Reduction 방법에 해당합니다. 예를 들어 <a href="http://sualab.github.io/introduction/2017/11/29/image-recognition-overview-1.html#인간의-인식-성능을-좇기-위한-도전" target="_blank">MNIST 데이터셋</a>으로 학습한 컨볼루션 신경망에 대하여 t-SNE를 적용할 경우, 아래 그림과 같은 형태의 Dataset Visualization 결과를 도출할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/tsne-visualization-example.png" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/tsne-visualization-example.png" alt="MNIST 데이터셋으로 학습한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과를 원본 이미지로 표현한 예시 &lt;small&gt;(Laurens van der Maaten and Geoffrey Hinton)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/tsne-visualization-example.png" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/tsne-visualization-example.png" alt="MNIST 데이터셋으로 학습한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과를 원본 이미지로 표현한 예시 &lt;small&gt;(Laurens van der Maaten and Geoffrey Hinton)&lt;/small&gt;" />
 </a>
 <span class="caption">MNIST 데이터셋으로 학습한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과를 원본 이미지로 표현한 예시 <small>(Laurens van der Maaten and Geoffrey Hinton)</small></span></p>
 
 <p>혹은, <a href="http://www.image-net.org/challenges/LSVRC/2014/" target="_blank">ILSVRC</a>와 같은 데이터셋 상의 자연계 이미지들로 학습한 컨볼루션 신경망에 대해서도 동일한 방법으로 t-SNE를 적용하고, 이를 통해 얻어진 2D feature space 상의 공간적 위치에 의거하여, 이미지들을 이에 맞게 균일한 간격으로 배치한 아래와 같은 Dataset Visualization 결과도 도출할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/cnn-embed-full-1k.jpg" target="_blank">
-  <img class="large-image" src="http://github.sualab.io/assets/images/interpretable-machine-learning-overview-2/cnn-embed-full-1k.jpg" alt="ILSVRC 데이터셋으로 학습한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과를 원본 이미지로 표현한 예시 &lt;small&gt;(Andrej Karpathy)&lt;/small&gt;" />
+<p><a href="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/cnn-embed-full-1k.jpg" target="_blank">
+  <img class="large-image" src="http://sualab.github.io/assets/images/interpretable-machine-learning-overview-2/cnn-embed-full-1k.jpg" alt="ILSVRC 데이터셋으로 학습한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과를 원본 이미지로 표현한 예시 &lt;small&gt;(Andrej Karpathy)&lt;/small&gt;" />
 </a>
 <span class="caption">ILSVRC 데이터셋으로 학습한 컨볼루션 신경망의 t-SNE Visualization (2D) 결과를 원본 이미지로 표현한 예시 <small>(Andrej Karpathy)</small></span></p>
 
