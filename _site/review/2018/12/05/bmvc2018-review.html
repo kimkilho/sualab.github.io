@@ -156,9 +156,9 @@ References
   
   
   <meta property="article:published_time" content="2018-12-05T19:00:00+09:00">
-  <meta property="article:author" content="http://research.sualab.com/about/">
+  <meta property="article:author" content="http://localhost:4000/about/">
   
-  <meta property="og:url" content="http://research.sualab.com/review/2018/12/05/bmvc2018-review.html" />
+  <meta property="og:url" content="http://localhost:4000/review/2018/12/05/bmvc2018-review.html" />
   
   <meta itemprop="keywords" content="bmvc2018,symmetry,selfpaced-learning,metric-learning,visualization,architecture,attention,depthwise-separable-convolution" />
   
@@ -186,7 +186,7 @@ References
   <meta name="description" content="BMVC(British Machine Vision Conference)는 영국에서 열리는 머신 비전 학회입니다. 1985년부터 시작하여 올해로 28번째를 맞이하였고, 매해 영국 내 다른 장소에서 열리는데 이번에는 뉴캐슬어폰타인이라는 영국의 북부에 있는 도시에서 열렸습니다. 올해 제...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://research.sualab.com/review/2018/12/05/bmvc2018-review.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/review/2018/12/05/bmvc2018-review.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -198,18 +198,6 @@ References
                 });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-  
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-110963421-1');
-</script>
-
 
   
 </head>
@@ -354,8 +342,8 @@ References
 <p>올해 제출된 논문 수는 대부분의 컴퓨터 비전 학회들과 같이 증가세를 보여서 862편이며, 그중 약 30%에 해당하는 255편이 채택되었습니다. 가장 큰 컴퓨터 비전 학회인 <a href="http://cvpr2018.thecvf.com/" target="_blank">CVPR 2018</a>은 3300편 중 979편이 채택되었고, BMVC가 끝나고 2일 뒤에 열린 <a href="https://eccv2018.org/program/main-conference/" target="_blank">ECCV 2018</a>에는 2439편 중 776편이 채택되었던 것을 보면 메이저 학회들과 비교해 봤을 때 채택된 비율은 비슷하지만, 규모는 상대적으로 작은 학회입니다. 논문이 채택된 지역의 분포를 보면 영국에서 열리는 학회이니만큼 영국도 많지만, 아시아가 가장 많은 부분을 차지하는 것을 확인해볼 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bmvc2018-review/stats_papers.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bmvc2018-review/stats_papers.PNG" alt="2016 ~ 2018에 BMVC로 제출된 논문 수, BMVC 2018에서 채택된 논문의 지역 분포" />
+<p><a href="http://localhost:4000/assets/images/bmvc2018-review/stats_papers.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bmvc2018-review/stats_papers.PNG" alt="2016 ~ 2018에 BMVC로 제출된 논문 수, BMVC 2018에서 채택된 논문의 지역 분포" />
 </a>
 <span class="caption">2016 ~ 2018에 BMVC로 제출된 논문 수, BMVC 2018에서 채택된 논문의 지역 분포</span></p>
 
@@ -366,16 +354,16 @@ References
 <p>우선 키노트는 Sven J. Dickinson이라는 연구자의 ‘대칭성(Symmetry)’에 대한 연구 내용이었습니다. 우선, 해당 연구자의 연구는 어떤 이미지가 어떤 장면에 해당하는지, 예를 들어 어떤 사진이 바다를 찍은 사진인지 산을 찍은 사진인지를 분류하는 장면 분류(scene classification) 작업을 기반으로 진행되었습니다. 처음에 그가 모티브를 얻은 것은 <a href="https://www.ncbi.nlm.nih.gov/pubmed/24474725" target="_blank">Walther and Shen의 2014년 연구</a>입니다. 해당 연구에서는 사람은 이미지의 윤곽선만으로도 장면 분류를 잘한다는 사실에서 시작하여, 외곽선의 어떤 특성이 사람의 장면 분류 성능에 도움을 주는지 실험을 해보았습니다. 해당 실험은 외곽선의 방향, 길이, 곡률 같은 ‘1차원 적인 특성’과 외곽선의 교차 유형, 교차 각도와 같은 ‘관계적인 특성’에 기반하여 외곽선의 색을 달리한 이미지들을 이용해서 어떤 특성이 장면 분류에 중요한지 실험하여, 외곽선들의 ‘관계적인 특성’이 ‘1차원 적인 특성’보다 더 중요하다는 결과를 얻었습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bmvc2018-review/walther_and_shen_2014.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bmvc2018-review/walther_and_shen_2014.PNG" alt="외곽선의 특성에 따라 색을 달리한 이미지, Walther and Shen (2014)" />
+<p><a href="http://localhost:4000/assets/images/bmvc2018-review/walther_and_shen_2014.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bmvc2018-review/walther_and_shen_2014.PNG" alt="외곽선의 특성에 따라 색을 달리한 이미지, Walther and Shen (2014)" />
 </a>
 <span class="caption">외곽선의 특성에 따라 색을 달리한 이미지, Walther and Shen (2014)</span></p>
 
 <p>해당 연구를 보고 Sven은 외곽선에서 선들의 관계를 좀 더 탐구해보고자 두 가지 실험을 하였는데, 첫 번째 실험은 외곽선의 가운데 부분(middle line)과 선들이 교차하는 부분(junction line) 중에 어느 부분이 장면 분류에 더 중요한 요인인지를 살펴보는 실험입니다. 각각을 제거한 외곽선 이미지들을 이용하여, 사람이 장면을 인식하기에는 외곽선의 가운데 부분을 제거한 이미지들이 더 어렵다는 결론을 끌어냈습니다. 아래는 가운데 부분과 교차하는 부분을 각각 제거한 이미지들입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bmvc2018-review/sven_exp1.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bmvc2018-review/sven_exp1.PNG" alt="오른쪽 위가 원본 외곽선 이미지, 왼쪽 아래가 교차하는 부분을 제거한 외곽선 이미지, 오른쪽 아래가 가운데 부분을 제거한 외곽선 이미지, Wilder et al. (2018)" />
+<p><a href="http://localhost:4000/assets/images/bmvc2018-review/sven_exp1.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bmvc2018-review/sven_exp1.PNG" alt="오른쪽 위가 원본 외곽선 이미지, 왼쪽 아래가 교차하는 부분을 제거한 외곽선 이미지, 오른쪽 아래가 가운데 부분을 제거한 외곽선 이미지, Wilder et al. (2018)" />
 </a>
 <span class="caption">오른쪽 위가 원본 외곽선 이미지, 왼쪽 아래가 교차하는 부분을 제거한 외곽선 이미지, 오른쪽 아래가 가운데 부분을 제거한 외곽선 이미지, Wilder et al. (2018)</span></p>
 
@@ -384,8 +372,8 @@ References
 <p>Sven의 두 번째 실험은 첫 번째 실험과 유사하게 대칭성이 높은 부분과 대칭성이 낮은 부분 중에 어느 부분이 장면 분류에 더 중요한 부분인지를 비교하는 실험이었습니다. 즉, 윤곽선의 대칭성이 높은 부분과 낮은 부분을 각각 제거하여 사람에게 제시한 뒤 장면 분류의 성능을 비교하는데, 이를 위해서 MAT(Medial Axis Transformation)이라는 1967년에 발표된 방법을 이용하여 윤곽선의 해당 부분이 얼마나 대칭적인지를 알 수 있는 척도로 사용하였습니다. 실험 결과는 예상할 수 있듯이 대칭성이 높은 외곽선을 남겼을 때 사람이 장면 분류를 더 잘 해내는 결과를 보였습니다. 즉 사람이 어떤 이미지를 보고 산인지 바다인지 등을 예측하기 위해서는 대칭성이 높은 외곽선이 중요하다는 것이 결론입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bmvc2018-review/sym_asym.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bmvc2018-review/sym_asym.PNG" alt="첫 번째 열이 원본 외곽선 이미지, 두 번째 열이 대칭성이 높은 부분만 남긴 이미지(symmetric), 세 번째 열이 대칭성이 낮은 부분만 남긴 이미지(asymmetrc), Wilder et al. (2018)" />
+<p><a href="http://localhost:4000/assets/images/bmvc2018-review/sym_asym.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bmvc2018-review/sym_asym.PNG" alt="첫 번째 열이 원본 외곽선 이미지, 두 번째 열이 대칭성이 높은 부분만 남긴 이미지(symmetric), 세 번째 열이 대칭성이 낮은 부분만 남긴 이미지(asymmetrc), Wilder et al. (2018)" />
 </a>
 <span class="caption">첫 번째 열이 원본 외곽선 이미지, 두 번째 열이 대칭성이 높은 부분만 남긴 이미지(symmetric), 세 번째 열이 대칭성이 낮은 부분만 남긴 이미지(asymmetrc), Wilder et al. (2018)</span></p>
 
@@ -412,8 +400,8 @@ References
 <p>위 논문에서 또 하나 재미있었던 점은 즉 딥러닝의 해석 가능성(explainablity) 정도를 정량화할 수 있는 척도를 제시했다는 점입니다. 기존에 살리언시 맵은 정량적으로 평가하는 척도가 없어서, 맵과 이미지를 보면서 정성적으로 평가할 수밖에 없었습니다. Petsiuk et al.은 해당 척도로 AUC(Area Under Curve)기반의 삭제(deletion)와 삽입(insertion)과 관련된 두 가지 척도를 제시하는데, 우선 삭제와 관련된 AUC를 계산하기 위해 살리언시 맵의 각 픽셀별 점수가 높은 순서대로 픽셀들을 점점 더 많이 지워가면서 해당 클래스의 확률을 그래프로 나타냅니다. 그러면 아래 그림의 ‘삭제 곡선’처럼 점점 작아지는 곡선이 나타나는데 만약 해당 살리언시 맵이 해당 클래스로 판단하게 한 부분을 정확히 표현했다고 하면, 해당 곡선이 가파르게 낮아질 것이고, 그렇지 않다고 하면 완만하게 낮아질 것입니다. 따라서 삭제와 관련 AUC는 낮을수록 해당 살리언시 맵의 품질이 좋다는 것을 가르킨다고 할 수 있습니다. 삽입과 관련된 AUC는 살리언시 점수가 높은 순서대로 반대로 아무것도 없는 이미지에 해당 픽셀 영역을 추가시켜줬을 때 예측 확률을 그린 그래프의 AUC를 구하는 것으로 이는 높을수록 좋은 척도입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bmvc2018-review/rise_explainability_auc.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bmvc2018-review/rise_explainability_auc.PNG" alt="순서대로 원본 이미지, 원본 이미지에 살리언시 맵을 덧씌운 이미지, '삭제 곡선'(살리언시 점수가 높은 순서대로 픽셀을 지웠을 때의 해당 클래스의 예측 확률), '삽입 곡선'(살리언시 점수가 높은 순서대로 픽셀을 삽입했을 때의 해당 클래스의 예측 확률)" />
+<p><a href="http://localhost:4000/assets/images/bmvc2018-review/rise_explainability_auc.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bmvc2018-review/rise_explainability_auc.PNG" alt="순서대로 원본 이미지, 원본 이미지에 살리언시 맵을 덧씌운 이미지, '삭제 곡선'(살리언시 점수가 높은 순서대로 픽셀을 지웠을 때의 해당 클래스의 예측 확률), '삽입 곡선'(살리언시 점수가 높은 순서대로 픽셀을 삽입했을 때의 해당 클래스의 예측 확률)" />
 </a>
 <span class="caption">순서대로 원본 이미지, 원본 이미지에 살리언시 맵을 덧씌운 이미지, ‘삭제 곡선’(살리언시 점수가 높은 순서대로 픽셀을 지웠을 때의 해당 클래스의 예측 확률), ‘삽입 곡선’(살리언시 점수가 높은 순서대로 픽셀을 삽입했을 때의 해당 클래스의 예측 확률)</span></p>
 
@@ -432,8 +420,8 @@ References
 <p>마지막으로 Guo et al.의 “Network Decoupling: From Regular to Depthwise Separable Convolutions”는 역시 근래에 많은 유명 아키텍처에서 활용되었었던 ‘depth-wise separable convolution’에 관련된 논문입니다. ‘depth-wise separable convolution’은 간단히 설명하면 아래 그림과 같이 기존의 컨볼루션과 다르게 공간(spatial)과 관련된 컨볼루션과 채널과 관련된 컨볼루션을 따로 적용하여 파라미터 수를 낮추는 컨볼루션입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bmvc2018-review/depthwise_separable_conv.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bmvc2018-review/depthwise_separable_conv.PNG" alt="(a):일반적인 컨볼루션과 (b), (c):'depth-wise separable convolution' 의 도식도. 'depth-wise separable convolution'은 'point-wise(PW) convolution'과 'depth-wise(DW) convolution' 의 순서에 따라 두 가지 종류가 있습니다." />
+<p><a href="http://localhost:4000/assets/images/bmvc2018-review/depthwise_separable_conv.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bmvc2018-review/depthwise_separable_conv.PNG" alt="(a):일반적인 컨볼루션과 (b), (c):'depth-wise separable convolution' 의 도식도. 'depth-wise separable convolution'은 'point-wise(PW) convolution'과 'depth-wise(DW) convolution' 의 순서에 따라 두 가지 종류가 있습니다." />
 </a>
 <span class="caption">(a):일반적인 컨볼루션과 (b), (c):’depth-wise separable convolution’ 의 도식도. ‘depth-wise separable convolution’은 ‘point-wise(PW) convolution’과 ‘depth-wise(DW) convolution’ 의 순서에 따라 두 가지 종류가 있습니다.</span></p>
 
@@ -444,8 +432,8 @@ References
 <p>이상 BMVC 2018의 대칭성에 관련된 키노트와 그 외 흥미 있었던 5편의 논문들에 대해서 간략히 살펴보았습니다. 이보다 더 큰 학회에 비해 질적으로나 양적으로 부족한 면이 있을 수 있겠지만, 오히려 적정 규모의 학회이다 보니 모든 논문을 한 번씩 관심 있게 볼 수 있을 수 있었던 것 같아 보람이 있었습니다. 마지막으로 BMVC 2018가 열렸던 도시 뉴캐슬어폰타인의 타인강의 멋진 다리를 보면서 글을 마치도록 하겠습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bmvc2018-review/tyne_bridge.jpg" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bmvc2018-review/tyne_bridge.jpg" alt="" />
+<p><a href="http://localhost:4000/assets/images/bmvc2018-review/tyne_bridge.jpg" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bmvc2018-review/tyne_bridge.jpg" alt="" />
 </a>
 <span class="caption"></span></p>
 

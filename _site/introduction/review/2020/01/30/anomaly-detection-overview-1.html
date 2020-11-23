@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2020-01-30T12:00:00+09:00">
-  <meta property="article:author" content="http://research.sualab.com/about/">
+  <meta property="article:author" content="http://localhost:4000/about/">
   
-  <meta property="og:url" content="http://research.sualab.com/introduction/review/2020/01/30/anomaly-detection-overview-1.html" />
+  <meta property="og:url" content="http://localhost:4000/introduction/review/2020/01/30/anomaly-detection-overview-1.html" />
   
   <meta itemprop="keywords" content="Anomaly-Detection" />
   
@@ -34,7 +34,7 @@
   <meta name="description" content="안녕하세요. 이번 포스팅에서는 Anomaly Detection(이상 탐지)에 대해 소개를 드리고자 합니다. Anomaly Detection이란, Normal(정상) sample과 Abnormal(비정상, 이상치, 특이치) sample을 구별해내는 문제를 의미하며 수아랩이 다루고 있...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://research.sualab.com/introduction/review/2020/01/30/anomaly-detection-overview-1.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/introduction/review/2020/01/30/anomaly-detection-overview-1.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -46,18 +46,6 @@
                 });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-  
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-110963421-1');
-</script>
-
 
   
 </head>
@@ -227,8 +215,8 @@
 <p>이처럼 Class-Imbalance가 매우 심한 경우 정상 sample만 이용해서 모델을 학습하기도 하는데, 이 방식을 One-Class Classification(혹은 Semi-supervised Learning)이라 합니다. 이 방법론의 핵심 아이디어는 정상 sample들을 둘러싸는 discriminative boundary를 설정하고, 이 boundary를 최대한 좁혀 boundary 밖에 있는 sample들을 모두 비정상으로 간주하는 것입니다. <a href="http://www.jmlr.org/papers/volume2/manevitz01a/manevitz01a.pdf" target="_blank"><b> One-Class SVM </b></a>이 One-Class Classification을 사용하는 대표적인 방법론으로 잘 알려져 있으며, 이 아이디어에서 확장해 Deep Learning을 기반으로 One-Class Classification 방법론을 사용하는 <a href="http://data.bit.uni-bonn.de/publications/ICML2018.pdf" target="_blank"><b> Deep SVDD </b></a> 논문이 잘 알려져 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/anomaly-detection-overview-1/deep_svdd.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/anomaly-detection-overview-1/deep_svdd.PNG" alt="Deep SVDD 방법론 모식도" />
+<p><a href="http://localhost:4000/assets/images/anomaly-detection-overview-1/deep_svdd.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/anomaly-detection-overview-1/deep_svdd.PNG" alt="Deep SVDD 방법론 모식도" />
 </a>
 <span class="caption">Deep SVDD 방법론 모식도</span></p>
 
@@ -245,8 +233,8 @@
 <p>가장 단순하게는 주어진 데이터에 대해 Principal Component Analysis(PCA, 주성분 분석)를 이용하여 차원을 축소하고 복원을 하는 과정을 통해 비정상 sample을 검출할 수 있습니다. , Neural Network 기반으로는 대표적으로 Autoencoder 기반의 방법론이 주로 사용되고 있습니다. Autoencoder는 입력을 code 혹은 latent variable로 압축하는 Encoding과, 이를 다시 원본과 가깝게 복원해내는 Decoding 과정으로 진행이 되며 이를 통해 데이터의 중요한 정보들만 압축적으로 배울 수 있다는 점에서 데이터의 주성분을 배울 수 있는 PCA와 유사한 동작을 한다고 볼 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/anomaly-detection-overview-1/autoencoder.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/anomaly-detection-overview-1/autoencoder.PNG" alt="autoencoder 기반 unsupervised anomaly detection" />
+<p><a href="http://localhost:4000/assets/images/anomaly-detection-overview-1/autoencoder.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/anomaly-detection-overview-1/autoencoder.PNG" alt="autoencoder 기반 unsupervised anomaly detection" />
 </a>
 <span class="caption">autoencoder 기반 unsupervised anomaly detection</span></p>
 
@@ -273,8 +261,8 @@
 <p>저는 비정상 sample을 정의하는 방식에 따라 크게 Novelty Detection과 Outlier Detection으로 구분합니다. 다만 종종 두 방법론을 합쳐서 Anomaly Detection라 부르기도 합니다. 개인적인 생각으로는 Novelty Detection과 Outlier Detection은 용어가 가지는 뉘앙스의 차이가 존재하다고 느껴서, 예시를 통해 두 용어의 차이를 설명을 드리겠습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/anomaly-detection-overview-1/novelty_outlier.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/anomaly-detection-overview-1/novelty_outlier.PNG" alt="Anomaly Detection 용어 정리를 위한 예시" />
+<p><a href="http://localhost:4000/assets/images/anomaly-detection-overview-1/novelty_outlier.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/anomaly-detection-overview-1/novelty_outlier.PNG" alt="Anomaly Detection 용어 정리를 위한 예시" />
 </a>
 <span class="caption">Anomaly Detection 용어 정리를 위한 예시</span></p>
 
@@ -293,8 +281,8 @@
 
 <p>In-distribution 데이터 셋에 위의 예시 그림처럼 흰색 강아지만 있는 것이 아니라, 골든 레트리버, 닥스훈트, 도베르만, 말티즈 등 4가지 종류의 강아지 sample들이 존재한다고 가정하면, 불독 sample은 Novel sample, 호랑이 sample은 Outlier sample로 간주할 수 있습니다. 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<a href="http://research.sualab.com/assets/images/anomaly-detection-overview-1/ood_example.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/anomaly-detection-overview-1/ood_example.PNG" alt="Out-of-distribution sample 예시" />
+<a href="http://localhost:4000/assets/images/anomaly-detection-overview-1/ood_example.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/anomaly-detection-overview-1/ood_example.PNG" alt="Out-of-distribution sample 예시" />
 </a>
 <span class="caption">Out-of-distribution sample 예시</span></p>
 
@@ -307,8 +295,8 @@
 <p>이렇게 총 3가지 분류 방법으로 용어를 정리하였고, 이를 한 장의 그림으로 요약하면 다음과 같습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/anomaly-detection-overview-1/summary.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/anomaly-detection-overview-1/summary.PNG" alt="Anomaly Detection의 3가지 용어의 분류 방법 정리" />
+<p><a href="http://localhost:4000/assets/images/anomaly-detection-overview-1/summary.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/anomaly-detection-overview-1/summary.PNG" alt="Anomaly Detection의 3가지 용어의 분류 방법 정리" />
 </a>
 <span class="caption">Anomaly Detection의 3가지 용어의 분류 방법 정리</span></p>
 
@@ -319,8 +307,8 @@
 <p>위에서 Anomaly Detection의 방법론, 문제 상황 등을 정리하였다면 이번엔 산업 전반적인 분야의 대표적인 적용 사례들을 하나씩 소개드릴 예정입니다. 대부분의 예시는 <a href="https://arxiv.org/abs/1901.03407" target="_blank"><b> “Deep Learning for Anomaly Detection: A Survey,” 2019 arXiv </b></a> 2019년에 작성된 서베이 논문을 참고하여 작성하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/anomaly-detection-overview-1/applications.PNG" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/anomaly-detection-overview-1/applications.PNG" alt="Anomaly Detection의 적용 사례" />
+<p><a href="http://localhost:4000/assets/images/anomaly-detection-overview-1/applications.PNG" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/anomaly-detection-overview-1/applications.PNG" alt="Anomaly Detection의 적용 사례" />
 </a>
 <span class="caption">Anomaly Detection의 적용 사례</span></p>
 

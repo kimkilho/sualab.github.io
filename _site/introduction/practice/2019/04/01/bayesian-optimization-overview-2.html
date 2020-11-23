@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2019-04-01T09:00:00+09:00">
-  <meta property="article:author" content="http://research.sualab.com/about/">
+  <meta property="article:author" content="http://localhost:4000/about/">
   
-  <meta property="og:url" content="http://research.sualab.com/introduction/practice/2019/04/01/bayesian-optimization-overview-2.html" />
+  <meta property="og:url" content="http://localhost:4000/introduction/practice/2019/04/01/bayesian-optimization-overview-2.html" />
   
   <meta itemprop="keywords" content="bayesian optimization,hyperparameter optimization,gaussian process" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="(이전 포스팅 보기)">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://research.sualab.com/introduction/practice/2019/04/01/bayesian-optimization-overview-2.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/introduction/practice/2019/04/01/bayesian-optimization-overview-2.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -50,18 +50,6 @@
                 });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-  
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-110963421-1');
-</script>
-
 
   
 </head>
@@ -203,7 +191,7 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><a href="http://research.sualab.com/introduction/practice/2019/02/19/bayesian-optimization-overview-1.html">(이전 포스팅 보기)</a></p>
+    <p><a href="http://localhost:4000/introduction/practice/2019/02/19/bayesian-optimization-overview-1.html">(이전 포스팅 보기)</a></p>
 
 <p>지난 글에서 딥러닝 모델의 Hyperparamter Optimization을 위한 Bayesian Optimization 방법론의 대략적인 원리 및 행동 방식에 대한 설명을 드렸습니다. 이번 글에서는 실제 Bayesian Optimization을 위한 Python 라이브러리인 <em>bayesian-optimization</em>을 사용하여, 간단한 예시 목적 함수의 최적해를 탐색하는 과정을 먼저 소개하고, 실제 딥러닝 모델의 최적 hyperparameter를 탐색하는 과정을 안내해 드리도록 하겠습니다.</p>
 
@@ -216,7 +204,7 @@
   </li>
   <li>본격적인 시작에 앞서, 여러분의 Python 환경 상에 <a href="https://pypi.org/project/bayesian-optimization/" target="_blank">bayesian-optimization</a> 라이브러리를 먼저 설치해 주시길 바랍니다. 이는 PyPI에서 <em>bayesian-optimization</em>이라는 이름의 패키지로 제공되며, pip로 설치하실 수 있습니다.</li>
   <li>본 글의 중반부에 소개된, 예시 목적 함수에 대한 최적해를 탐색하는 과정은 <a href="https://github.com/sualab/sualab.github.io/blob/master/assets/notebooks/bayesian-optimization-overview-2.ipynb" target="_blank">여기</a>에서 확인하실 수 있습니다.</li>
-  <li>본 글의 후반부에서는 지난 <a href="http://research.sualab.com/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">&lt;이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양이 분류하기&gt;</a> 글에서 사용했던 AlexNet 구현체를 그대로 가져와서, 딥러닝 모델 학습과 관련된 최적의 hyperparameter를 탐색하는 과정에 대해서만 <em>bayesian-optimization</em> 라이브러리를 사용하는 방법을 중심으로 설명합니다. 본문을 따라 구현체를 작성하고 시험적으로 구동해 보고자 하시는 분들은, 아래 사항들을 참조해 주십시오.
+  <li>본 글의 후반부에서는 지난 <a href="http://localhost:4000/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">&lt;이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양이 분류하기&gt;</a> 글에서 사용했던 AlexNet 구현체를 그대로 가져와서, 딥러닝 모델 학습과 관련된 최적의 hyperparameter를 탐색하는 과정에 대해서만 <em>bayesian-optimization</em> 라이브러리를 사용하는 방법을 중심으로 설명합니다. 본문을 따라 구현체를 작성하고 시험적으로 구동해 보고자 하시는 분들은, 아래 사항들을 참조해 주십시오.
     <ul>
       <li>만일 &lt;이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양이 분류하기&gt; 글을 읽어보지 않으셨다면, 먼저 해당 글을 읽어보시면서 AlexNet 구현체 및 개vs고양이 분류 데이터셋에 대한 준비를 미리 완료해 주시길 바랍니다.</li>
       <li>본 글에서 최적 hyperparameter 탐색을 수행하는 전체 구현체 코드는 <a href="https://github.com/sualab/asirra-dogs-cats-classification" target="_blank">수아랩의 GitHub 저장소</a>에서 자유롭게 확인하실 수 있습니다.
@@ -233,8 +221,8 @@
 <p>오늘날 Bayesian Optimization을 다양한 문제에 원활하게 적용할 수 있도록 하는 여러 Python 라이브러리가 공개되어 있습니다. 이들 중에서 Fernando Nogueira 씨가 제작한 <a href="https://github.com/fmfn/BayesianOptimization" target="_blank"><i>bayesian-optimization</i></a> 라이브러리를 간략하게 소개해 드리고, 간단한 예시 목적 함수의 최적해를 탐색하는 방법에 대해 안내해 드린 후, 실제 딥러닝 모델의 hyperparameter 탐색을 위해서 어떻게 사용할 수 있는지를 집중적으로 설명하도록 하겠습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/bayesian-optimization-library.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/bayesian-optimization-library.png" alt="bayesian-optimization 라이브러리" />
+<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-2/bayesian-optimization-library.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-2/bayesian-optimization-library.png" alt="bayesian-optimization 라이브러리" />
 </a>
 <span class="caption">bayesian-optimization 라이브러리</span></p>
 
@@ -273,8 +261,8 @@
 </code></pre></div></div>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/target-function-plot.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/target-function-plot.png" alt="예시 목적 함수의 플롯팅 결과" />
+<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-2/target-function-plot.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-2/target-function-plot.png" alt="예시 목적 함수의 플롯팅 결과" />
 </a>
 <span class="caption">예시 목적 함수의 플롯팅 결과</span></p>
 
@@ -308,16 +296,16 @@
 <p>처음 랜덤한 방식의 2회, 이후 14회의 반복 회차에 걸쳐 Bayesian Optimization을 수행한 결과는 아래와 같이 출력됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/bayesian-optimization-result-example.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/bayesian-optimization-result-example.png" alt="" />
+<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-2/bayesian-optimization-result-example.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-2/bayesian-optimization-result-example.png" alt="" />
 </a>
 <span class="caption"></span></p>
 
 <p>‘iter’는 반복 회차, ‘target’은 목적 함수의 값, ‘x’는 입력값을 나타냅니다. 현재 회차 이전까지 조사된 함숫값들과 비교하여, 현재 회차에 최댓값이 얻어진 경우, <em>bayesian-optimization</em> 라이브러리는 이를 자동으로 다른 색 글자로 표시하는 것을 확인할 수 있습니다. 최종적으로 업데이트가 완료된 <code class="language-plaintext highlighter-rouge">BayesianOptimization</code> 객체 내부의 멤버 변수 <code class="language-plaintext highlighter-rouge">_gp</code>를 실제 목적 함수와 함께 도시하면 아래와 같습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/estimated-function-plot.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/estimated-function-plot.png" alt="예시 목적 함수에 대한 추정의 플롯팅 결과&lt;br&gt;&lt;small&gt;(파란색 실선: 목적 함수(Objective Function), 검은색 점선: GP를 통해 추정한 평균 함수(Prediction),&lt;br&gt;붉은색 점: 조사된 입력값-함숫값 점(Observations), 하늘색 영역: GP를 통해 추정한 표준편차(불확실성; Uncertain area))&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-2/estimated-function-plot.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-2/estimated-function-plot.png" alt="예시 목적 함수에 대한 추정의 플롯팅 결과&lt;br&gt;&lt;small&gt;(파란색 실선: 목적 함수(Objective Function), 검은색 점선: GP를 통해 추정한 평균 함수(Prediction),&lt;br&gt;붉은색 점: 조사된 입력값-함숫값 점(Observations), 하늘색 영역: GP를 통해 추정한 표준편차(불확실성; Uncertain area))&lt;/small&gt;" />
 </a>
 <span class="caption">예시 목적 함수에 대한 추정의 플롯팅 결과<br /><small>(파란색 실선: 목적 함수(Objective Function), 검은색 점선: GP를 통해 추정한 평균 함수(Prediction),<br />붉은색 점: 조사된 입력값-함숫값 점(Observations), 하늘색 영역: GP를 통해 추정한 표준편차(불확실성; Uncertain area))</small></span></p>
 
@@ -329,7 +317,7 @@
 
 <h3 id="개vs고양이-분류-문제-해결을-위한-alexnet-구현체">‘개vs고양이 분류’ 문제 해결을 위한 AlexNet 구현체</h3>
 
-<p>실제 딥러닝 모델 학습 예시로, 지난 <a href="http://research.sualab.com/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">&lt;이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양이 분류하기&gt;</a> 글에서 사용했던 AlexNet 구현체를 그대로 사용, Asirra Dogs vs. Cats 데이터셋으로 해당 모델을 학습하고 이를 ‘개vs고양이 분류’ 문제에 적용하는 과정을 다시 한 번 채택하기로 하였습니다. AlexNet으로 개vs고양이를 분류하는 과정에 대한 자세한 설명은, 해당 글을 다시 참조해 주시길 바랍니다.</p>
+<p>실제 딥러닝 모델 학습 예시로, 지난 <a href="http://localhost:4000/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html" target="_blank">&lt;이미지 Classification 문제와 딥러닝: AlexNet으로 개vs고양이 분류하기&gt;</a> 글에서 사용했던 AlexNet 구현체를 그대로 사용, Asirra Dogs vs. Cats 데이터셋으로 해당 모델을 학습하고 이를 ‘개vs고양이 분류’ 문제에 적용하는 과정을 다시 한 번 채택하기로 하였습니다. AlexNet으로 개vs고양이를 분류하는 과정에 대한 자세한 설명은, 해당 글을 다시 참조해 주시길 바랍니다.</p>
 
 <p>지난 글에서 개vs고양이 분류를 위해 AlexNet을 학습할 당시에는, 사전에 지정한 하나의 hyperparameter들의 조합만을 사용하여 모델을 1회만 학습한 바 있습니다. 당시 설정했던 hyperparameter들 중 모델의 학습 성패 및 일반화 성능에 지대한 영향을 미칠 만한 것은 (decay 적용 전의) <strong>초기 학습률(initial learning rate)</strong>과 <strong>L2 정규화 계수(L2 weight decay)</strong>라고 할 수 있습니다.</p>
 
@@ -470,8 +458,8 @@
 <p><code class="language-plaintext highlighter-rouge">train-with-bo.py</code> 스크립트를 실행하여, 최적의 초기 학습률 및 L2 정규화 계수를 탐색하는 과정을 아래 그림과 같이 시각화하였습니다. 입력값이 두 가지이므로 이를 2차원 평면 상의 히트맵(heatmap) 형태로 나타냈으며, 빨간색에 가까울수록 그 값이 크고, 파란색에 가까울수록 그 값이 작음을 의미합니다. 실제 조사된 입력값-함숫값 점의 경우, 검은색 점으로 표시했습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/2d-bayesian-optimization-process.gif" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/2d-bayesian-optimization-process.gif" alt="(초기 학습률, L2 정규화 계수)에 대한 2차원 Bayesian Optimization(GP, EI) 수행 과정&lt;br&gt;&lt;small&gt;(각각 구간 $$(-5, -1)$$, $$(-5, -1)$$에서 최초 3개($$n=3$$), 총 30개($$N=30$$)의 점에 대한 반복 조사 결과&lt;br&gt;좌측: GP를 통해 추정한 평균 함수 $$\mu(x,y)$$, 중앙: GP를 통해 추정한 표준편차 $$\sigma(x,y)$$,&lt;br&gt;우측: GP의 확률적 추정 결과에 대한 EI 함수 계산 결과(십자 표시: 다음 조사 대상 점의 위치); random_seed=0)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-2/2d-bayesian-optimization-process.gif" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-2/2d-bayesian-optimization-process.gif" alt="(초기 학습률, L2 정규화 계수)에 대한 2차원 Bayesian Optimization(GP, EI) 수행 과정&lt;br&gt;&lt;small&gt;(각각 구간 $$(-5, -1)$$, $$(-5, -1)$$에서 최초 3개($$n=3$$), 총 30개($$N=30$$)의 점에 대한 반복 조사 결과&lt;br&gt;좌측: GP를 통해 추정한 평균 함수 $$\mu(x,y)$$, 중앙: GP를 통해 추정한 표준편차 $$\sigma(x,y)$$,&lt;br&gt;우측: GP의 확률적 추정 결과에 대한 EI 함수 계산 결과(십자 표시: 다음 조사 대상 점의 위치); random_seed=0)&lt;/small&gt;" />
 </a>
 <span class="caption">(초기 학습률, L2 정규화 계수)에 대한 2차원 Bayesian Optimization(GP, EI) 수행 과정<br /><small>(각각 구간 \((-5, -1)\), \((-5, -1)\)에서 최초 3개(\(n=3\)), 총 30개(\(N=30\))의 점에 대한 반복 조사 결과<br />좌측: GP를 통해 추정한 평균 함수 \(\mu(x,y)\), 중앙: GP를 통해 추정한 표준편차 \(\sigma(x,y)\),<br />우측: GP의 확률적 추정 결과에 대한 EI 함수 계산 결과(십자 표시: 다음 조사 대상 점의 위치); random_seed=0)</small></span></p>
 
@@ -492,8 +480,8 @@
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/optimal-learning-curve-result.svg" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/bayesian-optimization-overview-2/optimal-learning-curve-result.svg" alt="학습 곡선 플롯팅 결과&lt;br&gt;&lt;small&gt;(파란색: 학습 데이터셋 정확도, 빨간색: 검증 데이터셋 정확도)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/bayesian-optimization-overview-2/optimal-learning-curve-result.svg" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/bayesian-optimization-overview-2/optimal-learning-curve-result.svg" alt="학습 곡선 플롯팅 결과&lt;br&gt;&lt;small&gt;(파란색: 학습 데이터셋 정확도, 빨간색: 검증 데이터셋 정확도)&lt;/small&gt;" />
 </a>
 <span class="caption">학습 곡선 플롯팅 결과<br /><small>(파란색: 학습 데이터셋 정확도, 빨간색: 검증 데이터셋 정확도)</small></span></p>
 

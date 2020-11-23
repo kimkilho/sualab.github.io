@@ -2,123 +2,123 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
-        <loc>http://research.sualab.com/review/2020/09/03/ECCV-2020-review.html</loc>
+        <loc>http://localhost:4000/review/2020/09/03/ECCV-2020-review.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/development/2020/08/06/secure-coding.html</loc>
+        <loc>http://localhost:4000/development/2020/08/06/secure-coding.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/development/2020/06/18/pytorch-boilerplate.html</loc>
+        <loc>http://localhost:4000/development/2020/06/18/pytorch-boilerplate.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/development/2020/05/07/dependency-management-for-cpp-windows-app-using-nuget.html</loc>
+        <loc>http://localhost:4000/development/2020/05/07/dependency-management-for-cpp-windows-app-using-nuget.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/development/2020/04/06/Lifetime-of-Boost-Interprocess-Mechanisms.html</loc>
+        <loc>http://localhost:4000/development/2020/04/06/Lifetime-of-Boost-Interprocess-Mechanisms.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/review/2020/02/20/anomaly-detection-overview-2.html</loc>
+        <loc>http://localhost:4000/introduction/review/2020/02/20/anomaly-detection-overview-2.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/review/2020/01/30/anomaly-detection-overview-1.html</loc>
+        <loc>http://localhost:4000/introduction/review/2020/01/30/anomaly-detection-overview-1.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/review/2019/12/19/transfer-learning-in-sualab.html</loc>
+        <loc>http://localhost:4000/introduction/review/2019/12/19/transfer-learning-in-sualab.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/2019/10/23/interpretable-machine-learning-overview-2.html</loc>
+        <loc>http://localhost:4000/introduction/2019/10/23/interpretable-machine-learning-overview-2.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/2019/08/30/interpretable-machine-learning-overview-1.html</loc>
+        <loc>http://localhost:4000/introduction/2019/08/30/interpretable-machine-learning-overview-1.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/development/2019/07/05/setup-cntk-2.7-on-jetson-agx-xavier.html</loc>
+        <loc>http://localhost:4000/development/2019/07/05/setup-cntk-2.7-on-jetson-agx-xavier.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/review/2019/05/23/ICLR-2019-best-paper-review.html</loc>
+        <loc>http://localhost:4000/review/2019/05/23/ICLR-2019-best-paper-review.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/practice/2019/05/08/generative-adversarial-network.html</loc>
+        <loc>http://localhost:4000/introduction/practice/2019/05/08/generative-adversarial-network.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/practice/2019/04/01/bayesian-optimization-overview-2.html</loc>
+        <loc>http://localhost:4000/introduction/practice/2019/04/01/bayesian-optimization-overview-2.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/practice/2019/02/19/bayesian-optimization-overview-1.html</loc>
+        <loc>http://localhost:4000/introduction/practice/2019/02/19/bayesian-optimization-overview-1.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/review/2018/12/27/siggraph2018-review-2.html</loc>
+        <loc>http://localhost:4000/review/2018/12/27/siggraph2018-review-2.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/review/2018/12/27/siggraph2018-review-1.html</loc>
+        <loc>http://localhost:4000/review/2018/12/27/siggraph2018-review-1.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/review/2018/12/05/bmvc2018-review.html</loc>
+        <loc>http://localhost:4000/review/2018/12/05/bmvc2018-review.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/practice/2018/11/23/image-segmentation-deep-learning.html</loc>
+        <loc>http://localhost:4000/practice/2018/11/23/image-segmentation-deep-learning.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/review/2018/09/28/nasnet-review.html</loc>
+        <loc>http://localhost:4000/review/2018/09/28/nasnet-review.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/review/2018/08/14/taskonomy-task-transfer-learning.html</loc>
+        <loc>http://localhost:4000/review/2018/08/14/taskonomy-task-transfer-learning.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/practice/review/2018/06/28/shake-shake-regularization-review.html</loc>
+        <loc>http://localhost:4000/practice/review/2018/06/28/shake-shake-regularization-review.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/practice/2018/05/14/image-detection-deep-learning.html</loc>
+        <loc>http://localhost:4000/practice/2018/05/14/image-detection-deep-learning.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/practice/2018/01/17/image-classification-deep-learning.html</loc>
+        <loc>http://localhost:4000/practice/2018/01/17/image-classification-deep-learning.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/development/2017/12/07/setup-cntk-evaluation-library-on-jetson-tx1.html</loc>
+        <loc>http://localhost:4000/development/2017/12/07/setup-cntk-evaluation-library-on-jetson-tx1.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/2017/11/29/image-recognition-overview-2.html</loc>
+        <loc>http://localhost:4000/introduction/2017/11/29/image-recognition-overview-2.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/2017/11/29/image-recognition-overview-1.html</loc>
+        <loc>http://localhost:4000/introduction/2017/11/29/image-recognition-overview-1.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/2017/10/10/what-is-deep-learning-2.html</loc>
+        <loc>http://localhost:4000/introduction/2017/10/10/what-is-deep-learning-2.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/2017/10/10/what-is-deep-learning-1.html</loc>
+        <loc>http://localhost:4000/introduction/2017/10/10/what-is-deep-learning-1.html</loc>
     </url>
     
     <url>
-        <loc>http://research.sualab.com/introduction/2017/09/04/what-is-machine-learning.html</loc>
+        <loc>http://localhost:4000/introduction/2017/09/04/what-is-machine-learning.html</loc>
     </url>
     
 
@@ -126,7 +126,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/404.html</loc>
+        <loc>http://localhost:4000/404.html</loc>
     </url>
     
     
@@ -134,7 +134,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/</loc>
+        <loc>http://localhost:4000/</loc>
     </url>
     
     
@@ -146,7 +146,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/2017/09/04/what-is-machine-learning.html</loc>
+        <loc>http://localhost:4000/machine-learning/2017/09/04/what-is-machine-learning.html</loc>
     </url>
     
     
@@ -154,7 +154,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/2017/10/10/what-is-deep-learning-1.html</loc>
+        <loc>http://localhost:4000/machine-learning/2017/10/10/what-is-deep-learning-1.html</loc>
     </url>
     
     
@@ -162,7 +162,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/2017/10/10/what-is-deep-learning-2.html</loc>
+        <loc>http://localhost:4000/machine-learning/2017/10/10/what-is-deep-learning-2.html</loc>
     </url>
     
     
@@ -170,7 +170,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/computer-vision/2017/11/29/image-recognition-overview-1.html</loc>
+        <loc>http://localhost:4000/computer-vision/2017/11/29/image-recognition-overview-1.html</loc>
     </url>
     
     
@@ -178,7 +178,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/computer-vision/2017/11/29/image-recognition-overview-2.html</loc>
+        <loc>http://localhost:4000/computer-vision/2017/11/29/image-recognition-overview-2.html</loc>
     </url>
     
     
@@ -186,7 +186,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/etc/2017/12/07/Setup-CNTK-Evaluation-Library-on-Jetson-TX1-KOR.html</loc>
+        <loc>http://localhost:4000/etc/2017/12/07/Setup-CNTK-Evaluation-Library-on-Jetson-TX1-KOR.html</loc>
     </url>
     
     
@@ -194,7 +194,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html</loc>
+        <loc>http://localhost:4000/machine-learning/computer-vision/2018/01/17/image-classification-deep-learning.html</loc>
     </url>
     
     
@@ -202,7 +202,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/computer-vision/2018/05/14/image-detection-deep-learning.html</loc>
+        <loc>http://localhost:4000/machine-learning/computer-vision/2018/05/14/image-detection-deep-learning.html</loc>
     </url>
     
     
@@ -210,7 +210,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/computer-vision/2018/06/28/shake-shake-regularization-review.html</loc>
+        <loc>http://localhost:4000/machine-learning/computer-vision/2018/06/28/shake-shake-regularization-review.html</loc>
     </url>
     
     
@@ -218,7 +218,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/computer-vision/2018/08/14/taskonomy-task-transfer-learning.html</loc>
+        <loc>http://localhost:4000/machine-learning/computer-vision/2018/08/14/taskonomy-task-transfer-learning.html</loc>
     </url>
     
     
@@ -226,7 +226,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/computer-vision/2018/09/28/nasnet-review.html</loc>
+        <loc>http://localhost:4000/machine-learning/computer-vision/2018/09/28/nasnet-review.html</loc>
     </url>
     
     
@@ -234,7 +234,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/computer-vision/2018/11/23/image-segmentation-deep-learning.html</loc>
+        <loc>http://localhost:4000/machine-learning/computer-vision/2018/11/23/image-segmentation-deep-learning.html</loc>
     </url>
     
     
@@ -242,7 +242,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/computer-vision/2018/12/05/bmvc2018-review.html</loc>
+        <loc>http://localhost:4000/machine-learning/computer-vision/2018/12/05/bmvc2018-review.html</loc>
     </url>
     
     
@@ -250,7 +250,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/computer-vision/2018/12/27/siggraph2018-review-1.html</loc>
+        <loc>http://localhost:4000/machine-learning/computer-vision/2018/12/27/siggraph2018-review-1.html</loc>
     </url>
     
     
@@ -258,7 +258,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/machine-learning/computer-vision/2018/12/27/siggraph2018-review-2.html</loc>
+        <loc>http://localhost:4000/machine-learning/computer-vision/2018/12/27/siggraph2018-review-2.html</loc>
     </url>
     
     
@@ -266,7 +266,7 @@
     
     
     <url>
-        <loc>http://research.sualab.com/etc/2017/12/07/Setup-CNTK-Evaluation-Library-on-Jetson-TX1-KOR.html</loc>
+        <loc>http://localhost:4000/etc/2017/12/07/Setup-CNTK-Evaluation-Library-on-Jetson-TX1-KOR.html</loc>
     </url>
     
     

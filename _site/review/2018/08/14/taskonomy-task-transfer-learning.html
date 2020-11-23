@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2018-08-14T09:00:00+09:00">
-  <meta property="article:author" content="http://research.sualab.com/about/">
+  <meta property="article:author" content="http://localhost:4000/about/">
   
-  <meta property="og:url" content="http://research.sualab.com/review/2018/08/14/taskonomy-task-transfer-learning.html" />
+  <meta property="og:url" content="http://localhost:4000/review/2018/08/14/taskonomy-task-transfer-learning.html" />
   
   <meta itemprop="keywords" content="taskonomy,visual tasks,transfer learning" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="오늘날 딥러닝 분야에서 주요하게 연구되는 주제들 중 하나로 transfer learning(전이 학습)이 있습니다. 이는 어느 특정한 task(이하 source task; e.g. classification, detection, segmentation 등)에 대하여 학습된 딥러닝 ...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://research.sualab.com/review/2018/08/14/taskonomy-task-transfer-learning.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/review/2018/08/14/taskonomy-task-transfer-learning.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -50,18 +50,6 @@
                 });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-  
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-110963421-1');
-</script>
-
 
   
 </head>
@@ -224,8 +212,8 @@
 <p>오늘날 이미지 인식 분야에서 다뤄지는 task들은 classification, depth estimation(깊이 추정), edge detection(경계선 검출), pose estimation(포즈 추정) 등 다양하게 나와 있습니다. 이러한 task를 각각 별도의 딥러닝 모델이 학습하도록 하다 보면, ‘서로 간에 필요로 하는 정보가 서로 유사하여 공유될 여지가 있는 task들도 있을 것 같은데, 그저 이렇게 각각 별도로 학습하는 것은 학습 데이터 및 레이블링 비용의 낭비 아닐까?’하는 의문이 들 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-structure-example.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-structure-example.png" alt="Taskonomy 방법을 통해 찾아낸 task structure 예시" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-structure-example.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-structure-example.png" alt="Taskonomy 방법을 통해 찾아낸 task structure 예시" />
 </a>
 <span class="caption">Taskonomy 방법을 통해 찾아낸 task structure 예시</span></p>
 
@@ -272,8 +260,8 @@
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/taskonomy-method-overview.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/taskonomy-method-overview.png" alt="Taskonomy 방법 overview: Transferability 모델링 및 taxonomy 생성 과정" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/taskonomy-method-overview.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/taskonomy-method-overview.png" alt="Taskonomy 방법 overview: Transferability 모델링 및 taxonomy 생성 과정" />
 </a>
 <span class="caption">Taskonomy 방법 overview: Transferability 모델링 및 taxonomy 생성 과정</span></p>
 
@@ -339,8 +327,8 @@
 <p><span class="caption">논문에서 채택된 26가지 task 리스트</span></p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-dictionary-examples.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-dictionary-examples.png" alt="논문에서 채택된 26가지 중 24가지 task 예측 결과 예시&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-dictionary-examples.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-dictionary-examples.png" alt="논문에서 채택된 26가지 중 24가지 task 예측 결과 예시&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
 </a>
 <span class="caption">논문에서 채택된 26가지 중 24가지 task 예측 결과 예시<br /><small>(클릭하면 확대하여 보실 수 있습니다)</small></span></p>
 
@@ -349,8 +337,8 @@
 <p>맨 먼저 \(\mathcal{S}\) 내의 각 task \(s_i\)에 대하여 task-specific networks를 독립적으로 학습합니다. 각 task-specific network는 공통적으로 아래와 같은 encoder-decoder 구조를 지닙니다. 이 때, decoder의 경우 task의 목적에 따라 출력값을 생성하는 부분의 구조에 약간의 차이가 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-specific-network-architecture.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-specific-network-architecture.png" alt="Task-Specific network의 encoder-decoder 구조" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-specific-network-architecture.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-specific-network-architecture.png" alt="Task-Specific network의 encoder-decoder 구조" />
 </a>
 <span class="caption">Task-Specific network의 encoder-decoder 구조</span></p>
 
@@ -359,8 +347,8 @@
 <p>\(s \in \mathcal{S}\)와 \(t \in \mathcal{T}\)인 어느 source task \(s\)와 target task \(t\)에 대하여, \(s\)의 task-specific network의 encoder \(E_s(\cdot)\)와, parameters \(\theta\)로 표현되는 새로운 decoder \(D_{\theta}(\cdot)\)이 합쳐져 구성된 transfer network를 생성합니다. 그러면, 어느 입력 이미지 \(I\)에 대한 transfer network의 예측 레이블은 \(D_{\theta}(E_s(I))\)로 표현할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/transfer-network-architecture.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/transfer-network-architecture.png" alt="Transfer network의 구조" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/transfer-network-architecture.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/transfer-network-architecture.png" alt="Transfer network의 구조" />
 </a>
 <span class="caption">Transfer network의 구조</span></p>
 
@@ -377,8 +365,8 @@ D_{s \to t} := \arg\min_{\theta} \mathbb{E}_{I \in \mathcal{D}} \big[ L_t \big( 
 <p>지나치게 많은 계산을 방지하고자, Taskonomy 방법에서는 먼저 \(k=1\)로 하여 계산한 모든 \(D_{s \to t}\)의 성능을 기준으로 hypergraph를 그리고, 여기에 <a href="https://en.wikipedia.org/wiki/Beam_search" target="_blank">beam search</a>를 적용하여 \(D_{s \to t}\) 성능 기준으로 상위에 속하는 5개(\(k \leq 5\)인 경우) 또는 \(k\)개(\(k \geq 5\)인 경우)의 source task들을 취사 선택하고, 이들 간의 \(k\)차 조합만을 고려하는 방식을 채택합니다. 이렇게 하여, 모든 \(({s_1, ..., s_k}, t)\) 조합에 대한 readout function들을 모두 구합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/beam-search-keq2-examples.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/beam-search-keq2-examples.png" alt="Transfer order k=2인 경우의 beam search 과정 예시" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/beam-search-keq2-examples.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/beam-search-keq2-examples.png" alt="Transfer order k=2인 경우의 beam search 과정 예시" />
 </a>
 <span class="caption">Transfer order k=2인 경우의 beam search 과정 예시</span></p>
 
@@ -403,16 +391,16 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <p>모든 \(t \in \mathcal{T}\)에 대하여 \(W_t'\)의 principal eigenvector들을 계산하여 이들을 row-wise로 쌓아올리면, 아래 그림과 같은 task affinity matrix \(P\)가 얻어집니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-affinity-matrix-1st-order-example.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-affinity-matrix-1st-order-example.png" alt="k=1일 때의 task affinity matrix 예시&lt;br&gt;&lt;small&gt;(여기에서는 값이 작을수록, source-&gt;target transferability가 높음)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-affinity-matrix-1st-order-example.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-affinity-matrix-1st-order-example.png" alt="k=1일 때의 task affinity matrix 예시&lt;br&gt;&lt;small&gt;(여기에서는 값이 작을수록, source-&gt;target transferability가 높음)&lt;/small&gt;" />
 </a>
 <span class="caption">k=1일 때의 task affinity matrix 예시<br /><small>(여기에서는 값이 작을수록, source-&gt;target transferability가 높음)</small></span></p>
 
 <p>논문 본문에서는 \(k=1\)인 경우만을 가지고 설명하였는데, \(k\)가 \(1\)보다 큰 경우에는 task affinity matrix를 계산하는 과정에서의 성능 비교 대상이, 엄밀히 말하면 source task들이 기준이 되는 것이 아니라, \(k\)차 조합으로 구성한 \((s_1, ..., s_k, t)\) 조합들이 기준이 됩니다. (\(k=1\)인 경우 \((s_k, t)\) 조합 안에 하나의 source task만이 포함되기 때문에 이를 source task 자체로 대표하여 표현할 수 있었던 것이라고 볼 수 있습니다.) 즉 다시 말해, task affinity matrix \(P\) 상의 하나의 열은, 곧 하나의 \((s_1, ..., s_k, t)\) 조합을 대표한다고 이해하시면 되겠습니다. 이해를 돕기 위해, \(k=1\)과 \(k=2\)인 경우 \(P\)의 각 열을 설명하는 그림을 아래에 추가하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-affinity-matrix-higher-order-example.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-affinity-matrix-higher-order-example.png" alt="k &gt;= 1일 때의 task affinity matrix 예시&lt;br&gt;&lt;small&gt;(여기에서는 값이 작을수록, source-&gt;target transferability가 높음)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-affinity-matrix-higher-order-example.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-affinity-matrix-higher-order-example.png" alt="k &gt;= 1일 때의 task affinity matrix 예시&lt;br&gt;&lt;small&gt;(여기에서는 값이 작을수록, source-&gt;target transferability가 높음)&lt;/small&gt;" />
 </a>
 <span class="caption">k &gt;= 1일 때의 task affinity matrix 예시<br /><small>(여기에서는 값이 작을수록, source-&gt;target transferability가 높음)</small></span></p>
 
@@ -425,8 +413,8 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <p>앞서 찾은 \(P\)와, transfer 규칙 및 supervision budget과 관련된 제약 조건을 적용하여, <a href="https://en.wikipedia.org/wiki/Integer_programming" target="_blank">Boolean Integer Programming(이하 BIP)</a> 문제의 objective function(목적 함수) 및 constraints(제약식)를 설정합니다. 이 때 boolean variables \(x = (x_1, x_2, ..., x_{\vert E \vert+ \vert \mathcal{V} \vert})\)은, 전체 \(E\)개의 transfer(edge)들과 \(\mathcal{V}\)개의 source task들 중에서 어느 것들을 선택할지를 \(\{0,1\}\) 중 하나로 표시합니다. 결과적으로, 아래와 같은 BIP 문제를 풀면 됩니다:</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/bip-objective-and-constraints.png" target="_blank">
-  <img class="small-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/bip-objective-and-constraints.png" alt="" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/bip-objective-and-constraints.png" target="_blank">
+  <img class="small-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/bip-objective-and-constraints.png" alt="" />
 </a>
 <span class="caption"></span></p>
 
@@ -435,8 +423,8 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <p>먼저 objective function weights의 경우, 전체 \(\vert E \vert+\vert \mathcal{V} \vert\)개의 원소 중 앞쪽 \(\vert E \vert\)개의 transfer(edge)들에 대응되는 것만 \(c_i := r_{target(i)} \cdot p_i\)를 넣어주고, 나머지 원소에는 \(0\)을 넣어주면 됩니다. 이 때, \(p_i\)는 \(i\)번째 transfer가 가리키는 target task에 대한 transferability 수준을 나타내며, 이는 앞서 계산하여 얻은 task affinity matrix \(P\) 상에서 찾을 수 있습니다. 다음으로 \(r_{target(i)}\)는 \(i\)번째 transfer가 가리키는 target task의 상대적 중요성을 나타내며, 이는 필요에 따라 사용자가 적절하게 정하여 입력할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/bip-weights-description.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/bip-weights-description.png" alt="BIP 문제에서의 objective weights 값의 설정" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/bip-weights-description.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/bip-weights-description.png" alt="BIP 문제에서의 objective weights 값의 설정" />
 </a>
 <span class="caption">BIP 문제에서의 objective weights 값의 설정</span></p>
 
@@ -451,8 +439,8 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <p>위 3가지 조건을 모두 반영하면 \(A \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1) \times (\vert E \vert + \vert \mathcal{V} \vert)}\), \(b \in \mathbb{R}^{(\vert E \vert + \vert \mathcal{V} \vert + 1)}\)를 얻을 수 있으며, 좀 더 구체적으로는 \(A\)와 \(b\) 내 각 구역 별 원소의 값들을 아래 그림에 표시한 조건에 따라 결정하면 됩니다. 이 때, \(l_i\)는 \(i\)번째 transfer와 결부된 source task들을 레이블링할 시의 상대적인 cost를 가리킵니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/bip-constraints-description.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/bip-constraints-description.png" alt="BIP 문제에서의 constraints 설정&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/bip-constraints-description.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/bip-constraints-description.png" alt="BIP 문제에서의 constraints 설정&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
 </a>
 <span class="caption">BIP 문제에서의 constraints 설정<br /><small>(클릭하면 확대하여 보실 수 있습니다)</small></span></p>
 
@@ -467,8 +455,8 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <p>본격적인 Tasknomy 학습 결과 분석에 앞서, 학습이 완료된 task-specific network의 성능이 기본적으로 쓸 만한지(?)를 먼저 간단히 검증하였습니다. 정규분포로부터 샘플링한 랜덤한 값들을 그대로 task-specific network의 weight들로 사용하여 테스트하는 방법(<em>rand</em>)와, 각 task 별 전체 실제 레이블들을 평균한 결과를 그대로 사용하여 테스트하는 방법(<em>avg</em>)을 baseline으로 하여 검증한 결과, 충분히 안정적으로 잘 학습되었다는 것을 확인하였습니다. 아래 그림에서 그 결과를 확인할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-specific-networks-sanity.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-specific-networks-sanity.png" alt="Task-specific network들의 각 task 별 성능 검증 결과" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-specific-networks-sanity.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-specific-networks-sanity.png" alt="Task-specific network들의 각 task 별 성능 검증 결과" />
 </a>
 <span class="caption">Task-specific network들의 각 task 별 성능 검증 결과</span></p>
 
@@ -477,8 +465,8 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <p>Supervision budget \(\gamma\) 및 Transfer Order \(k\)를 변경해 가면서 학습한 결과 얻어진 몇 가지 예시 Taskonomy들을 아래 그림과 같이 나타냈습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/computed-taxonomies.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/computed-taxonomies.png" alt="학습을 통해 얻어진 예시 Taskonomy&lt;br&gt;&lt;small&gt;(BIP 문제를 해결하여 얻어진 transfer들을 화살표로 표현함; 흐릿하게 표시된 node들은 source-only task에 해당함)&lt;/small&gt;&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/computed-taxonomies.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/computed-taxonomies.png" alt="학습을 통해 얻어진 예시 Taskonomy&lt;br&gt;&lt;small&gt;(BIP 문제를 해결하여 얻어진 transfer들을 화살표로 표현함; 흐릿하게 표시된 node들은 source-only task에 해당함)&lt;/small&gt;&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
 </a>
 <span class="caption">학습을 통해 얻어진 예시 Taskonomy<br /><small>(BIP 문제를 해결하여 얻어진 transfer들을 화살표로 표현함; 흐릿하게 표시된 node들은 source-only task에 해당함)</small><br /><small>(클릭하면 확대하여 보실 수 있습니다)</small></span></p>
 
@@ -492,8 +480,8 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/taxonomy-evaluation.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/taxonomy-evaluation.png" alt="완성된 taskonomy에 기반한 transfer 규칙을 각 target task에 적용하였을 시의 테스트 결과&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/taxonomy-evaluation.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/taxonomy-evaluation.png" alt="완성된 taskonomy에 기반한 transfer 규칙을 각 target task에 적용하였을 시의 테스트 결과&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
 </a>
 <span class="caption">완성된 taskonomy에 기반한 transfer 규칙을 각 target task에 적용하였을 시의 테스트 결과<br /><small>(클릭하면 확대하여 보실 수 있습니다)</small></span></p>
 
@@ -508,8 +496,8 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <p>이러한 상황을 재현하고자, 기존 task dictionary 내의 모든 task들을 source로, 기존 task dictionary에 없었던 어느 새로운 task를 단일 target으로 한 일반화 성능 검증 실험을 수행하였습니다. 이 때 target task와 관련된 학습 데이터는 validation set(1.6만)만을 사용하였음을 다시 강조합니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/generalization-to-novel-tasks.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/generalization-to-novel-tasks.png" alt="새로운 task에 대한 일반화 성능 검증 결과&lt;br&gt;&lt;small&gt;(좌측: Gain과 Quality; 우측: 상기 명시된 방법들을 baseline으로 한 win rate(%))&lt;/small&gt;&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/generalization-to-novel-tasks.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/generalization-to-novel-tasks.png" alt="새로운 task에 대한 일반화 성능 검증 결과&lt;br&gt;&lt;small&gt;(좌측: Gain과 Quality; 우측: 상기 명시된 방법들을 baseline으로 한 win rate(%))&lt;/small&gt;&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
 </a>
 <span class="caption">새로운 task에 대한 일반화 성능 검증 결과<br /><small>(좌측: Gain과 Quality; 우측: 상기 명시된 방법들을 baseline으로 한 win rate(%))</small><br /><small>(클릭하면 확대하여 보실 수 있습니다)</small></span></p>
 
@@ -520,8 +508,8 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <p>위의 과정을 거쳐 찾은 Taskonomy 결과에 대하여, 본 논문에서는 다양한 방법으로 검증을 시도하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/structure-significance.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/structure-significance.png" alt="랜덤한 transfer policy 대비 Taskonomy 방법으로 찾은 최적의 transfer policy 적용 성능 비교 결과&lt;br&gt;&lt;small&gt;(녹색: Taskonomy; 회색: 랜덤 transfer policy)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/structure-significance.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/structure-significance.png" alt="랜덤한 transfer policy 대비 Taskonomy 방법으로 찾은 최적의 transfer policy 적용 성능 비교 결과&lt;br&gt;&lt;small&gt;(녹색: Taskonomy; 회색: 랜덤 transfer policy)&lt;/small&gt;" />
 </a>
 <span class="caption">랜덤한 transfer policy 대비 Taskonomy 방법으로 찾은 최적의 transfer policy 적용 성능 비교 결과<br /><small>(녹색: Taskonomy; 회색: 랜덤 transfer policy)</small></span></p>
 
@@ -532,8 +520,8 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <p>데이터셋 차원에서의 간단한 일반화 성능 검증을 위해, Object Classification task로 ImageNet, Scene Classification task로 MIT Places를 각각 target task의 데이터셋으로 선정하고, 여기에 대하여 각 source task들의 task-specific network들을 fine-tuning한 결과 테스트 성능을 조사하였습니다. 이 성능을 기준으로 한 랭킹 결과를 산출하고, 이를 앞서 taskonomy 방법을 통해 찾은 transferability를 기준으로 한 랭킹 결과와 비교하여 서로 간에 상관성이 존재하는지 알아보고자 하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/transferability-correlations.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/transferability-correlations.png" alt="ImageNet, MIT Places 데이터셋으로의 transferability 결과와의 상관성 조사 결과&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/transferability-correlations.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/transferability-correlations.png" alt="ImageNet, MIT Places 데이터셋으로의 transferability 결과와의 상관성 조사 결과&lt;br&gt;&lt;small&gt;(클릭하면 확대하여 보실 수 있습니다)&lt;/small&gt;" />
 </a>
 <span class="caption">ImageNet, MIT Places 데이터셋으로의 transferability 결과와의 상관성 조사 결과<br /><small>(클릭하면 확대하여 보실 수 있습니다)</small></span></p>
 
@@ -559,8 +547,8 @@ w_{i,j}’ = \frac { \mathbb{E}_{I \in \mathcal{D}_{test}} [\mathcal{D}_{s_i \to
 <p>각 task들 간의 structure를 좀 더 명시적으로 조사하기 위해, 위에서 구한 task affinity matrix \(P\)를 사용한 <a href="https://en.wikipedia.org/wiki/Hierarchical_clustering" target="_blank">병합 군집(agglomerative clustering)</a>을 통해 서로 다른 task 간의 유사도를 조사하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-similarity-tree.png" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/taskonomy-task-transfer-learning/task-similarity-tree.png" alt="Task 유사도 트리" />
+<p><a href="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-similarity-tree.png" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/taskonomy-task-transfer-learning/task-similarity-tree.png" alt="Task 유사도 트리" />
 </a>
 <span class="caption">Task 유사도 트리</span></p>
 
