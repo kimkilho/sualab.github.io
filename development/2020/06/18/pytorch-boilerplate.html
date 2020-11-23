@@ -363,9 +363,9 @@ DCGAN을 이용한 이미지 생성
   
   
   <meta property="article:published_time" content="2020-06-18T00:00:00+09:00">
-  <meta property="article:author" content="http://research.sualab.com/about/">
+  <meta property="article:author" content="http://localhost:4000/about/">
   
-  <meta property="og:url" content="http://research.sualab.com/development/2020/06/18/pytorch-boilerplate.html" />
+  <meta property="og:url" content="http://localhost:4000/development/2020/06/18/pytorch-boilerplate.html" />
   
   <meta itemprop="keywords" content="pytorch-lightning,boilerplate" />
   
@@ -381,7 +381,7 @@ DCGAN을 이용한 이미지 생성
   <meta name="description" content="TL;DR “OmegaConf”로 실험 설정을 관리하고 “Pytorch-Lightning”으로 실험 코드를 구성하고, “Microsoft NNI”+”Tensorboard”로 실험을 기록하는 과정을 “Docker” 환경을 구축해서 하자! 딥러닝 “실험”이란? 연구는 관찰, 가설 설정...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://research.sualab.com/development/2020/06/18/pytorch-boilerplate.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/development/2020/06/18/pytorch-boilerplate.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -393,18 +393,6 @@ DCGAN을 이용한 이미지 생성
                 });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-  
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-110963421-1');
-</script>
-
 
   
 </head>
@@ -547,8 +535,8 @@ DCGAN을 이용한 이미지 생성
     <h2 id="tldr">TL;DR</h2>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/tldr.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/pytorch-boilerplate/tldr.png" alt="" />
+<p><a href="http://localhost:4000/assets/images/pytorch-boilerplate/tldr.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/pytorch-boilerplate/tldr.png" alt="" />
 </a>
 <span class="caption"></span></p>
 
@@ -561,8 +549,8 @@ DCGAN을 이용한 이미지 생성
 <p>그러면 딥러닝을 위한 실험은 어떻게 구성되어 있을까요? N명의 연구자가 있으면 N개의 연구 방법론들이 있겠습니다만, 필자는 딥러닝 실험을 “실험 도구”, “실험 수행” 그리고 “실험 환경”으로 나누어 접근하였습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/exp.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/pytorch-boilerplate/exp.png" alt="실험실의 삼요소" />
+<p><a href="http://localhost:4000/assets/images/pytorch-boilerplate/exp.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/pytorch-boilerplate/exp.png" alt="실험실의 삼요소" />
 </a>
 <span class="caption">실험실의 삼요소</span></p>
 
@@ -575,8 +563,8 @@ DCGAN을 이용한 이미지 생성
 <h3 id="pytorch-lightning--실험-도구"><a href="https://github.com/PyTorchLightning/pytorch-lightning">Pytorch-Lightning</a> : 실험 도구</h3>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/pl.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/pytorch-boilerplate/pl.png" alt="Pytorch 코드를 Pytorch Lightning으로 변환하는 도식" />
+<p><a href="http://localhost:4000/assets/images/pytorch-boilerplate/pl.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/pytorch-boilerplate/pl.png" alt="Pytorch 코드를 Pytorch Lightning으로 변환하는 도식" />
 </a>
 <span class="caption">Pytorch 코드를 Pytorch Lightning으로 변환하는 도식</span></p>
 
@@ -625,8 +613,8 @@ DCGAN을 이용한 이미지 생성
 <p>Research 부분인 <code class="language-plaintext highlighter-rouge">LightningModule</code> 은 기존 pytorch의 <code class="language-plaintext highlighter-rouge">nn.Module</code> 에 데이터, 로스, 옵티마이저 설정을 추가한 모듈입니다.  <code class="language-plaintext highlighter-rouge">__init__</code> <code class="language-plaintext highlighter-rouge">forward</code> 에 네트워크 구조를 정의하고, 추가적으로 <code class="language-plaintext highlighter-rouge">training_step</code> <code class="language-plaintext highlighter-rouge">train_dataloader</code> <code class="language-plaintext highlighter-rouge">configure_optimizers</code>  등의 함수들을 오버 라이딩하여 학습 데이터 및 옵티마이저를 정의하여 줍니다.  <code class="language-plaintext highlighter-rouge">training_step</code> , <code class="language-plaintext highlighter-rouge">validation_step</code>, <code class="language-plaintext highlighter-rouge">validataion_epoch_end</code>에서 “log” key로 리턴하는 내용은 Logger에 batch step 기준으로 로깅되고, “progress_bar” key로 리턴하는 내용은 terminal에서 progress bar 프로그램인 <a href="https://github.com/tqdm/tqdm">tqdm</a>을 통해 출력됩니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/tqdm.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/pytorch-boilerplate/tqdm.png" alt="tqdm을 통해 출력되는 예시" />
+<p><a href="http://localhost:4000/assets/images/pytorch-boilerplate/tqdm.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/pytorch-boilerplate/tqdm.png" alt="tqdm을 통해 출력되는 예시" />
 </a>
 <span class="caption">tqdm을 통해 출력되는 예시</span></p>
 
@@ -679,8 +667,8 @@ DCGAN을 이용한 이미지 생성
 <p>NNI는 3가지 과정을 통해 사용할 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/nni.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/pytorch-boilerplate/nni.png" alt="MS NNI를 코드에 적용하는 3가지 단계" />
+<p><a href="http://localhost:4000/assets/images/pytorch-boilerplate/nni.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/pytorch-boilerplate/nni.png" alt="MS NNI를 코드에 적용하는 3가지 단계" />
 </a>
 <span class="caption">MS NNI를 코드에 적용하는 3가지 단계</span></p>
 
@@ -730,8 +718,8 @@ DCGAN을 이용한 이미지 생성
 <p>위의 단계를 마치고 NNI을 실행시킨다면 다음과 같은 결과를 <code class="language-plaintext highlighter-rouge">localhost:8080</code> 에 접속하시면 현재 탐색 실행 상황 및 최적 값 등을 확인하실 수 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/nni2.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/pytorch-boilerplate/nni2.png" alt="NNI를 실행 후 parameter를 grid search하고 loss 결과에 매핑한 그래프" />
+<p><a href="http://localhost:4000/assets/images/pytorch-boilerplate/nni2.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/pytorch-boilerplate/nni2.png" alt="NNI를 실행 후 parameter를 grid search하고 loss 결과에 매핑한 그래프" />
 </a>
 <span class="caption">NNI를 실행 후 parameter를 grid search하고 loss 결과에 매핑한 그래프</span></p>
 
@@ -793,8 +781,8 @@ DCGAN을 이용한 이미지 생성
 <p>딥러닝 실험 코드를 작성하고, 설정 관리 및 자동 탐색 툴까지 붙였는데 더 해야 하는 것이 있을까요? 이번 툴은 필수는 아니나 추후에 다시 코드 실행 환경을 복구하기 위한 Docker와 Anaconda를 통한 파이썬 라이브러리 관리를 소개드립니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/meme.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/pytorch-boilerplate/meme.png" alt="논문 코드가 바로 실행될 때.jpg" />
+<p><a href="http://localhost:4000/assets/images/pytorch-boilerplate/meme.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/pytorch-boilerplate/meme.png" alt="논문 코드가 바로 실행될 때.jpg" />
 </a>
 <span class="caption">논문 코드가 바로 실행될 때.jpg</span></p>
 
@@ -809,8 +797,8 @@ DCGAN을 이용한 이미지 생성
 <p>Anaconda를 설치하시고 path를 설정해주시면 prompt 창에서 가장 왼쪽에 <code class="language-plaintext highlighter-rouge">(base)</code>로 표시가 됩니다. 이는 현재 base라는 기본 환경을 가지는 python을 실행하기 위해 준비되었다는 의미입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/pytorch-boilerplate/conda.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/pytorch-boilerplate/conda.png" alt="conda가 준비되었을 때의 콘솔창" />
+<p><a href="http://localhost:4000/assets/images/pytorch-boilerplate/conda.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/pytorch-boilerplate/conda.png" alt="conda가 준비되었을 때의 콘솔창" />
 </a>
 <span class="caption">conda가 준비되었을 때의 콘솔창</span></p>
 

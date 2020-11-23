@@ -18,9 +18,9 @@
   
   
   <meta property="article:published_time" content="2018-01-17T09:00:00+09:00">
-  <meta property="article:author" content="http://research.sualab.com/about/">
+  <meta property="article:author" content="http://localhost:4000/about/">
   
-  <meta property="og:url" content="http://research.sualab.com/practice/2018/01/17/image-classification-deep-learning.html" />
+  <meta property="og:url" content="http://localhost:4000/practice/2018/01/17/image-classification-deep-learning.html" />
   
   <meta itemprop="keywords" content="classification,alexnet,tensorflow" />
   
@@ -38,7 +38,7 @@
   <meta name="description" content="지금까지 딥러닝과 이미지 인식 문제에 대해서 알아보았습니다. 해결하고자 하는 문제(이미지 인식)의 개괄을 살펴보았고 문제 해결을 위한 도구(딥러닝)에 대해 알아보았으니, 이제는 좀 더 구체적으로 이미지 인식 문제에 딥러닝을 직접 적용한 사례를 하나 제시하고, 이를 실제 Tensor...">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://research.sualab.com/practice/2018/01/17/image-classification-deep-learning.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/practice/2018/01/17/image-classification-deep-learning.html">  <link rel="alternate" type="application/rss+xml" title="Cognex Deep Learning Lab-KOR Research Blog" href="/feed.xml">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Enabling line-breaking for MathJax equations -->
@@ -50,18 +50,6 @@
                 });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-
-  
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110963421-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-110963421-1');
-</script>
-
 
   
 </head>
@@ -227,7 +215,7 @@
 
 <h2 id="서론">서론</h2>
 
-<p><a href="http://research.sualab.com/computer-vision/2017/11/29/image-recognition-overview-1.html" target="_blank">&lt;이미지 인식 문제의 개요: PASCAL VOC Challenge를 중심으로&gt;</a>에서 언급한 바에 따르면, PASCAL VOC Challenge의 규정에 의거하면 이미지 인식 분야에서 총 3가지 문제를 다룬다고 하였습니다. 이번 글에서는 이들 문제 중 가장 단순한 축에 속하는 <strong>Classification</strong> 문제의 한 가지 사례를 가져오고, 이를 딥러닝 기술로 해결하는 과정을 여러분께 안내하고자 합니다.</p>
+<p><a href="http://localhost:4000/computer-vision/2017/11/29/image-recognition-overview-1.html" target="_blank">&lt;이미지 인식 문제의 개요: PASCAL VOC Challenge를 중심으로&gt;</a>에서 언급한 바에 따르면, PASCAL VOC Challenge의 규정에 의거하면 이미지 인식 분야에서 총 3가지 문제를 다룬다고 하였습니다. 이번 글에서는 이들 문제 중 가장 단순한 축에 속하는 <strong>Classification</strong> 문제의 한 가지 사례를 가져오고, 이를 딥러닝 기술로 해결하는 과정을 여러분께 안내하고자 합니다.</p>
 
 <p>본격적인 글의 전개에 앞서 중대한 사항을 하나 말씀드려야 하는데, 본 글이 <em>(1) 딥러닝에서의 심층 신경망 모델을 학습시키는 러닝 알고리즘에 대한 기초적인 이해가 있으며,</em> <em>(2) Python 언어 및 TensorFlow의 기초를 알고 있는</em> 분들을 타겟으로 한다는 점입니다. 만약 이게 갖춰지지 않은 분들이 계시다면, 아쉽지만 온/오프라인 상에 좋은 교육 자료들이 많이 있으니 이들을 먼저 공부하고 오시길 권해 드립니다.</p>
 
@@ -249,7 +237,7 @@
 
 <p>또한, 이는 구현체 코드에 대한 유지/보수의 측면에서도 좋지 못합니다. 반복 실험 과정에서의 모델의 성능 향상을 위해, 여러분들은 기존에 마련해 놓은 구현체에 최근에 핫하다고 나온 이런저런 테크닉들을 하나둘씩 추가로 적용하여 커스터마이징(customizing)을 할 것인데, 그러다 보면 기존 코드가 걸레짝(?)처럼 되는 경우가 비일비재합니다. 그러다가 어딘지 모를 지점에서 문제가 생겨 학습이 잘 이루어지지 않는 상황이 찾아오면 문제는 더 심각해지는데, 이 얽히고설킨 코드들을 샅샅이 훑어보는 과정에서 여러분들은 극도의 스트레스에 시달리게 될 가능성이 높습니다.</p>
 
-<p>지난 <a href="http://research.sualab.com/machine-learning/2017/10/10/what-is-deep-learning-1.html" target="_blank">&lt;딥러닝이란 무엇인가?&gt;</a>에서 <em>딥러닝은 머신러닝의 세부 방법론에 불과하다</em>고 하였으며, <a href="http://research.sualab.com/machine-learning/2017/09/04/what-is-machine-learning.html" target="_blank">&lt;머신러닝이란 무엇인가?&gt;</a>에서는 <strong>머신러닝의 핵심 요소</strong>로 <em>데이터셋(data set)</em>, <em>러닝 모델(learning model)</em>, <em>러닝 알고리즘(learning algorithm)</em> 등이 있다고 하였습니다. 여기에 학습된 러닝 모델에 대한 <em>성능 평가(performance evaluation)</em>를 추가하면, 아래와 같은 리스트가 완성됩니다.</p>
+<p>지난 <a href="http://localhost:4000/machine-learning/2017/10/10/what-is-deep-learning-1.html" target="_blank">&lt;딥러닝이란 무엇인가?&gt;</a>에서 <em>딥러닝은 머신러닝의 세부 방법론에 불과하다</em>고 하였으며, <a href="http://localhost:4000/machine-learning/2017/09/04/what-is-machine-learning.html" target="_blank">&lt;머신러닝이란 무엇인가?&gt;</a>에서는 <strong>머신러닝의 핵심 요소</strong>로 <em>데이터셋(data set)</em>, <em>러닝 모델(learning model)</em>, <em>러닝 알고리즘(learning algorithm)</em> 등이 있다고 하였습니다. 여기에 학습된 러닝 모델에 대한 <em>성능 평가(performance evaluation)</em>를 추가하면, 아래와 같은 리스트가 완성됩니다.</p>
 
 <h4 id="이미지-인식-문제를-위한-딥러닝의-기본-요소">이미지 인식 문제를 위한 딥러닝의 기본 요소</h4>
 
@@ -269,8 +257,8 @@
 <p>개vs고양이 분류 문제를 위해 사용한 데이터셋의 원본은 <strong>The Asirra dataset</strong>이며, 본 글에서 실제 사용한 데이터셋은 데이터 사이언스 관련 유명 웹사이트인 Kaggle에서 제공하는 competitions 항목 중 <a href="https://www.kaggle.com/c/dogs-vs-cats" target="_blank">Dogs vs. Cats</a>로부터 가져온 것입니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-classification-deep-learning/dogs-cats-examples.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/image-classification-deep-learning/dogs-cats-examples.png" alt="Asirra Dogs vs. Cats 데이터셋 내 개/고양이 이미지 예시" />
+<p><a href="http://localhost:4000/assets/images/image-classification-deep-learning/dogs-cats-examples.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/image-classification-deep-learning/dogs-cats-examples.png" alt="Asirra Dogs vs. Cats 데이터셋 내 개/고양이 이미지 예시" />
 </a>
 <span class="caption">Asirra Dogs vs. Cats 데이터셋 내 개/고양이 이미지 예시</span></p>
 
@@ -922,8 +910,8 @@
 <p>AlexNet 논문에서는, AlexNet의 아키텍처를 아래 그림과 같이 표현하고 있습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-classification-deep-learning/alexnet-architecture.svg" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/image-classification-deep-learning/alexnet-architecture.svg" alt="AlexNet 아키텍처" />
+<p><a href="http://localhost:4000/assets/images/image-classification-deep-learning/alexnet-architecture.svg" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/image-classification-deep-learning/alexnet-architecture.svg" alt="AlexNet 아키텍처" />
 </a>
 <span class="caption">AlexNet 아키텍처</span></p>
 
@@ -1342,8 +1330,8 @@
 </ul>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-classification-deep-learning/learning-curve-result.svg" target="_blank">
-  <img class="large-image" src="http://research.sualab.com/assets/images/image-classification-deep-learning/learning-curve-result.svg" alt="학습 곡선 플롯팅 결과&lt;br&gt;&lt;small&gt;(파란색: 학습 데이터셋 정확도, 빨간색: 검증 데이터셋 정확도)&lt;/small&gt;" />
+<p><a href="http://localhost:4000/assets/images/image-classification-deep-learning/learning-curve-result.svg" target="_blank">
+  <img class="large-image" src="http://localhost:4000/assets/images/image-classification-deep-learning/learning-curve-result.svg" alt="학습 곡선 플롯팅 결과&lt;br&gt;&lt;small&gt;(파란색: 학습 데이터셋 정확도, 빨간색: 검증 데이터셋 정확도)&lt;/small&gt;" />
 </a>
 <span class="caption">학습 곡선 플롯팅 결과<br /><small>(파란색: 학습 데이터셋 정확도, 빨간색: 검증 데이터셋 정확도)</small></span></p>
 
@@ -1358,8 +1346,8 @@
 <p>실제로 얻을 수 있는 이미지에 대한 테스트를 위해, Google에서 개 이미지와 고양이 이미지 각각에 대한 검색 결과들 중 랜덤하게 3개씩 고른 뒤 이들을 학습이 완료된 모델에 입력하였더니, 아래와 같이 괜찮은 예측 결과를 얻었습니다.</p>
 
 <!-- @reference: https://www.kevinmcgillivray.net/captions-for-images-with-jekyll/ -->
-<p><a href="http://research.sualab.com/assets/images/image-classification-deep-learning/random-dogs-cats-predictions.png" target="_blank">
-  <img class="full-image" src="http://research.sualab.com/assets/images/image-classification-deep-learning/random-dogs-cats-predictions.png" alt="랜덤한 개vs고양이 이미지에 대한 모델의 예측 결과(pred)" />
+<p><a href="http://localhost:4000/assets/images/image-classification-deep-learning/random-dogs-cats-predictions.png" target="_blank">
+  <img class="full-image" src="http://localhost:4000/assets/images/image-classification-deep-learning/random-dogs-cats-predictions.png" alt="랜덤한 개vs고양이 이미지에 대한 모델의 예측 결과(pred)" />
 </a>
 <span class="caption">랜덤한 개vs고양이 이미지에 대한 모델의 예측 결과(pred)</span></p>
 
